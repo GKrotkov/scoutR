@@ -257,10 +257,17 @@ tidy_rankings <- function(raw, trim = TRUE){
     data <- unnest_wider(data, ranking)
     data <- unnest_wider(data, record)
 
+    # unpack sort order names and
     sort_order <- tibble(rank = raw$sort_order_info)
-    sort_order <- unnest_wider(sort_order, rank)
-    tiebreaker_names <- sort_order$name
-    # use sort_order to name tiebreakers
+    if (is.null(raw$sort_order_info)){
+        labels <- seq(1, length(unlist(data$sort_orders[1])))
+        tiebreaker_names <- paste("sort", labels)
+    } else {
+        sort_order <- unnest_wider(sort_order, rank)
+        tiebreaker_names <- sort_order$name
+    }
+
+    # use sort_orders to name tiebreakers
     data$sort_orders <- lapply(data$sort_orders, name_sublist, "tiebreaker")
     idx <- which(colnames(data) == "sort_orders")
     data <- unnest_wider(data, sort_orders)
