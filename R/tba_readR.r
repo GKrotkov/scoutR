@@ -104,7 +104,7 @@ get_content <- function(req){
 #' simkeys("", TRUE, TRUE)
 simkeys <- function(req, simple = FALSE, keys = FALSE){
     if (simple && keys){
-        warning("Warning from simkeys: both simple and keys = TRUE")
+        warning("both simple and keys = TRUE")
     }
     if (keys){
         req <- paste(req, "keys", sep = "/")
