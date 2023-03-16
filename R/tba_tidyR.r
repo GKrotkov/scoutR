@@ -155,6 +155,14 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
     event <- event %>%
         unnest_wider(matches)
 
+    # handling case of call on null schedule
+    if (breakdown & all(is.na(event$score_breakdown))){
+        warning("tidy_matches called with breakdown = TRUE on all NA scores. \n
+                Recalling tidy_matches with breakdown = FALSE.")
+        return(tidy_matches(raw, alliances = alliances, breakdown = FALSE,
+                            trim = trim))
+    }
+
     if (alliances) event <- unpack_alliances(event)
     if (breakdown) event <- unpack_breakdown(event)
     if (trim){
