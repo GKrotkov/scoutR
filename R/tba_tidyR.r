@@ -125,7 +125,6 @@ unpack_breakdown <- function(matches){
     idx <- cid:(cid + ncol(matches) - ncol0)
     colnames(matches)[idx] <- paste("blue", colnames(matches)[idx], sep = "_")
 
-    browser()
     # reset variables and repeat the process for red
     ncol0 <- ncol(matches)
     cid <- which(colnames(matches) == "red")
