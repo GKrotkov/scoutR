@@ -125,12 +125,13 @@ unpack_breakdown <- function(matches){
     idx <- cid:(cid + ncol(matches) - ncol0)
     colnames(matches)[idx] <- paste("blue", colnames(matches)[idx], sep = "_")
 
+    browser()
     # reset variables and repeat the process for red
     ncol0 <- ncol(matches)
     cid <- which(colnames(matches) == "red")
     matches <- matches %>%
         unnest_wider("red")
-    idx <- cid:(cid + ncol(matches) - ncol0 - 1)
+    idx <- cid:(cid + ncol(matches) - ncol0)
     colnames(matches)[idx] <- paste("red", colnames(matches)[idx], sep = "_")
 
     return(matches)
@@ -156,12 +157,12 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
         unnest_wider(matches)
 
     # handling case of call on nulls or when score_breakdown does not exist
-    if (breakdown & (all(is.na(event$score_breakdown)) |
-                     !exists("event$score_breakdown"))){
-        warning("tidy_matches called with breakdown = TRUE on all NA scores. \n
-                Recalling tidy_matches with breakdown = FALSE.")
+    if (breakdown && (!("score_breakdown" %in% colnames(event)) ||
+                     all(is.na(event$score_breakdown)))){
+        warning("tidy_matches called with breakdown = TRUE on null case \n
+                Recalling tidy_matches with breakdown = FALSE, trim = FALSE.")
         return(tidy_matches(raw, alliances = alliances, breakdown = FALSE,
-                            trim = trim))
+                            trim = FALSE))
     }
 
     if (alliances) event <- unpack_alliances(event)
