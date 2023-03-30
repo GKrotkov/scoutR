@@ -151,7 +151,6 @@ unpack_breakdown <- function(matches){
 #'     breakdown = TRUE)
 tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
                          trim = TRUE){
-    browser()
     event <- tibble(matches = raw)
     event <- event %>%
         unnest_wider(matches)
