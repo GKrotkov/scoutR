@@ -56,7 +56,7 @@ get_team_stations <- function(matches, key){
                                           ifelse(col_idx == 4, "red1",
                                                  ifelse(col_idx == 5, "red2",
                                                         "red3")))))
-    return(data.frame(matches = row_idx, station = team_stations))
+    return(data.frame(match = row_idx, station = team_stations))
 }
 
 ##############
