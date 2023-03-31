@@ -7,7 +7,6 @@
 
 # tba_tidyR loads the libraries as well as tba_readR
 library(devtools)
-library(roxygen2)
 #source("R/tba_tidyR.r")
 
 # tbaR implements functions that return tidy-style data, wrapping functions
@@ -57,6 +56,16 @@ get_team_stations <- function(matches, key){
                                                  ifelse(col_idx == 5, "red2",
                                                         "red3")))))
     return(data.frame(match = row_idx, station = team_stations))
+}
+
+#' Document
+#'
+#' Automatically creates .rd documentation files for each function in tbaR
+#' Also loads sinew in case you want to start documenting a new function.
+document <- function(){
+    library(roxygen2)
+    library(sinew)
+    roxygen2::roxygenise()
 }
 
 ##############
