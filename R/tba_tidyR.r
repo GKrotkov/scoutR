@@ -356,13 +356,13 @@ tidy_district_rankings <- function(raw, separate_events = FALSE,
 
         if(event_breakdown){
             N <- ncol(rankings) - mark + 1 # number of event columns
-            mark <- ncol(rankings) # ncol before any unpacking
             # unpack each event, rename with tag
             for (i in 1:N){
+                ncol0 <- ncol(rankings) #ncol before unnest_wider
                 rankings <- unnest_wider(rankings, paste("event", i, sep = ""))
-
+                mark <- ncol(rankings) - ncol0 + 1 # number of additional cols
                 start_col <- (i - 1) * mark + 1
-                end_col <- ncol(rankings) - mark + i
+                end_col <- start_col + mark - 1
                 new_names <- paste(colnames(rankings[start_col:end_col]),
                                    "event", as.character(i), sep = "_")
 
