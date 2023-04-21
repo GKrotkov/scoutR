@@ -122,7 +122,7 @@ trim_unplayed <- function(matches){
 #' @param team_id team id of interest
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 # if the content has complicated content not fit for a vector.
-get_generic_robot_field <- function(matches, field_id, team_id,
+get_single_robot_field <- function(matches, field_id, team_id,
                                     unlist = TRUE){
     stations <- get_team_stations(matches, team_id)
     # assumption: station number is the last character of the string
