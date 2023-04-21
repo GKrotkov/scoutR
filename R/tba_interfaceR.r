@@ -1,6 +1,3 @@
-# @todo:
-# - figure out a way to incorporate Zebra MotionWorks data
-
 ##############
 #### tbaR ####
 ##############
@@ -28,45 +25,6 @@ warns <- function(){
     list(simkey = "both simple and keys are TRUE",
          year_event = "both year and event supplied, defaulting to year",
          mtype = "match_type not a valid entry type, defaulting to 'all'")
-}
-
-#################
-#### Helpers ####
-#################
-
-#' Get Team Stations
-#'
-#' Returns a df containing the indices of a team's matches and the alliance
-#' station for that team in that match.
-#' @param matches dataframe of matches with alliances broken out
-#' @param key team key
-#' @return data frame with match indices and alliance station
-get_team_stations <- function(matches, key){
-    key <- tf(key)
-    stations <- matches[, c(paste0("blue", 1:3), paste0("red", 1:3))]
-    idx <- which(stations == key)
-    col_idx <- trunc(idx / nrow(stations)) + 1
-    row_idx <- idx %% nrow(stations)
-    # mod operator fails on the nrow edge case
-    row_idx[which(row_idx == 0)] <- nrow(stations)
-    # convert the column indexes into alliance station formats
-    team_stations <- ifelse(col_idx == 1, "blue1",
-                            ifelse(col_idx == 2, "blue2",
-                                   ifelse(col_idx == 3, "blue3",
-                                          ifelse(col_idx == 4, "red1",
-                                                 ifelse(col_idx == 5, "red2",
-                                                        "red3")))))
-    return(data.frame(match = row_idx, station = team_stations))
-}
-
-#' Document
-#'
-#' Automatically creates .rd documentation files for each function in tbaR
-#' Also loads sinew in case you want to start documenting a new function.
-document <- function(){
-    library(roxygen2)
-    library(sinew)
-    roxygen2::roxygenise()
 }
 
 ##############
