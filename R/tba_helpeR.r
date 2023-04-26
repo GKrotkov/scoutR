@@ -39,6 +39,14 @@ substr_right_inv <- function(s, n){
     return(substr(s, 1, nchar(s) - 1))
 }
 
+#' Capitalize First Character
+#'
+#'
+cap_first <- function(s){
+    return(paste(toupper(substr(s, 1, 1)),
+                 substr(s, 2, nchar(s)), sep=""))
+}
+
 #' Indexer
 #'
 #' @author Isolde Moyer
@@ -57,8 +65,8 @@ indexer <- function(row, col) {
 #' row index and col index) that index into df.
 apply_indexer <- function(df, idx){
     indexed <- apply(as.matrix(df[idx$ridx, ]), 1, indexer, idx$cidx)
-    mat <- do.call("cbind", indexed)
-    return(diag(mat))
+    if (is.list(indexed)) indexed <- do.call("cbind", indexed)
+    return(diag(indexed))
 }
 
 ##########################
@@ -112,25 +120,85 @@ trim_unplayed <- function(matches){
     return(matches[!id_unplayed(matches), ])
 }
 
+#' Schema for (color)_(field)Robot(station_num)
+#'
+#' This schema was the default between 2018 and 2023 (at least.)
+#' cfs references color/field/station, the order of the terms
+#' @param color alliance color, either "red" or "blue"
+#' @param station_num number of the driver station
+#' @param field_id name of the relevant field
+schema_cfs <- function(color, station_num, field_id){
+    return(paste0(color, "_", field_id, "Robot", station_num))
+}
+
+#' Schema for (color)_robot(station_num)(Field)
+#'
+#' This schema was the default in 2016 and 2017.
+#' csf references color/station/field, the order of the terms
+#' @param color alliance color, either "red" or "blue"
+#' @param station_num number of the driver station
+#' @param field_id name of the relevant field
+schema_csf <- function(color, station_num, field_id){
+    # for correct camelCase, field_id must have a capital first letter
+    return(paste0(color, "_", "robot", station_num, cap_first(field_id)))
+}
 
 #' Generic Robot Field Getter
 #'
 #' generic solution for getting fields from tba that use "(color)_nameRobot#"
 #' as a naming style. Assumes field does not have the leading underscore.
+#' schema optional parameter allows the user to define their own schema if the
+#' "(color)_nameRobot#" style is inapplicable
 #' @param matches dataframe of match rows
 #' @param field variable name of interest in the (color)_(field)Robot(#) format
 #' @param team_id team id of interest
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
-# if the content has complicated content not fit for a vector.
+#'  if the content has complicated content not fit for a vector.
+#' @param schema (function) function that takes alliance color, driver station
+#'  number, and the name of the relevant field and returns the column name of
+#'  the variable of interest. **Supply this parameter without parentheses**
 get_single_robot_field <- function(matches, field_id, team_id,
-                                    unlist = TRUE){
+                                   schema = schema_cfs, unlist = T){
     stations <- get_team_stations(matches, team_id)
     # assumption: station number is the last character of the string
     station_num <- substr_right(stations$station, 1)
     color <- substr_right_inv(stations$station, nchar(stations$station) - 1)
-    cidx <- paste0(color, "_", field_id, "Robot", station_num)
+    cidx <- schema(color, station_num, field_id)
     idx <- data.frame(ridx = stations$match, cidx = cidx)
     result <- apply_indexer(matches, idx)
     if (unlist) result <- unlist(result)
     return(result)
 }
+
+#' Get Field Table
+#'
+#' Returns a list with a table of results for each robot for a given generic
+#' field.
+#' @param matches dataframe of match rows
+#' @param field_id name of field of interest
+#' @param schema function defining schema for column names
+get_field_table <- function(matches, field_id, schema = schema_cfs, unlist = T){
+    ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
+                    matches$red1, matches$red2, matches$red3))
+    results <- list()
+    for (i in 1:length(ids)){
+        result <- get_single_robot_field(matches, field_id, ids[i],
+                                         schema = schema, unlist = unlist)
+        results[[ids[i]]] <- result
+    }
+    return(results)
+}
+
+get_fields_distribution <- function(matches, field_ids,
+                                    schema = schema_cfs, unlist = T){
+    results <- list()
+    for (i in 1:length(field_ids)){
+        result <- get_field_table(matches, field_ids[i],
+                                  schema = schema, unlist = unlist)
+        results[[field_ids[i]]] <- result
+    }
+    return(results)
+}
+
+# @TODO rewrite get_field_table and get_fields_distribution to return a better
+# structured data frame rather than a list of a list of tables
