@@ -170,23 +170,27 @@ get_single_robot_field <- function(matches, field_id, team_id,
     return(result)
 }
 
-#' Get Field Table
+#' Get Field Dataframe
 #'
-#' Returns a list with a table of results for each robot for a given generic
-#' field.
+#' Returns a dataframe with the results for every robot in matches for the field
+#' specified in field_id.
 #' @param matches dataframe of match rows
 #' @param field_id name of field of interest
 #' @param schema function defining schema for column names
-get_field_table <- function(matches, field_id, schema = schema_cfs, unlist = T){
+get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
     ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
                     matches$red1, matches$red2, matches$red3))
-    results <- list()
+    df <- data.frame(id = ids)
+    unique_states <- c()
     for (i in 1:length(ids)){
         result <- get_single_robot_field(matches, field_id, ids[i],
                                          schema = schema, unlist = unlist)
-        results[[ids[i]]] <- result
+        tbl <- table(result)
+        df[df$id == ids[i], names(tbl)] <- tbl
     }
-    return(results)
+
+    df[is.na(df)] <- 0 # set all NA values to 0
+    return(df)
 }
 
 get_fields_distribution <- function(matches, field_ids,
