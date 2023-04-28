@@ -7,7 +7,6 @@
 library(jsonlite)
 library(httr)
 library(sys)
-library(lubridate)
 library(stringr)
 
 KEY <- "m8eOXxp89B9pTqVXHAvR1HFA83eQz8ybZVEJdxCyB6T331LPIIv1ze1dUNjSF9rE"

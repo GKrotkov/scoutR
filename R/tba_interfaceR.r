@@ -5,7 +5,6 @@
 # tba_tidyR loads the libraries as well as tba_readR
 library(devtools)
 library(stringr)
-#source("R/tba_tidyR.r")
 
 # tbaR implements functions that return tidy-style data, wrapping functions
 # both from tba_readR and tba_tidyR. tbaR uses valuable namespace like "event"
