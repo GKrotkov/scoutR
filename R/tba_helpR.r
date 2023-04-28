@@ -156,7 +156,8 @@ schema_csf <- function(color, station_num, field){
 #'  if the content has complicated content not fit for a vector.
 #' @param schema (function) function that takes alliance color, driver station
 #'  number, and the name of the relevant field and returns the column name of
-#'  the variable of interest. **Supply this parameter without parentheses**
+#'  the variable of interest. **Supply this parameter without parentheses**.
+#'  Also note that schema_csf exists for years 2016 and 2017.
 #' @examples
 #' mil23 <- event_matches("2023mil")
 #' get_single_robot_field(mil23, "mobility", 6672)
