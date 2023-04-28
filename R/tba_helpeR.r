@@ -177,11 +177,12 @@ get_single_robot_field <- function(matches, field_id, team_id,
 #' @param matches dataframe of match rows
 #' @param field_id name of field of interest
 #' @param schema function defining schema for column names
+#' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
+#'  if the content has complicated content not fit for a vector.
 get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
     ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
                     matches$red1, matches$red2, matches$red3))
     df <- data.frame(id = ids)
-    unique_states <- c()
     for (i in 1:length(ids)){
         result <- get_single_robot_field(matches, field_id, ids[i],
                                          schema = schema, unlist = unlist)
@@ -193,16 +194,21 @@ get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
     return(df)
 }
 
+#' Get Distribution of Fields
+#'
+#' Applies the get_field_distribution function to all field_ids provided and
+#' returns a list of resulting dataframes.
+#' @param matches dataframe with matches on the rows
+#' @param field_ids vector of name of the fields you want pulled out
+#' @param schema function defining schema for column names
+#' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
+#'  if the content of a given field has complicated content not fit for a vector
 get_fields_distribution <- function(matches, field_ids,
                                     schema = schema_cfs, unlist = T){
-    results <- list()
-    for (i in 1:length(field_ids)){
-        result <- get_field_table(matches, field_ids[i],
-                                  schema = schema, unlist = unlist)
-        results[[field_ids[i]]] <- result
-    }
-    return(results)
+    statics <- list(matches = matches, schema = schema, unlist = unlist)
+    result <- mapply(get_field_df, field_id = field_ids, MoreArgs = statics, SIMPLIFY = FALSE)
+    return(result)
 }
 
-# @TODO rewrite get_field_table and get_fields_distribution to return a better
-# structured data frame rather than a list of a list of tables
+# @TODO rigorously test get_fields_distribution to ensure it works on a variety
+# of use cases. Also, should it return a single dataframe of a list of dataframes?
