@@ -206,9 +206,9 @@ get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
 get_fields_distribution <- function(matches, field_ids,
                                     schema = schema_cfs, unlist = T){
     statics <- list(matches = matches, schema = schema, unlist = unlist)
-    result <- mapply(get_field_df, field_id = field_ids, MoreArgs = statics, SIMPLIFY = FALSE)
+    result <- mapply(get_field_df, field_id = field_ids,
+                     MoreArgs = statics, SIMPLIFY = FALSE)
     return(result)
 }
 
-# @TODO rigorously test get_fields_distribution to ensure it works on a variety
-# of use cases. Also, should it return a single dataframe of a list of dataframes?
+# @TODO Should get_fields_distribution return a single dataframe of a list of dataframes?
