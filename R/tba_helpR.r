@@ -126,9 +126,9 @@ trim_unplayed <- function(matches){
 #' cfs references color/field/station, the order of the terms
 #' @param color alliance color, either "red" or "blue"
 #' @param station_num number of the driver station
-#' @param field_id name of the relevant field
-schema_cfs <- function(color, station_num, field_id){
-    return(paste0(color, "_", field_id, "Robot", station_num))
+#' @param field name of the relevant field
+schema_cfs <- function(color, station_num, field){
+    return(paste0(color, "_", field, "Robot", station_num))
 }
 
 #' Schema for (color)_robot(station_num)(Field)
@@ -137,10 +137,10 @@ schema_cfs <- function(color, station_num, field_id){
 #' csf references color/station/field, the order of the terms
 #' @param color alliance color, either "red" or "blue"
 #' @param station_num number of the driver station
-#' @param field_id name of the relevant field
-schema_csf <- function(color, station_num, field_id){
-    # for correct camelCase, field_id must have a capital first letter
-    return(paste0(color, "_", "robot", station_num, cap_first(field_id)))
+#' @param field name of the relevant field
+schema_csf <- function(color, station_num, field){
+    # for correct camelCase, field must have a capital first letter
+    return(paste0(color, "_", "robot", station_num, cap_first(field)))
 }
 
 #' Generic Robot Field Getter
@@ -163,13 +163,13 @@ schema_csf <- function(color, station_num, field_id){
 #' get_single_robot_field(mil23, "endGameChargeStation", 2539)
 #' mar16 <- event_matches("2016mrcmp")
 #' get_single_robot_field(mar16, "auto", 1712, schema = schema_csf)
-get_single_robot_field <- function(matches, field_id, team_id,
+get_single_robot_field <- function(matches, field, team_id,
                                    schema = schema_cfs, unlist = T){
     stations <- get_team_stations(matches, team_id)
     # assumption: station number is the last character of the string
     station_num <- substr_right(stations$station, 1)
     color <- substr_right_inv(stations$station, nchar(stations$station) - 1)
-    cidx <- schema(color, station_num, field_id)
+    cidx <- schema(color, station_num, field)
     idx <- data.frame(ridx = stations$match, cidx = cidx)
     result <- apply_indexer(matches, idx)
     if (unlist) result <- unlist(result)
@@ -179,9 +179,9 @@ get_single_robot_field <- function(matches, field_id, team_id,
 #' Get Field Dataframe
 #'
 #' Returns a dataframe with the results for every robot in matches for the field
-#' specified in field_id.
+#' specified in field.
 #' @param matches dataframe of match rows
-#' @param field_id name of field of interest
+#' @param field name of field of interest
 #' @param schema function defining schema for column names
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 #'  if the content has complicated content not fit for a vector.
@@ -190,12 +190,12 @@ get_single_robot_field <- function(matches, field_id, team_id,
 #' get_field_df(mil23, "autoChargeStation")
 #' mar17 <- event_matches("2017mrcmp")
 #' get_field_df(mar17, "auto", schema = schema_csf)
-get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
+get_field_df <- function(matches, field, schema = schema_cfs, unlist = T){
     ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
                     matches$red1, matches$red2, matches$red3))
     df <- data.frame(id = ids)
     for (i in 1:length(ids)){
-        result <- get_single_robot_field(matches, field_id, ids[i],
+        result <- get_single_robot_field(matches, field, ids[i],
                                          schema = schema, unlist = unlist)
         tbl <- table(result)
         df[df$id == ids[i], names(tbl)] <- tbl
@@ -205,28 +205,37 @@ get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
     return(df)
 }
 
-#' Get Field Dataframes
+#' Get Dataframe for multiple fields
 #'
-#' Applies the get_field_df function to all field_ids provided and returns a
-#' list of resulting dataframes.
+#' Applies the get_field_df function to all fields provided and returns a
+#' dataframe with all the resulting data
 #' @param matches dataframe with matches on the rows
-#' @param field_ids vector of name of the fields you want pulled out
+#' @param fields vector of name of the fields you want pulled out
 #' @param schema function defining schema for column names
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 #'  if the content of a given field has complicated content not fit for a vector
 #' @examples
 #' mil23 <- event_matches("2023mil")
 #' fields <- c("mobility", "endGameChargeStation", "autoChargeStation")
-#' get_field_dfs(mil23, fields)
+#' get_multifield_df(mil23, fields)
 #' fma17 <- event_matches("2017mrcmp")
 #' fields <- c("auto")
-#' get_field_dfs(fma17, fields, schema = schema_csf)
-get_field_dfs <- function(matches, field_ids,
-                                    schema = schema_cfs, unlist = T){
+#' get_multifield_df(fma17, fields, schema = schema_csf)
+get_multifield_df <- function(matches, fields, schema = schema_cfs,
+                              unlist = TRUE, merge = TRUE){
     statics <- list(matches = matches, schema = schema, unlist = unlist)
-    result <- mapply(get_field_df, field_id = field_ids,
+    result <- mapply(get_field_df, field = fields,
                      MoreArgs = statics, SIMPLIFY = FALSE)
+    if (merge){
+        # note down the titles and the dataframes they come from
+        titles <- lapply(lapply(result, colnames), function(v) v[-1])
+        sources <- sapply(titles, length)
+        sources <- rep(names(sources), sources)
+        titles <- flatten_chr(titles)
+        # call Reduce to do the actual merging
+        result <- Reduce(function(x, y) merge(x, y, by = "id"), result)
+        # rename columns to make result more interpretable
+        colnames(result) <- c("id", paste(sources, titles, sep = "."))
+    }
     return(result)
 }
-
-# @TODO Should get_fields_distribution return a single dataframe of a list of dataframes?
