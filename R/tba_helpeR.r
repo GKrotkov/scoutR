@@ -157,6 +157,12 @@ schema_csf <- function(color, station_num, field_id){
 #' @param schema (function) function that takes alliance color, driver station
 #'  number, and the name of the relevant field and returns the column name of
 #'  the variable of interest. **Supply this parameter without parentheses**
+#' @examples
+#' mil23 <- event_matches("2023mil")
+#' get_single_robot_field(mil23, "mobility", 6672)
+#' get_single_robot_field(mil23, "endGameChargeStation", 2539)
+#' mar16 <- event_matches("2016mrcmp")
+#' get_single_robot_field(mar16, "auto", 1712, schema = schema_csf)
 get_single_robot_field <- function(matches, field_id, team_id,
                                    schema = schema_cfs, unlist = T){
     stations <- get_team_stations(matches, team_id)
@@ -179,6 +185,11 @@ get_single_robot_field <- function(matches, field_id, team_id,
 #' @param schema function defining schema for column names
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 #'  if the content has complicated content not fit for a vector.
+#' @examples
+#' mil23 <- event_matches("2023mil")
+#' get_field_df(mil23, "autoChargeStation")
+#' mar17 <- event_matches("2017mrcmp")
+#' get_field_df(mar17, "auto", schema = schema_csf)
 get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
     ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
                     matches$red1, matches$red2, matches$red3))
@@ -194,16 +205,23 @@ get_field_df <- function(matches, field_id, schema = schema_cfs, unlist = T){
     return(df)
 }
 
-#' Get Distribution of Fields
+#' Get Field Dataframes
 #'
-#' Applies the get_field_distribution function to all field_ids provided and
-#' returns a list of resulting dataframes.
+#' Applies the get_field_df function to all field_ids provided and returns a
+#' list of resulting dataframes.
 #' @param matches dataframe with matches on the rows
 #' @param field_ids vector of name of the fields you want pulled out
 #' @param schema function defining schema for column names
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 #'  if the content of a given field has complicated content not fit for a vector
-get_fields_distribution <- function(matches, field_ids,
+#' @examples
+#' mil23 <- event_matches("2023mil")
+#' fields <- c("mobility", "endGameChargeStation", "autoChargeStation")
+#' get_field_dfs(mil23, fields)
+#' fma17 <- event_matches("2017mrcmp")
+#' fields <- c("auto")
+#' get_field_dfs(fma17, fields, schema = schema_csf)
+get_field_dfs <- function(matches, field_ids,
                                     schema = schema_cfs, unlist = T){
     statics <- list(matches = matches, schema = schema, unlist = unlist)
     result <- mapply(get_field_df, field_id = field_ids,
