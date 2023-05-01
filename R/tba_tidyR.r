@@ -250,6 +250,21 @@ tidy_oprs <- function(raw){
     return(data)
 }
 
+#' Tidy Event cOPRs
+#'
+#' Turns list of event cOPRs (from read_event_coprs) to a tidy dataframe
+#' @param data list of cOPR data
+#' @author Dr. Holt Oliver
+tidy_coprs <- function(data){
+    long_df <- Reduce(rbind, data)
+    long_df$value <- as.numeric(long_df$value)
+    wide_df <- long_df %>% pivot_wider(id_cols=`team`,
+                                       values_from = value,
+                                       names_from = stat)
+    wide_df$event <- key
+    return(wide_df)
+}
+
 #' Tidy Rankings
 #'
 #' Returns a tidy tibble of rankings given raw lists of event rankings

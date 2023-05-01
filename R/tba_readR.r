@@ -300,6 +300,33 @@ read_event_oprs <- function(key){
     return(get_content(request))
 }
 
+#' Read Event cOPRs
+#'
+#' Reads event cOPRs from the event_insights tab and returns them as a list.
+#' @param key (string) event key
+#' @author Dr. Holt Oliver
+read_event_coprs <- function(key){
+    raw <- GET(paste0("https://www.thebluealliance.com/event/",
+                      key,"#event-insights")) %>%
+        xml2::read_html() %>% html_text()
+
+    pat <- "const coprs [=] JSON.parse.*\n"
+    head <- nchar(pat) - 2 # we want to trim the header from our text
+    tail <- 4 # there will be 4 unnecessary characters at the end
+
+    data <- str_extract(raw, pattern = pat) %>%
+        str_sub(start = head, end = str_length(.) - tail) %>%
+        fromJSON()
+
+    for(i in 1:length(data)){
+        colnames(data[[i]]) <- c('team','value')
+        data[[i]] <- as.data.frame(data[[i]])
+        data[[i]]$stat <- names(data)[i]
+    }
+
+    return(data)
+}
+
 #' Read Event Predictions
 #'
 #' Returns event predictions given event key

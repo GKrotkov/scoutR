@@ -273,6 +273,16 @@ event_oprs <- function(key){
     return(data)
 }
 
+#' Get Event cOPRs
+#'
+#' Wrapper function for read_event_coprs and tidy_event_coprs
+#' @param key (string) event key
+#' @author Dr. Holt Oliver
+event_coprs <- function(key){
+    data <- read_event_coprs(key)
+    return(tidy_coprs(data))
+}
+
 #' Event Rankings
 #'
 #' Read event rankings
