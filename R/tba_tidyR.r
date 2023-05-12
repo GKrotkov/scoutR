@@ -1,3 +1,7 @@
+###############
+#### tidyR ####
+###############
+
 # Behavior notes:
 # If an object of TBA keys only is fed into a tidy function it may take a long
 # time to execute since it will attempt to rename each level of the factor and
@@ -6,10 +10,6 @@
 # Occasionally tidy_rankings will return a dataframe with unused tiebreaker
 # columns. This accurately reflects additional null tiebreakers supplied from
 # the API, but I supply an optional parameter that trims off NA or 0 columns.
-
-###################
-#### tba_readR ####
-###################
 
 library(tidyverse)
 
@@ -261,7 +261,6 @@ tidy_coprs <- function(data){
     wide_df <- long_df %>% pivot_wider(id_cols=`team`,
                                        values_from = value,
                                        names_from = stat)
-    wide_df$event <- key
     return(wide_df)
 }
 

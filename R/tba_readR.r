@@ -1,22 +1,21 @@
-# @TODO add unlist option for all functions with the keys optional parameter
+###############
+#### readR ####
+###############
 
-#################
-#### Startup ####
-#################
+# This R library wraps TBA's API to return well-formatted JSON data as a list.
+# If it does not exist as an API call, or close to it, it shouldn't be a part of
+# the readR.
 
 library(jsonlite)
 library(httr)
 library(sys)
 library(stringr)
+library(rvest)
 
 KEY <- "m8eOXxp89B9pTqVXHAvR1HFA83eQz8ybZVEJdxCyB6T331LPIIv1ze1dUNjSF9rE"
 BASE <- "https://www.thebluealliance.com/api/v3"
 # returns the current year
 YEAR <- format(Sys.time(), "%Y")
-
-# This R library will wrap TBA's API to return well-formatted data
-# If it does not exist as an API call, or close to it, it shouldn't be a part of
-# tba_readR. Further capability will be included as tidyTBA.
 
 ###################
 #### Behaviors ####

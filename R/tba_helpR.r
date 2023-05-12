@@ -1,6 +1,6 @@
-####################
-#### TBA HelpeR ####
-####################
+################
+#### helpeR ####
+################
 
 # TBA HelpeR implements helper functions that are not necessarily core to the
 # funtionality of tbaR, but are useful for users to have access to.
@@ -13,11 +13,9 @@ library(devtools)
 
 #' Document
 #'
-#' Automatically creates .rd documentation files for each function in tbaR
-#' Also loads sinew in case you want to start documenting a new function.
+#' Automatically creates .rd documentation files for each function in tbaR.
 document <- function(){
     library(roxygen2)
-    library(sinew)
     roxygen2::roxygenise()
 }
 

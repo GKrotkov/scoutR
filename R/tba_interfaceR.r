@@ -1,10 +1,6 @@
-##############
-#### tbaR ####
-##############
-
-# tba_tidyR loads the libraries as well as tba_readR
-library(devtools)
-library(stringr)
+####################
+#### interfaceR ####
+####################
 
 # tbaR implements functions that return tidy-style data, wrapping functions
 # both from tba_readR and tba_tidyR. tbaR uses valuable namespace like "event"
@@ -14,7 +10,10 @@ library(stringr)
 # tbaR and the TBA API. Advanced R users are encouraged to use the functions
 # available in tba_readR and tba_tidyR to get more low level control.
 
-# in general, "keys" will override many other optional parameters in this file
+# in general "keys" will override many other optional parameters in this file
+
+library(devtools)
+library(stringr)
 
 ###################
 #### Constants ####
