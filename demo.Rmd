@@ -1,0 +1,91 @@
+---
+title: "tbaR demo"
+author: "Gabriel Krotkov"
+date: "2023-04-28"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+# Introduction
+
+Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the useful functions that tbaR provides for anyone interested in interacting with TBA data in a convenient format. 
+
+If this is your first time using tbaR, you may need to install some packages. You can install a package by running code like below. You should only run the installation once, but loading a library with the `library` function will be run many times. (The tidyverse is a large package, don't worry if it's taking a long time to install.)
+
+```{r, eval = FALSE}
+install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", 
+                   "httr", "sys", "stringr", "roxygen2", "rvest"))
+```
+
+The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files.
+
+```{r}
+library(devtools)
+load_all(".")
+```
+
+If you wanted to utilize tbaR from outside the tbaR directory, you would use code in this form.
+
+```{r, eval = FALSE}
+# for example, this code would work if called from a file that sees the directory "tbaR"
+path_to_tbaR <- "tbaR"
+library(devtools)
+load_all(path_to_tbaR)
+```
+
+# Documentation 
+
+tbaR functions come with documentation you may find useful. I prefer not to include the documentation files in the github repository, but you can run the below function once to generate the files on your local machine. Once they've been generated and the tbaR package has been loaded you can reference them via `help(fxn_of_interest)`
+
+```{r}
+document()
+```
+
+
+# tba_interfaceR
+
+InterfaceR (pronounce "interfacer") is the primary product of tbaR. It provides R functions that connect to the TBA API. Each function returns a tidied dataframe of data instead of the JSON output of the TBA API.
+
+```{r}
+awards_example <- team_awards(321, year = 2023)
+
+
+```
+
+@TODO tidy_insights in tidyR and event_insights in interfaceR
+
+# tba_helpR
+
+Helper (pronounce "helper")
+
+```{r}
+
+```
+
+# cOPR plotting
+
+This code chunk is an example of directly scraping the TBA website to get cOPR data, which is available on the website's frontend but not through the API (at least yet.)
+
+```{r}
+event_key <- "2023mil"
+df <- event_coprs(event_key)
+
+df %>% mutate(cargo_ratio =`Total Cones Scored`-`Total Cubes Scored`) %>% 
+    ggplot(aes(label=team,
+               x=`Total Cones Scored`, 
+               y=`Total Cubes Scored`,fill=cargo_ratio,
+               color=)) + 
+    ggrepel::geom_label_repel() + 
+    scale_fill_gradient2(high = 'yellow', mid = 'white', low = 'purple') +
+    geom_abline(slope = 1) +
+    ggtitle("COPR cone vs cube ratio")
+
+#or the averages computed by tba from website
+raw <- GET(paste0("https://www.thebluealliance.com/event/", 
+                  event_key, "#results")) %>%
+    xml2::read_html() %>% html_table()
+
+df2 <- raw[[24]]
+df2 %>% select(Team, 5) %>% ggplot(aes(x=reorder(factor(Team),`Avg Charge Station`),y=`Avg Charge Station`))+ geom_col() + coord_flip() +labs(y='team',caption='source: TBA 2023txfor website https://www.thebluealliance.com/event/2023txfor#results')
+```
