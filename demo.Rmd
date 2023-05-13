@@ -53,7 +53,7 @@ awards_example <- team_awards(321, year = 2023)
 
 ```
 
-@TODO tidy_insights in tidyR and event_insights in interfaceR
+@TODO multievent_insights in interfaceR, some solution to the developer key problem
 
 # tba_helpR
 

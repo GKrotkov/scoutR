@@ -12,6 +12,8 @@
 # the API, but I supply an optional parameter that trims off NA or 0 columns.
 
 library(tidyverse)
+library(assertthat)
+library(data.table)
 
 #################
 #### Helpers ####
@@ -230,9 +232,58 @@ tidy_alliances <- function(raw, unpack_picks = FALSE){
     return(alliances)
 }
 
-# I don't write a tidy_insights because that changes each year
+#' Insight Helper
+#'
+#' Helper function for tidy_insights. Handles the return for a single sublist,
+#' for example insights for qual matches for a single event.
+#' @param raw Sublist of insight data, usually either quals or playoffs
+#' @param to_transpose (bool) Do we want to transpose the data? If TRUE,
+insight_helper <- function(raw, to_transpose = FALSE){
+    lists <- unlist(raw[sapply(raw, is.list)])
+    data <- tibble(field = names(lists), value = lists)
+    # extend nonlist values to the dataframe
+    tmp <- unlist(raw[!sapply(raw, is.list)])
+    data <- rbind(data, tibble(field = names(tmp), value = tmp))
+    # transpose the dataframe and fix the naming if required
+    if (to_transpose){
+        data <- transpose(data)
+        colnames(data) <- data[1, ]
+        data <- data[-1, ]
+        rownames(data) <- 1:nrow(data)
+    }
+    return(data)
+}
 
-# returns a tidy tibble of OPRs given raw lists of OPR objects
+#' Tidy Insights
+#'
+#' Returns a tidy tibble of insights given raw lists of insights.
+#' @param raw List of insights, broken down into sublists with actual data.
+#' Usually those sublists are "qual" and "playoff"
+#' @param phase_as_factor (bool) Will we treat the "phase" of insights
+#' (qual/playoff) as the column variable? If TRUE, will return a dataframe
+#' with the variables "field", "qual", "playoff", (and any other phases.) If
+#' FALSE, will have each field in its own column and a row for each phase.
+#' @details We assume that sublists have the same number and names for fields.
+#' That is, quals and playoffs will have the same length of list, and have
+#' the same fields filled out in both lists, in the same order.
+tidy_insights <- function(raw, phase_as_factor = TRUE){
+    data <- lapply(raw, insight_helper, !phase_as_factor)
+    if (phase_as_factor){
+        data <- do.call(cbind, args = data)
+        colnames(data) <- gsub("[.]", "_", colnames(data))
+        data <- data[, !duplicated(as.list(data))]
+        colnames(data)[grep("field", colnames(data))] <- "field"
+        colnames(data) <- gsub("_value", "", colnames(data))
+    } else{
+        data <- do.call(rbind, args = data)
+        data$phase <- rownames(data)
+        rownames(data) <- 1:nrow(data)
+        data <- data %>%
+            select(phase, everything())
+    }
+    return(data)
+}
+
 #' Tidy OPRs
 #'
 #' Returns a tidy tibble of OPRs given raw lists of OPR objects from TBA API
