@@ -18,7 +18,7 @@ install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat"
                    "httr", "sys", "stringr", "roxygen2", "rvest", "data.table"))
 ```
 
-The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files.
+The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files. It also executes the document() function while creates the documentation of the tbaR files.
 
 ```{r, echo = FALSE}
 my_auth_key <- read_file("auth_key.txt")
@@ -39,15 +39,6 @@ path_to_tbaR <- "tbaR"
 library(devtools)
 load_all(path_to_tbaR)
 ```
-
-# Documentation 
-
-tbaR functions come with documentation you may find useful. I prefer not to include the documentation files in the github repository, but you can run the below function once to generate the files on your local machine. Once they've been generated and the tbaR package has been loaded you can reference them via `help(fxn_of_interest)`
-
-```{r}
-document()
-```
-
 
 # tba_interfaceR
 
