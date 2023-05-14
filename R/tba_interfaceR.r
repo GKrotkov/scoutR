@@ -12,9 +12,6 @@
 
 # in general "keys" will override many other optional parameters in this file
 
-library(devtools)
-library(stringr)
-
 ###################
 #### Constants ####
 ###################

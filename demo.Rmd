@@ -14,15 +14,21 @@ Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the u
 If this is your first time using tbaR, you may need to install some packages. You can install a package by running code like below. You should only run the installation once, but loading a library with the `library` function will be run many times. (The tidyverse is a large package, don't worry if it's taking a long time to install.)
 
 ```{r, eval = FALSE}
-install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", 
-                   "httr", "sys", "stringr", "roxygen2", "rvest"))
+install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat" 
+                   "httr", "sys", "stringr", "roxygen2", "rvest", "data.table"))
 ```
 
 The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files.
 
+```{r, echo = FALSE}
+my_auth_key <- read_file("auth_key.txt")
+```
+
+
 ```{r}
 library(devtools)
-load_all(".")
+load_all()
+initialize_tbaR(my_auth_key)
 ```
 
 If you wanted to utilize tbaR from outside the tbaR directory, you would use code in this form.

@@ -6,13 +6,7 @@
 # If it does not exist as an API call, or close to it, it shouldn't be a part of
 # the readR.
 
-library(jsonlite)
-library(httr)
-library(sys)
-library(stringr)
-library(rvest)
-
-KEY <- "m8eOXxp89B9pTqVXHAvR1HFA83eQz8ybZVEJdxCyB6T331LPIIv1ze1dUNjSF9rE"
+KEY <- ifelse(file.exists("auth_key.txt"), read_file("auth_key.txt"), NA)
 BASE <- "https://www.thebluealliance.com/api/v3"
 # returns the current year
 YEAR <- format(Sys.time(), "%Y")
@@ -39,6 +33,8 @@ numbers_only <- function(x) !grepl("\\D", x)
 #' @examples
 #' auth("")
 auth <- function(req){
+    assert_that(!is.na(KEY), msg = "Authentication key uninitialized.
+                Run: initialize_tbaR('your_tba_auth_key').")
     return(paste(req, "?X-TBA-Auth-Key=", KEY, sep = ""))
 }
 

@@ -11,10 +11,6 @@
 # columns. This accurately reflects additional null tiebreakers supplied from
 # the API, but I supply an optional parameter that trims off NA or 0 columns.
 
-library(tidyverse)
-library(assertthat)
-library(data.table)
-
 #################
 #### Helpers ####
 #################

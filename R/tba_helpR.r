@@ -5,19 +5,41 @@
 # TBA HelpeR implements helper functions that are not necessarily core to the
 # funtionality of tbaR, but are useful for users to have access to.
 
-library(devtools)
+###############
+#### Setup ####
+###############
 
-#########################
-#### Generic Helpers ####
-#########################
+library(devtools)
+library(jsonlite)
+library(httr)
+library(sys)
+library(stringr)
+library(rvest)
+library(assertthat)
+library(tidyverse)
+library(data.table)
+library(stringr)
+library(roxygen2)
 
 #' Document
 #'
 #' Automatically creates .rd documentation files for each function in tbaR.
 document <- function(){
-    library(roxygen2)
     roxygen2::roxygenise()
 }
+
+#' Initialize tbaR
+#'
+#' Function to start tbaR by writing the auth key for tbaR as well as
+#' creating the documentation files for tbaR.
+initialize_tbaR <- function(auth_key){
+    write.file(auth_key, file = "auth_key.txt")
+    document()
+}
+
+#########################
+#### Generic Helpers ####
+#########################
 
 #' Substring Right
 #'
