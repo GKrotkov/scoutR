@@ -50,7 +50,7 @@ awards_example <- team_awards(321, year = 2023)
 
 ```
 
-@TODO multievent_insights in interfaceR, some solution to the developer key problem
+@TODO fix insight_as_col = TRUE case, phase should be a factor as well. multievent_insights in interfaceR
 
 # tba_helpR
 

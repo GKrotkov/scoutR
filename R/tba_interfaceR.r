@@ -259,23 +259,37 @@ event_alliances <- function(key, unpack_picks = TRUE){
 #'
 #' Read event insights
 #' @param key event key
-#' @param phase_as_factor (bool) Will we treat the "phase" of insights
+#' @param insight_as_col (bool) Will we treat the "phase" of insights
 #' (qual/playoff) as the column variable? If TRUE, will return a dataframe
 #' with the variables "field", "qual", "playoff", (and any other phases.) If
 #' FALSE, will have each field in its own column and a row for each phase.
 #' @details We assume that sublists have the same number and names for fields.
 #' That is, quals and playoffs will have the same length of list, and have
 #' the same fields filled out in both lists, in the same order.
-event_insights <- function(key, phase_as_factor = TRUE){
-    data <- tidy_insights(read_event_insights(key), phase_as_factor)
+event_insights <- function(key, insight_as_col = FALSE){
+    data <- tidy_insights(read_event_insights(key), insight_as_col)
+    if(insight_as_col){
+        data$event <- key
+        data <- data %>%
+            select(event, everything())
+    } else{
+        data$id <- paste(key, data$phase, sep = "_")
+        data$key <- key
+        data <- data %>%
+            select(id, key, phase, everything())
+    }
     return(data)
 }
 
 #' Multievent Insights
 #'
-#'
-multievent_insights <- function(keys, phase_as_factor = TRUE){
-    # @TODO
+#' Creates a single insights dataframe for a vector of event keys
+#' @param keys vector or list of TBA event keys (ex. "2023txfor")
+#' @param insight_as_col (bool)
+multievent_insights <- function(keys, insight_as_col = FALSE){
+    lst <- lapply(as.list(keys), event_insights, insight_as_col)
+    data <- bind_rows(lst)
+    return(data)
 }
 
 #' Event OPRs
