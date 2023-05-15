@@ -32,8 +32,13 @@ document <- function(){
 #'
 #' Function to start tbaR by writing the auth key for tbaR as well as
 #' creating the documentation files for tbaR.
-initialize_tbaR <- function(auth_key){
-    write_file(auth_key, file = "auth_key.txt")
+initialize_tbaR <- function(auth_key = NA){
+    if (is.na(auth_key)){
+        warning("No auth key supplied.")
+    }
+    else{
+        write_file(auth_key, file = "auth_key.txt")
+    }
     document()
 }
 
