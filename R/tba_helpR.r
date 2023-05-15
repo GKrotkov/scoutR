@@ -33,7 +33,7 @@ document <- function(){
 #' Function to start tbaR by writing the auth key for tbaR as well as
 #' creating the documentation files for tbaR.
 initialize_tbaR <- function(auth_key){
-    write.file(auth_key, file = "auth_key.txt")
+    write_file(auth_key, file = "auth_key.txt")
     document()
 }
 
@@ -92,6 +92,28 @@ apply_indexer <- function(df, idx){
 ##########################
 #### TBA Data Helpers ####
 ##########################
+
+#' ID Robot Fields
+#'
+#' Helper function that returns the column names of matches that include "robot"
+#' in them. Useful to identify fields you may want to include as input to
+#' get_multifield_df().
+#' @param matches dataframe of match objects
+#' @param simplify (bool) if TRUE, we will make some assumptions about the
+#' naming schema to cut away alliance color and the robot number so that we can
+#' make the output a little less ugly.
+id_robot_fields <- function(matches, simplify = TRUE){
+    idx <- grep("robot", colnames(matches), ignore.case = TRUE)
+    result <- colnames(matches)[idx]
+    if (simplify){
+        result <- gsub("red|blue", "", result, ignore.case = TRUE)
+        result <- gsub("_", "", result)
+        result <- gsub("robot", "", result, ignore.case = TRUE)
+        result <- gsub("\\d", "", result)
+        result <- unique(result)
+    }
+    return(result)
+}
 
 #' Get Team Stations
 #'
