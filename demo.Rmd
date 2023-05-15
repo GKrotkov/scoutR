@@ -38,6 +38,7 @@ If you wanted to utilize tbaR from outside the tbaR directory, you would use cod
 path_to_tbaR <- "tbaR"
 library(devtools)
 load_all(path_to_tbaR)
+initialize_tbaR(my_auth_key)
 ```
 
 # tba_interfaceR
@@ -52,10 +53,19 @@ awards_example <- team_awards(321, year = 2023)
 
 # tba_helpR
 
-Helper (pronounce "helper")
+Helper (pronounce "helper") has functions that I found myself wanting during the 2023 competition season but didn't neatly fit into the readR->tidyR->interfaceR model. My personal favorite here is the get_multifield_df function. I implemented this during the 2023 championship while with 6672 to help validate our scouting data and streamline our strategy discussions. Specifically what it does is retrieve data from TBA for every field that is associated with a specific robot, letting you compare to your scouted data much quicker. I'll show you below what the workflow would look like.
+
+First, let's identify fields we might be interested in. Below are all the fields from TBA from 2023 that include "robot" in the name. These are the names of fields associated with a single robot.
 
 ```{r}
+matches <- event_matches("2023mil")
+id_robot_fields(matches)
+```
 
+Now that we know the name of all the fields we're interested in, we can pass that in to the get_multifield_df() function and take advantage of the publicly available field data.
+
+```{r}
+mil23 <- get_multifield_df(matches, id_robot_fields(matches))
 ```
 
 # cOPR plotting
