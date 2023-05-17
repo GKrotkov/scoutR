@@ -21,7 +21,7 @@ install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat"
 The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files. It also executes the document() function while creates the documentation of the tbaR files.
 
 ```{r, echo = FALSE}
-my_auth_key <- read_file("auth_key.txt")
+my_auth_key <- scan("auth_key.txt", what = character())
 ```
 
 

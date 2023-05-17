@@ -12,12 +12,12 @@ Next, open `demo.rmd`. The demo will walk you through some use cases of tbaR and
 
 tbaR has 4 major files: `tba_readR`, `tba_tidyR`, `tba_interfaceR`, and `tba_helpR`. Their usage is summarized below. There are exceptions in individual functions but the documentation for each function will call that out.
 
-| Name | Description | Input | Output | Public Facing? |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-| `tba_readR` | Read data from the TBA API | TBA-legal keys| JSON | No |
-| `tba_tidyR` | Reformat JSON data from TBA to Tidy format | JSON | Tidy dataframes | No |
-| `tba_interfaceR` | Wrap tba_readR and tba_tidyR functions to provide an interface between the user and the TBA API | TBA-legal keys | Tidy dataframes | Yes |
-| `tba_helpR` | Helper functions for analysis that does not directly interact with the TBA API | Varies, but mostly dataframes of match objects | Varies | Yes |
+| Name | Description | Input | Output | Public Facing?
+| ----- | ----- | ----- | ----- | -----
+| `tba_readR` | Read data from the TBA API | TBA-legal keys| JSON | No
+| `tba_tidyR` | Reformat JSON data from TBA to Tidy format | JSON | Tidy dataframes | No
+| `tba_interfaceR` | Wrap tba_readR and tba_tidyR functions to provide an interface between the user and the TBA API | TBA-legal keys | Tidy dataframes | Yes
+| `tba_helpR` | Helper functions for analysis that does not directly interact with the TBA API | Varies, but mostly dataframes of match objects | Varies | Yes
 
 I recommend that new users to R only use `tba_interfaceR` and `tba_helpR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of tbaR, `tba_readR` and `tba_tidyR` may be more useful to you.
 
