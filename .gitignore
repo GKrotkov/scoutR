@@ -5,5 +5,5 @@
 man
 data
 .DS_Store
-demo.html
+*.html
 tba_auth_key.txt
