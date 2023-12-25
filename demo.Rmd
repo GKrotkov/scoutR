@@ -23,7 +23,7 @@ install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat",
 The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files. It also executes the `document()` function to create local documentation of the tbaR files. This code assumes that you have a authorization key stored in "tba_auth_key.txt" in the same directory as demo.rmd. You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header; put the key you generated into a raw .txt with no other text and store it in the same directory as demo.rmd.
 
 ```{r}
-my_auth_key <- scan("auth_key.txt", what = character())
+my_auth_key <- scan("tba_auth_key.txt", what = character())
 
 library(devtools)
 load_all()
