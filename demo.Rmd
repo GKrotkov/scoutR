@@ -13,25 +13,26 @@ Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the u
 
 If this is your first time using tbaR, you may need to install some packages. You can install a package by running code like below. You should only run the installation once, but loading a library with the `library` function will be run many times. (The tidyverse is a large package, don't worry if it's taking a long time to install.)
 
+For those using an RMD file for the first time, RMD stands for "R Markdown", it is a file type that blends formattable text and chunks of R Code. To run the R code while viewing an rmd, click the green arrow on the top right corner of a code chunk.
+
 ```{r, eval = FALSE}
-install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat" 
+install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat", 
                    "httr", "sys", "stringr", "roxygen2", "rvest", "data.table"))
 ```
 
-The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files. It also executes the document() function while creates the documentation of the tbaR files.
-
-```{r, echo = FALSE}
-my_auth_key <- scan("auth_key.txt", what = character())
-```
-
+The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files. It also executes the `document()` function to create local documentation of the tbaR files. This code assumes that you have a authorization key stored in "auth_key.txt" in the same directory as demo.rmd. You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header; put the key you generated into a raw .txt with no other text and store it in the same directory as demo.rmd.
 
 ```{r}
+my_auth_key <- scan("auth_key.txt", what = character())
+
 library(devtools)
 load_all()
 initialize_tbaR(my_auth_key)
 ```
 
-If you wanted to utilize tbaR from outside the tbaR directory, you would use code in this form.
+Now that you have run `initialize_tbaR()`, you have access to all of tbaR's help files. For any function in tbaR, you can call `help(fxn_of_interest)` and get access to its documentation. For example, try running `help(event_matches)`. 
+
+If you wanted to utilize tbaR from outside the tbaR directory, you would use code in this form. I have set this code chunk to not evaluate by default, since I assume that we have already initialized tbaR in this example!
 
 ```{r, eval = FALSE}
 # for example, this code would work if called from a file that sees the directory "tbaR"
@@ -41,14 +42,16 @@ load_all(path_to_tbaR)
 initialize_tbaR(my_auth_key)
 ```
 
+@TODO Create some documentation that allows the user to see a list of every function in tbaR, prioritizing interfaceR and helpR.
+
 # tba_interfaceR
 
 InterfaceR (pronounce "interfacer") is the primary product of tbaR. It provides R functions that connect to the TBA API. Each function returns a tidied dataframe of data instead of the JSON output of the TBA API.
 
+Below is an example of calling one useful function from interfaceR - `team_awards`. This loads a dataframe with all the awards that team 321 won in the year 2023. 
+
 ```{r}
 awards_example <- team_awards(321, year = 2023)
-
-
 ```
 
 # tba_helpR
@@ -62,10 +65,35 @@ matches <- event_matches("2023mil")
 id_robot_fields(matches)
 ```
 
-Now that we know the name of all the fields we're interested in, we can pass that in to the get_multifield_df() function and take advantage of the publicly available field data.
+Now that we know the name of all the fields we're interested in, we can pass that in to the get_multifield_df() function and take advantage of the publicly available field data. Once we have collected our data, we can reshape it and plot it to gain some insight. 
 
 ```{r}
 mil23 <- get_multifield_df(matches, id_robot_fields(matches))
+
+denom <- (mil23$mobility.No + mil23$mobility.Yes)
+mil23$mobility_pct <- mil23$mobility.Yes / denom
+denom <- (mil23$autoChargeStation.Docked + mil23$autoChargeStation.None)
+mil23$auto_dock_pct <- mil23$autoChargeStation.Docked / denom
+denom <- (mil23$endGameChargeStation.Docked + mil23$endGameChargeStation.None + mil23$endGameChargeStation.Park)
+mil23$end_none_pct <- mil23$endGameChargeStation.None / denom
+```
+
+@TODO include examples of the following fxns: 
+- team_matches
+- event_matches
+- event_insights maybe compare competitiveness of events
+- tba_sync
+
+Try opening the `mil23` dataframe and exploring the data. You can also create plots to help visualize the data you have collected.
+
+```{r}
+ggplot(mil23, aes(x = mobility_pct, y = (1 - end_none_pct), 
+                  size = auto_dock_pct, label = id)) + 
+    geom_label() + 
+    labs(title = "Plot of TBA Readable Data", 
+         x = "Mobility Percentage", y = "Engage or Park Percentage", 
+         size = "Auto Dock Percentage")
+
 ```
 
 # cOPR plotting

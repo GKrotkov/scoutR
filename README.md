@@ -4,9 +4,11 @@ tbaR is an R library to facilitate usage of data from the TBA API for FRC scouts
 
 ## Setup
 
-Install R and RStudio on your machine. You can find them both on Posit's website here: https://posit.co/download/rstudio-desktop/. 
+Install R and RStudio on your machine. You can find them both on Posit's website here: https://posit.co/download/rstudio-desktop/. tbaR assumes that you have R 4.3.0 or later.
 
-Next, open `demo.rmd`. The demo will walk you through some use cases of tbaR and especially useful functions from `tba_interfaceR` and `tba_helpR`. It will also instruct you on installing tbaR's dependencies and generating documentation files to reference in the help pages as you work with tbaR.
+Now download this repository locally and store in a convenient location on your machine. I suggest a separate directory that is only for tbaR for the most convenience.
+
+Next, open `demo.rmd` using RStudio; I recommend setting RStudio to be your default for opening both .r files and .rmd files. The demo will walk you through some use cases of tbaR and especially useful functions from `tba_interfaceR` and `tba_helpR`. It will also instruct you on installing tbaR's dependencies and generating documentation files to reference in the help pages as you work with tbaR.
 
 ## Roadmap to tbaR
 
@@ -14,10 +16,10 @@ tbaR has 4 major files: `tba_readR`, `tba_tidyR`, `tba_interfaceR`, and `tba_hel
 
 | Name | Description | Input | Output | Public Facing?
 | ----- | ----- | ----- | ----- | -----
-| `tba_readR` | Read data from the TBA API | TBA-legal keys| JSON | No
-| `tba_tidyR` | Reformat JSON data from TBA to Tidy format | JSON | Tidy dataframes | No
-| `tba_interfaceR` | Wrap tba_readR and tba_tidyR functions to provide an interface between the user and the TBA API | TBA-legal keys | Tidy dataframes | Yes
-| `tba_helpR` | Helper functions for analysis that does not directly interact with the TBA API | Varies, but mostly dataframes of match objects | Varies | Yes
+| `tba_interfaceR` | Provide a direct interface between the user and the TBA API | TBA-legal keys | Tidy dataframes | Yes
+| `tba_helpR` | Analysis helper functions that do not directly interact with the TBA API | Varies, but mostly dataframes of match objects | Varies | Yes
+| `tba_readR` | Read data from the TBA API, helper library for `interfaceR` | TBA-legal keys| JSON | No
+| `tba_tidyR` | Reformat JSON data from TBA to Tidy format, helper library for `interfaceR` | JSON | Tidy dataframes | No
 
 I recommend that new users to R only use `tba_interfaceR` and `tba_helpR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of tbaR, `tba_readR` and `tba_tidyR` may be more useful to you.
 
