@@ -4,7 +4,6 @@
 .Ruserdata
 man
 data
-auth_key.txt
 .DS_Store
 demo.html
 tba_auth_key.txt
