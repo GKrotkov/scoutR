@@ -91,8 +91,7 @@ Try opening the `mil23` dataframe and exploring the data. You can also create pl
 ```{r}
 ggplot(mil23, aes(x = mobility_pct, y = (1 - end_none_pct), 
                   color = auto_dock_pct, label = id)) + 
-  geom_label(alpha = 0.5) + 
-  ggrepel::geom_label_repel(max.overlaps = 50, alpha = 0.5) + 
+  ggrepel::geom_label_repel(max.overlaps = 50, alpha = 0.9) + 
   labs(title = "Plot of TBA Readable Data", 
        x = "Mobility Percentage", y = "Engage or Park Percentage", 
        size = "Auto Dock Percentage")
