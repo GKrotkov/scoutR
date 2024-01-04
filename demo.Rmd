@@ -35,7 +35,8 @@ Now that you have run `initialize_tbaR()`, you have access to all of tbaR's help
 If you wanted to utilize tbaR from outside the tbaR directory, you would use code in this form. I have set this code chunk to not evaluate by default, since I assume that we have already initialized tbaR in this example!
 
 ```{r, eval = FALSE}
-# for example, this code would work if called from a file that sees the directory "tbaR"
+# for example, this code would work if called from a file that sees the 
+# directory "tbaR"
 path_to_tbaR <- "tbaR"
 library(devtools)
 load_all(path_to_tbaR)
@@ -50,9 +51,10 @@ Below is an example of calling one useful function from interfaceR - `team_award
 
 ```{r}
 awards_example <- team_awards(321, year = 2023)
+awards_example
 ```
 
-I find the following functions particularly useful - maybe take a moment to check out their documentation with `help` and see if they'll be useful for you!
+I find the following functions from `interfaceR` particularly useful - maybe take a moment to check out their documentation with `help` and see if they'll be useful for you!
 
 - `team_matches`
 - `event_matches`
@@ -81,14 +83,15 @@ denom <- (mil23$autoChargeStation.Docked + mil23$autoChargeStation.None)
 mil23$auto_dock_pct <- mil23$autoChargeStation.Docked / denom
 denom <- (mil23$endGameChargeStation.Docked + mil23$endGameChargeStation.None + mil23$endGameChargeStation.Park)
 mil23$end_none_pct <- mil23$endGameChargeStation.None / denom
+mil23$id <- as.numeric(substr(mil23$id, 4, nchar(mil23$id)))
 ```
 
 Try opening the `mil23` dataframe and exploring the data. You can also create plots to help visualize the data you have collected.
 
 ```{r}
 ggplot(mil23, aes(x = mobility_pct, y = (1 - end_none_pct), 
-                  size = auto_dock_pct, label = id)) + 
-    geom_label() + 
+                  color = auto_dock_pct, label = id)) + 
+    geom_label(alpha = 0.5) + 
     labs(title = "Plot of TBA Readable Data", 
          x = "Mobility Percentage", y = "Engage or Park Percentage", 
          size = "Auto Dock Percentage")
