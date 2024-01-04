@@ -110,7 +110,7 @@ df %>% mutate(cargo_ratio =`Total Cones Scored`-`Total Cubes Scored`) %>%
                x=`Total Cones Scored`, 
                y=`Total Cubes Scored`,fill=cargo_ratio,
                color=)) + 
-    ggrepel::geom_label_repel() + 
+    ggrepel::geom_label_repel(max.overlaps = 20) + 
     scale_fill_gradient2(high = 'yellow', mid = 'white', low = 'purple') +
     geom_abline(slope = 1) +
     ggtitle("COPR cone vs cube ratio")
