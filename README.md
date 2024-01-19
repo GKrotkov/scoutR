@@ -1,3 +1,5 @@
+<img src="logos/transparent.png" width="500">
+
 # tbaR
 
 tbaR is an R library to facilitate usage of data from the TBA API for FRC scouts, strategists, and data-driven observers. The objective is to provide functions that interface with the TBA API allowing a newcomer to R to write one line of code and retrieve exactly the right dataframe in a tidy format rather than as a JSON that needs massaging to be useful.
