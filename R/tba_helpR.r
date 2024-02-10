@@ -262,6 +262,8 @@ get_field_df <- function(matches, field, schema = schema_cfs, unlist = T){
 #' @param schema function defining schema for column names
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 #'  if the content of a given field has complicated content not fit for a vector
+#' @details This assumes that all the fields considered are categorical - it
+#' will treat numeric variables as categorical.
 #' @examples
 #' mil23 <- event_matches("2023mil")
 #' fields <- c("mobility", "endGameChargeStation", "autoChargeStation")
