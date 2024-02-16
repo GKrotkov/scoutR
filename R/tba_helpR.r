@@ -18,7 +18,6 @@ library(rvest)
 library(assertthat)
 library(tidyverse)
 library(data.table)
-library(stringr)
 library(roxygen2)
 
 #' Document
