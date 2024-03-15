@@ -6,8 +6,8 @@
 # If it does not exist as an API call, or close to it, it shouldn't be a part of
 # the readR.
 
-KEY <- ifelse(file.exists("tba_auth_key.txt"),
-              read_file("tba_auth_key.txt"), NA)
+KEY <- ifelse(file.exists(here("data/tba_auth_key.txt")),
+              read_file(here("data/tba_auth_key.txt")), NA)
 BASE <- "https://www.thebluealliance.com/api/v3"
 # returns the current year
 YEAR <- format(Sys.time(), "%Y")

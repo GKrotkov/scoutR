@@ -19,12 +19,15 @@ library(assertthat)
 library(tidyverse)
 library(data.table)
 library(roxygen2)
+library(withr)
+library(here)
 
 #' Document
 #'
 #' Automatically creates .rd documentation files for each function in tbaR.
+#' @details Uses here() to always call from the project root.
 document <- function(){
-    roxygen2::roxygenise()
+    with_dir(here(), roxygen2::roxygenise())
 }
 
 #' Initialize tbaR
@@ -36,7 +39,7 @@ initialize_tbaR <- function(auth_key = NA){
         warning("No auth key supplied. We assume tba_auth_key.txt exists.")
     }
     else{
-        write_file(auth_key, file = "tba_auth_key.txt")
+        with_dir(here(), write_file(auth_key, file = "data/tba_auth_key.txt"))
     }
     document()
 }
