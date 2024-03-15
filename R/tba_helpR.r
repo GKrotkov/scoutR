@@ -36,7 +36,7 @@ document <- function(){
 #' creating the documentation files for tbaR.
 initialize_tbaR <- function(auth_key = NA){
     if (is.na(auth_key)){
-        warning("No auth key supplied. We assume tba_auth_key.txt exists.")
+        warning("No auth key supplied. We assume data/tba_auth_key.txt exists.")
     }
     else{
         with_dir(here(), write_file(auth_key, file = "data/tba_auth_key.txt"))
