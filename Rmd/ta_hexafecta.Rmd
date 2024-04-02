@@ -1,0 +1,50 @@
+---
+title: "TA Hexafecta"
+author: "Gabriel Krotkov"
+date: "2024-04-02"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message = FALSE}
+library(devtools)
+load_all()
+```
+
+```{r}
+team_attributes_hexafecta <- function(id){
+    awards <- team_awards(id)
+    if (nrow(awards) == 0){
+        return(FALSE)
+    }
+    unq <- unique(awards$name)
+    return(
+        (length(grep("Engineering Inspiration", unq)) > 0) & 
+        (length(grep("Gracious Professionalism", unq)) > 0) &
+        (length(grep("Imagery", unq)) > 0) &
+        (length(grep("Team Spirit", unq)) > 0) & 
+        (length(grep("Judges", unq)) > 0) & 
+        (length(grep("(Sustainability|Entrepreneurship)", unq)) > 0)
+    )
+}
+
+all_teams <- c()
+
+pages <- 0:19
+
+for (i in pages){
+    all_teams <- c(all_teams, teams(i, keys = TRUE))
+}
+
+data <- data.frame(team = all_teams)
+data$ta_hexafecta <- apply(data, 1, team_attributes_hexafecta)
+save(data, file = "data/ta_hexafecta.rda")
+```
+
+```{r}
+ta_hexafecta_teams <- data$team[data$ta_hexafecta]
+```
+
