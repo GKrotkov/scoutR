@@ -14,6 +14,8 @@ library(devtools)
 load_all()
 ```
 
+@TODO account for "Sportsmanship GP" and the "Most Photogenic Award", and "Judge's Award" as opposed to "Judges Award"
+
 ```{r}
 team_attributes_hexafecta <- function(id){
     awards <- team_awards(id)
@@ -23,10 +25,10 @@ team_attributes_hexafecta <- function(id){
     unq <- unique(awards$name)
     return(
         (length(grep("Engineering Inspiration", unq)) > 0) & 
-        (length(grep("Gracious Professionalism", unq)) > 0) &
+        (length(grep("(Gracious Professionalism|Sportsmanship)", unq)) > 0) &
         (length(grep("Imagery", unq)) > 0) &
         (length(grep("Team Spirit", unq)) > 0) & 
-        (length(grep("Judges", unq)) > 0) & 
+        (length(grep("(Judges|Judge's|Judges')", unq)) > 0) & 
         (length(grep("(Sustainability|Entrepreneurship)", unq)) > 0)
     )
 }
@@ -46,5 +48,37 @@ save(data, file = "data/ta_hexafecta.rda")
 
 ```{r}
 ta_hexafecta_teams <- data$team[data$ta_hexafecta]
+```
+
+```{r collect all team awards}
+# THIS CODE CHUNCK MAKES VERY MANY CALLS TO THE TBA API
+# SET ASIDE TIME TO LET IT RUN
+all_team_awards <- list()
+
+pages <- 0:19
+
+for (i in pages){
+    all_teams <- c(all_teams, teams(i, keys = TRUE))
+}
+
+for (i in seq_along(all_teams)){
+    all_team_awards[[all_teams[i]]] <- team_awards(all_teams[i])
+}
+
+saveRDS(all_team_awards, file = "data/all_team_awards.rds")
+```
+
+```{r}
+unique_awards <- function(team_awards){
+    if (nrow(team_awards) == 0){
+        return(c())
+    }
+    return(unique(team_awards$name))
+}
+
+all_team_awards <- readRDS("../data/all_team_awards.rds")
+
+team_unique_awards <- unlist(sapply(all_team_awards, unique_awards))
+all_unique_awards <- unique(team_unique_awards)
 ```
 
