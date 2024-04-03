@@ -68,7 +68,15 @@ for (i in seq_along(all_teams)){
 saveRDS(all_team_awards, file = "data/all_team_awards.rds")
 ```
 
-```{r}
+@TODO debug - what was the "Autodesk Excellence in Engineering Creativity and Communications Award"? This causes a bug in my creativity award matching.
+
+@TODO was "Most Photogenic" actually the forerunner of Imagery?
+
+@TODO need some way to filter out offseasons rather than doing this on a per-award basis
+
+@TODO need to reformat the code to make it readable
+
+```{r modern awards}
 unique_awards <- function(team_awards){
     if (nrow(team_awards) == 0){
         return(c())
@@ -80,5 +88,37 @@ all_team_awards <- readRDS("../data/all_team_awards.rds")
 
 team_unique_awards <- unlist(sapply(all_team_awards, unique_awards))
 all_unique_awards <- unique(team_unique_awards)
+
+count_modern_awards <- function(team_award_history){
+    if (nrow(team_award_history) == 0){
+        return(data.frame(
+            impact = 0, ei = 0, ras = 0, autonomous = 0, creativity = 0, 
+            eng_excellence = 0, gp = 0, imagery = 0, industrial_design = 0, 
+            innovation_control = 0, quality = 0, judges = 0, rookie_insp = 0, 
+            team_spirit = 0, sustainability = 0)
+        )
+    }
+    award_names <- team_award_history$name
+    result <- data.frame(
+        impact = length(grep("(Impact|Chairman\'s)", award_names, ignore.case = TRUE)), 
+        ei = length(grep("Engineering Inspiration", award_names, ignore.case = TRUE)), 
+        ras = length(grep("(Rookie All-Star|Rookie All Star)", award_names, ignore.case = TRUE)), 
+        autonomous = length(grep("Autonomous Award", award_names, ignore.case = TRUE)), 
+        creativity = length(grep("Creativity", award_names, ignore.case = TRUE)), 
+        eng_excellence = length(grep("(Engineering Excellence|Excellence in Engineering)", award_names, ignore.case = TRUE)), 
+        gp = length(grep("(Gracious Professionalism|Sportsmanship)", award_names, ignore.case = TRUE)), 
+        imagery = length(grep("(Imagery|Photogenic)", award_names, ignore.case = TRUE)), 
+        industrial_design = length(grep("(Imagery|Photogenic)", award_names, ignore.case = TRUE)), 
+        innovation_control = length(grep("(Control|Controls)", award_names, ignore.case = TRUE)), 
+        quality = length(grep("Quality", award_names, ignore.case = TRUE)), 
+        judges = length(grep("(Judges|Judge's|Judges')", award_names, ignore.case = TRUE)), 
+        rookie_insp = length(grep("Rookie Inspiration", award_names, ignore.case = TRUE)), 
+        team_spirit = length(grep("Spirit", award_names, ignore.case = TRUE)), 
+        sustainability = length(grep("(Sustainability|Entrepreneurship)", award_names, ignore.case = TRUE))
+    )
+    return(result)
+}
+
+modern_awards <- t(sapply(all_team_awards, count_modern_awards))
 ```
 
