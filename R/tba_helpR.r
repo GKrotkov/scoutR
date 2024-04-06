@@ -291,3 +291,29 @@ get_multifield_df <- function(matches, fields, schema = schema_cfs,
     }
     return(result)
 }
+
+#' Event Season History
+#'
+#' Given an event code, this function returns all a dataframe with all the
+#' matches played by every team registered for that event. This is intended
+#' for use with the `get_multifield_df`
+#' @param event_code TBA-legal event code (ex. "2024paca")
+#' @details
+#' Checks for match duplication, which will stop execution if TRUE.
+#' @examples
+#' gpr24 <- event_season_history("2024paca")
+#' get_multifield_df(gpr24)
+event_season_history <- function(event_code){
+    registered_teams <- event_teams(event_code, keys = TRUE)
+    registered_teams <- as.numeric(
+        substr(registered_teams, 4, nchar(registered_teams))
+    )
+    year <- as.numeric(substr(event_code, 1, 4))
+    matches <- sapply(registered_teams, team_matches, year = year)
+    result <- matches %>%
+        reduce(full_join)
+    # check for duplicated matches
+    stopifnot(!any(duplicated(result)))
+    return(result)
+}
+

@@ -14,8 +14,6 @@ library(devtools)
 load_all()
 ```
 
-@TODO account for "Sportsmanship GP" and the "Most Photogenic Award", and "Judge's Award" as opposed to "Judges Award"
-
 ```{r}
 team_attributes_hexafecta <- function(id){
     awards <- team_awards(id)
@@ -76,6 +74,8 @@ saveRDS(all_team_awards, file = "data/all_team_awards.rds")
 
 @TODO need to reformat the code to make it readable
 
+@TODO why is `modern_awards` a dataframe of dataframes?
+
 ```{r modern awards}
 unique_awards <- function(team_awards){
     if (nrow(team_awards) == 0){
@@ -119,6 +119,6 @@ count_modern_awards <- function(team_award_history){
     return(result)
 }
 
-modern_awards <- t(sapply(all_team_awards, count_modern_awards))
+modern_awards <- data.frame(t(sapply(all_team_awards, count_modern_awards)))
 ```
 
