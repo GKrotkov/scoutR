@@ -340,7 +340,8 @@ event_season_history <- function(event_code){
 #'
 #' Computes the design matrix for a linear regression computing OPR.
 #' @param matches Dataframe of matches like output by event_matches
-#' @details Assumes match order is irrelevant.
+#' @details Assumes match order is irrelevant. Casts the final output to a
+#' data.frame because the `lm` function expects a data.frame.
 #' @examples
 #' matches <- event_matches("2023mil", match_type = "qual")
 #' matches <- matches[order(matches$match_number), ]
