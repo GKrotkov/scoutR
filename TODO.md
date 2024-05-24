@@ -9,3 +9,4 @@
     provide the data for everything it can - we won't have anything to compare
     against.
 2) local OPR/EPA calculators? Include some weighting on match recency?
+3) Tim (Angert) wants some kind of printout to show who was available for each individual pick of the alliance selection.

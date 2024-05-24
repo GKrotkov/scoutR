@@ -268,13 +268,16 @@ get_field_df <- function(matches, field, schema = schema_cfs, unlist = T){
 #' will treat numeric variables as categorical.
 #' @examples
 #' mil23 <- event_matches("2023mil")
-#' fields <- c("mobility", "endGameChargeStation", "autoChargeStation")
+#' fields <- id_robot_fields(mil23)
 #' get_multifield_df(mil23, fields)
 #' fma17 <- event_matches("2017mrcmp")
 #' fields <- c("auto")
 #' get_multifield_df(fma17, fields, schema = schema_csf)
-get_multifield_df <- function(matches, fields, schema = schema_cfs,
+get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
                               unlist = TRUE, merge = TRUE){
+    if (is.null(fields)){
+        fields <- id_robot_fields(matches)
+    }
     statics <- list(matches = matches, schema = schema, unlist = unlist)
     result <- mapply(get_field_df, field = fields,
                      MoreArgs = statics, SIMPLIFY = FALSE)
@@ -290,6 +293,22 @@ get_multifield_df <- function(matches, fields, schema = schema_cfs,
         colnames(result) <- c("id", paste(sources, titles, sep = "."))
     }
     return(result)
+}
+
+#' Robot Results
+#'
+#' Get all the robot-level results available in TBA, under a few assumptions.
+#' @param event_code Event code of interest
+#' @param match_type One of "all", "qual", or "playoff"
+#' @details Assumes that names of robot-level information follow the convention:
+#' "(red/blue)_robot_(1/2/3)"
+#' @examples
+#' mil23_individual <- event_robot_results("2023mil", match_type = "qual")
+#' gpr24_individual <- event_robot_results("2024paca")
+#'
+event_robot_results <- function(event_code, match_type = "all"){
+    matches <- event_matches(event_code, match_type = match_type)
+    robot_results <- get_multifield_df(matches)
 }
 
 #' Event Season History
@@ -316,4 +335,3 @@ event_season_history <- function(event_code){
     stopifnot(!any(duplicated(result)))
     return(result)
 }
-
