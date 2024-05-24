@@ -338,27 +338,55 @@ event_season_history <- function(event_code){
 
 #' OPR Design Matrix
 #'
-#' Computes the design matrix for a linear regression computing OPR.
+#' Computes the design matrix (indicator variables 1hot encoding each robot's
+#' presence in a match) for a linear regression computing OPR.
 #' @param matches Dataframe of matches like output by event_matches
 #' @details Assumes match order is irrelevant. Casts the final output to a
-#' data.frame because the `lm` function expects a data.frame.
+#' data.frame because the `lm` function expects a data.frame. Returns blue
+#' alliances as a block, and then red alliances.
 #' @examples
 #' matches <- event_matches("2023mil", match_type = "qual")
 #' matches <- matches[order(matches$match_number), ]
 #' design <- opr_design_matrix(matches)
+#' design$score <- c(matches$blue_score, matches$red_score)
 #' fit <- lm(score ~ 0 + ., data = design)
 #' summary(fit) # retrieves OPRs
 opr_design_matrix <- function(matches){
-    score <- c(matches$blue_score, matches$red_score)
     lineups <- data.frame(
         robot1 = c(matches$blue1, matches$red1),
         robot2 = c(matches$blue2, matches$red2),
         robot3 = c(matches$blue3, matches$red3)
     )
+    # Sort numerically
     teams <- unique(unlist(lineups))
-    design <- matrix(ncol = length(teams), nrow = length(score))
+    teams <- teams[order(as.numeric(gsub("^frc", "", teams)))]
+    design <- matrix(ncol = length(teams), nrow = nrow(lineups))
     design <- t(apply(lineups, 1, function(row) as.numeric(teams %in% row)))
     colnames(design) <- teams
+    return(data.frame(design))
+}
 
-    return(data.frame(cbind(score, design)))
+#' Compute Event (c)OPRs
+#'
+#' Performs a linear regression through the origin for a given event
+#' @param event_code TBA-legal event code (e.g. "2024paca")
+#' @param match_type One of "qual", "playoff", or "all"
+#' @param response The response variable of interest for the linear regression.
+#' To compute regular OPR, pick "score". Component OPRs can be computed by
+#' supplying a string with a different response.
+#' @details Assumes that the event matches dataframe follows the convention
+#' "(red/blue)_(response)" where (response) is the type of score we are
+#' interested in computing.
+#' @examples
+#' event_oprs("2024paca")
+#' event_oprs("2023mil", response = "teleopGamePieceCount")
+#' event_oprs("2024new", match_type = "all")
+event_oprs <- function(event_code, response = "score", match_type = "qual"){
+    matches <- event_matches(event_code, match_type = match_type)
+    matches <- matches[order(matches$match_number), ]
+    design <- opr_design_matrix(matches)
+    design$response <- unlist(c(matches[, paste0("blue_", response)],
+                                matches[, paste0("red_", response)]))
+    fit <- lm(response ~ 0 + ., data = design)
+    return(coefficients(fit))
 }
