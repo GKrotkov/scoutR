@@ -335,3 +335,24 @@ event_season_history <- function(event_code){
     stopifnot(!any(duplicated(result)))
     return(result)
 }
+
+#' OPR Design Matrix
+#'
+#' Computes the design matrix for a linear regression computing OPR.
+#' @param matches Dataframe of matches like output by event_matches
+#' @details Assumes match order is irrelevant.
+opr_design_matrix <- function(matches){
+    score <- c(matches$blue_score, matches$red_score)
+    lineups <- data.frame(
+        robot1 = c(matches$blue1, matches$red1),
+        robot2 = c(matches$blue2, matches$red2),
+        robot3 = c(matches$blue3, matches$red3)
+    )
+    teams <- unique(unlist(lineups))
+    design <- matrix(ncol = length(teams), nrow = length(score))
+    colnames(design) <- teams
+    for (i in 1:length(score)){
+        design[i, ] <- ifelse(teams %in% lineups[i, ], 1, 0)
+    }
+    return(cbind(score, design))
+}
