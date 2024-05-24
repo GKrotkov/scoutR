@@ -341,6 +341,12 @@ event_season_history <- function(event_code){
 #' Computes the design matrix for a linear regression computing OPR.
 #' @param matches Dataframe of matches like output by event_matches
 #' @details Assumes match order is irrelevant.
+#' @examples
+#' matches <- event_matches("2023mil", match_type = "qual")
+#' matches <- matches[order(matches$match_number), ]
+#' design <- opr_design_matrix(matches)
+#' fit <- lm(score ~ 0 + ., data = design)
+#' summary(fit) # retrieves OPRs
 opr_design_matrix <- function(matches){
     score <- c(matches$blue_score, matches$red_score)
     lineups <- data.frame(
@@ -350,9 +356,8 @@ opr_design_matrix <- function(matches){
     )
     teams <- unique(unlist(lineups))
     design <- matrix(ncol = length(teams), nrow = length(score))
+    design <- t(apply(lineups, 1, function(row) as.numeric(teams %in% row)))
     colnames(design) <- teams
-    for (i in 1:length(score)){
-        design[i, ] <- ifelse(teams %in% lineups[i, ], 1, 0)
-    }
-    return(cbind(score, design))
+
+    return(data.frame(cbind(score, design)))
 }
