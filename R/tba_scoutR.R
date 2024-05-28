@@ -51,7 +51,8 @@ event_season_history <- function(event_code){
 #' Computes the lineup design matrix (indicator variables one-hot encoding each
 #' robot's presence in a match). When used to fit a linear regression through
 #' the intercept with scores as the response, the resulting coefficients
-#' are equal to OPR.
+#' are equal to OPR. We use the nomenclature "lineups" to reflect NBA "lineup
+#' data" which is related to the development of OPR/Calculated Contribution.
 #' @param matches Dataframe of matches like output by event_matches
 #' @details Assumes match order is irrelevant. Casts the final output to a
 #' data.frame because the `lm` function expects a data.frame. Returns blue
@@ -69,7 +70,7 @@ lineup_design_matrix <- function(matches){
         robot2 = c(matches$blue2, matches$red2),
         robot3 = c(matches$blue3, matches$red3)
     )
-    # Sort numerically
+    # Sort the columns numerically
     teams <- unique(unlist(lineups))
     teams <- teams[order(as.numeric(gsub("^frc", "", teams)))]
     design <- matrix(ncol = length(teams), nrow = nrow(lineups))
@@ -78,7 +79,33 @@ lineup_design_matrix <- function(matches){
     return(data.frame(design))
 }
 
-#' Compute Lineup Contributions
+#' Fit Lineup Linear Model
+#'
+#' Computes the lineup design matrix for a given dataframe `lineups`, and then
+#' fits a linear model using the given `responses`.
+#' @param lineups A dataframe of lineups assumed to have the columns `blue1`,
+#' `blue2`, `blue3`, `red1`, `red2`, and `red3`. This can be like a dataframe
+#' of matches as output by `event_matches`.
+#' @param responses A list of two vectors, `red` and `blue`. Each must be a
+#' vector of the same length as the number of rows in `lineups`, representing
+#' the response value to fit a linear model to.
+#' @details Key assumption - the order of `lineups` and the `responses` vector
+#' must line up exactly. Otherwise, the fit will be meaningless.
+fit_lineup_lm <- function(lineups, responses){
+    stopifnot("`responses` must be of length 2" = {length(responses) == 2})
+    stopifnot("`responses` must have `red` and `blue` vectors" =
+                  "red" %in% names(responses) & "blue" %in% names(responses))
+    stopifnot("`responses` vectors must be of the same length as `lineups`" =
+                  all(sapply(responses, length) == nrow(lineups)))
+    stopifnot("Lineups dataframe input cannot have a column named `response`"
+              = {!("response" %in% colnames(lineups))})
+    design <- lineup_design_matrix(lineups)
+    # the design matrix function does blue first, then red, so we mirror that
+    design$response <- c(responses$blue, responses$red)
+    return(lm(response ~ 0 + ., data = design))
+}
+
+#' Fit Event (c)OPR
 #'
 #' Performs a linear regression through the origin for a given event. With
 #' default settings, this will compute OPR; cOPRs can be retrieved through
@@ -92,16 +119,16 @@ lineup_design_matrix <- function(matches){
 #' "(red/blue)_(response)" where (response) is the type of score we are
 #' interested in computing an approximation contribution for.
 #' @examples
-#' compute_lineup_contributions("2024paca")
-#' compute_lineup_contributions("2023mil", response = "teleopGamePieceCount")
-#' compute_lineup_contributions("2024new", match_type = "all")
-compute_lineup_contributions <- function(event_code, response = "score",
-                                         match_type = "qual"){
+#' fit_event_copr("2024paca")
+#' fit_event_copr("2023mil", response = "teleopGamePieceCount")
+#' fit_event_copr("2024new", match_type = "all")
+fit_event_copr <- function(event_code, response = "score", match_type = "qual"){
     matches <- event_matches(event_code, match_type = match_type)
     matches <- matches[order(matches$match_number), ]
-    design <- lineup_design_matrix(matches)
-    design$response <- unlist(c(matches[, paste0("blue_", response)],
-                                matches[, paste0("red_", response)]))
-    fit <- lm(response ~ 0 + ., data = design)
+    responses <- list(
+        red = matches[, paste0("red_", response)][[1]],
+        blue = matches[, paste0("blue_", response)][[1]]
+    )
+    fit <- fit_lineup_lm(matches, responses)
     return(coefficients(fit))
 }
