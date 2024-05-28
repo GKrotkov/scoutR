@@ -18,12 +18,13 @@ tbaR has 4 major files: `tba_readR`, `tba_tidyR`, `tba_interfaceR`, and `tba_hel
 
 | Name | Description | Input | Output | Public Facing?
 | ----- | ----- | ----- | ----- | -----
+| `tba_scoutR` | Analysis functions for at-event usage. | Event codes or match data | Tidy dataframes | Yes
 | `tba_interfaceR` | Provide a direct interface between the user and the TBA API | TBA-legal keys | Tidy dataframes | Yes
-| `tba_helpR` | Analysis helper functions that do not directly interact with the TBA API | Varies, but mostly dataframes of match objects | Varies | Yes
+| `tba_helpR` | Helper functions that do not directly interact with the TBA API | Varies, but mostly dataframes of match objects | Varies | Yes
 | `tba_readR` | Read data from the TBA API, helper library for `interfaceR` | TBA-legal keys| JSON | No
 | `tba_tidyR` | Reformat JSON data from TBA to Tidy format, helper library for `interfaceR` | JSON | Tidy dataframes | No
 
-I recommend that new users to R only use `tba_interfaceR` and `tba_helpR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of tbaR, `tba_readR` and `tba_tidyR` may be more useful to you.
+I recommend that new users to R only use `tba_interfaceR` and `tba_scoutR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of tbaR, `tba_helpR` `tba_readR` and `tba_tidyR` may be more useful to you.
 
 ## Why do I care about Tidy data? What even is it?
 

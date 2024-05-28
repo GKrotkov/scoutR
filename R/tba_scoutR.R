@@ -1,0 +1,107 @@
+################
+#### ScoutR ####
+################
+
+# ScoutR provides an array of useful, event-ready functions to fill teams'
+# scouting and strategy needs.
+
+#' Robot Results
+#'
+#' Get all the robot-level results available in TBA, under a few assumptions.
+#' @param event_code Event code of interest
+#' @param match_type One of "all", "qual", or "playoff"
+#' @details Assumes that names of robot-level information follow the convention:
+#' "(red/blue)_robot_(1/2/3)"
+#' @examples
+#' mil23_individual <- event_robot_results("2023mil", match_type = "qual")
+#' gpr24_individual <- event_robot_results("2024paca")
+#'
+event_robot_results <- function(event_code, match_type = "all"){
+    matches <- event_matches(event_code, match_type = match_type)
+    robot_results <- get_multifield_df(matches)
+}
+
+#' Event Season History
+#'
+#' Given an event code, this function returns all a dataframe with all the
+#' matches played by every team registered for that event. This is intended
+#' for use with the `get_multifield_df`
+#' @param event_code TBA-legal event code (ex. "2024paca")
+#' @details
+#' Checks for match duplication, which will stop execution if TRUE.
+#' @examples
+#' gpr24 <- event_season_history("2024paca")
+#' get_multifield_df(gpr24)
+event_season_history <- function(event_code){
+    registered_teams <- event_teams(event_code, keys = TRUE)
+    registered_teams <- as.numeric(
+        substr(registered_teams, 4, nchar(registered_teams))
+    )
+    year <- as.numeric(substr(event_code, 1, 4))
+    matches <- sapply(registered_teams, team_matches, year = year)
+    result <- matches %>%
+        reduce(full_join)
+    # check for duplicated matches
+    stopifnot(!any(duplicated(result)))
+    return(result)
+}
+
+#' Lineup Design Matrix
+#'
+#' Computes the lineup design matrix (indicator variables one-hot encoding each
+#' robot's presence in a match). When used to fit a linear regression through
+#' the intercept with scores as the response, the resulting coefficients
+#' are equal to OPR.
+#' @param matches Dataframe of matches like output by event_matches
+#' @details Assumes match order is irrelevant. Casts the final output to a
+#' data.frame because the `lm` function expects a data.frame. Returns blue
+#' alliances as a block, and then red alliances.
+#' @examples
+#' matches <- event_matches("2023mil", match_type = "qual")
+#' matches <- matches[order(matches$match_number), ]
+#' design <- lineup_design_matrix(matches)
+#' design$score <- c(matches$blue_score, matches$red_score)
+#' fit <- lm(score ~ 0 + ., data = design)
+#' summary(fit) # retrieves OPRs
+lineup_design_matrix <- function(matches){
+    lineups <- data.frame(
+        robot1 = c(matches$blue1, matches$red1),
+        robot2 = c(matches$blue2, matches$red2),
+        robot3 = c(matches$blue3, matches$red3)
+    )
+    # Sort numerically
+    teams <- unique(unlist(lineups))
+    teams <- teams[order(as.numeric(gsub("^frc", "", teams)))]
+    design <- matrix(ncol = length(teams), nrow = nrow(lineups))
+    design <- t(apply(lineups, 1, function(row) as.numeric(teams %in% row)))
+    colnames(design) <- teams
+    return(data.frame(design))
+}
+
+#' Compute Lineup Contributions
+#'
+#' Performs a linear regression through the origin for a given event. With
+#' default settings, this will compute OPR; cOPRs can be retrieved through
+#' changing the `response` field.
+#' @param event_code TBA-legal event code (e.g. "2024paca")
+#' @param match_type One of "qual", "playoff", or "all"
+#' @param response The response variable of interest for the linear regression.
+#' To compute regular OPR, pick "score". Component OPRs can be computed by
+#' supplying a string with a different response.
+#' @details Assumes that the event matches dataframe follows the convention
+#' "(red/blue)_(response)" where (response) is the type of score we are
+#' interested in computing an approximation contribution for.
+#' @examples
+#' compute_lineup_contributions("2024paca")
+#' compute_lineup_contributions("2023mil", response = "teleopGamePieceCount")
+#' compute_lineup_contributions("2024new", match_type = "all")
+compute_lineup_contributions <- function(event_code, response = "score",
+                                         match_type = "qual"){
+    matches <- event_matches(event_code, match_type = match_type)
+    matches <- matches[order(matches$match_number), ]
+    design <- lineup_design_matrix(matches)
+    design$response <- unlist(c(matches[, paste0("blue_", response)],
+                                matches[, paste0("red_", response)]))
+    fit <- lm(response ~ 0 + ., data = design)
+    return(coefficients(fit))
+}

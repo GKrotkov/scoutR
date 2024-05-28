@@ -1,0 +1,59 @@
+---
+title: "sandbox"
+format: pdf
+editor: visual
+---
+
+```{r libraries}
+library(devtools)
+load_all()
+```
+
+## Testing OPR/LM equivalence
+
+```{r loading}
+event_key <- "2024ohcl"
+
+ohcl <- event_matches(event_key, match_type = "qual")
+teams <- event_teams(event_key, keys = TRUE)
+
+premat <- data.frame(
+    score = c(ohcl$red_score, ohcl$blue_score), 
+    robot1 = c(ohcl$red1, ohcl$blue1), 
+    robot2 = c(ohcl$red2, ohcl$blue2), 
+    robot3 = c(ohcl$red3, ohcl$blue3)
+)
+
+mat <- matrix(ncol = length(teams), 
+              nrow = nrow(premat))
+
+colnames(mat) <- teams
+
+for (i in 1:nrow(mat)){
+    for (j in 1:ncol(mat)){
+        mat[i, j] <- ifelse(colnames(mat)[j] %in% premat[i, 2:4], 1, 0)
+    }
+}
+
+mat <- data.frame(cbind(premat$score, mat))
+colnames(mat)[1] <- "score"
+
+fit <- lm(score ~ 0 + ., data = mat)
+```
+
+# Testing OPR Weighting
+
+```{r}
+library(devtools)
+load_all()
+
+event_keys <- c("2016mrcmp", "2015paphi", "2017pawch", "2018mrcmp", "2019paca", 
+                "2022txfor", "2023mil", "2024paca")
+
+event_weighted_opr_design <- function(event_code){
+    
+}
+
+results <- lapply(event_keys, event_oprs)
+```
+

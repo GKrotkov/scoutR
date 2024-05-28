@@ -3,7 +3,8 @@
 ################
 
 # TBA HelpeR implements helper functions that are not necessarily core to the
-# funtionality of tbaR, but are useful for users to have access to.
+# funtionality of tbaR, but are useful for users to have access to. These are
+# utility functions, more useful under the hood than for decisionmaking.
 
 ###############
 #### Setup ####
@@ -293,100 +294,4 @@ get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
         colnames(result) <- c("id", paste(sources, titles, sep = "."))
     }
     return(result)
-}
-
-#' Robot Results
-#'
-#' Get all the robot-level results available in TBA, under a few assumptions.
-#' @param event_code Event code of interest
-#' @param match_type One of "all", "qual", or "playoff"
-#' @details Assumes that names of robot-level information follow the convention:
-#' "(red/blue)_robot_(1/2/3)"
-#' @examples
-#' mil23_individual <- event_robot_results("2023mil", match_type = "qual")
-#' gpr24_individual <- event_robot_results("2024paca")
-#'
-event_robot_results <- function(event_code, match_type = "all"){
-    matches <- event_matches(event_code, match_type = match_type)
-    robot_results <- get_multifield_df(matches)
-}
-
-#' Event Season History
-#'
-#' Given an event code, this function returns all a dataframe with all the
-#' matches played by every team registered for that event. This is intended
-#' for use with the `get_multifield_df`
-#' @param event_code TBA-legal event code (ex. "2024paca")
-#' @details
-#' Checks for match duplication, which will stop execution if TRUE.
-#' @examples
-#' gpr24 <- event_season_history("2024paca")
-#' get_multifield_df(gpr24)
-event_season_history <- function(event_code){
-    registered_teams <- event_teams(event_code, keys = TRUE)
-    registered_teams <- as.numeric(
-        substr(registered_teams, 4, nchar(registered_teams))
-    )
-    year <- as.numeric(substr(event_code, 1, 4))
-    matches <- sapply(registered_teams, team_matches, year = year)
-    result <- matches %>%
-        reduce(full_join)
-    # check for duplicated matches
-    stopifnot(!any(duplicated(result)))
-    return(result)
-}
-
-#' OPR Design Matrix
-#'
-#' Computes the design matrix (indicator variables 1hot encoding each robot's
-#' presence in a match) for a linear regression computing OPR.
-#' @param matches Dataframe of matches like output by event_matches
-#' @details Assumes match order is irrelevant. Casts the final output to a
-#' data.frame because the `lm` function expects a data.frame. Returns blue
-#' alliances as a block, and then red alliances.
-#' @examples
-#' matches <- event_matches("2023mil", match_type = "qual")
-#' matches <- matches[order(matches$match_number), ]
-#' design <- opr_design_matrix(matches)
-#' design$score <- c(matches$blue_score, matches$red_score)
-#' fit <- lm(score ~ 0 + ., data = design)
-#' summary(fit) # retrieves OPRs
-opr_design_matrix <- function(matches){
-    lineups <- data.frame(
-        robot1 = c(matches$blue1, matches$red1),
-        robot2 = c(matches$blue2, matches$red2),
-        robot3 = c(matches$blue3, matches$red3)
-    )
-    # Sort numerically
-    teams <- unique(unlist(lineups))
-    teams <- teams[order(as.numeric(gsub("^frc", "", teams)))]
-    design <- matrix(ncol = length(teams), nrow = nrow(lineups))
-    design <- t(apply(lineups, 1, function(row) as.numeric(teams %in% row)))
-    colnames(design) <- teams
-    return(data.frame(design))
-}
-
-#' Compute Event (c)OPRs
-#'
-#' Performs a linear regression through the origin for a given event
-#' @param event_code TBA-legal event code (e.g. "2024paca")
-#' @param match_type One of "qual", "playoff", or "all"
-#' @param response The response variable of interest for the linear regression.
-#' To compute regular OPR, pick "score". Component OPRs can be computed by
-#' supplying a string with a different response.
-#' @details Assumes that the event matches dataframe follows the convention
-#' "(red/blue)_(response)" where (response) is the type of score we are
-#' interested in computing.
-#' @examples
-#' event_oprs("2024paca")
-#' event_oprs("2023mil", response = "teleopGamePieceCount")
-#' event_oprs("2024new", match_type = "all")
-event_oprs <- function(event_code, response = "score", match_type = "qual"){
-    matches <- event_matches(event_code, match_type = match_type)
-    matches <- matches[order(matches$match_number), ]
-    design <- opr_design_matrix(matches)
-    design$response <- unlist(c(matches[, paste0("blue_", response)],
-                                matches[, paste0("red_", response)]))
-    fit <- lm(response ~ 0 + ., data = design)
-    return(coefficients(fit))
 }
