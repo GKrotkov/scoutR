@@ -295,3 +295,25 @@ get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
     }
     return(result)
 }
+
+#' Weight Rows
+#'
+#' Weights the rows of the input dataframe by cutting the dataframe into equal
+#' length bins and multiple-counting the rows for appropriate weight
+#' @param df input dataframe to be weighted
+#' @param weights numeric vector of weights applied to `df`, assumed integers
+#' @details Weights are applied in uniform length bins (so if weights is
+#' length-2, there will be two bins with 50% of the data each, and if weights
+#' is length-5, there will be five bins with 20% of the data each). The
+#' weighting respects order.
+weight_rows <- function(df, weights){
+    stopifnot("weights must all be integers" = all(weights == floor(weights)))
+    # apply weighting by multiply-sampling the weighted rows
+    cuts <- cut(1:nrow(df), length(weights))
+    result <- data.frame()
+    for (i in seq_along(weights)){
+        bin <- df[cuts == levels(cuts)[i], ]
+        result <- rbind(result, bin[rep(seq_len(nrow(bin)), weights[i]), ])
+    }
+    return(result)
+}

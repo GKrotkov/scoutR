@@ -2,8 +2,8 @@
 #### ScoutR ####
 ################
 
-# ScoutR provides an array of useful, event-ready functions to fill teams'
-# scouting and strategy needs.
+# ScoutR provides an array of useful, event-ready analysis functions for
+# data-driven decisionmaking at FRC events.
 
 #' Robot Results
 #'
@@ -56,7 +56,9 @@ event_season_history <- function(event_code){
 #' @param matches Dataframe of matches like output by event_matches
 #' @details Assumes match order is irrelevant. Casts the final output to a
 #' data.frame because the `lm` function expects a data.frame. Returns blue
-#' alliances as a block, and then red alliances.
+#' alliances as a block, and then red alliances. We call this function the
+#' "design matrix" because it only includes the indicator variables, and not
+#' any of the responses.
 #' @examples
 #' matches <- event_matches("2023mil", match_type = "qual")
 #' matches <- matches[order(matches$match_number), ]
@@ -115,6 +117,11 @@ fit_lineup_lm <- function(lineups, responses){
 #' @param response The response variable of interest for the linear regression.
 #' To compute regular OPR, pick "score". Component OPRs can be computed by
 #' supplying a string with a different response.
+#' @param weights Numeric vector indicating the weights to apply to each evenly
+#' spaced bin. (So for example, c(1, 2) indicates you want the second half of
+#' matches to be double weighted, and c(1, 2, 3) indicates you want the middle
+#' third of matches to be double weighted the final third of matches to be
+#' triple weighted.)
 #' @details Assumes that the event matches dataframe follows the convention
 #' "(red/blue)_(response)" where (response) is the type of score we are
 #' interested in computing an approximation contribution for.
@@ -122,9 +129,15 @@ fit_lineup_lm <- function(lineups, responses){
 #' fit_event_copr("2024paca")
 #' fit_event_copr("2023mil", response = "teleopGamePieceCount")
 #' fit_event_copr("2024new", match_type = "all")
-fit_event_copr <- function(event_code, response = "score", match_type = "qual"){
+fit_event_copr <- function(event_code, match_type = "qual",
+                           response = "score", weights = NULL){
     matches <- event_matches(event_code, match_type = match_type)
     matches <- matches[order(matches$match_number), ]
+
+    if (!is.null(weights)){
+        matches <- weight_rows(matches, weights)
+    }
+
     responses <- list(
         red = matches[, paste0("red_", response)][[1]],
         blue = matches[, paste0("blue_", response)][[1]]
