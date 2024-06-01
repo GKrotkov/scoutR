@@ -177,7 +177,7 @@ event <- function(key, simple = FALSE){
 #' @return tidy tibble of event objects, or vector if keys = TRUE
 #' @examples
 #' events(2019)
-#' events(2010, offical = TRUE)
+#' events(2010, official = TRUE)
 #' events(2012, simple = TRUE)
 #' events(2015, keys = TRUE)
 events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){

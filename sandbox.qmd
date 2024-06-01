@@ -9,51 +9,176 @@ library(devtools)
 load_all()
 ```
 
-## Testing OPR/LM equivalence
-
-```{r loading}
-event_key <- "2024ohcl"
-
-ohcl <- event_matches(event_key, match_type = "qual")
-teams <- event_teams(event_key, keys = TRUE)
-
-premat <- data.frame(
-    score = c(ohcl$red_score, ohcl$blue_score), 
-    robot1 = c(ohcl$red1, ohcl$blue1), 
-    robot2 = c(ohcl$red2, ohcl$blue2), 
-    robot3 = c(ohcl$red3, ohcl$blue3)
-)
-
-mat <- matrix(ncol = length(teams), 
-              nrow = nrow(premat))
-
-colnames(mat) <- teams
-
-for (i in 1:nrow(mat)){
-    for (j in 1:ncol(mat)){
-        mat[i, j] <- ifelse(colnames(mat)[j] %in% premat[i, 2:4], 1, 0)
-    }
-}
-
-mat <- data.frame(cbind(premat$score, mat))
-colnames(mat)[1] <- "score"
-
-fit <- lm(score ~ 0 + ., data = mat)
-```
-
-# Testing OPR Weighting
+# Gentle OPR Weighting does improve the R^2 slightly for 2022TXIRV
 
 ```{r}
 library(devtools)
 load_all()
 
-event_keys <- c("2016mrcmp", "2015paphi", "2017pawch", "2018mrcmp", "2019paca", 
-                "2022txfor", "2023mil", "2024paca")
+event_key <- "2022txirv"
 
-event_weighted_opr_design <- function(event_code){
-    
+matches <- event_matches(event_key, match_type = "qual")
+# order matches before computing design matrix and response
+matches <- matches[order(matches$match_number), ]
+
+# apply weighting before computation
+# assume the number of weights evenly divides the number of matches
+# assume all weights are integers (this assumption could be relaxed)
+weights <- c(3, 4, 4, 5)
+cuts <- cut(1:nrow(matches), length(weights))
+
+result <- data.frame()
+for (i in seq_along(weights)){
+    bin <- matches[cuts == cuts[i], ]
+    result <- rbind(result, bin[rep(seq_len(nrow(bin)), weights[i]), ])
 }
 
-results <- lapply(event_keys, event_oprs)
+fit <- fit_lineup_lm(
+    result, list(red = result$red_score, blue = result$blue_score)
+)
+
+null_fit <- fit_lineup_lm(
+    matches, list(red = matches$red_score, blue = matches$blue_score)
+)
+
+cat("\n", "Null fit adj. R^2:", summary(null_fit)$adj.r.squared, "\n", 
+    "Weighted fit adj. R^2:", summary(fit)$adj.r.squared, "\n", 
+    "diff:", summary(fit)$adj.r.squared - summary(null_fit)$adj.r.squared, "\n")
+```
+
+... but we get singularities if we examine the summary of the coefficients.
+
+# Proving the helper functions work
+
+```{r}
+library(devtools)
+load_all()
+
+event_key <- "2024paca"
+
+matches <- event_matches(event_key, match_type = "qual")
+# order matches before computing design matrix and response
+matches <- matches[order(matches$match_number), ]
+
+weights <- c(rep(0, 25), rep(1, 60), rep(25, 24), rep(50, 1))
+
+weighted <- weight_rows(matches, weights)
+
+weighted_fit <- fit_lineup_lm(
+    weighted, list(red = weighted$red_score, blue = weighted$blue_score)
+)
+
+null_fit <- fit_lineup_lm(
+    matches, list(red = matches$red_score, blue = matches$blue_score)
+)
+
+cat("\n", "Null fit adj. R^2:", summary(null_fit)$adj.r.squared, "\n", 
+    "Weighted fit adj. R^2:", summary(weighted_fit)$adj.r.squared, "\n", 
+    "diff:", 
+    summary(weighted_fit)$adj.r.squared - summary(null_fit)$adj.r.squared, "\n")
+```
+
+# Testing whether throwing out the first two rounds of matches improves OPR
+
+I'll restrict this code to districts because always having 12 qualification matches makes things significantly easier.
+
+```{r}
+library(devtools)
+load_all()
+
+event_key <- "2022txirv"
+
+matches <- event_matches(event_key, match_type = "qual")
+matches <- matches[order(matches$match_number), ]
+
+roundlen <- nrow(matches) / 12
+
+# reserve the last 2 matches for testing
+test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
+train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
+
+null_fit <- fit_lineup_lm(
+    train, list(red = train$red_score, blue = train$blue_score)
+)
+
+# throw out the first 2 rounds of matches
+weighted <- weight_rows(
+    train, c(rep(0, roundlen), rep(1, nrow(train) - roundlen))
+)
+
+weighted_fit <- fit_lineup_lm(
+    weighted, list(red = weighted$red_score, blue = weighted$blue_score)
+)
+
+test_design <- lineup_design_matrix(test)
+test_design$response <- c(test$blue_score, test$red_score)
+
+preds_null <- predict(null_fit, newdata = test_design)
+preds_weighted <- predict(weighted_fit, newdata = test_design)
+true_response <- c(test$blue_score, test$red_score)
+
+mse_null <- mean((preds_null - true_response) ^ 2)
+mse_weighted <- mean((preds_weighted - true_response) ^ 2)
+
+cat("\n", "Null MSE:", mse_null, "\n", 
+    "Weighted MSE:", mse_weighted, "\n")
+```
+
+Testing for all districts in 2022
+
+Picking 2022 because that was a generally excellent year for OPR (scoring highly separable and linear)
+
+```{r}
+# assume "weights" is a length-5 vector where each index represents an integer
+# weight on the importance of a set of 2 "rounds" of matches (each team playing)
+# 2 matches, on average
+weighting_mse_diff <- function(event_key, weights){
+    matches <- event_matches(event_key, match_type = "qual")
+    matches <- matches[order(matches$match_number), ]
+    
+    # assumption: we are looking at districts only
+    roundlen <- nrow(matches) / 12
+
+    # reserve the last 2 matches for testing
+    test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
+    train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
+
+    null_fit <- fit_lineup_lm(
+        train, list(red = train$red_score, blue = train$blue_score)
+    )
+
+    # throw out the first 2 rounds of matches
+    weighted <- weight_rows(train, weights)
+
+    weighted_fit <- fit_lineup_lm(
+        weighted, list(red = weighted$red_score, blue = weighted$blue_score)
+    )
+
+    test_design <- lineup_design_matrix(test)
+    test_design$response <- c(test$blue_score, test$red_score)
+    
+    preds_null <- predict(null_fit, newdata = test_design)
+    preds_weighted <- predict(weighted_fit, newdata = test_design)
+    true_response <- c(test$blue_score, test$red_score)
+    
+    mse_null <- mean((preds_null - true_response) ^ 2)
+    mse_weighted <- mean((preds_weighted - true_response) ^ 2)
+    return(mse_weighted - mse_null)
+}
+
+district_keys <- districts(2022)$key
+# remove 2022 ONT and CHS bc they did single-day events
+district_keys <- setdiff(district_keys, c("2022ont", "2022chs"))
+event_keys <- unlist(sapply(district_keys, district_events, keys = TRUE))
+# remove CMP-level events
+event_keys <- event_keys[-grep("cmp", event_keys)]
+
+diffs <- sapply(
+    event_keys, weighting_mse_diff, 
+    weights = c(3, 4, 4, 4, 5)
+)
+
+hist(diffs)
+abline(v = mean(diffs), col = "red")
 ```
 
