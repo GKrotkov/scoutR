@@ -1,5 +1,5 @@
 ---
-title: "sandbox"
+title: "OPR Weighting"
 format: pdf
 editor: visual
 ---
@@ -86,7 +86,7 @@ I'll restrict this code to districts because always having 12 qualification matc
 library(devtools)
 load_all()
 
-event_key <- "2022txirv"
+event_key <- "2023nhgrs"
 
 matches <- event_matches(event_key, match_type = "qual")
 matches <- matches[order(matches$match_number), ]
@@ -103,7 +103,7 @@ null_fit <- fit_lineup_lm(
 
 # throw out the first 2 rounds of matches
 weighted <- weight_rows(
-    train, c(rep(0, roundlen), rep(1, nrow(train) - roundlen))
+    train, c(3, 4, 4, 4, 5)
 )
 
 weighted_fit <- fit_lineup_lm(
@@ -132,10 +132,9 @@ Picking 2022 because that was a generally excellent year for OPR (scoring highly
 # assume "weights" is a length-5 vector where each index represents an integer
 # weight on the importance of a set of 2 "rounds" of matches (each team playing)
 # 2 matches, on average
-weighting_mse_diff <- function(event_key, weights){
-    matches <- event_matches(event_key, match_type = "qual")
-    matches <- matches[order(matches$match_number), ]
-    
+# assume "matches" is a dataframe of qualification matches, *in order*, of
+# a district competition (or regional with 12 quals)
+compute_mse_diff <- function(matches, weights){
     # assumption: we are looking at districts only
     roundlen <- nrow(matches) / 12
 
@@ -147,7 +146,7 @@ weighting_mse_diff <- function(event_key, weights){
         train, list(red = train$red_score, blue = train$blue_score)
     )
 
-    # throw out the first 2 rounds of matches
+    # apply given weighting
     weighted <- weight_rows(train, weights)
 
     weighted_fit <- fit_lineup_lm(
@@ -165,20 +164,82 @@ weighting_mse_diff <- function(event_key, weights){
     mse_weighted <- mean((preds_weighted - true_response) ^ 2)
     return(mse_weighted - mse_null)
 }
+```
 
-district_keys <- districts(2022)$key
+```{r}
+district_keys <- districts(2019)$key
+
 # remove 2022 ONT and CHS bc they did single-day events
 district_keys <- setdiff(district_keys, c("2022ont", "2022chs"))
 event_keys <- unlist(sapply(district_keys, district_events, keys = TRUE))
-# remove CMP-level events
-event_keys <- event_keys[-grep("cmp", event_keys)]
+# remove CMP-level events (ONT, MI, TX, and NE have divisions)
+event_keys <- setdiff(
+    event_keys, event_keys[grep("(mi|ont|tx|ne)cmp$", event_keys)]
+)
+# 2023 Granite State didn't play the 2nd half of quals
+event_keys <- setdiff(event_keys, "2023nhgrs")
+
+matches <- lapply(event_keys, event_matches, match_type = "qual")
+# order matches by match number
+matches <- lapply(
+    matches, function(matches){matches[order(matches$match_number), ]}
+)
 
 diffs <- sapply(
-    event_keys, weighting_mse_diff, 
+    matches, compute_mse_diff, 
     weights = c(3, 4, 4, 4, 5)
 )
 
 hist(diffs)
 abline(v = mean(diffs), col = "red")
+
 ```
 
+Expanding to all district events
+
+```{r}
+district_keys <- unlist(sapply(
+    setdiff(2009:2024, c(2020, 2021)), function(yr){districts(yr)$key}
+))
+
+# remove 2022 ONT and CHS bc they did single-day events
+district_keys <- setdiff(district_keys, c("2022ont", "2022chs"))
+event_keys <- unlist(sapply(district_keys, district_events, keys = TRUE))
+# remove CMP-level events (ONT, MI, TX, and NE have divisions)
+event_keys <- setdiff(
+    event_keys, event_keys[grep("(mi|on|tx|ne)cmp$", event_keys)]
+)
+# 2023 Granite State didn't play the 2nd half of quals
+event_keys <- setdiff(event_keys, "2023nhgrs")
+
+matches <- lapply(event_keys, event_matches, match_type = "qual")
+# order matches by match number
+matches <- lapply(
+    matches, function(matches){matches[order(matches$match_number), ]}
+)
+
+diffs <- sapply(
+    matches, compute_mse_diff, 
+    weights = c(3, 4, 4, 4, 5)
+)
+
+names(diffs) <- event_keys
+```
+
+```{r}
+data <- diffs[grep("^2018", names(diffs))]
+
+# 2018 was bad for weighting, but all other years have a negative mean
+hist(data, main = "Impact of weighting in 2018")
+abline(v = mean(data), col = "red")
+
+data <- diffs
+
+hist(data, main = "Impact of weighting from 2012 - 2024")
+abline(v = mean(data), col = "red")
+```
+
+@TODO update the weighting code to account for non-integer weights
+@TODO errors should be normalized by year for cross-year comparisons
+@TODO more elegant code for throwing out DCMPs with divisions
+@TODO optimization over a grid of all weights
