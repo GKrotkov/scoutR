@@ -17,6 +17,7 @@ library(sys)
 library(stringr)
 library(rvest)
 library(assertthat)
+library(MASS)
 library(tidyverse)
 library(data.table)
 library(roxygen2)
@@ -95,6 +96,42 @@ apply_indexer <- function(df, idx){
     indexed <- apply(as.matrix(df[idx$ridx, ]), 1, indexer, idx$cidx)
     if (is.list(indexed)) indexed <- do.call("cbind", indexed)
     return(diag(indexed))
+}
+
+#' Normalize Weights
+#'
+#' Takes a vector of real, non-negative weights and converts them to an integer
+#' form while maintaining the ratios between all elements.
+#' @param w vector of weights
+#' @return vector of scaled weights, guaranteed to be integer
+#' @details Iteratively gets the LCM of all the denominators, so we are
+#' guaranteed to get integer results after multiplying by that LCM. And, because
+#' it is the *least* common multiple, these will be the smallest possible
+#' integer weights.
+normalize_weights <- function(w) {
+    stopifnot("weights must be nonnegative" = {all(w >= 0)})
+    # apply MASS fractional approximation
+    fractions <- sapply(w, function(x) {as.character(MASS::fractions(x))})
+
+    fractional <- matrix(sapply(fractions, function(f) {
+        parts <- unlist(strsplit(f, "/"))
+        # If there's no denominator, it's 1
+        if (length(parts) == 1) {
+            return(c(as.numeric(parts), 1))
+        } else {
+            return(as.numeric(parts))
+        }
+    }), nrow = 2)
+
+    rownames(fractional) <- c("numerator", "denominator")
+
+    denominators <- fractional["denominator", ]
+    lcm_den <- denominators[1]
+    for (d in denominators[-1]) {
+        lcm_den <- pracma::Lcm(lcm_den, d)
+    }
+
+    return(w * lcm_den)
 }
 
 ##########################
