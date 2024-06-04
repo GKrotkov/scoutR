@@ -131,7 +131,8 @@ normalize_weights <- function(w) {
         lcm_den <- pracma::Lcm(lcm_den, d)
     }
 
-    return(w * lcm_den)
+    # use round to guarantee integer results
+    return(round(w * lcm_den))
 }
 
 ##########################
@@ -338,19 +339,21 @@ get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
 #' Weights the rows of the input dataframe by cutting the dataframe into equal
 #' length bins and multiple-counting the rows for appropriate weight
 #' @param df input dataframe to be weighted
-#' @param weights numeric vector of weights applied to `df`, assumed integers
+#' @param w numeric vector of weights applied to `df`, assumed integers
 #' @details Weights are applied in uniform length bins (so if weights is
 #' length-2, there will be two bins with 50% of the data each, and if weights
 #' is length-5, there will be five bins with 20% of the data each). The
 #' weighting respects order.
-weight_rows <- function(df, weights){
-    stopifnot("weights must all be integers" = all(weights == floor(weights)))
+weight_rows <- function(df, w){
+    w <- normalize_weights(w)
+    stopifnot("weights must all be integers after normalization" =
+                  all(w == floor(w)))
     # apply weighting by multiply-sampling the weighted rows
-    cuts <- cut(1:nrow(df), length(weights))
+    cuts <- cut(1:nrow(df), length(w))
     result <- data.frame()
-    for (i in seq_along(weights)){
+    for (i in seq_along(w)){
         bin <- df[cuts == levels(cuts)[i], ]
-        result <- rbind(result, bin[rep(seq_len(nrow(bin)), weights[i]), ])
+        result <- rbind(result, bin[rep(seq_len(nrow(bin)), w[i]), ])
     }
     return(result)
 }
