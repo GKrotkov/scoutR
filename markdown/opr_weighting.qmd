@@ -320,7 +320,9 @@ gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
 
 par(family = "Futura")
-hist(viz, main = "Impact of weighting from 2009 - 2024",
+hist(viz, breaks = 25, 
+     main = "Weighting Improves OPR Predictions", 
+     sub = "District Event Qualifications, 2009 - 2024", 
      xlab = "Year-Normalized Mean Squared Error Difference", ylab = "# Events", 
      col = gos_blue, border = "black")
 abline(v = mean(viz), col = gos_red, lwd = 2)
