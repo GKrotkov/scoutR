@@ -310,14 +310,17 @@ for (i in 1:5){
 }
 
 best_w <- grid[min_mean_weights]
-viz <- test_weighting(matches, best_w)
+results <- test_weighting(matches, best_w)
 ```
 
 ```{r}
 library(extrafont)
+library(gt)
 
 gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
+
+viz <- results
 
 par(family = "Futura")
 hist(viz, breaks = 25, 
@@ -326,6 +329,34 @@ hist(viz, breaks = 25,
      xlab = "Year-Normalized Mean Squared Error Difference", ylab = "# Events", 
      col = gos_blue, border = "black")
 abline(v = mean(viz), col = gos_red, lwd = 2)
+
+viz <- data.frame(mse_diff = viz, year = as.factor(substr(names(viz), 1, 4)))
+
+ggplot(viz, aes(x = mse_diff)) + 
+    geom_density(alpha = 0.2, fill = gos_blue) + 
+    facet_wrap(~year) +
+    labs(title = "OPR Weighting MSE Difference", x = "MSE Difference")
+
+viz <- viz %>%
+    group_by(year) %>%
+    summarize(mean_diff = mean(mse_diff))
+
+colnames(viz) <- c("Year", "MSE Difference")
+
+gt(viz) %>%
+    tab_header(
+        title = "By-year MSE differences between weighted OPR and null OPR"
+    ) %>%
+    tab_options(
+        column_labels.background.color = gos_blue
+    ) %>%
+    tab_style(
+        cell_borders(color = gos_blue), 
+        cells_body()
+    ) %>%
+    opt_table_font(
+        font = "Futura"
+    )
 ```
 
 @TODO for the kids: replicate these results but in python. 
@@ -333,3 +364,4 @@ abline(v = mean(viz), col = gos_red, lwd = 2)
 Outstanding questions: 
 1) Do the best weightings vary from year to year? 
 2) Failure analysis - what happened at the worst events?
+    - Take a look when the bins = 30: What's going on with that?
