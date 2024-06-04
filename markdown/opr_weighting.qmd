@@ -315,6 +315,7 @@ viz <- test_weighting(matches, best_w)
 
 ```{r}
 library(extrafont)
+
 gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
 
@@ -323,7 +324,6 @@ hist(viz, main = "Impact of weighting from 2009 - 2024",
      xlab = "Year-Normalized Mean Squared Error Difference", ylab = "# Events", 
      col = gos_blue, border = "black")
 abline(v = mean(viz), col = gos_red, lwd = 2)
-
 ```
 
 @TODO for the kids: replicate these results but in python. 
