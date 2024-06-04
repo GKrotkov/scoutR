@@ -360,6 +360,7 @@ gt(viz) %>%
 ```
 
 @TODO for the kids: replicate these results but in python. 
+@TODO debug event_robot_results, something wrong with event_matches function
 
 Outstanding questions: 
 1) Do the best weightings vary from year to year? 
