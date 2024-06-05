@@ -19,6 +19,7 @@
 event_robot_results <- function(event_code, match_type = "all"){
     matches <- event_matches(event_code, match_type = match_type)
     robot_results <- get_multifield_df(matches)
+    return(robot_results)
 }
 
 #' Event Season History
@@ -91,9 +92,11 @@ lineup_design_matrix <- function(matches){
 #' @param responses A list of two vectors, `red` and `blue`. Each must be a
 #' vector of the same length as the number of rows in `lineups`, representing
 #' the response value to fit a linear model to.
+#' @param w Weights for WLS fit. Weights will be normalized to be integers
+#' and to have the same length as `lineups` has rows.
 #' @details Key assumption - the order of `lineups` and the `responses` vector
 #' must line up exactly. Otherwise, the fit will be meaningless.
-fit_lineup_lm <- function(lineups, responses){
+fit_lineup_lm <- function(lineups, responses, w = NULL){
     stopifnot("`responses` must be of length 2" = {length(responses) == 2})
     stopifnot("`responses` must have `red` and `blue` vectors" =
                   "red" %in% names(responses) & "blue" %in% names(responses))
@@ -101,10 +104,16 @@ fit_lineup_lm <- function(lineups, responses){
                   all(sapply(responses, length) == nrow(lineups)))
     stopifnot("Lineups dataframe input cannot have a column named `response`"
               = {!("response" %in% colnames(lineups))})
+    if (is.null(w)){
+        w <- rep(1, nrow(lineups))
+    }
+    w <- normalize_weights(w, len_out = nrow(lineups))
+    # double the length of weights to match blue/red alliances
+    w <- c(w, w)
     design <- lineup_design_matrix(lineups)
     # the design matrix function does blue first, then red, so we mirror that
     design$response <- c(responses$blue, responses$red)
-    return(lm(response ~ 0 + ., data = design))
+    return(lm(response ~ 0 + ., data = design, weights = w))
 }
 
 #' Fit Event (c)OPR
@@ -117,11 +126,7 @@ fit_lineup_lm <- function(lineups, responses){
 #' @param response The response variable of interest for the linear regression.
 #' To compute regular OPR, pick "score". Component OPRs can be computed by
 #' supplying a string with a different response.
-#' @param weights Numeric vector indicating the weights to apply to each evenly
-#' spaced bin. (So for example, c(1, 2) indicates you want the second half of
-#' matches to be double weighted, and c(1, 2, 3) indicates you want the middle
-#' third of matches to be double weighted the final third of matches to be
-#' triple weighted.)
+#' @param w Numeric vector indicating the weights to apply to each row
 #' @details Assumes that the event matches dataframe follows the convention
 #' "(red/blue)_(response)" where (response) is the type of score we are
 #' interested in computing an approximation contribution for.
@@ -130,18 +135,14 @@ fit_lineup_lm <- function(lineups, responses){
 #' fit_event_copr("2023mil", response = "teleopGamePieceCount")
 #' fit_event_copr("2024new", match_type = "all")
 fit_event_copr <- function(event_code, match_type = "qual",
-                           response = "score", weights = NULL){
+                           response = "score", w = NULL){
     matches <- event_matches(event_code, match_type = match_type)
     matches <- matches[order(matches$match_number), ]
-
-    if (!is.null(weights)){
-        matches <- weight_rows(matches, weights)
-    }
 
     responses <- list(
         red = matches[, paste0("red_", response)][[1]],
         blue = matches[, paste0("blue_", response)][[1]]
     )
-    fit <- fit_lineup_lm(matches, responses)
+    fit <- fit_lineup_lm(matches, responses, weights = w)
     return(coefficients(fit))
 }

@@ -84,7 +84,7 @@ I'll restrict this code to districts because always having 12 qualification matc
 library(devtools)
 load_all()
 
-event_key <- "2023nhgrs"
+event_key <- "2023txfor"
 
 matches <- event_matches(event_key, match_type = "qual")
 matches <- matches[order(matches$match_number), ]
@@ -261,20 +261,71 @@ hist(viz, main = "Impact of weighting from 2009 - 2024")
 abline(v = mean(viz), col = "red")
 ```
 
-# Optimization over a grid of weights
-
-We will make the key assumption that there are no interaction effects and hope we can get away with a stepwise search of the possible space of weights.
+# Demonstrate that WLS is essentially identical to row-weighting
 
 ```{r}
+evnt <- matches[["2022txirv"]]
+
+design_unweighted <- lineup_design_matrix(evnt)
+design_unweighted$response <- c(evnt$blue_score, evnt$red_score)
+
+w <- c(rep(0.9, nrow(evnt) / 2), rep(1.1, nrow(evnt) / 2))
+
+# apply given weighting
+matches_weighted <- weight_rows(evnt, w)
+design_weighted <- lineup_design_matrix(matches_weighted)
+design_weighted$response <- c(matches_weighted$blue_score, 
+                              matches_weighted$red_score)
+
+null_fit <- lm(response ~ 0 + ., data = design_unweighted)
+weighted_fit <- lm(response ~ 0 + ., data = design_weighted)
+wls_fit <- lm(response ~ 0 + ., data = design_unweighted, weights = rep(w, 2))
+
+# check that they are within a tolerance of e-10
+all(round(coefficients(weighted_fit) - coefficients(wls_fit), digits = 8) == 0)
+```
+
+# Use WLS to optimize over a fine grid of possible weights
+
+```{r}
+rm(list = ls())
+load("../data/district_quals_09_24.rda")
+
+# redefine compute_mse_diff to use WLS
+compute_mse_diff <- function(matches, w){
+    # reserve the last 2 matches for testing
+    test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
+    train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
+
+    null_fit <- fit_lineup_lm(
+        train, list(red = train$red_score, blue = train$blue_score)
+    )
+
+    weighted_fit <- fit_lineup_lm(
+        train, list(red = train$red_score, blue = train$blue_score), w
+    )
+
+    test_design <- lineup_design_matrix(test)
+    test_design$response <- c(test$blue_score, test$red_score)
+    
+    preds_null <- predict(null_fit, newdata = test_design)
+    preds_weighted <- predict(weighted_fit, newdata = test_design)
+    true_response <- c(test$blue_score, test$red_score)
+    
+    mse_null <- mean((preds_null - true_response) ^ 2)
+    mse_weighted <- mean((preds_weighted - true_response) ^ 2)
+    return(mse_weighted - mse_null)
+}
+
 # matches - list of dataframes, each with qual matches with >= 12 matches/team
-# w - vector of length 5 representing the weighting
+# w - vector representing the weighting
 # returns a vector of mean squared errors for each event in `matches`, where
 # negative means that the weighted models performed better and positive means
 # that the null models performed better.
 test_weighting <- function(matches, w){
-    # normalize weights and compute MSE difference between null and weighted
+    # don't need to normalize weights anymore because the helper function does
     diffs <- sapply(
-        matches, compute_mse_diff, w = normalize_weights(w)
+        matches, compute_mse_diff, w = w
     )
     names(diffs) <- names(matches)
     
@@ -293,9 +344,6 @@ test_weighting <- function(matches, w){
     return(result)
 }
 
-load("../data/district_quals_09_24.rda")
-
-# avoiding 1 as a weight for any of them because it will result in division by 0
 grid <- seq(0.5, 1.5, 0.2)
 min_mean_weights <- rep(0, 5)
 
@@ -312,6 +360,8 @@ for (i in 1:5){
 best_w <- grid[min_mean_weights]
 results <- test_weighting(matches, best_w)
 ```
+
+Repeating visualization code
 
 ```{r}
 library(extrafont)
@@ -359,10 +409,16 @@ gt(viz) %>%
     )
 ```
 
+@TODO test finding weights by using residuals of null model
+
+@TODO how much does the optimal weighting change on a per-game basis? (Prior: not much)
+
+@TODO write a bunch of test cases
+
 @TODO for the kids: replicate these results but in python. 
-@TODO debug event_robot_results, something wrong with event_matches function
 
 Outstanding questions: 
-1) Do the best weightings vary from year to year? 
+1) Try a more fine-grain weight grid
 2) Failure analysis - what happened at the worst events?
     - Take a look when the bins = 30: What's going on with that?
+

@@ -103,12 +103,13 @@ apply_indexer <- function(df, idx){
 #' Takes a vector of real, non-negative weights and converts them to an integer
 #' form while maintaining the ratios between all elements.
 #' @param w vector of weights
+#' @param len_out positive integer, desired output length of the normed weights
 #' @return vector of scaled weights, guaranteed to be integer
 #' @details Iteratively gets the LCM of all the denominators, so we are
 #' guaranteed to get integer results after multiplying by that LCM. And, because
 #' it is the *least* common multiple, these will be the smallest possible
 #' integer weights.
-normalize_weights <- function(w) {
+normalize_weights <- function(w, len_out = NA) {
     stopifnot("weights must be nonnegative" = {all(w >= 0)})
     # apply MASS fractional approximation
     fractions <- sapply(w, function(x) {as.character(MASS::fractions(x))})
@@ -132,7 +133,18 @@ normalize_weights <- function(w) {
     }
 
     # use round to guarantee integer results
-    return(round(w * lcm_den))
+    result <- round(w * lcm_den)
+
+    if (!is.na(len_out)){
+        # all elements are multiplied an additonal baseline number of times
+        baseline <- floor(len_out / length(w))
+        # only the first (len_out mod len(w)) elements get an additional 1
+        adj <- c(rep(1, len_out %% length(w)),
+                 rep(0, length(w) - (len_out %% length(w))))
+        result <- rep(result, times = baseline + adj)
+    }
+
+    return(result)
 }
 
 ##########################
