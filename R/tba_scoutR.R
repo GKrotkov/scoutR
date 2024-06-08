@@ -39,7 +39,7 @@ event_season_history <- function(event_code){
         substr(registered_teams, 4, nchar(registered_teams))
     )
     year <- as.numeric(substr(event_code, 1, 4))
-    matches <- sapply(registered_teams, team_matches, year = year)
+    matches <- lapply(registered_teams, team_matches, year = year)
     result <- matches %>%
         reduce(full_join)
     # check for duplicated matches
@@ -116,7 +116,7 @@ fit_lineup_lm <- function(lineups, responses, w = NULL){
     return(lm(response ~ 0 + ., data = design, weights = w))
 }
 
-#' Fit Event (c)OPR
+#' Fit Event Linear Regression
 #'
 #' Performs a linear regression through the origin for a given event. With
 #' default settings, this will compute OPR; cOPRs can be retrieved through
@@ -127,15 +127,22 @@ fit_lineup_lm <- function(lineups, responses, w = NULL){
 #' To compute regular OPR, pick "score". Component OPRs can be computed by
 #' supplying a string with a different response.
 #' @param w Numeric vector indicating the weights to apply to each row
+#' @param flip_response_alliance  (bool) if TRUE, uses the blue alliance
+#' response for the red alliance design matrix and vice versa. This can be
+#' useful for calculating foul contributions to the other alliance or defensive
+#' metrics.
+#' @return Fitted lm object; to retrieve coefficients call coefficients(fit)
 #' @details Assumes that the event matches dataframe follows the convention
 #' "(red/blue)_(response)" where (response) is the type of score we are
 #' interested in computing an approximation contribution for.
 #' @examples
-#' fit_event_copr("2024paca")
-#' fit_event_copr("2023mil", response = "teleopGamePieceCount")
-#' fit_event_copr("2024new", match_type = "all")
-fit_event_copr <- function(event_code, match_type = "qual",
-                           response = "score", w = NULL){
+#' fit_event_lr("2024paca")
+#' fit_event_lr("2023mil", response = "teleopGamePieceCount")
+#' fit_event_lr("2024new", match_type = "all")
+#' fit_event_lr("2024paca", response = "foulPoints", flip_response_alliance = T)
+fit_event_lr <- function(
+        event_code, match_type = "qual", response = "score", w = NULL,
+        flip_response_alliance = FALSE){
     matches <- event_matches(event_code, match_type = match_type)
     matches <- matches[order(matches$match_number), ]
 
@@ -143,6 +150,13 @@ fit_event_copr <- function(event_code, match_type = "qual",
         red = matches[, paste0("red_", response)][[1]],
         blue = matches[, paste0("blue_", response)][[1]]
     )
-    fit <- fit_lineup_lm(matches, responses, weights = w)
-    return(coefficients(fit))
+
+    if (flip_response_alliance){
+        tmp <- responses
+        responses$red <- tmp$blue
+        responses$blue <- tmp$red
+        rm(tmp)
+    }
+
+    return(fit_lineup_lm(matches, responses, w = w))
 }

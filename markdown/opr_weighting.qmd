@@ -185,47 +185,12 @@ matches <- lapply(
 
 diffs <- sapply(
     matches, compute_mse_diff, 
-    weights = c(3, 4, 4, 4, 5)
+    w = c(3, 4, 4, 4, 5)
 )
 
 hist(diffs)
 abline(v = mean(diffs), col = "red")
 
-```
-
-# Reading all district quals 2009 - 2024
-
-```{r read-matches}
-# check that a matches dataframe has the correct number of matches and doesn't
-# have NA values in key places
-flag_conformance <- function(matches){
-    # check for unposted matches
-    if (!all(matches$blue_score >= 0 & matches$red_score >= 0)) return(FALSE)
-    n_teams <- length(unique(unlist(
-        matches[, c("red1", "red2", "red3", "blue1", "blue2", "blue3")])))
-    # check for at least 12 matches/team
-    return(nrow(matches) >= n_teams * 2)
-}
-
-district_keys <- unlist(sapply(
-    setdiff(2009:2024, c(2020, 2021)), function(yr){districts(yr)$key}
-))
-
-event_keys <- unlist(sapply(district_keys, district_events, keys = TRUE))
-
-matches <- lapply(event_keys, event_matches, match_type = "qual")
-names(matches) <- event_keys
-
-# remove NAs, events with fewer than 12 matches/team, single-day events
-matches <- matches[!is.na(matches)]
-matches <- matches[sapply(matches, flag_conformance)]
-
-# order matches by match number
-matches <- lapply(
-    matches, function(matches){matches[order(matches$match_number), ]}
-)
-
-save(matches, file = "data/district_quals_09_24.rda")
 ```
 
 # Testing a single weighting over all district events 2009 - 2024
@@ -235,7 +200,7 @@ load("../data/district_quals_09_24.rda")
 
 weights <- c(0.75, 1, 1, 1, 1.25)
 diffs <- sapply(
-    matches, compute_mse_diff, weights = normalize_weights(weights)
+    matches, compute_mse_diff, w = normalize_weights(weights)
 )
 names(diffs) <- names(matches)
 
@@ -264,6 +229,8 @@ abline(v = mean(viz), col = "red")
 # Demonstrate that WLS is essentially identical to row-weighting
 
 ```{r}
+load("../data/district_quals_09_24.rda")
+
 evnt <- matches[["2022txirv"]]
 
 design_unweighted <- lineup_design_matrix(evnt)
@@ -285,7 +252,7 @@ wls_fit <- lm(response ~ 0 + ., data = design_unweighted, weights = rep(w, 2))
 all(round(coefficients(weighted_fit) - coefficients(wls_fit), digits = 8) == 0)
 ```
 
-# Use WLS to optimize over a fine grid of possible weights
+# Fit weights from OLS residuals
 
 ```{r}
 rm(list = ls())
@@ -344,24 +311,38 @@ test_weighting <- function(matches, w){
     return(result)
 }
 
-grid <- seq(0.5, 1.5, 0.2)
-min_mean_weights <- rep(0, 5)
-
-for (i in 1:5){
-    means <- rep(0, length(grid))
-    for (j in seq_along(grid)){
-        w <- rep(1, 5)
-        w[i] <- grid[j]
-        means[j] <- mean(test_weighting(matches, w))
-    }
-    min_mean_weights[i] <- which.min(means)
+# @TODO this is a bad estimator
+estimate_weights <- function(event_matches){
+    fit <- fit_lineup_lm(
+        event_matches, 
+        list(red = event_matches$red_score, blue = event_matches$blue_score)
+    )
+    
+    # sort residuals to be in match order
+    resid <- c(rbind(
+        residuals(fit)[1:nrow(event_matches)], 
+        residuals(fit)[(nrow(event_matches) + 1):(2 * nrow(event_matches))]
+    ))
+    
+    # repeat 1:nrow(matches) twice each for the two alliances in each match
+    resid_fit <- lm(residuals(fit) ~ rep(1:nrow(event_matches), each = 2))
+    # linear prediction fit for the weights
+    w <- coefficients(resid_fit)[1] + 
+        (coefficients(resid_fit)[2] * 1:nrow(event_matches))
+    
+    # normalize to ensure nonnegativity
+    w <- (w - min(w)) / (max(w) - min(w))
+    return(w)
 }
 
-best_w <- grid[min_mean_weights]
+# rough optimization over a grid found 0.9, 0.9, 1.05, 1.1, 1.1 to be optimal
+best_w <- c(0.9, 0.9, 1.05, 1.1, 1.1)
+estimated_w <- estimate_weights(matches[["2022txirv"]])
 results <- test_weighting(matches, best_w)
+# results <- test_weighting(matches, estimated_w)
 ```
 
-Repeating visualization code
+Visualizing the results
 
 ```{r}
 library(extrafont)
@@ -389,9 +370,10 @@ ggplot(viz, aes(x = mse_diff)) +
 
 viz <- viz %>%
     group_by(year) %>%
-    summarize(mean_diff = mean(mse_diff))
+    summarize(mean_diff = mean(mse_diff), 
+              median_diff = median(mse_diff))
 
-colnames(viz) <- c("Year", "MSE Difference")
+colnames(viz) <- c("Year", "Mean MSE Difference", "Median MSE Difference")
 
 gt(viz) %>%
     tab_header(
@@ -408,6 +390,17 @@ gt(viz) %>%
         font = "Futura"
     )
 ```
+
+# Estimating weights as a function of the residuals
+
+```{r}
+load("../data/district_quals_09_24.rda")
+matches <- matches[["2022txirv"]]
+
+
+test_weighting(matches, normalize_weights(estimate_weights(matches)))
+```
+
 
 @TODO test finding weights by using residuals of null model
 
