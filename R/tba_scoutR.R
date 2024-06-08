@@ -25,8 +25,8 @@ event_robot_results <- function(event_code, match_type = "all"){
 #' Event Season History
 #'
 #' Given an event code, this function returns all a dataframe with all the
-#' matches played by every team registered for that event. This is intended
-#' for use with the `get_multifield_df`
+#' matches played by every team registered for that event. The output is
+#' filtered through `get_multifield_df`
 #' @param event_code TBA-legal event code (ex. "2024paca")
 #' @param fields optional, robot fields you want to retrieve. If NULL, uses
 #' `id_robot_fields()` to get individual robot-level fields automatically.
