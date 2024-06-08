@@ -28,23 +28,36 @@ event_robot_results <- function(event_code, match_type = "all"){
 #' matches played by every team registered for that event. This is intended
 #' for use with the `get_multifield_df`
 #' @param event_code TBA-legal event code (ex. "2024paca")
+#' @param fields optional, robot fields you want to retrieve. If NULL, uses
+#' `id_robot_fields()` to get individual robot-level fields automatically.
 #' @details
 #' Checks for match duplication, which will stop execution if TRUE.
 #' @examples
 #' gpr24 <- event_season_history("2024paca")
-#' get_multifield_df(gpr24)
-event_season_history <- function(event_code){
+event_season_history <- function(event_code, fields = NULL){
     registered_teams <- event_teams(event_code, keys = TRUE)
     registered_teams <- as.numeric(
         substr(registered_teams, 4, nchar(registered_teams))
     )
     year <- as.numeric(substr(event_code, 1, 4))
     matches <- lapply(registered_teams, team_matches, year = year)
-    result <- matches %>%
+    matches <- matches %>%
         reduce(full_join)
     # check for duplicated matches
-    stopifnot(!any(duplicated(result)))
-    return(result)
+    stopifnot(!any(duplicated(matches)))
+
+    if (is.null(fields)){
+        fields <- id_robot_fields(matches)
+    }
+
+    history <- get_multifield_df(matches, fields)
+
+    # filter history
+    history$id <- as.numeric(substr(history$id, 4, nchar(history$id)))
+    history <- history[history$id %in% registered_teams, ]
+    history <- history[order(history$id), ]
+    rownames(history) <- history$id
+    return(history)
 }
 
 #' Lineup Design Matrix
