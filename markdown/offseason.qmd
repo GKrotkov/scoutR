@@ -1,0 +1,34 @@
+---
+title: "offseason"
+format: html
+---
+
+```{r}
+formal_teams <- c(117, 695, 1507, 2539, 2559, 2656, 3173, 3504, 4150, 4467, 
+                  5740, 8393, 9022, 9475)
+
+informal_teams <- c(9989)
+
+matches <- lapply(formal_teams, team_matches, year = 2024)
+matches <- matches %>%
+    reduce(full_join)
+# check for duplicated matches
+stopifnot(!any(duplicated(matches)))
+
+history <- get_multifield_df(matches, fields = id_robot_fields(matches))
+history <- history %>%
+    mutate(
+        mobility_pct = autoLine.Yes / (autoLine.Yes + autoLine.No),
+        park_pct = endGame.Parked / (autoLine.Yes + autoLine.No),
+        hang_pct = (endGame.CenterStage + endGame.StageLeft + 
+                         endGame.StageRight) / (autoLine.Yes + autoLine.No),
+        none_pct = (endGame.None) / (autoLine.Yes + autoLine.No)
+    )
+
+history <- history[history$id %in% paste0("frc", formal_teams), ]
+history$id <- as.numeric(substr(history$id, 4, nchar(history$id)))
+history <- history[order(history$id), ]
+rownames(history) <- history$id
+
+```
+
