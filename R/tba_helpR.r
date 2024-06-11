@@ -6,27 +6,9 @@
 # funtionality of tbaR, but are useful for users to have access to. These are
 # utility functions, more useful under the hood than for decisionmaking.
 
-###############
-#### Setup ####
-###############
-
-library(devtools)
-library(jsonlite)
-library(httr)
-library(sys)
-library(stringr)
-library(rvest)
-library(assertthat)
-library(MASS)
-library(tidyverse)
-library(data.table)
-library(roxygen2)
-library(withr)
-library(here)
-
 #' Document
 #'
-#' Automatically creates .rd documentation files for each function in tbaR.
+#' Automatically creates .rd documentation files for each function in scoutR
 #' @details Uses here() to always call from the project root.
 document <- function(){
     with_dir(here(), roxygen2::roxygenise())

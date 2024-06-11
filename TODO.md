@@ -22,4 +22,4 @@
 4) OPR improvements
     - "dropout" idea where when a robot suffers catastrophic failure, set their indicator variable in the design matrix to 0.
     - Improve OPR by using a GLM or WLS instead of a regular linear model?
-5) Pull in `statbotics_readR` and rename to `scoutR`
+5) Pull in `statbotics_readR` and resolve namespace conflicts

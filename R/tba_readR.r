@@ -1,6 +1,6 @@
-###############
-#### readR ####
-###############
+###################
+#### tba_readR ####
+###################
 
 # This R library wraps TBA's API to return well-formatted JSON data as a list.
 # If it does not exist as an API call, or close to it, it shouldn't be a part of
