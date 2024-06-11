@@ -1,8 +1,8 @@
-###################
-#### tba_readR ####
-###################
+###############
+#### readR ####
+###############
 
-# This R library wraps the TBA and Statbotics APIs to return well-formatted JSON
+# This R script wraps the TBA and Statbotics APIs to return well-formatted JSON
 # data as a list. If it does not exist as an API call, or close to it, it
 # shouldn't be a part of the readR.
 
