@@ -2,13 +2,18 @@
 #### tba_readR ####
 ###################
 
-# This R library wraps TBA's API to return well-formatted JSON data as a list.
-# If it does not exist as an API call, or close to it, it shouldn't be a part of
-# the readR.
+# This R library wraps the TBA and Statbotics APIs to return well-formatted JSON
+# data as a list. If it does not exist as an API call, or close to it, it
+# shouldn't be a part of the readR.
 
-KEY <- ifelse(file.exists(here("data/tba_auth_key.txt")),
+# Functions interfacing with the Statbotics api will end in "_statbotics";
+# because the TBA API has generally broader functionality than the statbotics
+# API (so we're giving the nomenclature "right of way" to TBA)
+
+TBA_KEY <- ifelse(file.exists(here("data/tba_auth_key.txt")),
               read_file(here("data/tba_auth_key.txt")), NA)
-BASE <- "https://www.thebluealliance.com/api/v3"
+TBA_BASE <- "https://www.thebluealliance.com/api/v3"
+STATBOTICS_BASE <- "https://api.statbotics.io/v2"
 # returns the current year
 YEAR <- format(Sys.time(), "%Y")
 
@@ -34,9 +39,9 @@ numbers_only <- function(x) !grepl("\\D", x)
 #' @examples
 #' auth("")
 auth <- function(req){
-    assert_that(!is.na(KEY), msg = "Authentication key uninitialized.
+    assert_that(!is.na(TBA_KEY), msg = "Authentication key uninitialized.
                 Run: initialize_tbaR('your_tba_auth_key').")
-    return(paste(req, "?X-TBA-Auth-Key=", KEY, sep = ""))
+    return(paste(req, "?X-TBA-Auth-Key=", TBA_KEY, sep = ""))
 }
 
 #' Team Formatting
@@ -64,24 +69,28 @@ tf <- function(n){
 #'
 #' Wrapper for httr:GET attaches TBA base and auth key to input request
 #' @param req request string
+#' @param base API base string (for example, TBA or Statbotics API root)
 #' @author Gabriel Krotkov
 #' @return API response
 #' @examples
 #' get_response("team/frc1712/awards")
-get_response <- function(req){
-    return(GET(auth(paste(BASE, req, sep = "/"))))
+#' get_response("team/3504", base = STATBOTICS_BASE)
+get_response <- function(req, base = TBA_BASE){
+    return(GET(auth(paste(base, req, sep = "/"))))
 }
 
 #' Get Content
 #'
 #' Wrapper for get_reponse, uses content() to retrieve a list of the content
 #' @param req request string
+#' @param base API base string (for example, TBA or Statbotics API root)
 #' @author Gabriel Krotkov
 #' @return JSON list of result string
 #' @examples
 #' get_content("team/frc1712/awards")
-get_content <- function(req){
-    return(content(get_response(req)))
+#' get_content("team/3504", base = STATBOTICS_BASE)
+get_content <- function(req, base = TBA_BASE){
+    return(content(get_response(req, base = base)))
 }
 
 #' Simkeys
@@ -109,9 +118,32 @@ simkeys <- function(req, simple = FALSE, keys = FALSE){
     return(req)
 }
 
-####################
-#### Match Fxns ####
-####################
+#' Attach parameters
+#'
+#' Helper function to write API calls, adds parameters to the request
+#' @param req Request string prior to operation
+#' @param parameters Vector of parameter titles
+#' @param values Vector of parameter values
+#' @author Gabriel Krotkov
+#' @return String request with parameter attached
+#' @examples
+#' attach_parameters("api.example/v2/root", "option", "2")
+attach_parameters <- function(req, parameters, values){
+    req <- paste(req, "?", sep = "")
+    for (i in 1:length(parameters)){
+        if (i != 1) req <- paste0(req, "&")
+        if (!is.na(values[i])){
+            req <- paste0(req, as.character(parameters[i]),
+                          "=", as.character(values[i]))
+        }
+
+    }
+    return(req)
+}
+
+########################
+#### TBA Match Fxns ####
+########################
 
 # Functions for manipulating match objects
 #' Identify qualification match
@@ -207,9 +239,9 @@ read_official_match_keys <- function(year = YEAR, trim_parents = TRUE){
     return(unlist(matches))
 }
 
-####################
-#### Event Fxns ####
-####################
+########################
+#### TBA Event Fxns ####
+########################
 
 #' Identify an official event
 #'
@@ -577,9 +609,9 @@ read_official_events <- function(year = YEAR, trim_parents = TRUE,
     return(events)
 }
 
-###################
-#### Team Fxns ####
-###################
+#######################
+#### TBA Team Fxns ####
+#######################
 
 #' Read Team
 #'
@@ -829,4 +861,203 @@ read_district_rankings <- function(district_key){
 read_match_zebra <- function(match_key){
     request <- paste("match", match_key, "zebra_motionworks", sep = "/")
     return(get_content(request))
+}
+
+#########################
+#### Statbotics Team ####
+#########################
+
+#' Read Team
+#'
+#' Gets a statbotics team record
+#' @param team the team number
+#' @return List of team's stats on statbotics
+#' @examples
+#' read_team(6672)
+#' read_team(1712)
+#' read_team(708)
+read_team_statbotics <- function(team){
+    req <- paste("team", as.character(team), sep = "/")
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+#' Read Teams
+#'
+#' Reads a group of teams with a host of optional parameters. If a parameter is
+#' left as NA, it is removed from the request to statbotics.
+#' @param metric (string) statbotics metric to sort by. Valid metrics include
+#' country, district, state, active.
+#' @param country Full name of the country of interest (ex. Canada, Israel, USA)
+#' @param district lowercase abbreviation for the district of interest (ex. fma)
+#' @param state Uppercase abbreviation for the state/territory of interest
+#' @param active (bool) Restrict to active teams?
+#' @param ascending (bool) Sort ascending? (False for sort descending)
+#' @param limit (int) maximum length of the desired output.
+#' @param offset (int) Length of the offset of the beginning of the pull from
+#' the sorted list.
+#' @return List of team objects with statbotics information
+read_teams_statbotics <- function(
+        metric = "team", country = NA, district = NA, state = NA, active = NA,
+        ascending = TRUE, limit = 100, offset = 0){
+    titles <- c("metric", "country", "district", "state", "active", "ascending",
+                "limit", "offset")
+    values <- c(metric, country, district, state, active,
+                ascending, limit, offset)
+    req <- attach_parameters("teams", titles, values)
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+#' Read Team Year
+#'
+#' Returns a "team-year" object representing the data of a team in a given year.
+#' @param n (int or character) team number
+#' @param year (int or character) year
+#' @return list object of team-year data
+#' @examples
+#' read_team_year(1712, 2016)
+read_team_year_statbotics <- function(n, year){
+    req <- paste("team_year", as.character(n), as.character(year), sep = "/")
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+#' Read Team Years
+#'
+#' Returns team-year objects based on supplied parameters.
+#' @param team team number
+#' @param year year of interest
+#' @param country full name of country (ex. Canada)
+#' @param district lowercase district abbreviation (ex. fma)
+#' @param state uppercase abbreviation for state/province (ex. CA, TX)
+#' @param metric statbotics metric to sort the resulting list by
+#' @param ascending (bool)
+#' @param limit (int) maximum length of the desired output.
+#' @param offset (int) Length of the offset of the beginning of the pull from
+#' the sorted list.
+read_team_years_statbotics <- function(
+        team = NA, year = NA, country = NA, district = NA, state = NA,
+        metric = NA, ascending = NA, limit = NA, offset = NA){
+    titles <- c("team", "year", "country", "district", "state", "metric",
+                "ascending", "limit", "offset")
+    values <- c(team, year, country, district, state, metric, ascending,
+                limit, offset)
+    req <- attach_parameters("team_years", titles, values)
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+read_team_event_statbotics <- function(n, key){
+    req <- paste("team_event", as.character(n), key, sep = "/")
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+#' Read Team Events
+#'
+#' Returns team-event objects based on supplied parameters.
+#' @param team team number
+#' @param year year of interest
+#' @param country full name of country (ex. Canada)
+#' @param district lowercase district abbreviation (ex. fma)
+#' @param state uppercase abbreviation for state/province (ex. CA, TX)
+#' @param type (int) TBA event type codes
+#' @param week (int) week of competition
+#' @param metric statbotics metric to sort the resulting list by
+#' @param ascending (bool)
+#' @param limit (int) maximum length of the desired output.
+#' @param offset (int) Length of the offset of the beginning of the pull from
+#' the sorted list.
+read_team_events_statbotics <- function(
+        team = NA, year = NA, event = NA, country = NA, district = NA,
+        state = NA, type = NA, week = NA, metric = NA, ascending = NA,
+        limit = NA, offset = NA){
+    titles <- c("team", "year", "event", "country", "district", "state",
+                "type", "week", "metric", "ascending", "limit", "offset")
+    values <- c(team, year, event, country, district, state,
+                type, week, metric, ascending, limit, offset)
+    req <- attach_parameters("team_events", titles, values)
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+read_team_match_statbotics <- function(team, key){
+    req <- paste("team_match", team, key, sep = "/")
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+#' Read Team Matches
+#'
+#' Returns team-match objects based on supplied parameters.
+#' @param team team number
+#' @param year year of interest
+#' @param event event code (ex. 2018pahat)
+#' @param week (int) week of competition
+#' @param match match code
+#' @param metric statbotics metric to sort the resulting list by
+#' @param ascending (bool)
+#' @param limit (int) maximum length of the desired output.
+#' @param offset (int) Length of the offset of the beginning of the pull from
+#' the sorted list.
+read_team_matches_statbotics <- function(
+        team = NA, year = NA, event = NA, week = NA, match = NA, elims = NA,
+        metric = NA, ascending = NA, limit = NA, offset = NA){
+    titles <- c("team", "year", "event", "week", "match", "elims", "metric",
+                "ascending", "limit", "offset")
+    values <- c(team, year, event, week, match, elims, metric,
+                ascending, limit, offset)
+    req <- attach_parameters("team_matches", titles, values)
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+##########################
+#### Statbotics Event ####
+##########################
+
+read_event_statbotics <- function(key){
+    req <- paste("event", key, sep = "/")
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+read_events_statbotics <- function(
+        year = NA, country = NA, district = NA, state = NA, type = NA,
+        week = NA, metric = NA, ascending = NA, limit = NA, offset = NA){
+    titles <- c("year", "country", "district", "state", "type", "week",
+                "metric", "ascending", "limit", "offset")
+    values <- c(year, country, district, state, type,
+                metric, ascending, limit, offset)
+    req <- attach_parameters("events", titles, values)
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+####################
+#### Match Fxns ####
+####################
+
+#' Read matches
+#'
+#' Returns match objects given a match key
+#' @param key match key
+read_match_statbotics <- function(key){
+    req <- paste("match", key, sep = "/")
+    return(get_content(req, base = STATBOTICS_BASE))
+}
+
+#' Read Team Matches
+#'
+#' Returns team-match objects based on supplied parameters.
+#' @param team team number
+#' @param year year of interest
+#' @param event event code (ex. 2018pahat)
+#' @param week (int) week of competition
+#' @param elims (bool) restrict to playoff matches?
+#' @param metric statbotics metric to sort the resulting list by
+#' @param ascending (bool)
+#' @param limit (int) maximum length of the desired output.
+#' @param offset (int) Length of the offset of the beginning of the pull from
+#' the sorted list.
+read_matches_statbotics <- function(
+        team = NA, year = NA, event = NA, week = NA, elims = NA, metric = NA,
+        ascending = NA, limit = NA, offset = NA){
+    titles <- c("team", "year", "event", "week", "elims", "metric",
+                "ascending", "limit", "offset")
+    values <- c(team, year, event, week, elims, metric,
+                ascending, limit, offset)
+    req <- attach_parameters("matches", titles, values)
+    return(get_content(req, base = STATBOTICS_BASE))
 }

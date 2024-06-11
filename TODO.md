@@ -7,11 +7,6 @@
 4) Failure analysis
 5) Functions to make competition usage easy
 
-## Short Term
-1) `get_multifield_df` should include an "n_matches" column
-2) More elegant library loading
-    - Make sure MASS doesn't override dplyr
-
 ## Long term:
 1) Generic, automated data validation via `tba_validatoR`
     - GoS will not develop this this year, because we will rely on tbaR to
@@ -23,3 +18,4 @@
     - "dropout" idea where when a robot suffers catastrophic failure, set their indicator variable in the design matrix to 0.
     - Improve OPR by using a GLM or WLS instead of a regular linear model?
 5) Pull in `statbotics_readR` and resolve namespace conflicts
+6) Team Comparison generator

@@ -35,3 +35,7 @@ Tidy data has 3 features.
 3.  Each type of observational unit forms a separate table.
 
 This is a pretty simple set of rules for data to follow, but keeping strictly to it enables powerful data manipulation libraries like the `tidyverse`. Once we have tidy data, visualization and analysis become streamlined. We can rely on R's inbuilt functions as well as R's robust open source developer community to implement functions to do most of anything we want to do with the data. Luckily for us, tbaR makes getting tidy data straightforward.
+
+# Dependencies
+
+`scoutR` manages dependencies with the `renv` package. This means to start up `scoutR` on your local machine, all you need to do is clone this repository and then run `renv::init()` and `renv::restore()` in the R console. (You will also need to make your own TBA auth key.)

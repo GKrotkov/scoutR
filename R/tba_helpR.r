@@ -288,6 +288,21 @@ get_field_df <- function(matches, field, schema = schema_cfs, unlist = T){
     return(df)
 }
 
+#' Count Team Matches
+#'
+#' Counts the number of times a team appears in a matches dataframe
+#' @param matches dataframe assumed to have "blue1", "blue2", "blue3", "red1",
+#' "red2", and "red3" columns.
+#' @return dataframe with team ids and the count of matches appeared in
+count_team_matches <- function(matches){
+    result <- data.frame(table(unlist(c(
+        matches %>%
+            dplyr::select(blue1, blue2, blue3, red1, red2, red3)
+    ))))
+    colnames(result) <- c("id", "count")
+    return(result)
+}
+
 #' Get Dataframe for multiple fields
 #'
 #' Applies the get_field_df function to all fields provided and returns a
@@ -314,6 +329,7 @@ get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
     statics <- list(matches = matches, schema = schema, unlist = unlist)
     result <- mapply(get_field_df, field = fields,
                      MoreArgs = statics, SIMPLIFY = FALSE)
+    result$n_matches <- count_team_matches(matches)
     if (merge){
         # note down the titles and the dataframes they come from
         titles <- lapply(lapply(result, colnames), function(v) v[-1])
