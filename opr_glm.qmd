@@ -1,0 +1,33 @@
+---
+title: "Generalized Linear Models for improving OPR"
+format: html
+---
+
+Key Question: Can we improve OPR's fit to the data by using a GLM? 
+
+I would expect 2018 to be the best candidate year for this method, so we'll test using that at the beginning to see if we can get a meaningful enough improvement to continue investigating. 
+
+```{r}
+rm(list = ls())
+library(devtools)
+load_all()
+
+gpr <- event_matches("2024paca", match_type = "qual", simple = TRUE)
+scores <- c(gpr$blue_score, gpr$red_score)
+
+viz <- data.frame(scores)
+
+hist(scores)
+hist(abs(scores) - mean(scores))
+hist(sqrt(scores))
+
+fit <- fit_lineup_lm(gpr, list(red = gpr$red_score, blue = gpr$blue_score))
+
+resid <- residuals(fit)
+
+hist(resid, freq = FALSE, 
+     main = "Residuals look pretty normal")
+curve(dnorm(x, mean(resid), sd(resid)), add = TRUE)
+
+```
+
