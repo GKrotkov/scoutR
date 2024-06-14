@@ -1,0 +1,45 @@
+---
+title: "visualizations"
+format: html
+---
+
+# Idle amp efficiency ideas
+
+```{r}
+library(devtools)
+load_all()
+
+newton <- event_matches("2024new", match_type = "qual")
+newton <- newton %>%
+    mutate(
+        red_teleop_note_count = red_teleopAmpNoteCount + 
+            red_teleopSpeakerNoteCount + red_teleopSpeakerNoteAmplifiedCount,
+        red_amp_eff = red_teleopTotalNotePoints / red_teleop_note_count, 
+        blue_teleop_note_count = blue_teleopAmpNoteCount + 
+            blue_teleopSpeakerNoteCount + blue_teleopSpeakerNoteAmplifiedCount,
+        blue_amp_eff = blue_teleopTotalNotePoints / blue_teleop_note_count)
+
+fit <- fit_lineup_lm(
+    newton, list(red = newton$red_amp_eff, blue = newton$blue_amp_eff))
+
+viz <- data.frame(id = names(coefficients(fit)), amp_eff = coefficients(fit))
+
+fit <- fit_lineup_lm(
+    newton, 
+    list(red = newton$red_teleop_note_count, 
+         blue = newton$blue_teleop_note_count))
+
+viz$volume <- coefficients(fit)
+
+viz$id <- substr(viz$id, 4, nchar(viz$id))
+
+plt <- ggplot(viz, aes(x = amp_eff, y = volume, label = id)) + 
+    geom_text(alpha = 0.4)
+
+library(plotly)
+library(dplyr)
+library(gapminder)
+library(babynames)
+
+ggplotly(plt)
+```
