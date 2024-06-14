@@ -242,12 +242,12 @@ schema_csf <- function(color, station_num, field){
 #'  Also note that schema_csf exists for years 2016 and 2017.
 #' @examples
 #' mil23 <- event_matches("2023mil")
-#' get_single_robot_field(mil23, "mobility", 6672)
-#' get_single_robot_field(mil23, "endGameChargeStation", 2539)
+#' get_robot_field(mil23, "mobility", 6672)
+#' get_robot_field(mil23, "endGameChargeStation", 2539)
 #' mar16 <- event_matches("2016mrcmp")
-#' get_single_robot_field(mar16, "auto", 1712, schema = schema_csf)
-get_single_robot_field <- function(matches, field, team_id,
-                                   schema = schema_cfs, unlist = T){
+#' get_robot_field(mar16, "auto", 1712, schema = schema_csf)
+get_robot_field <- function(matches, field, team_id,
+                            schema = schema_cfs, unlist = T){
     stations <- get_team_stations(matches, team_id)
     # assumption: station number is the last character of the string
     station_num <- substr_right(stations$station, 1)
@@ -259,7 +259,7 @@ get_single_robot_field <- function(matches, field, team_id,
     return(result)
 }
 
-#' Get Field Dataframe
+#' Get Field Dataframe (Robot-level)
 #'
 #' Returns a dataframe with the results for every robot in matches for the field
 #' specified in field.
@@ -270,16 +270,16 @@ get_single_robot_field <- function(matches, field, team_id,
 #'  if the content has complicated content not fit for a vector.
 #' @examples
 #' mil23 <- event_matches("2023mil")
-#' get_field_df(mil23, "autoChargeStation")
+#' get_robot_field_df(mil23, "autoChargeStation")
 #' mar17 <- event_matches("2017mrcmp")
-#' get_field_df(mar17, "auto", schema = schema_csf)
-get_field_df <- function(matches, field, schema = schema_cfs, unlist = T){
+#' get_robot_field_df(mar17, "auto", schema = schema_csf)
+get_robot_field_df <- function(matches, field, schema = schema_cfs, unlist = T){
     ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
                     matches$red1, matches$red2, matches$red3))
     df <- data.frame(id = ids)
     for (i in 1:length(ids)){
-        result <- get_single_robot_field(matches, field, ids[i],
-                                         schema = schema, unlist = unlist)
+        result <- get_robot_field(matches, field, ids[i],
+                                  schema = schema, unlist = unlist)
         tbl <- table(result)
         df[df$id == ids[i], names(tbl)] <- tbl
     }
@@ -305,7 +305,7 @@ count_team_matches <- function(matches){
 
 #' Get Dataframe for multiple fields
 #'
-#' Applies the get_field_df function to all fields provided and returns a
+#' Applies the get_robot_field_df function to all fields provided and returns a
 #' dataframe with all the resulting data
 #' @param matches dataframe with matches on the rows
 #' @param fields vector of name of the fields you want pulled out
@@ -327,7 +327,7 @@ get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
         fields <- id_robot_fields(matches)
     }
     statics <- list(matches = matches, schema = schema, unlist = unlist)
-    result <- mapply(get_field_df, field = fields,
+    result <- mapply(get_robot_field_df, field = fields,
                      MoreArgs = statics, SIMPLIFY = FALSE)
     result$n_matches <- count_team_matches(matches)
     if (merge){
