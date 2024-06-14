@@ -164,9 +164,9 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
     if (breakdown) event <- unpack_breakdown(event)
     if (trim){
         event <- event %>%
-            dplyr::select(-c(
+            dplyr::select(-any_of(c(
                 "actual_time", "post_result_time",
-                "predicted_time", "time", "videos")
+                "predicted_time", "time", "videos"))
             )
     }
     return(event)
