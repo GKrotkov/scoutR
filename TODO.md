@@ -7,15 +7,30 @@
 4) Failure analysis
 5) Functions to make competition usage easy
 
+## Bugs
+
+Weird bug with:
+gpr24 <- event_matches("2024paca", match_type = "qual", 
+                       breakdown = FALSE, simple = TRUE)
+The thing that makes it weird, is that if you call it with breakdown=TRUE it works!
+
 ## Long term:
-1) Generic, automated data validation via `tba_validatoR`
+- Generic, automated data validation via `tba_validatoR`
     - GoS will not develop this this year, because we will rely on tbaR to
     provide the data for everything it can - we won't have anything to compare
     against.
-2) local EPA calculation?
-3) Tim (Angert) wants some kind of printout to show who was available for each individual pick of the alliance selection.
-4) OPR improvements
+- Team comparison generator (based on award history, performance over time, etc.)
+    - Idea is to make a big dataframe, run PCA on it, and then use that to evaluate "distances" between teams.
+- OPR improvements
     - "dropout" idea where when a robot suffers catastrophic failure, set their indicator variable in the design matrix to 0.
-    - Improve OPR by using a GLM or WLS instead of a regular linear model?
-5) Pull in `statbotics_readR` and resolve namespace conflicts
-6) Team Comparison generator
+- Statbotics tidyR, update tba_interfaceR to just be interfaceR and include default parameters to switch between statbotics and TBA.
+- Learn how to use plotly to make great graphs!
+
+## Back Burner
+
+- Tim (Angert) wants some kind of printout to show who was available for each individual pick of the alliance selection.
+- local EPA calculation
+
+## Probable Dead Ends
+
+- OPR GLMs

@@ -401,17 +401,12 @@ matches <- matches[["2022txirv"]]
 test_weighting(matches, normalize_weights(estimate_weights(matches)))
 ```
 
-
 @TODO test finding weights by using residuals of null model
 
 @TODO how much does the optimal weighting change on a per-game basis? (Prior: not much)
 
 @TODO write a bunch of test cases
 
-@TODO for the kids: replicate these results but in python. 
+@TODO for the kids: replicate these results but in python.
 
-Outstanding questions: 
-1) Try a more fine-grain weight grid
-2) Failure analysis - what happened at the worst events?
-    - Take a look when the bins = 30: What's going on with that?
-
+Outstanding questions: 1) Try a more fine-grain weight grid 2) Failure analysis - what happened at the worst events? - Take a look when the bins = 30: What's going on with that?

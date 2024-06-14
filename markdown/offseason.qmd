@@ -4,8 +4,14 @@ format: html
 ---
 
 ```{r}
+library(devtools)
+load_all()
+```
+
+
+```{r ncrc, message = FALSE}
 formal_teams <- c(117, 695, 1507, 2539, 2559, 2656, 3173, 3504, 
-                  4150, 4467, 5740, 8393, 9022, 9475)
+                  4150, 4467, 5740, 8393, 9022, 9475, 9653)
 
 informal_teams <- c(9989)
 
@@ -14,6 +20,11 @@ matches <- matches %>%
     reduce(full_join)
 # check for duplicated matches
 stopifnot(!any(duplicated(matches)))
+
+matches$red_amp_eff <- matches$red_teleopTotalNotePoints / 
+    (matches$red_teleopAmpNoteCount + matches$red_teleopSpeakerNoteCount)
+matches$blue_amp_eff <- matches$blue_teleopTotalNotePoints / 
+    (matches$blue_teleopAmpNoteCount + matches$blue_teleopSpeakerNoteCount)
 
 history <- get_multifield_df(matches, fields = id_robot_fields(matches))
 history <- history %>%
@@ -28,7 +39,31 @@ history <- history %>%
 history <- history[history$id %in% paste0("frc", formal_teams), ]
 history$id <- as.numeric(substr(history$id, 4, nchar(history$id)))
 history <- history[order(history$id), ]
+
+history$epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$epa_end})
+
+history$auto_epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$auto_epa_end})
+
+history$teleop_epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$teleop_epa_end})
+
+history$endgame_epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$endgame_epa_end})
+
+# informal teams should be NA for all these
+history <- rbind(history, NA)
+history$id <- c(formal_teams, informal_teams)
 rownames(history) <- history$id
 
+write_csv(history, file = "../data/ncrc24.csv")
+```
+
+```{r}
+library(devtools)
+load_all()
+
+gpr <- event_matches("2024paca", simple = TRUE, breakdown = FALSE)
 ```
 
