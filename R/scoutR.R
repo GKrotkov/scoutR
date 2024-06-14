@@ -59,6 +59,9 @@ event_season_history <- function(event_code, fields = NULL){
     rownames(history) <- history$id
     return(history)
 }
+#######################################################
+#### Linear Modeling (Calculated Contribution/OPR) ####
+#######################################################
 
 #' Lineup Design Matrix
 #'
