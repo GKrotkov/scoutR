@@ -199,6 +199,7 @@ abline(v = mean(diffs), col = "red")
 load("../data/district_quals_09_24.rda")
 
 weights <- c(0.75, 1, 1, 1, 1.25)
+
 diffs <- sapply(
     matches, compute_mse_diff, w = normalize_weights(weights)
 )
@@ -337,7 +338,7 @@ estimate_weights <- function(event_matches){
 
 # rough optimization over a grid found 0.9, 0.9, 1.05, 1.1, 1.1 to be optimal
 best_w <- c(0.9, 0.9, 1.05, 1.1, 1.1)
-estimated_w <- estimate_weights(matches[["2022txirv"]])
+# estimated_w <- estimate_weights(matches[["2022txirv"]])
 results <- test_weighting(matches, best_w)
 # results <- test_weighting(matches, estimated_w)
 ```

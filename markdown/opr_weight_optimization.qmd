@@ -1,0 +1,124 @@
+---
+title: "opr_weight_optimization"
+format: html
+---
+
+# Estimating Weights as a function of residuals
+
+It is difficult to optimize the weights because we are optimizing over an uncountably infinite grid. So we are interested in directly estimating the weights rather than numerically optimizing them.
+
+For simplicity, let's restrict our analysis to 2022.
+
+```{r setup, message = FALSE, warning = FALSE}
+library(devtools)
+load_all()
+rm(list = ls())
+load("../data/district_quals_09_24.rda")
+matches <- matches[startsWith(names(matches), "2022")]
+```
+
+To estimate the weighting, we will fit a regular unweighted regression for each event and investigate the relationship between the residuals and the match number. To make comparison possible between events with different numbers of matches, we need to convert each match to a proportion of the progress through the tournament that the match took place at.
+
+```{r}
+fit_opr <- function(match_df){
+    return(
+        fit_lineup_lm(
+            match_df, responses = list(
+                red = match_df$red_score, blue = match_df$blue_score)
+        )
+    )
+}
+
+normalize_match_number <- function(opr_residual){
+    # we know we can divide the length by 2 because there are 2 alliances/match
+    alliance_corrected <- ((1:length(opr_residual) - 1) %% 
+                               (length(opr_residual) / 2)) + 1
+    return((alliance_corrected / length(opr_residual)) * 2)
+}
+
+fits <- lapply(matches, fit_opr)
+
+residuals <- lapply(fits, function(fit){return(residuals(fit))})
+
+normalized_resids <- lapply(residuals, function(residuals){
+    return(scale(residuals))
+})
+
+library(extrafont)
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+viz <- data.frame(
+    sq_resids = unlist(residuals, use.names = FALSE) ^ 2,
+    sq_norm_resids = unlist(normalized_resids, use.names = FALSE) ^ 2,
+    match_percentile = unlist(lapply(residuals, normalize_match_number), 
+                              use.names = FALSE)
+)
+
+norm_resid_fit <- lm(sq_norm_resids ~ match_percentile, data = viz)
+
+ggplot(viz, aes(x = match_percentile, y = sq_norm_resids)) + 
+    geom_point(col = gos_red, alpha = 0.2) + 
+    geom_smooth(method = "lm", formula = y ~ x, col = "black") +
+    labs(title = "SLR residuals slightly decrease as the tournament proceeds", 
+         x = "Qual Match Percentile", y = "Squared Normalized Residual") + 
+    theme(text = element_text(family = "Futura"), 
+          panel.background = element_rect(fill = "#FAFAFA", color = "#FAFAFA", 
+                                          size = 0.5, linetype = "solid"), 
+          panel.grid.major = element_line(size = 0.5, linetype = "solid", 
+                                          color = gos_blue), 
+          panel.grid.minor = element_line(size = 0.25, linetype = "solid", 
+                                          color = gos_blue))
+
+norm_resid_fit <- lm(log(sq_norm_resids) ~ log(match_percentile), data = viz)
+
+ggplot(viz, aes(x = log(match_percentile), y = log(sq_norm_resids))) + 
+    geom_point(col = gos_red, alpha = 0.2) + 
+    geom_smooth(method = "lm", formula = y ~ x, col = "black") +
+    labs(title = "Log-log transformation improves the linearity of the fit", 
+         x = "Log Qual Match Percentile", 
+         y = "Log Squared Normalized Residual") + 
+    theme(text = element_text(family = "Futura"), 
+          panel.background = element_rect(fill = "#FAFAFA", color = "#FAFAFA", 
+                                          size = 0.5, linetype = "solid"), 
+          panel.grid.major = element_line(size = 0.5, linetype = "solid", 
+                                          color = gos_blue), 
+          panel.grid.minor = element_line(size = 0.25, linetype = "solid", 
+                                          color = gos_blue))
+```
+
+@TODO make a consistent GoS theme for ggplot
+@TODO set up a meeting with Divya about the linear analysis
+@TODO ask Reinhart about the methodology
+
+# Expanding Analysis to all years
+
+```{r}
+library(extrafont)
+library(gt)
+
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+match_percentile <- unlist(lapply(residuals, normalize_match_number), use.names = FALSE)
+
+sq_resids <- unlist(residuals, use.names = FALSE) ^ 2
+
+plot(x = axis_mtch_percentile, 
+     y = log(yaxis_residual_scatter), 
+     col = alpha("white", 0.5), pch = 1, 
+     xlab = NA, ylab = NA, xaxt = "n", yaxt = "n")
+
+rect(par("usr")[1], par("usr")[3],
+     par("usr")[2], par("usr")[4],
+     col = gos_blue)
+
+par(new = TRUE, family = "Futura")
+
+plot(x = axis_mtch_percentile, 
+     y = log(yaxis_residual_scatter), 
+     col = alpha(gos_red, 0.5), pch = 1)
+
+abline(residual_fit, col = "white")
+
+```

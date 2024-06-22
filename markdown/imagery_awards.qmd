@@ -1,0 +1,28 @@
+---
+title: "imagery_awards"
+format: html
+---
+
+Quick markdown file to count the number of imagery awards. For now I won't consider the "Most Photogenic" award from early FRC.
+
+```{r}
+awards <- readRDS("../data/all_team_awards.rds")
+
+count_imagery <- function(team_awards){
+    if (ncol(team_awards) == 0) return(0)
+    return(length(grep("Imagery", team_awards$name)))
+}
+
+img_count <- sort(sapply(awards, count_imagery), decreasing = TRUE)
+img <- data.frame(team = names(img_count), imagery_awards = img_count)
+
+write_csv(img, file = "../data/awards/imagery_award_counts.csv")
+
+library(pander)
+
+pander(table(img_count), 
+       caption = "Imagery Award Counts (via TBA API)")
+
+hist(img_count)
+```
+
