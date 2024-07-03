@@ -24,7 +24,7 @@ team_attributes_hexafecta <- function(id){
     return(
         (length(grep("Engineering Inspiration", unq)) > 0) & 
         (length(grep("(Gracious Professionalism|Sportsmanship)", unq)) > 0) &
-        (length(grep("Imagery", unq)) > 0) &
+        (length(grep("(Most Photogenic|Imagery)", unq)) > 0) &
         (length(grep("Team Spirit", unq)) > 0) & 
         (length(grep("(Judges|Judge's|Judges')", unq)) > 0) & 
         (length(grep("(Sustainability|Entrepreneurship)", unq)) > 0)
@@ -41,14 +41,14 @@ for (i in pages){
 
 data <- data.frame(team = all_teams)
 data$ta_hexafecta <- apply(data, 1, team_attributes_hexafecta)
-save(data, file = "data/ta_hexafecta.rda")
+save(data, file = "../data/ta_hexafecta.rda")
 ```
 
 ```{r}
 ta_hexafecta_teams <- data$team[data$ta_hexafecta]
 ```
 
-```{r collect all team awards}
+```{r all-team-awards}
 # THIS CODE CHUNCK MAKES VERY MANY CALLS TO THE TBA API
 # SET ASIDE TIME TO LET IT RUN
 all_team_awards <- list()
@@ -68,15 +68,13 @@ saveRDS(all_team_awards, file = "data/all_team_awards.rds")
 
 @TODO debug - what was the "Autodesk Excellence in Engineering Creativity and Communications Award"? This causes a bug in my creativity award matching.
 
-@TODO was "Most Photogenic" actually the forerunner of Imagery?
-
 @TODO need some way to filter out offseasons rather than doing this on a per-award basis
 
 @TODO need to reformat the code to make it readable
 
 @TODO why is `modern_awards` a dataframe of dataframes?
 
-```{r modern awards}
+```{r modern-awards}
 unique_awards <- function(team_awards){
     if (nrow(team_awards) == 0){
         return(c())

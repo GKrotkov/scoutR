@@ -312,32 +312,11 @@ test_weighting <- function(matches, w){
     return(result)
 }
 
-# @TODO this is a bad estimator
-estimate_weights <- function(event_matches){
-    fit <- fit_lineup_lm(
-        event_matches, 
-        list(red = event_matches$red_score, blue = event_matches$blue_score)
-    )
-    
-    # sort residuals to be in match order
-    resid <- c(rbind(
-        residuals(fit)[1:nrow(event_matches)], 
-        residuals(fit)[(nrow(event_matches) + 1):(2 * nrow(event_matches))]
-    ))
-    
-    # repeat 1:nrow(matches) twice each for the two alliances in each match
-    resid_fit <- lm(residuals(fit) ~ rep(1:nrow(event_matches), each = 2))
-    # linear prediction fit for the weights
-    w <- coefficients(resid_fit)[1] + 
-        (coefficients(resid_fit)[2] * 1:nrow(event_matches))
-    
-    # normalize to ensure nonnegativity
-    w <- (w - min(w)) / (max(w) - min(w))
-    return(w)
-}
-
 # rough optimization over a grid found 0.9, 0.9, 1.05, 1.1, 1.1 to be optimal
 best_w <- c(0.9, 0.9, 1.05, 1.1, 1.1)
+best_w <- c(0.7, 0.9, 1.1, 1.0, 1.0)
+# see opr_weight_optimization.qmd for computing bin_vars
+best_w <- 1 / bin_vars
 # estimated_w <- estimate_weights(matches[["2022txirv"]])
 results <- test_weighting(matches, best_w)
 # results <- test_weighting(matches, estimated_w)
@@ -390,6 +369,8 @@ gt(viz) %>%
     opt_table_font(
         font = "Futura"
     )
+
+mean(results)
 ```
 
 # Estimating weights as a function of the residuals
@@ -402,12 +383,4 @@ matches <- matches[["2022txirv"]]
 test_weighting(matches, normalize_weights(estimate_weights(matches)))
 ```
 
-@TODO test finding weights by using residuals of null model
-
-@TODO how much does the optimal weighting change on a per-game basis? (Prior: not much)
-
-@TODO write a bunch of test cases
-
 @TODO for the kids: replicate these results but in python.
-
-Outstanding questions: 1) Try a more fine-grain weight grid 2) Failure analysis - what happened at the worst events? - Take a look when the bins = 30: What's going on with that?

@@ -14,7 +14,7 @@ library(devtools)
 load_all()
 rm(list = ls())
 load("../data/district_quals_09_24.rda")
-matches <- matches[startsWith(names(matches), "2022")]
+# matches <- matches[startsWith(names(matches), "2022")]
 ```
 
 To estimate the weighting, we will fit a regular unweighted regression for each event and investigate the relationship between the residuals and the match number. To make comparison possible between events with different numbers of matches, we need to convert each match to a proportion of the progress through the tournament that the match took place at.
@@ -41,7 +41,7 @@ fits <- lapply(matches, fit_opr)
 residuals <- lapply(fits, function(fit){return(residuals(fit))})
 
 normalized_resids <- lapply(residuals, function(residuals){
-    return(scale(residuals))
+    return(scale(residuals, center = FALSE))
 })
 
 library(extrafont)
@@ -49,6 +49,8 @@ gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
 
 viz <- data.frame(
+    resids = unlist(residuals, use.names = FALSE),
+    std_resids = unlist(normalized_resids, use.names = FALSE),
     sq_resids = unlist(residuals, use.names = FALSE) ^ 2,
     sq_norm_resids = unlist(normalized_resids, use.names = FALSE) ^ 2,
     match_percentile = unlist(lapply(residuals, normalize_match_number), 
@@ -87,38 +89,228 @@ ggplot(viz, aes(x = log(match_percentile), y = log(sq_norm_resids))) +
                                           color = gos_blue))
 ```
 
-@TODO make a consistent GoS theme for ggplot
-@TODO set up a meeting with Divya about the linear analysis
-@TODO ask Reinhart about the methodology
+# estimating the weights by the slope of the residuals
 
-# Expanding Analysis to all years
+this estimator did not turn out well - actively worse than unweighteds
 
 ```{r}
+estimate_weights <- function(event_matches){
+    fit <- fit_lineup_lm(
+        event_matches, 
+        list(red = event_matches$red_score, blue = event_matches$blue_score)
+    )
+    
+    # sort residuals to be in match order
+    resid <- c(rbind(
+        residuals(fit)[1:nrow(event_matches)], 
+        residuals(fit)[(nrow(event_matches) + 1):(2 * nrow(event_matches))]
+    ))
+    
+    # repeat 1:nrow(matches) twice each for the two alliances in each match
+    resid_fit <- lm(residuals(fit) ~ rep(1:nrow(event_matches), each = 2))
+    # linear prediction fit for the weights
+    w <- coefficients(resid_fit)[1] + 
+        (coefficients(resid_fit)[2] * 1:nrow(event_matches))
+    
+    # normalize to ensure nonnegativity
+    w <- (w - min(w)) / (max(w) - min(w))
+    return(w)
+}
+```
+
+
+# Computing Weights by bin variance
+
+```{r}
+n_bins <- 11
+cuts <- cut(viz$match_percentile, breaks = n_bins)
+labs <- levels(cuts)
+
+bin_vars <- rep(0, length(unique(cuts)))
+# use standardized residuals to account for year and event week
+for (i in 1:length(unique(cuts))){
+    bin_vars[i] <- var(unlist(normalized_resids)[cuts == levels(cuts)[i]])
+}
+
+plot(x = 1:length(bin_vars), y = bin_vars)
+```
+
+Looking at the plot with varying numbers of bins, we'll model the variance in the residuals as two lines, one for the left-hand half of the data and one for the right-hand half of the data. We'll do two regressions to model this, one for match percentiles less than 0.5 and one for match percentiles greater than 0.5
+
+```{r}
+idx <- 1:(floor(length(bin_vars) / 2))
+first_half_fit <- lm(bin_vars[idx] ~ idx)
+idx <- (ceiling(length(bin_vars) / 2)):length(bin_vars)
+second_half_fit <- lm(bin_vars[idx] ~ idx)
+
+plot(x = 1:length(bin_vars), y = bin_vars)
+abline(first_half_fit, col = gos_blue)
+abline(second_half_fit, col = gos_red)
+```
+
+Now we need to write the variances in terms of the slopes, and then turn the variances into weights by inverting them.
+
+```{r}
+weights_from_lines <- function(intercept_1, intercept_2, n_bins, slope_1, slope_2){
+    first_half <- rep(intercept_1, floor(n_bins / 2))
+    first_half <- first_half + (slope_1 * (1:length(first_half) - 1))
+    second_half <- rep(intercept_2 + (slope_2 * ((floor(n_bins / 2) + 1))), 
+                       ceiling(n_bins / 2))
+    second_half <- second_half + (slope_2 * (1:length(second_half) - 1))
+    result <- 1 / c(first_half, second_half)
+    names(result) <- NULL
+    return(result)
+}
+
+w <- weights_from_lines(
+    coefficients(first_half_fit)[1], coefficients(second_half_fit)[1], n_bins,
+    coefficients(first_half_fit)[2], coefficients(second_half_fit)[2]
+)
+```
+
+# Testing Weight Optimization
+
+```{r}
+# assume "w" is a length-5 vector where each index represents an integer
+# weight on the importance of a set of 2 "rounds" of matches (each team playing)
+# 2 matches, on average
+# assume "matches" is a dataframe of qualification matches, *in order*, of
+# a district competition (or regional with 12 quals)
+compute_mse_diff <- function(matches, w){
+    # assumption: we are looking at districts only
+    roundlen <- nrow(matches) / 12
+
+    # reserve the last 2 matches for testing
+    test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
+    train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
+
+    null_fit <- fit_lineup_lm(
+        train, list(red = train$red_score, blue = train$blue_score)
+    )
+
+    # apply given weighting
+    weighted <- weight_rows(train, w)
+
+    weighted_fit <- fit_lineup_lm(
+        weighted, list(red = weighted$red_score, blue = weighted$blue_score)
+    )
+
+    test_design <- lineup_design_matrix(test)
+    test_design$response <- c(test$blue_score, test$red_score)
+    
+    preds_null <- predict(null_fit, newdata = test_design)
+    preds_weighted <- predict(weighted_fit, newdata = test_design)
+    true_response <- c(test$blue_score, test$red_score)
+    
+    mse_null <- mean((preds_null - true_response) ^ 2)
+    mse_weighted <- mean((preds_weighted - true_response) ^ 2)
+    return(mse_weighted - mse_null)
+}
+
+# redefine compute_mse_diff to use WLS
+compute_mse_diff <- function(matches, w){
+    # reserve the last 2 matches for testing
+    test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
+    train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
+
+    null_fit <- fit_lineup_lm(
+        train, list(red = train$red_score, blue = train$blue_score)
+    )
+
+    weighted_fit <- fit_lineup_lm(
+        train, list(red = train$red_score, blue = train$blue_score), w
+    )
+
+    test_design <- lineup_design_matrix(test)
+    test_design$response <- c(test$blue_score, test$red_score)
+    
+    preds_null <- predict(null_fit, newdata = test_design)
+    preds_weighted <- predict(weighted_fit, newdata = test_design)
+    true_response <- c(test$blue_score, test$red_score)
+    
+    mse_null <- mean((preds_null - true_response) ^ 2)
+    mse_weighted <- mean((preds_weighted - true_response) ^ 2)
+    return(mse_weighted - mse_null)
+}
+
+# matches - list of dataframes, each with qual matches with >= 12 matches/team
+# w - vector representing the weighting
+# returns a vector of mean squared errors for each event in `matches`, where
+# negative means that the weighted models performed better and positive means
+# that the null models performed better.
+test_weighting <- function(matches, w){
+    # don't need to normalize weights anymore because the helper function does
+    diffs <- sapply(
+        matches, compute_mse_diff, w = w
+    )
+    names(diffs) <- names(matches)
+    
+    # normalize errors for cross-year comparisons
+    unique_years <- unique(as.numeric(substr(names(matches), 1, 4)))
+    result <- unlist(lapply(
+        unique_years, 
+        function(year, diffs){
+            batch <- diffs[startsWith(names(diffs), as.character(year))]
+            scale(batch, center = FALSE)
+        }, 
+        diffs
+    ))
+    names(result) <- names(diffs)
+    
+    return(result)
+}
+```
+
+```{r visualization}
 library(extrafont)
 library(gt)
 
 gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
 
-match_percentile <- unlist(lapply(residuals, normalize_match_number), use.names = FALSE)
+viz <- results
 
-sq_resids <- unlist(residuals, use.names = FALSE) ^ 2
+par(family = "Futura")
+hist(viz, breaks = 25, 
+     main = "Weighting Improves OPR Predictions", 
+     sub = "District Event Qualifications, 2009 - 2024", 
+     xlab = "Year-Normalized Mean Squared Error Difference", ylab = "# Events", 
+     col = gos_blue, border = "black")
+abline(v = mean(viz), col = gos_red, lwd = 2)
 
-plot(x = axis_mtch_percentile, 
-     y = log(yaxis_residual_scatter), 
-     col = alpha("white", 0.5), pch = 1, 
-     xlab = NA, ylab = NA, xaxt = "n", yaxt = "n")
+viz <- data.frame(mse_diff = viz, year = as.factor(substr(names(viz), 1, 4)))
 
-rect(par("usr")[1], par("usr")[3],
-     par("usr")[2], par("usr")[4],
-     col = gos_blue)
+ggplot(viz, aes(x = mse_diff)) + 
+    geom_density(alpha = 0.2, fill = gos_blue) + 
+    facet_wrap(~year) +
+    labs(title = "OPR Weighting MSE Difference", x = "MSE Difference")
 
-par(new = TRUE, family = "Futura")
+viz <- viz %>%
+    group_by(year) %>%
+    summarize(mean_diff = mean(mse_diff), 
+              median_diff = median(mse_diff))
 
-plot(x = axis_mtch_percentile, 
-     y = log(yaxis_residual_scatter), 
-     col = alpha(gos_red, 0.5), pch = 1)
+colnames(viz) <- c("Year", "Mean MSE Difference", "Median MSE Difference")
 
-abline(residual_fit, col = "white")
+gt(viz) %>%
+    tab_header(
+        title = "By-year MSE differences between weighted OPR and null OPR"
+    ) %>%
+    tab_options(
+        column_labels.background.color = gos_blue
+    ) %>%
+    tab_style(
+        cell_borders(color = gos_blue), 
+        cells_body()
+    ) %>%
+    opt_table_font(
+        font = "Futura"
+    )
 
+mean(results)
 ```
+
+@TODO make a consistent GoS theme for ggplot
+@TODO set up a meeting with Divya about the linear analysis
+@TODO how much does the optimal weighting change on a per-game basis? (Prior: not much)
+@TODO consider whether we should randomly reserve matches for test set rather than reserving the last 2 rounds
