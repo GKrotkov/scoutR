@@ -268,7 +268,7 @@ library(gt)
 gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
 
-viz <- results
+viz <- test_weighting(matches, w)
 
 par(family = "Futura")
 hist(viz, breaks = 25, 
@@ -307,7 +307,7 @@ gt(viz) %>%
         font = "Futura"
     )
 
-mean(results)
+mean(viz)
 ```
 
 @TODO make a consistent GoS theme for ggplot
