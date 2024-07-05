@@ -92,6 +92,9 @@ apply_indexer <- function(df, idx){
 #' it is the *least* common multiple, these will be the smallest possible
 #' integer weights.
 normalize_weights <- function(w, len_out = NA) {
+    # round the digits to 4 places to avoid number representation problems
+    # (when the fractionalized numbers get too large, we hit 2's complement)
+    w <- round(w, digits = 4)
     stopifnot("weights must be nonnegative" = {all(w >= 0)})
     # apply MASS fractional approximation
     fractions <- sapply(w, function(x) {as.character(MASS::fractions(x))})

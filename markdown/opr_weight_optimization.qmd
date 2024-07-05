@@ -7,14 +7,15 @@ format: html
 
 It is difficult to optimize the weights because we are optimizing over an uncountably infinite grid. So we are interested in directly estimating the weights rather than numerically optimizing them.
 
-For simplicity, let's restrict our analysis to 2022.
-
 ```{r setup, message = FALSE, warning = FALSE}
 library(devtools)
 load_all()
 rm(list = ls())
 load("../data/district_quals_09_24.rda")
-# matches <- matches[startsWith(names(matches), "2022")]
+library(extrafont)
+library(plotly)
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
 ```
 
 To estimate the weighting, we will fit a regular unweighted regression for each event and investigate the relationship between the residuals and the match number. To make comparison possible between events with different numbers of matches, we need to convert each match to a proportion of the progress through the tournament that the match took place at.
@@ -44,10 +45,6 @@ normalized_resids <- lapply(residuals, function(residuals){
     return(scale(residuals, center = FALSE))
 })
 
-library(extrafont)
-gos_blue <- "#337DFC"
-gos_red <- "#F7041A"
-
 viz <- data.frame(
     resids = unlist(residuals, use.names = FALSE),
     std_resids = unlist(normalized_resids, use.names = FALSE),
@@ -57,43 +54,55 @@ viz <- data.frame(
                               use.names = FALSE)
 )
 
-norm_resid_fit <- lm(sq_norm_resids ~ match_percentile, data = viz)
+sq_norm_resid_fit <- lm(sq_norm_resids ~ match_percentile, data = viz)
 
 ggplot(viz, aes(x = match_percentile, y = sq_norm_resids)) + 
     geom_point(col = gos_red, alpha = 0.2) + 
     geom_smooth(method = "lm", formula = y ~ x, col = "black") +
+    annotate("label", 
+             x = mean(viz$match_percentile), 
+             y = mean(viz$sq_norm_resids), 
+             label = paste0(
+                 "Slope: ", round(coefficients(sq_norm_resid_fit)[2], 3))
+             ) + 
     labs(title = "SLR residuals slightly decrease as the tournament proceeds", 
          x = "Qual Match Percentile", y = "Squared Normalized Residual") + 
     theme(text = element_text(family = "Futura"), 
-          panel.background = element_rect(fill = "#FAFAFA", color = "#FAFAFA", 
-                                          size = 0.5, linetype = "solid"), 
-          panel.grid.major = element_line(size = 0.5, linetype = "solid", 
+          panel.background = element_rect(fill = "#FFFFFF", color = "#FFFFFF", 
+                                          linewidth = 0.5, linetype = "solid"), 
+          panel.grid.major = element_line(linewidth = 0.5, linetype = "solid", 
                                           color = gos_blue), 
-          panel.grid.minor = element_line(size = 0.25, linetype = "solid", 
+          panel.grid.minor = element_line(linewidth = 0.25, linetype = "solid", 
                                           color = gos_blue))
 
-norm_resid_fit <- lm(log(sq_norm_resids) ~ log(match_percentile), data = viz)
+log_log_fit <- lm(log(sq_norm_resids) ~ log(match_percentile), data = viz)
 
 ggplot(viz, aes(x = log(match_percentile), y = log(sq_norm_resids))) + 
     geom_point(col = gos_red, alpha = 0.2) + 
     geom_smooth(method = "lm", formula = y ~ x, col = "black") +
+    annotate("label", 
+             x = mean(log(viz$match_percentile)), 
+             y = mean(log(viz$sq_norm_resids)), 
+             label = paste0(
+                 "Slope: ", round(coefficients(log_log_fit)[2], 3))
+             ) + 
     labs(title = "Log-log transformation improves the linearity of the fit", 
          x = "Log Qual Match Percentile", 
          y = "Log Squared Normalized Residual") + 
     theme(text = element_text(family = "Futura"), 
-          panel.background = element_rect(fill = "#FAFAFA", color = "#FAFAFA", 
-                                          size = 0.5, linetype = "solid"), 
-          panel.grid.major = element_line(size = 0.5, linetype = "solid", 
+          panel.background = element_rect(fill = "#FFFFFF", color = "#FFFFFF", 
+                                          linewidth = 0.5, linetype = "solid"), 
+          panel.grid.major = element_line(linewidth = 0.5, linetype = "solid", 
                                           color = gos_blue), 
-          panel.grid.minor = element_line(size = 0.25, linetype = "solid", 
+          panel.grid.minor = element_line(linewidth = 0.25, linetype = "solid", 
                                           color = gos_blue))
 ```
 
-# estimating the weights by the slope of the residuals
+# Estimating the weights by the slope of the residuals
 
-this estimator did not turn out well - actively worse than unweighteds
+This estimator did not turn out well - actively worse than unweighteds
 
-```{r}
+```{r, include = FALSE}
 estimate_weights <- function(event_matches){
     fit <- fit_lineup_lm(
         event_matches, 
@@ -122,7 +131,7 @@ estimate_weights <- function(event_matches){
 # Computing Weights by bin variance
 
 ```{r}
-n_bins <- 11
+n_bins <- 12
 cuts <- cut(viz$match_percentile, breaks = n_bins)
 labs <- levels(cuts)
 
@@ -132,10 +141,12 @@ for (i in 1:length(unique(cuts))){
     bin_vars[i] <- var(unlist(normalized_resids)[cuts == levels(cuts)[i]])
 }
 
-plot(x = 1:length(bin_vars), y = bin_vars)
+plot(x = 1:length(bin_vars), y = bin_vars, 
+     xlab = "Bin Number", ylab = "Normalized Residual Variance", 
+     main = "Residual Variance by Binned Tournament Progress")
 ```
 
-Looking at the plot with varying numbers of bins, we'll model the variance in the residuals as two lines, one for the left-hand half of the data and one for the right-hand half of the data. We'll do two regressions to model this, one for match percentiles less than 0.5 and one for match percentiles greater than 0.5
+Looking at the plot with varying numbers of bins, we'll model the variance in the residuals as two lines, one for the left-hand half of the data and one for the right-hand half of the data. We'll do two regressions to model this, one for match percentiles less than 0.5 and one for match percentiles greater than or equal to 0.5
 
 ```{r}
 idx <- 1:(floor(length(bin_vars) / 2))
@@ -143,7 +154,9 @@ first_half_fit <- lm(bin_vars[idx] ~ idx)
 idx <- (ceiling(length(bin_vars) / 2)):length(bin_vars)
 second_half_fit <- lm(bin_vars[idx] ~ idx)
 
-plot(x = 1:length(bin_vars), y = bin_vars)
+plot(x = 1:length(bin_vars), y = bin_vars, 
+     xlab = "Bin Number", ylab = "Normalized Residual Variance", 
+     main = "Two lines approximate the variance relationship")
 abline(first_half_fit, col = gos_blue)
 abline(second_half_fit, col = gos_red)
 ```
@@ -170,55 +183,25 @@ w <- weights_from_lines(
 
 # Testing Weight Optimization
 
-```{r}
-# assume "w" is a length-5 vector where each index represents an integer
-# weight on the importance of a set of 2 "rounds" of matches (each team playing)
-# 2 matches, on average
-# assume "matches" is a dataframe of qualification matches, *in order*, of
-# a district competition (or regional with 12 quals)
-compute_mse_diff <- function(matches, w){
-    # assumption: we are looking at districts only
-    roundlen <- nrow(matches) / 12
+Reasons to reserve the last 2/12 matches instead of randomly selecting: 
+- Casts the problem as a prediction, rather than inference, problem: we are interested in approximating a team's performance heading into the playoff rounds
+- Follows the sequential nature of the data
+- Treats every event in the same manner, while if we randomly picked there would be an interaction with the year effect which would be difficult to account for
 
-    # reserve the last 2 matches for testing
-    test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
-    train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
-
-    null_fit <- fit_lineup_lm(
-        train, list(red = train$red_score, blue = train$blue_score)
-    )
-
-    # apply given weighting
-    weighted <- weight_rows(train, w)
-
-    weighted_fit <- fit_lineup_lm(
-        weighted, list(red = weighted$red_score, blue = weighted$blue_score)
-    )
-
-    test_design <- lineup_design_matrix(test)
-    test_design$response <- c(test$blue_score, test$red_score)
-    
-    preds_null <- predict(null_fit, newdata = test_design)
-    preds_weighted <- predict(weighted_fit, newdata = test_design)
-    true_response <- c(test$blue_score, test$red_score)
-    
-    mse_null <- mean((preds_null - true_response) ^ 2)
-    mse_weighted <- mean((preds_weighted - true_response) ^ 2)
-    return(mse_weighted - mse_null)
-}
-
+```{r optimization-helpers}
 # redefine compute_mse_diff to use WLS
+# assume matches is a dataframe of matches with red_score and blue_score columns
 compute_mse_diff <- function(matches, w){
-    # reserve the last 2 matches for testing
-    test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
-    train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
+    # reserve the last 2/12 matches for testing
+    test <- weight_rows(matches, c(rep(0, 5), 1))
+    train <- weight_rows(matches, c(rep(1, 5), 0))
 
     null_fit <- fit_lineup_lm(
         train, list(red = train$red_score, blue = train$blue_score)
     )
 
     weighted_fit <- fit_lineup_lm(
-        train, list(red = train$red_score, blue = train$blue_score), w
+        train, list(red = train$red_score, blue = train$blue_score), w = w
     )
 
     test_design <- lineup_design_matrix(test)
@@ -268,33 +251,46 @@ library(gt)
 gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
 
-viz <- test_weighting(matches, w)
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
 
-par(family = "Futura")
-hist(viz, breaks = 25, 
-     main = "Weighting Improves OPR Predictions", 
-     sub = "District Event Qualifications, 2009 - 2024", 
-     xlab = "Year-Normalized Mean Squared Error Difference", ylab = "# Events", 
-     col = gos_blue, border = "black")
-abline(v = mean(viz), col = gos_red, lwd = 2)
+mse_diffs <- test_weighting(matches, w)
 
-viz <- data.frame(mse_diff = viz, year = as.factor(substr(names(viz), 1, 4)))
+viz <- data.frame(mse_diff = mse_diffs, 
+                  year = as.factor(substr(names(mse_diffs), 1, 4)))
+
+ggplot(viz, aes(x = mse_diff)) + 
+    geom_histogram(fill = gos_blue, color = "black", 
+                   bins = ceiling(sqrt(nrow(viz)))) + 
+    geom_vline(aes(xintercept = mean(mse_diff)), color = gos_red) + 
+    annotate("label", x = mean(mse_diffs), y = 15, 
+             label = paste0("Mean: ", round(mean(mse_diffs), 3))) +
+    labs(title = "Weighting Improves OPR Predictions", 
+         subtitle = "District Event Qualifications, 2009 - 2024", 
+         x = "Year-Normalized Mean Squared Error Difference (Std Devs)", 
+         y = "# Events") +
+    gos_theme
 
 ggplot(viz, aes(x = mse_diff)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
-    labs(title = "OPR Weighting MSE Difference", x = "MSE Difference")
+    labs(title = "OPR Weighting MSE Difference", x = "MSE Difference", 
+         y = "Density") + 
+    gos_theme
 
 viz <- viz %>%
     group_by(year) %>%
-    summarize(mean_diff = mean(mse_diff), 
+    summarize(events = n(), 
+              mean_diff = mean(mse_diff), 
               median_diff = median(mse_diff))
 
-colnames(viz) <- c("Year", "Mean MSE Difference", "Median MSE Difference")
+colnames(viz) <- c(
+    "Year", "# Events", "Mean MSE Difference", "Median MSE Difference"
+)
 
 gt(viz) %>%
     tab_header(
-        title = "By-year MSE differences between weighted OPR and null OPR"
+        title = "Yearly MSE differences between null and weighted OPR"
     ) %>%
     tab_options(
         column_labels.background.color = gos_blue
@@ -306,11 +302,7 @@ gt(viz) %>%
     opt_table_font(
         font = "Futura"
     )
-
-mean(viz)
 ```
 
-@TODO make a consistent GoS theme for ggplot
 @TODO set up a meeting with Divya about the linear analysis
 @TODO how much does the optimal weighting change on a per-game basis? (Prior: not much)
-@TODO consider whether we should randomly reserve matches for test set rather than reserving the last 2 rounds

@@ -5,12 +5,10 @@
 - document() to call roxygen documentation handlers
 
 ## Weighting
-1) Have GoS re-implement in Python
-2) Consult with Reinhart to make sure the methodology is sound
-    - How can I optimize the weighting?
-3) Do the best weightings vary from year to year?
-4) Failure analysis
-5) Functions to make competition usage easy
+0) Known bug: 
+    - When calling normalize_weights with len_out = 12, we get degenerate output weights (all on the very slightly negative side of 0)
+1) Do the best weightings vary from year to year?
+2) Functions to make competition usage easy
 
 ## Long term:
 - Generic, automated data validation via `tba_validatoR`

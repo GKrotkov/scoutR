@@ -30,6 +30,7 @@ cuts <- cut(1:nrow(matches), length(weights))
 result <- data.frame()
 for (i in seq_along(weights)){
     bin <- matches[cuts == cuts[i], ]
+    # using replacement sampling to acheive the weighting
     result <- rbind(result, bin[rep(seq_len(nrow(bin)), weights[i]), ])
 }
 
@@ -76,55 +77,9 @@ cat("\n", "Null fit adj. R^2:", summary(null_fit)$adj.r.squared, "\n",
     summary(weighted_fit)$adj.r.squared - summary(null_fit)$adj.r.squared, "\n")
 ```
 
-# Testing whether throwing out the first two rounds of matches improves OPR
+# Testing based on 2022
 
-I'll restrict this code to districts because always having 12 qualification matches makes things significantly easier.
-
-```{r}
-library(devtools)
-load_all()
-
-event_key <- "2023txfor"
-
-matches <- event_matches(event_key, match_type = "qual")
-matches <- matches[order(matches$match_number), ]
-
-roundlen <- nrow(matches) / 12
-
-# reserve the last 2 matches for testing
-test <- weight_rows(matches, c(rep(0, 10), rep(1, 2)))
-train <- weight_rows(matches, c(rep(1, 10), rep(0, 2)))
-
-null_fit <- fit_lineup_lm(
-    train, list(red = train$red_score, blue = train$blue_score)
-)
-
-# throw out the first 2 rounds of matches
-weighted <- weight_rows(
-    train, c(3, 4, 4, 4, 5)
-)
-
-weighted_fit <- fit_lineup_lm(
-    weighted, list(red = weighted$red_score, blue = weighted$blue_score)
-)
-
-test_design <- lineup_design_matrix(test)
-test_design$response <- c(test$blue_score, test$red_score)
-
-preds_null <- predict(null_fit, newdata = test_design)
-preds_weighted <- predict(weighted_fit, newdata = test_design)
-true_response <- c(test$blue_score, test$red_score)
-
-mse_null <- mean((preds_null - true_response) ^ 2)
-mse_weighted <- mean((preds_weighted - true_response) ^ 2)
-
-cat("\n", "Null MSE:", mse_null, "\n", 
-    "Weighted MSE:", mse_weighted, "\n")
-```
-
-Testing for all districts in 2022
-
-Picking 2022 because that was a generally excellent year for OPR (scoring highly separable and linear)
+Picking 2022 because that was a generally excellent year for OPR (scoring highly separable and linear). Changing code to rely on Mean Squared Error directly rather than looking at R^2.
 
 ```{r}
 # assume "w" is a length-5 vector where each index represents an integer
@@ -314,12 +269,7 @@ test_weighting <- function(matches, w){
 
 # rough optimization over a grid found 0.9, 0.9, 1.05, 1.1, 1.1 to be optimal
 best_w <- c(0.9, 0.9, 1.05, 1.1, 1.1)
-best_w <- c(0.7, 0.9, 1.1, 1.0, 1.0)
-# see opr_weight_optimization.qmd for computing bin_vars
-best_w <- 1 / bin_vars
-# estimated_w <- estimate_weights(matches[["2022txirv"]])
 results <- test_weighting(matches, best_w)
-# results <- test_weighting(matches, estimated_w)
 ```
 
 Visualizing the results
@@ -372,15 +322,3 @@ gt(viz) %>%
 
 mean(results)
 ```
-
-# Estimating weights as a function of the residuals
-
-```{r}
-load("../data/district_quals_09_24.rda")
-matches <- matches[["2022txirv"]]
-
-
-test_weighting(matches, normalize_weights(estimate_weights(matches)))
-```
-
-@TODO for the kids: replicate these results but in python.
