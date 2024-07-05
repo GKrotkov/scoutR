@@ -5,10 +5,9 @@
 - document() to call roxygen documentation handlers
 
 ## Weighting
-0) Known bug: 
-    - When calling normalize_weights with len_out = 12, we get degenerate output weights (all on the very slightly negative side of 0)
-1) Do the best weightings vary from year to year?
-2) Functions to make competition usage easy
+1) Consider randomly retaining matches for MSE calculation rather than picking the last two
+    - Leave-one-out cross validation?
+2) Consider using in-sample MSE instead of test MSE
 
 ## Long term:
 - Generic, automated data validation via `tba_validatoR`

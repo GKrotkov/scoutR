@@ -131,7 +131,7 @@ estimate_weights <- function(event_matches){
 # Computing Weights by bin variance
 
 ```{r}
-n_bins <- 12
+n_bins <- 11
 cuts <- cut(viz$match_percentile, breaks = n_bins)
 labs <- levels(cuts)
 
