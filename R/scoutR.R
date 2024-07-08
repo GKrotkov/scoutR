@@ -108,8 +108,8 @@ lineup_design_matrix <- function(matches){
 #' @param responses A list of two vectors, `red` and `blue`. Each must be a
 #' vector of the same length as the number of rows in `lineups`, representing
 #' the response value to fit a linear model to.
-#' @param w Weights for WLS fit. Weights will be normalized to be integers
-#' and to have the same length as `lineups` has rows.
+#' @param w Weights for WLS fit. Weights will be extended with `rep_len` to have
+#' length corresponding to the rows of `lineups`.
 #' @details Key assumption - the order of `lineups` and the `responses` vector
 #' must line up exactly. Otherwise, the fit will be meaningless.
 fit_lineup_lm <- function(lineups, responses, w = NULL){
@@ -123,8 +123,10 @@ fit_lineup_lm <- function(lineups, responses, w = NULL){
     if (is.null(w)){
         w <- rep(1, nrow(lineups))
     }
-    w <- normalize_weights(w, len_out = nrow(lineups))
-    # double the length of weights to match blue/red alliances
+    # lm() weights parameter we doesn't need integer weights so we can use
+    # rep_len() instead of normalize_weights
+    w <- rep_len(w, length.out = nrow(lineups))
+    # double the length of weights to mirror blue/red alliances
     w <- c(w, w)
     design <- lineup_design_matrix(lineups)
     # the design matrix function does blue first, then red, so we mirror that

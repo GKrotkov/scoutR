@@ -121,7 +121,7 @@ normalize_weights <- function(w, len_out = NA) {
     result <- round(w * lcm_den)
 
     if (!is.na(len_out)){
-        # all elements are multiplied an additonal baseline number of times
+        # all elements are multiplied an additional baseline number of times
         baseline <- floor(len_out / length(w))
         # only the first (len_out mod len(w)) elements get an additional 1
         adj <- c(rep(1, len_out %% length(w)),

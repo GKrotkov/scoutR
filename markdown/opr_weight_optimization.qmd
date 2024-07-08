@@ -303,6 +303,3 @@ gt(viz) %>%
         font = "Futura"
     )
 ```
-
-@TODO set up a meeting with Divya about the linear analysis
-@TODO how much does the optimal weighting change on a per-game basis? (Prior: not much)
