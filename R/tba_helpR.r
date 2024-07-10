@@ -80,6 +80,21 @@ apply_indexer <- function(df, idx){
     return(diag(indexed))
 }
 
+#' Repeat Each for Given Length
+#'
+#' Extend a vector to have a given (`len_out`) length by repeating elements
+#' using the `each` functionality of `rep()`
+#' @param v input vector to extend
+#' @param len_out the desired final length of the vector
+rep_each_len <- function(v, len_out){
+    # all elements are multiplied an additional baseline number of times
+    baseline <- floor(len_out / length(v))
+    # only the first (len_out mod len(v)) elements get an additional 1
+    adj <- c(rep(1, len_out %% length(v)),
+             rep(0, length(v) - (len_out %% length(v))))
+    return(rep(v, times = baseline + adj))
+}
+
 #' Normalize Weights
 #'
 #' Takes a vector of real, non-negative weights and converts them to an integer
@@ -121,12 +136,7 @@ normalize_weights <- function(w, len_out = NA) {
     result <- round(w * lcm_den)
 
     if (!is.na(len_out)){
-        # all elements are multiplied an additional baseline number of times
-        baseline <- floor(len_out / length(w))
-        # only the first (len_out mod len(w)) elements get an additional 1
-        adj <- c(rep(1, len_out %% length(w)),
-                 rep(0, length(w) - (len_out %% length(w))))
-        result <- rep(result, times = baseline + adj)
+        result <- rep_each_len(result, len_out)
     }
 
     return(result)

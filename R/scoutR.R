@@ -125,7 +125,7 @@ fit_lineup_lm <- function(lineups, responses, w = NULL){
     }
     # lm() weights parameter we doesn't need integer weights so we can use
     # rep_len() instead of normalize_weights
-    w <- rep_len(w, length.out = nrow(lineups))
+    w <- rep_each_len(w, len_out = nrow(lineups))
     # double the length of weights to mirror blue/red alliances
     w <- c(w, w)
     design <- lineup_design_matrix(lineups)
