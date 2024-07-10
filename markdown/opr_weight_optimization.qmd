@@ -3,19 +3,36 @@ title: "opr_weight_optimization"
 format: html
 ---
 
-# Estimating Weights as a function of residuals
+# Residuals against Match Percentile
 
 It is difficult to optimize the weights because we are optimizing over an uncountably infinite grid. So we are interested in directly estimating the weights rather than numerically optimizing them.
+
+Note that we standardize match scores on a per-event basis so we can make cross-event comparisons; so units are in standard deviations.
 
 ```{r setup, message = FALSE, warning = FALSE}
 library(devtools)
 load_all()
 rm(list = ls())
 load("../data/district_quals_09_24.rda")
+
+# normalize match scores so we can do cross-week and cross-season comparisons
+# this simplifies a lot of later code
+matches <- lapply(
+    matches, 
+    function(match_df){
+        scaled <- scale(c(match_df$red_score, match_df$blue_score))
+        match_df$red_score <- scaled[1:nrow(match_df)]
+        match_df$blue_score <- scaled[(nrow(match_df) + 1):length(scaled)]
+        return(match_df)
+    })
+
 library(extrafont)
-library(plotly)
+library(gt)
 gos_blue <- "#337DFC"
 gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
 ```
 
 To estimate the weighting, we will fit a regular unweighted regression for each event and investigate the relationship between the residuals and the match number. To make comparison possible between events with different numbers of matches, we need to convert each match to a proportion of the progress through the tournament that the match took place at.
@@ -41,54 +58,32 @@ fits <- lapply(matches, fit_opr)
 
 residuals <- lapply(fits, function(fit){return(residuals(fit))})
 
+# applies normalization on a per-event basis, so it respects year and week
+# point variation
 normalized_resids <- lapply(residuals, function(residuals){
     return(scale(residuals, center = FALSE))
 })
 
 viz <- data.frame(
     resids = unlist(residuals, use.names = FALSE),
-    std_resids = unlist(normalized_resids, use.names = FALSE),
     sq_resids = unlist(residuals, use.names = FALSE) ^ 2,
-    sq_norm_resids = unlist(normalized_resids, use.names = FALSE) ^ 2,
     match_percentile = unlist(lapply(residuals, normalize_match_number), 
                               use.names = FALSE)
 )
 
-sq_norm_resid_fit <- lm(sq_norm_resids ~ match_percentile, data = viz)
+sq_resid_fit <- lm(sq_resids ~ match_percentile, data = viz)
 
-ggplot(viz, aes(x = match_percentile, y = sq_norm_resids)) + 
+ggplot(viz, aes(x = match_percentile, y = sq_resids)) + 
     geom_point(col = gos_red, alpha = 0.2) + 
     geom_smooth(method = "lm", formula = y ~ x, col = "black") +
     annotate("label", 
              x = mean(viz$match_percentile), 
-             y = mean(viz$sq_norm_resids), 
+             y = mean(viz$sq_resids), 
              label = paste0(
-                 "Slope: ", round(coefficients(sq_norm_resid_fit)[2], 3))
+                 "Slope: ", round(coefficients(sq_resid_fit)[2], 3))
              ) + 
     labs(title = "SLR residuals slightly decrease as the tournament proceeds", 
-         x = "Qual Match Percentile", y = "Squared Normalized Residual") + 
-    theme(text = element_text(family = "Futura"), 
-          panel.background = element_rect(fill = "#FFFFFF", color = "#FFFFFF", 
-                                          linewidth = 0.5, linetype = "solid"), 
-          panel.grid.major = element_line(linewidth = 0.5, linetype = "solid", 
-                                          color = gos_blue), 
-          panel.grid.minor = element_line(linewidth = 0.25, linetype = "solid", 
-                                          color = gos_blue))
-
-log_log_fit <- lm(log(sq_norm_resids) ~ log(match_percentile), data = viz)
-
-ggplot(viz, aes(x = log(match_percentile), y = log(sq_norm_resids))) + 
-    geom_point(col = gos_red, alpha = 0.2) + 
-    geom_smooth(method = "lm", formula = y ~ x, col = "black") +
-    annotate("label", 
-             x = mean(log(viz$match_percentile)), 
-             y = mean(log(viz$sq_norm_resids)), 
-             label = paste0(
-                 "Slope: ", round(coefficients(log_log_fit)[2], 3))
-             ) + 
-    labs(title = "Log-log transformation improves the linearity of the fit", 
-         x = "Log Qual Match Percentile", 
-         y = "Log Squared Normalized Residual") + 
+         x = "Qual Match Percentile", y = "Squared Residual") + 
     theme(text = element_text(family = "Futura"), 
           panel.background = element_rect(fill = "#FFFFFF", color = "#FFFFFF", 
                                           linewidth = 0.5, linetype = "solid"), 
@@ -98,7 +93,7 @@ ggplot(viz, aes(x = log(match_percentile), y = log(sq_norm_resids))) +
                                           color = gos_blue))
 ```
 
-# Estimating the weights by the slope of the residuals
+# Residual Slope Weight Estimation
 
 This estimator did not turn out well - actively worse than unweighteds
 
@@ -125,13 +120,14 @@ estimate_weights <- function(event_matches){
     w <- (w - min(w)) / (max(w) - min(w))
     return(w)
 }
+
+rm(estimate_weights)
 ```
 
-
-# Computing Weights by bin variance
+# Bin Variance Weight Estimates
 
 ```{r}
-n_bins <- 11
+n_bins <- 6
 cuts <- cut(viz$match_percentile, breaks = n_bins)
 labs <- levels(cuts)
 
@@ -181,20 +177,22 @@ w <- weights_from_lines(
 )
 ```
 
-# Testing Weight Optimization
+(We also tested the linear approximation weights against just using `1/bin_vars`, which performed worse by test MSE)
 
-Reasons to reserve the last 2/12 matches instead of randomly selecting: 
-- Casts the problem as a prediction, rather than inference, problem: we are interested in approximating a team's performance heading into the playoff rounds
-- Follows the sequential nature of the data
+# Test MSE
+
+Reasons to reserve the last 3/12 matches instead of randomly selecting: 
+- Casts the problem as a prediction, rather than inference, problem: we are interested in approximating a team's performance heading into the playoff rounds 
+- Follows the sequential nature of the data 
 - Treats every event in the same manner, while if we randomly picked there would be an interaction with the year effect which would be difficult to account for
 
 ```{r optimization-helpers}
 # redefine compute_mse_diff to use WLS
 # assume matches is a dataframe of matches with red_score and blue_score columns
 compute_mse_diff <- function(matches, w){
-    # reserve the last 2/12 matches for testing
-    test <- weight_rows(matches, c(rep(0, 5), 1))
-    train <- weight_rows(matches, c(rep(1, 5), 0))
+    # reserve the last 3/12 matches for testing
+    test <- weight_rows(matches, c(rep(0, 3), 1))
+    train <- weight_rows(matches, c(rep(1, 3), 0))
 
     null_fit <- fit_lineup_lm(
         train, list(red = train$red_score, blue = train$blue_score)
@@ -227,33 +225,11 @@ test_weighting <- function(matches, w){
         matches, compute_mse_diff, w = w
     )
     names(diffs) <- names(matches)
-    
-    # normalize errors for cross-year comparisons
-    unique_years <- unique(as.numeric(substr(names(matches), 1, 4)))
-    result <- unlist(lapply(
-        unique_years, 
-        function(year, diffs){
-            batch <- diffs[startsWith(names(diffs), as.character(year))]
-            scale(batch, center = FALSE)
-        }, 
-        diffs
-    ))
-    names(result) <- names(diffs)
-    
-    return(result)
+    return(diffs)
 }
 ```
 
 ```{r visualization}
-library(extrafont)
-library(gt)
-
-gos_blue <- "#337DFC"
-gos_red <- "#F7041A"
-
-gos_theme <- theme_bw() + 
-    theme(text = element_text(family = "Futura"))
-
 mse_diffs <- test_weighting(matches, w)
 
 viz <- data.frame(mse_diff = mse_diffs, 
@@ -267,7 +243,7 @@ ggplot(viz, aes(x = mse_diff)) +
              label = paste0("Mean: ", round(mean(mse_diffs), 3))) +
     labs(title = "Weighting Improves OPR Predictions", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
-         x = "Year-Normalized Mean Squared Error Difference (Std Devs)", 
+         x = "Event-Normalized Mean Squared Error Difference (Std Devs)", 
          y = "# Events") +
     gos_theme
 
@@ -303,3 +279,145 @@ gt(viz) %>%
         font = "Futura"
     )
 ```
+
+# In-Sample MSE
+
+```{r}
+weighted_fit <- function(match_df, w){
+    return(
+        fit_lineup_lm(
+            match_df, 
+            responses = list(
+                red = match_df$red_score, blue = match_df$blue_score
+            ), 
+            w = w
+        )
+    )
+}
+
+compute_in_sample_mse <- function(matches, w){
+    fits <- lapply(matches, weighted_fit, w = w)
+    mses <- sapply(
+        fits, function(fit){
+           return(mean(residuals(fit) ^ 2))
+        })
+    return(mses)
+}
+
+weighted_mse <- compute_in_sample_mse(matches, w)
+raw_mse <- compute_in_sample_mse(matches, 1)
+
+viz <- data.frame(mse_diff = raw_mse - weighted_mse, 
+                  year = as.factor(substr(names(weighted_mse), 1, 4)))
+
+ggplot(viz, aes(x = mse_diff)) + 
+    geom_histogram(fill = gos_blue, color = "black", 
+                   bins = ceiling(sqrt(nrow(viz)))) + 
+    geom_vline(aes(xintercept = mean(mse_diff)), color = gos_red) + 
+    annotate("label", x = mean(viz$mse_diff), y = 15, 
+             label = paste0("Mean: ", round(mean(viz$mse_diff), 6))) +
+    labs(title = "Weighting Improves OPR Predictions", 
+         subtitle = "District Event Qualifications, 2009 - 2024", 
+         x = "Event-Normalized Mean Squared Error Difference (Std Devs)", 
+         y = "# Events") +
+    gos_theme
+
+ggplot(viz, aes(x = mse_diff)) + 
+    geom_density(alpha = 0.2, fill = gos_blue) + 
+    facet_wrap(~year) +
+    labs(title = "OPR Weighting MSE Difference", x = "MSE Difference", 
+         y = "Density") + 
+    gos_theme
+
+viz <- viz %>%
+    group_by(year) %>%
+    summarize(events = n(), 
+              mean_diff = mean(mse_diff), 
+              median_diff = median(mse_diff))
+
+colnames(viz) <- c(
+    "Year", "# Events", "Mean MSE Difference", "Median MSE Difference"
+)
+
+gt(viz) %>%
+    tab_header(
+        title = "Yearly MSE differences between null and weighted OPR"
+    ) %>%
+    tab_options(
+        column_labels.background.color = gos_blue
+    ) %>%
+    tab_style(
+        cell_borders(color = gos_blue), 
+        cells_body()
+    ) %>%
+    opt_table_font(
+        font = "Futura"
+    )
+```
+
+# LOOCV
+
+Advantages of LOOCV: 
+- Retains more of the training test so the weighting makes more sense
+- Shortcut formula can make it computationally efficient
+    - Makes weight optimization over a grid possible
+
+```{r}
+LOOCV <- function(fit){
+    mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
+}
+
+weighted_fits <- lapply(matches, weighted_fit, w = w)
+raw_fits <- lapply(matches, weighted_fit, w = 1)
+
+weighted_loocvs <- sapply(weighted_fits, LOOCV)
+raw_loocvs <- sapply(raw_fits, LOOCV)
+
+viz <- data.frame(loocv_diff = weighted_loocvs - raw_loocvs, 
+                  year = as.factor(substr(names(raw_loocvs), 1, 4)))
+
+ggplot(viz, aes(x = loocv_diff)) + 
+    geom_histogram(fill = gos_blue, color = "black", 
+                   bins = ceiling(sqrt(nrow(viz)))) + 
+    geom_vline(aes(xintercept = mean(loocv_diff)), color = gos_red) + 
+    annotate("label", x = mean(viz$loocv_diff), y = 15, 
+             label = paste0("Mean: ", round(mean(viz$loocv_diff), 3))) +
+    labs(title = "Weighting Improves OPR Predictions", 
+         subtitle = "District Event Qualifications, 2009 - 2024", 
+         x = "Event-Normalized LOOCV Error Difference (Std Devs)", 
+         y = "# Events") +
+    gos_theme
+
+ggplot(viz, aes(x = loocv_diff)) + 
+    geom_density(alpha = 0.2, fill = gos_blue) + 
+    facet_wrap(~year) +
+    labs(title = "OPR Weighting LOOCV Difference", x = "LOOCV Difference", 
+         y = "Density") + 
+    gos_theme
+
+viz <- viz %>%
+    group_by(year) %>%
+    summarize(events = n(), 
+              mean_diff = mean(loocv_diff), 
+              median_diff = median(loocv_diff))
+
+colnames(viz) <- c(
+    "Year", "# Events", "Mean LOOCV Difference", "Median LOOCV Difference"
+)
+
+gt(viz) %>%
+    tab_header(
+        title = "LOOCV differences between raw and weighted OPR"
+    ) %>%
+    tab_options(
+        column_labels.background.color = gos_blue
+    ) %>%
+    tab_style(
+        cell_borders(color = gos_blue), 
+        cells_body()
+    ) %>%
+    opt_table_font(
+        font = "Futura"
+    )
+```
+
