@@ -279,10 +279,9 @@ gt(viz) %>%
     )
 ```
 
-Given the differences in means; I would recommend using the `1 / bin_vars` as the weighting rather than the linear approximation; I trust the LOOCV evaluation over the test MSE evaluation.
+Given the ratio in means; I would recommend using the `1 / bin_vars` as the weighting rather than the linear approximation; I trust the LOOCV evaluation over the test MSE evaluation.
 
 ```{r}
-mean(viz$nonlinear_loocv_diff)
-mean(viz$loocv_diff)
+mean(viz$nonlinear_loocv_diff) / mean(viz$loocv_diff)
 ```
 
