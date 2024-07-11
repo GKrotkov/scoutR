@@ -79,7 +79,7 @@ cat("\n", "Null fit adj. R^2:", summary(null_fit)$adj.r.squared, "\n",
 
 # Testing based on 2022
 
-Picking 2022 because that was a generally excellent year for OPR (scoring highly separable and linear). Changing code to rely on Mean Squared Error directly rather than looking at R^2.
+Picking 2022 because that was a generally excellent year for OPR (scoring highly separable and linear). Changing code to rely on Mean Squared Error directly rather than looking at R\^2.
 
 ```{r}
 # assume "w" is a length-5 vector where each index represents an integer
@@ -151,7 +151,7 @@ abline(v = mean(diffs), col = "red")
 # Testing a single weighting over all district events 2009 - 2024
 
 ```{r}
-load("../data/district_quals_09_24.rda")
+load("../../data/district_quals_09_24.rda")
 
 weights <- c(0.75, 1, 1, 1, 1.25)
 
@@ -185,7 +185,7 @@ abline(v = mean(viz), col = "red")
 # Demonstrate that WLS is essentially identical to row-weighting
 
 ```{r}
-load("../data/district_quals_09_24.rda")
+load("../../data/district_quals_09_24.rda")
 
 evnt <- matches[["2022txirv"]]
 
@@ -212,7 +212,7 @@ all(round(coefficients(weighted_fit) - coefficients(wls_fit), digits = 8) == 0)
 
 ```{r}
 rm(list = ls())
-load("../data/district_quals_09_24.rda")
+load("../../data/district_quals_09_24.rda")
 
 # redefine compute_mse_diff to use WLS
 compute_mse_diff <- function(matches, w){
