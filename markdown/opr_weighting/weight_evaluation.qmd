@@ -222,31 +222,32 @@ LOOCV <- function(fit){
     mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
 }
 
-weighted_fits <- lapply(matches, weighted_fit, w = w)
+linear_weight_fits <- lapply(matches, weighted_fit, w = w)
 nonlinear_weight_fits <- lapply(matches, weighted_fit, w = 1 / bin_vars)
 raw_fits <- lapply(matches, weighted_fit, w = 1)
 
-weighted_loocvs <- sapply(weighted_fits, LOOCV)
-nonlinear_weighted_loocvs <- sapply(nonlinear_weight_fits, LOOCV)
+linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
+nonlinear_weight_loocvs <- sapply(nonlinear_weight_fits, LOOCV)
 raw_loocvs <- sapply(raw_fits, LOOCV)
 
-viz <- data.frame(loocv_diff = weighted_loocvs - raw_loocvs, 
-                  nonlinear_loocv_diff = nonlinear_weighted_loocvs - raw_loocvs,
+viz <- data.frame(linear_loocv_diff = linear_weight_loocvs - raw_loocvs, 
+                  nonlinear_loocv_diff = nonlinear_weight_loocvs - raw_loocvs,
                   year = as.factor(substr(names(raw_loocvs), 1, 4)))
 
-ggplot(viz, aes(x = loocv_diff)) + 
+ggplot(viz, aes(x = nonlinear_loocv_diff)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
-    geom_vline(aes(xintercept = mean(loocv_diff)), color = gos_red) + 
-    annotate("label", x = mean(viz$loocv_diff), y = 15, 
-             label = paste0("Mean: ", round(mean(viz$loocv_diff), 3))) +
+    geom_vline(aes(xintercept = mean(nonlinear_loocv_diff)), color = gos_red) + 
+    annotate("label", x = mean(viz$nonlinear_loocv_diff), y = 15, 
+             label = paste0("Mean: ", 
+                            round(mean(viz$nonlinear_loocv_diff), 3))) +
     labs(title = "Weighting Improves OPR Predictions", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized LOOCV Error Difference (Std Devs)", 
          y = "# Events") +
     gos_theme
 
-ggplot(viz, aes(x = loocv_diff)) + 
+ggplot(viz, aes(x = nonlinear_loocv_diff)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
     labs(title = "OPR Weighting LOOCV Difference", x = "LOOCV Difference", 
@@ -256,11 +257,15 @@ ggplot(viz, aes(x = loocv_diff)) +
 viz <- viz %>%
     group_by(year) %>%
     summarize(events = n(), 
-              mean_diff = mean(loocv_diff), 
-              median_diff = median(loocv_diff))
+              linear_mean_diff = mean(linear_loocv_diff), 
+              linear_median_diff = median(linear_loocv_diff), 
+              nonlinear_mean_diff = mean(nonlinear_loocv_diff), 
+              nonlinear_median_diff = median(nonlinear_loocv_diff))
 
 colnames(viz) <- c(
-    "Year", "# Events", "Mean LOOCV Difference", "Median LOOCV Difference"
+    "Year", "# Events", 
+    "Mean Linear LOOCV Difference", "Median Linear LOOCV Difference", 
+    "Mean Nonlinear LOOCV Difference", "Median Nonlinear LOOCV Difference"
 )
 
 gt(viz) %>%
@@ -282,6 +287,7 @@ gt(viz) %>%
 Given the ratio in means; I would recommend using the `1 / bin_vars` as the weighting rather than the linear approximation; I trust the LOOCV evaluation over the test MSE evaluation.
 
 ```{r}
-mean(viz$nonlinear_loocv_diff) / mean(viz$loocv_diff)
+mean(nonlinear_weight_loocvs - raw_loocvs) / 
+    mean(linear_weight_loocvs - raw_loocvs)
 ```
 
