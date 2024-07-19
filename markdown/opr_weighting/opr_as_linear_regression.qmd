@@ -1,0 +1,91 @@
+---
+title: "OPR As Linear Regression"
+format: html
+---
+
+This markdown document is intended to show that OPR is a special case of linear regression. 
+
+```{r setup}
+rm(list = ls())
+library(devtools)
+load_all()
+
+gpr <- event_matches("2024paca", match_type = "qual")
+```
+
+See `scoutR.R` for the implementation of `fit_lineup_lm`: it creates a design matrix with a column for each team and a row for each alliance-match, then computes a linear regression with the scores as the response and that design matrix as the predictor.
+
+```{r linear-fit}
+linear_fit <- fit_lineup_lm(
+    gpr, list(red = gpr$red_score, blue = gpr$blue_score)
+)
+
+linear_coef <- coefficients(linear_fit)
+```
+
+Now we'll use tbaR to get the OPRs as TBA calculates them, and then check that all the values are equal (within a tolerance of 1.5e-8.)
+
+```{r get-oprs}
+gpr_oprs <- event_oprs("2024paca")
+# put the oprs in ascending team number order and label the vector
+tba_oprs <- gpr_oprs$opr[order(gpr_oprs$team)]
+names(tba_oprs) <- names(linear_coef)
+
+# this will be TRUE if all values of the vector are within a tolerance of 
+# 1.5e-8, and otherwise FALSE.
+all.equal(tba_oprs, linear_coef)
+```
+
+Now, to be additionally sure that it wasn't a fluke, let's do that comparison for every event in 2024. (Doing more than that would take the script a much longer time to run and be a lot of TBA queries for little reward.)
+
+```{r scale-up}
+compare_linear_to_tba <- function(key, margin = 1e-6){
+    data <- event_matches(key, match_type = "qual")
+    # for handling events with no qual matches (i.e. 2024cmptx)
+    if (length(data) == 1 && is.na(data)) return(NA)
+    linear_fit <- fit_lineup_lm(
+        data, list(red = data$red_score, blue = data$blue_score)
+    )
+    linear_coef <- coefficients(linear_fit)
+    
+    opr_df <- event_oprs(key)
+    tba_oprs <- opr_df$opr[order(opr_df$team)]
+    names(tba_oprs) <- names(linear_coef)
+    return(all.equal(tba_oprs, linear_coef))
+}
+
+event_keys <- events(2024, official = TRUE, keys = TRUE)
+result <- sapply(event_keys, compare_linear_to_tba)
+
+# print out all results which are not TRUE
+result[which(result != "TRUE")]
+```
+
+Take a look at both events for which TBA's OPR was not exactly equal to the linear model's coefficients, and notice that both events have null matches at the end of their schedule. That seems very likely to be our culprit somehow. Also notice that for Gwinnett, the event with the much higher mean relative difference, teams are assigned to those matches, while for Severn, no teams are assigned to those matches (or rather, TBA reports it as team number "0") in each alliance slot.
+
+If we exclude the null matches, do the OPRs match exactly?
+
+```{r}
+sev <- event_matches("2024mdsev", match_type = "qual")
+
+sev <- sev[-c(71, 72), ]
+
+linear_fit <- fit_lineup_lm(
+    sev, list(red = sev$red_score, blue = sev$blue_score)
+)
+
+linear_coef <- coefficients(linear_fit)
+
+oprs_df <- event_oprs("2024mdsev")
+oprs_df <- oprs_df[oprs_df$team != 0, ]
+# put the oprs in ascending team number order and label the vector
+tba_oprs <- oprs_df$opr[order(oprs_df$team)]
+names(tba_oprs) <- names(linear_coef)
+
+# this will be TRUE if all values of the vector are within a tolerance of 
+# 1.5e-8, and otherwise FALSE.
+all.equal(tba_oprs, linear_coef)
+
+gwin <- event_matches("2024gagwi", match_type = "qual")
+```
+
