@@ -140,13 +140,14 @@ unpack_breakdown <- function(matches){
 #' @param alliances (boolean) unpack the alliances?
 #' @param breakdown (boolean) unpack the score breakdown?
 #' @param trim (boolean) remove columns not useful to game analysis?
+#' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
 #' @author Gabriel Krotkov
 #' @return tidy tibble of matches
 #' @examples
 #' tidy_matches(read_event_matches("2016mrcmp"), alliances = TRUE,
 #'     breakdown = TRUE)
 tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
-                         trim = TRUE){
+                         trim = TRUE, unplayed = FALSE){
     event <- tibble(matches = raw)
     event <- event %>%
         unnest_wider(matches)
@@ -168,6 +169,9 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
                 "actual_time", "post_result_time",
                 "predicted_time", "time", "videos"))
             )
+    }
+    if(!unplayed){
+        event <- event[!(event$red_score == -1 & event$blue_score == -1), ]
     }
     return(event)
 }
