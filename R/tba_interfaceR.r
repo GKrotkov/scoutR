@@ -83,7 +83,7 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
 team_matches <- function(key, year = NA, event = NA, official = FALSE,
                          simple = FALSE, keys = FALSE, alliances = TRUE,
-                         breakdown = TRUE, trim = TRUE, unplayed = FALSE){
+                         breakdown = TRUE, unplayed = FALSE){
     if (simple & keys) warning(warns()$simkey)
     if (!is.na(year) & !is.na(event)) warning(warns()$year_event)
 
@@ -92,8 +92,7 @@ team_matches <- function(key, year = NA, event = NA, official = FALSE,
     if (keys) return(unlist(data)) # if user expects keys, list is unnecessary
 
     data <- tidy_matches(
-        data, alliances = alliances, breakdown = breakdown,
-        trim = trim, unplayed = unplayed
+        data, alliances = alliances, breakdown = breakdown, unplayed = unplayed
     )
 
     return(data)
@@ -209,7 +208,6 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' @param alliances (bool) break down alliances column?
 #' @param breakdown (bool) break down score_breakdown column?
 #' @param match_type one of "all", "qual", or "playoff"
-#' @param trim (bool) remove columns irrelevant to game analysis?
 #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
 #' @param simple (bool) simplify match object?
 #' @param keys (bool) get keys only?
@@ -218,7 +216,7 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' event_matches("2015paphi", match_type = "playoff")
 #' event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
 event_matches <- function(event_key, alliances = TRUE, breakdown = TRUE,
-                          match_type = "all", trim = TRUE, unplayed = FALSE,
+                          match_type = "all", unplayed = FALSE,
                           simple = FALSE, keys = FALSE){
     if (simple & keys) warning(warns()$simkeys)
     if (!(match_type %in% c("all", "qual", "playoff"))) warning(warns()$mtype)
@@ -239,8 +237,7 @@ event_matches <- function(event_key, alliances = TRUE, breakdown = TRUE,
     }
 
     data <- tidy_matches(
-        data, alliances = alliances, breakdown = breakdown,
-        trim = trim, unplayed = unplayed
+        data, alliances = alliances, breakdown = breakdown, unplayed = unplayed
     )
 
     return(data)

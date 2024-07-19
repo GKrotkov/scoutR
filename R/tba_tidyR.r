@@ -139,7 +139,6 @@ unpack_breakdown <- function(matches){
 #' @param raw list of match objects from TBA API as read by tba_readR
 #' @param alliances (boolean) unpack the alliances?
 #' @param breakdown (boolean) unpack the score breakdown?
-#' @param trim (boolean) remove columns not useful to game analysis?
 #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
 #' @author Gabriel Krotkov
 #' @return tidy tibble of matches
@@ -147,7 +146,7 @@ unpack_breakdown <- function(matches){
 #' tidy_matches(read_event_matches("2016mrcmp"), alliances = TRUE,
 #'     breakdown = TRUE)
 tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
-                         trim = TRUE, unplayed = FALSE){
+                         unplayed = FALSE){
     event <- tibble(matches = raw)
     event <- event %>%
         unnest_wider(matches)
@@ -163,13 +162,6 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
 
     if (alliances) event <- unpack_alliances(event)
     if (breakdown) event <- unpack_breakdown(event)
-    if (trim){
-        event <- event %>%
-            dplyr::select(-any_of(c(
-                "actual_time", "post_result_time",
-                "predicted_time", "time", "videos"))
-            )
-    }
 
     if(!unplayed){
         event <- trim_unplayed(event)
