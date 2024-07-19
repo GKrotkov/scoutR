@@ -172,7 +172,7 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
     }
 
     if(!unplayed){
-        event <- event[!id_unplayed(event), ]
+        event <- trim_unplayed(event)
     }
     return(event)
 }
