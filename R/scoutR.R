@@ -59,6 +59,7 @@ event_season_history <- function(event_code, fields = NULL){
     rownames(history) <- history$id
     return(history)
 }
+
 #######################################################
 #### Linear Modeling (Calculated Contribution/OPR) ####
 #######################################################
@@ -112,6 +113,9 @@ lineup_design_matrix <- function(matches){
 #' length corresponding to the rows of `lineups`.
 #' @details Key assumption - the order of `lineups` and the `responses` vector
 #' must line up exactly. Otherwise, the fit will be meaningless.
+#' @examples
+#' gpr <- event_matches("2024paca", match_type = "qual")
+#' opr <- fit_lineup_lm(gpr, list(red = gpr$red_score, blue = gpr$blue_score))
 fit_lineup_lm <- function(lineups, responses, w = NULL){
     stopifnot("`responses` must be of length 2" = {length(responses) == 2})
     stopifnot("`responses` must have `red` and `blue` vectors" =
@@ -177,4 +181,35 @@ fit_event_lr <- function(
     }
 
     return(fit_lineup_lm(matches, responses, w = w))
+}
+
+#############
+#### WLS ####
+#############
+
+#' Dual Line Weight Approximation
+#'
+#' Given the variance in a number of bins, approximate an appropriate WLS
+#' weighting by two lines.
+#' @param bin_vars A vector of the variance in each bin
+#' @return vector of weights
+dual_line_weight_approximation <- function(bin_vars){
+    idx <- 1:(floor(length(bin_vars) / 2))
+    first_half_fit <- lm(bin_vars[idx] ~ idx)
+    idx <- (ceiling(length(bin_vars) / 2)):length(bin_vars)
+    second_half_fit <- lm(bin_vars[idx] ~ idx)
+    first_half <- rep(coefficients(first_half_fit)[1],
+                      floor(length(bin_vars) / 2))
+    first_half <- first_half +
+        (coefficients(first_half_fit)[2] * (1:length(first_half) - 1))
+    second_half <- rep(
+        coefficients(second_half_fit)[1] +
+            (coefficients(second_half_fit)[2] *
+                 ((floor(length(bin_vars) / 2) + 1))),
+        ceiling(length(bin_vars) / 2))
+    second_half <- second_half +
+        (coefficients(second_half_fit)[2] * (1:length(second_half) - 1))
+    result <- 1 / c(first_half, second_half)
+    names(result) <- NULL
+    return(result)
 }

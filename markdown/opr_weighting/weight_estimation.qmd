@@ -1,5 +1,5 @@
 ---
-title: "OPR Weight Optimization"
+title: "OPR Weight Estimation"
 format: html
 ---
 
@@ -58,12 +58,6 @@ fits <- lapply(matches, fit_opr)
 
 residuals <- lapply(fits, function(fit){return(residuals(fit))})
 
-# applies normalization on a per-event basis, so it respects year and week
-# point variation
-normalized_resids <- lapply(residuals, function(residuals){
-    return(scale(residuals, center = FALSE))
-})
-
 viz <- data.frame(
     resids = unlist(residuals, use.names = FALSE),
     sq_resids = unlist(residuals, use.names = FALSE) ^ 2,
@@ -98,7 +92,7 @@ ggplot(viz, aes(x = match_percentile, y = sq_resids)) +
 This estimator did not turn out well - actively worse than unweighteds
 
 ```{r, include = FALSE}
-estimate_weights <- function(event_matches){
+estimate_weights_by_residual <- function(event_matches){
     fit <- fit_lineup_lm(
         event_matches, 
         list(red = event_matches$red_score, blue = event_matches$blue_score)
@@ -121,7 +115,7 @@ estimate_weights <- function(event_matches){
     return(w)
 }
 
-rm(estimate_weights)
+rm(estimate_weights_by_residual)
 ```
 
 # Bin Variance Weight Estimates
@@ -134,13 +128,15 @@ labs <- levels(cuts)
 bin_vars <- rep(0, length(unique(cuts)))
 # use standardized residuals to account for year and event week
 for (i in 1:length(unique(cuts))){
-    bin_vars[i] <- var(unlist(normalized_resids)[cuts == levels(cuts)[i]])
+    bin_vars[i] <- var(unlist(residuals)[cuts == levels(cuts)[i]])
 }
 
 plot(x = 1:length(bin_vars), y = bin_vars, 
      xlab = "Bin Number", ylab = "Normalized Residual Variance", 
      main = "Residual Variance by Binned Tournament Progress")
 ```
+
+# Linear Approximation to Bin Variance
 
 Looking at the plot with varying numbers of bins, we'll model the variance in the residuals as two lines, one for the left-hand half of the data and one for the right-hand half of the data. We'll do two regressions to model this, one for match percentiles less than 0.5 and one for match percentiles greater than or equal to 0.5
 
@@ -171,13 +167,12 @@ weights_from_lines <- function(intercept_1, intercept_2, n_bins, slope_1, slope_
     return(result)
 }
 
-w <- weights_from_lines(
+w_linear <- weights_from_lines(
     coefficients(first_half_fit)[1], coefficients(second_half_fit)[1], n_bins,
     coefficients(first_half_fit)[2], coefficients(second_half_fit)[2]
 )
 
-save(w, bin_vars, file = "../../data/opr_binvar.rda")
+w_bins <- 1 / bin_vars
+
+save(w_linear, w_bins, file = "../../data/opr_binvar.rda")
 ```
-
-(We also tested the linear approximation weights against just using `1/bin_vars`, which performed worse by test MSE)
-

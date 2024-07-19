@@ -12,22 +12,21 @@ rm(list = ls())
 library(devtools)
 load_all()
 
-gpr <- event_matches("2024paca", match_type = "qual", simple = TRUE)
-scores <- c(gpr$blue_score, gpr$red_score)
+gpr <- event_matches("2024paca", match_type = "qual")
+load("../data/opr_binvar.rda")
 
-viz <- data.frame(scores)
+linear_fit <- fit_lineup_lm(
+    gpr, 
+    list(red = gpr$red_score, blue = gpr$blue_score), 
+    w_bins
+)
 
-hist(scores)
-hist(abs(scores) - mean(scores))
-hist(sqrt(scores))
+plot(linear_fit, which = 1:6)
+```
 
-fit <- fit_lineup_lm(gpr, list(red = gpr$red_score, blue = gpr$blue_score))
-
-resid <- residuals(fit)
-
-hist(resid, freq = FALSE, 
-     main = "Residuals look pretty normal")
-curve(dnorm(x, mean(resid), sd(resid)), add = TRUE)
-
+```{r}
+design <- lineup_design_matrix(gpr)
+response <- c(gpr$blue_score, gpr$red_score)
+rlm_fit <- rlm(design, response)
 ```
 

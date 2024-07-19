@@ -82,7 +82,7 @@ test_weighting <- function(matches, w){
 ```
 
 ```{r visualization}
-mse_diffs <- test_weighting(matches, w)
+mse_diffs <- test_weighting(matches, w_linear)
 
 viz <- data.frame(mse_diff = mse_diffs, 
                   year = as.factor(substr(names(mse_diffs), 1, 4)))
@@ -156,7 +156,7 @@ compute_in_sample_mse <- function(matches, w){
     return(mses)
 }
 
-weighted_mse <- compute_in_sample_mse(matches, w)
+weighted_mse <- compute_in_sample_mse(matches, w_linear)
 raw_mse <- compute_in_sample_mse(matches, 1)
 
 viz <- data.frame(mse_diff = raw_mse - weighted_mse, 
@@ -222,55 +222,55 @@ LOOCV <- function(fit){
     mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
 }
 
-linear_weight_fits <- lapply(matches, weighted_fit, w = w)
-nonlinear_weight_fits <- lapply(matches, weighted_fit, w = 1 / bin_vars)
+linear_weight_fits <- lapply(matches, weighted_fit, w = w_linear)
+bin_weight_fits <- lapply(matches, weighted_fit, w = w_bins)
 raw_fits <- lapply(matches, weighted_fit, w = 1)
 
 linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
-nonlinear_weight_loocvs <- sapply(nonlinear_weight_fits, LOOCV)
+bin_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
 raw_loocvs <- sapply(raw_fits, LOOCV)
 
-viz <- data.frame(linear_loocv_diff = linear_weight_loocvs - raw_loocvs, 
-                  nonlinear_loocv_diff = nonlinear_weight_loocvs - raw_loocvs,
+viz <- data.frame(linear_loocv_ratio = linear_weight_loocvs / raw_loocvs, 
+                  bin_loocv_ratio = bin_weight_loocvs / raw_loocvs,
                   year = as.factor(substr(names(raw_loocvs), 1, 4)))
 
-ggplot(viz, aes(x = nonlinear_loocv_diff)) + 
+ggplot(viz, aes(x = bin_loocv_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
-    geom_vline(aes(xintercept = mean(nonlinear_loocv_diff)), color = gos_red) + 
-    annotate("label", x = mean(viz$nonlinear_loocv_diff), y = 15, 
+    geom_vline(aes(xintercept = mean(bin_loocv_ratio)), color = gos_red) + 
+    annotate("label", x = mean(viz$bin_loocv_ratio), y = 15, 
              label = paste0("Mean: ", 
-                            round(mean(viz$nonlinear_loocv_diff), 3))) +
+                            round(mean(viz$bin_loocv_ratio), 3))) +
     labs(title = "Weighting Improves OPR Predictions", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
-         x = "Event-Normalized LOOCV Error Difference (Std Devs)", 
+         x = "Event-Normalized LOOCV Error Ratio (Std Devs)", 
          y = "# Events") +
     gos_theme
 
-ggplot(viz, aes(x = nonlinear_loocv_diff)) + 
+ggplot(viz, aes(x = bin_loocv_ratio)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
-    labs(title = "OPR Weighting LOOCV Difference", x = "LOOCV Difference", 
+    labs(title = "OPR Weighting LOOCV Ratio", x = "LOOCV Difference", 
          y = "Density") + 
     gos_theme
 
 viz <- viz %>%
     group_by(year) %>%
     summarize(events = n(), 
-              linear_mean_diff = mean(linear_loocv_diff), 
-              linear_median_diff = median(linear_loocv_diff), 
-              nonlinear_mean_diff = mean(nonlinear_loocv_diff), 
-              nonlinear_median_diff = median(nonlinear_loocv_diff))
+              linear_mean_ratio = mean(linear_loocv_ratio), 
+              linear_median_ratio = median(linear_loocv_ratio), 
+              bin_mean_ratio = mean(bin_loocv_ratio), 
+              bin_median_ratio = median(bin_loocv_ratio))
 
 colnames(viz) <- c(
     "Year", "# Events", 
-    "Mean Linear LOOCV Difference", "Median Linear LOOCV Difference", 
-    "Mean Nonlinear LOOCV Difference", "Median Nonlinear LOOCV Difference"
+    "Mean Linear LOOCV Ratio", "Median Linear LOOCV Ratio", 
+    "Mean bin LOOCV Ratio", "Median bin LOOCV Ratio"
 )
 
 gt(viz) %>%
     tab_header(
-        title = "LOOCV differences between raw and weighted OPR"
+        title = "LOOCV Ratios between weighted and raw OPR"
     ) %>%
     tab_options(
         column_labels.background.color = gos_blue
@@ -287,7 +287,7 @@ gt(viz) %>%
 Given the ratio in means; I would recommend using the `1 / bin_vars` as the weighting rather than the linear approximation; I trust the LOOCV evaluation over the test MSE evaluation.
 
 ```{r}
-mean(nonlinear_weight_loocvs - raw_loocvs) / 
+mean(bin_weight_loocvs - raw_loocvs) / 
     mean(linear_weight_loocvs - raw_loocvs)
 ```
 

@@ -1,0 +1,13 @@
+---
+title: "playground"
+format: html
+---
+
+```{r}
+library(devtools)
+load_all()
+rm(list = ls())
+
+
+```
+

@@ -1,0 +1,680 @@
+---
+title: "2024 Offseason Scouting Nonsense"
+format: html
+---
+
+```{r}
+library(devtools)
+load_all()
+```
+
+# Historical
+
+```{r ncrc, message = FALSE}
+formal_teams <- c(117, 695, 1507, 2539, 2559, 2656, 3173, 3504, 
+                  4150, 4467, 5740, 8393, 9022, 9475, 9653)
+
+informal_teams <- c(9989)
+
+matches <- lapply(formal_teams, team_matches, year = 2024)
+matches <- matches %>%
+    reduce(full_join)
+# check for duplicated matches
+stopifnot(!any(duplicated(matches)))
+
+matches$red_amp_eff <- matches$red_teleopTotalNotePoints / 
+    (matches$red_teleopAmpNoteCount + matches$red_teleopSpeakerNoteCount)
+matches$blue_amp_eff <- matches$blue_teleopTotalNotePoints / 
+    (matches$blue_teleopAmpNoteCount + matches$blue_teleopSpeakerNoteCount)
+
+history <- get_multifield_df(matches, fields = id_robot_fields(matches))
+history <- history %>%
+    mutate(
+        mobility_pct = autoLine.Yes / (autoLine.Yes + autoLine.No),
+        park_pct = endGame.Parked / (autoLine.Yes + autoLine.No),
+        hang_pct = (endGame.CenterStage + endGame.StageLeft + 
+                         endGame.StageRight) / (autoLine.Yes + autoLine.No),
+        none_pct = (endGame.None) / (autoLine.Yes + autoLine.No)
+    )
+
+history <- history[history$id %in% paste0("frc", formal_teams), ]
+history$id <- as.numeric(substr(history$id, 4, nchar(history$id)))
+history <- history[order(history$id), ]
+
+history$epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$epa_end})
+
+history$auto_epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$auto_epa_end})
+
+history$teleop_epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$teleop_epa_end})
+
+history$endgame_epa <- sapply(
+    history$id, function(n){read_team_year_statbotics(n, 2024)$endgame_epa_end})
+
+# informal teams should be NA for all these
+history <- rbind(history, NA)
+history$id <- c(formal_teams, informal_teams)
+rownames(history) <- history$id
+
+write_csv(history, file = "../data/ncrc/ncrc24.csv")
+```
+
+# Match processing
+
+```{r}
+ncrc <- read.csv("../data/ncrc/ncrc_matches.csv")
+
+ncrc$teleop <- ncrc$total - ncrc$stage - ncrc$auto - ncrc$penalty
+ncrc$amp_eff <- ncrc$teleop / ncrc$n_notes
+
+red_idx <- seq(1, nrow(ncrc), 2)
+blue_idx <- seq(2, nrow(ncrc), 2)
+
+colors <- data.frame(
+    red1 = ncrc$team1[red_idx], 
+    red2 = ncrc$team2[red_idx], 
+    red3 = ncrc$team3[red_idx], 
+    blue1 = ncrc$team1[blue_idx], 
+    blue2 = ncrc$team2[blue_idx], 
+    blue3 = ncrc$team3[blue_idx], 
+    red_score = ncrc$total[red_idx], 
+    blue_score = ncrc$total[blue_idx], 
+    red_auto = ncrc$auto[red_idx], 
+    blue_auto = ncrc$auto[blue_idx], 
+    red_amp_eff = ncrc$amp_eff[red_idx], 
+    blue_amp_eff = ncrc$amp_eff[blue_idx], 
+    red_opp_penalty = ncrc$opp_penalty[red_idx], 
+    blue_opp_penalty = ncrc$opp_penalty[blue_idx]
+)
+
+total_fit <- fit_lineup_lm(
+    colors, list(red = colors$red_score, blue = colors$blue_score)
+)
+
+penalty_fit <- fit_lineup_lm(
+    colors, list(red = colors$red_opp_penalty, blue = colors$blue_opp_penalty)
+)
+
+auto_fit <- fit_lineup_lm(
+    colors, list(red = colors$red_auto, blue = colors$blue_auto)
+)
+
+amp_eff <- fit_lineup_lm(
+    colors, list(red = colors$red_amp_eff, blue = colors$blue_amp_eff)
+)
+
+viz <- data.frame(id = names(coefficients(total_fit)), 
+                  total = coefficients(total_fit), 
+                  penalties = coefficients(penalty_fit), 
+                  auto = coefficients(auto_fit), 
+                  amp_eff = coefficients(amp_eff))
+
+viz$id <- substr(viz$id, 2, nchar(viz$id))
+```
+
+```{r}
+plt <- ggplot(viz, aes(label = id, x = total, y = auto, size = amp_eff)) + 
+    geom_label(alpha = 0.5)
+
+plt
+
+plt <- ggplot(viz, aes(label = id, x = total, y = auto, size = amp_eff)) + 
+    geom_point(alpha = 0.5)
+
+ggplotly(plt)
+```
+
+# GPR Analysis
+
+```{r}
+rm(list = ls())
+library(devtools)
+load_all()
+load("../data/opr_binvar.rda")
+gpr <- event_matches("2024paca", match_type = "qual")
+
+# define "note points" to not include the Trap
+gpr <- gpr %>%
+    mutate(
+        blue_endgame_pts = blue_endGameHarmonyPoints + 
+            blue_endGameNoteInTrapPoints + blue_endGameOnStagePoints + 
+            blue_endGameParkPoints, 
+        red_endgame_pts = red_endGameHarmonyPoints + 
+            red_endGameNoteInTrapPoints + red_endGameOnStagePoints + 
+            red_endGameParkPoints,
+        blue_teleop_note_points = blue_teleopAmpNotePoints + 
+            blue_teleopSpeakerNoteAmplifiedPoints + 
+            blue_teleopSpeakerNotePoints, 
+        red_teleop_note_points = red_teleopAmpNotePoints + 
+            red_teleopSpeakerNoteAmplifiedPoints + red_teleopSpeakerNotePoints, 
+        blue_teleop_volume = blue_teleopAmpNoteCount + 
+            blue_teleopSpeakerNoteCount + blue_teleopSpeakerNoteAmplifiedCount, 
+        red_teleop_volume = red_teleopAmpNoteCount + 
+            red_teleopSpeakerNoteCount + red_teleopSpeakerNoteAmplifiedCount
+    )
+
+gpr$blue_amp_eff <- gpr$blue_teleop_note_points / gpr$blue_teleop_volume
+gpr$red_amp_eff <- gpr$red_teleop_note_points / gpr$red_teleop_volume
+gpr$blue_amp_eff <- ifelse(is.nan(gpr$blue_amp_eff), 0, gpr$blue_amp_eff)
+gpr$red_amp_eff <- ifelse(is.nan(gpr$red_amp_eff), 0, gpr$red_amp_eff)
+
+overall <- fit_lineup_lm(
+    gpr, list(red = gpr$red_score, blue = gpr$blue_score), w = w_bins
+)
+
+teleop <- fit_lineup_lm(
+    gpr, 
+    list(red = gpr$red_teleop_note_points, blue = gpr$blue_teleop_note_points), 
+    w = w_bins
+)
+
+auto <- fit_lineup_lm(
+    gpr, list(red = gpr$red_autoPoints, blue = gpr$blue_autoPoints), w = w_bins
+)
+
+endgame <- fit_lineup_lm(
+    gpr, list(red = gpr$red_endgame_pts, blue = gpr$blue_endgame_pts), w = w_bins
+)
+
+amp_eff <- fit_lineup_lm(
+    gpr, list(red = gpr$red_amp_eff, blue = gpr$blue_amp_eff), w = w_bins
+)
+
+fouls_good <- fit_lineup_lm(
+    gpr, 
+    list(red = gpr$red_foulPoints, blue = gpr$blue_foulPoints), 
+    w = w_bins
+)
+
+fouls_bad <- fit_lineup_lm(
+    gpr, 
+    list(red = gpr$blue_foulPoints, blue = gpr$red_foulPoints), 
+    w = w_bins
+)
+
+oprs <- data.frame(
+    score = coefficients(overall), auto = coefficients(auto), 
+    teleop = coefficients(teleop), endgame = coefficients(endgame), 
+    amp_eff = coefficients(amp_eff), fouls_good = coefficients(fouls_good), 
+    fouls_bad = coefficients(fouls_bad)
+)
+
+oprs <- round(oprs, digits = 3)
+oprs$id <- rownames(oprs)
+oprs <- oprs %>%
+    select(id, everything())
+
+oprs$id <- substr(oprs$id, 4, nchar(oprs$id))
+
+tangibles <- event_robot_results("2024paca", match_type = "qual")
+
+tangibles <- tangibles %>%
+    mutate(
+        mobility = autoLine.Yes / n_matches.count, 
+        climbs = (endGame.CenterStage + endGame.StageRight + endGame.StageLeft),
+        climb_rate = climbs / n_matches.count
+    )
+
+tangibles$mobility <- round(tangibles$mobility, digits = 3)
+tangibles$climb_rate <- round(tangibles$climb_rate, digits = 3)
+
+tangibles$id <- substr(tangibles$id, 4, nchar(tangibles$id))
+
+write_csv(oprs, file = "../data/events/2024paca_oprs.csv")
+```
+
+```{r}
+library(extrafont)
+library(gt)
+library(plotly)
+
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
+
+plt <- ggplot(oprs, aes(x = teleop, y = auto + endgame)) + 
+    geom_text(aes(label = id, y = auto + endgame, x = teleop, size = amp_eff)) + 
+    geom_abline(intercept = seq(5, 25, by = 5), slope = -1, 
+                color = gos_blue, linetype = "dotted", linewidth = 0.25) + 
+    labs(title = "Greater Pittsburgh Regional District OPRs", 
+         x = "Teleop", y = "Auto + Endgame") +
+    gos_theme
+
+ggplotly(plt)
+
+plt <- ggplot(tangibles, aes(x = climb_rate, y = mobility)) + 
+    geom_text(aes(label = id)) + 
+    labs(title = "Greater Pittsburgh Regional Tangibles", 
+         x = "Climb Rate", y = "Mobility Percentage") + 
+    gos_theme
+
+ggplotly(plt)
+```
+
+# FiT Houston District
+
+```{r}
+rm(list = ls())
+library(devtools)
+load_all()
+load("../data/opr_binvar.rda")
+hou <- event_matches("2024txhou", match_type = "qual")
+summary <- read_csv("../data/events/2024txhou_spectrum_summary.csv")
+raw <- read_csv("../data/events/2024txhou_spectrum_raw.csv")
+raw <- raw[, -1]
+
+# define "note points" to not include the Trap
+hou <- hou %>%
+    mutate(
+        blue_endgame_pts = blue_endGameHarmonyPoints + 
+            blue_endGameNoteInTrapPoints + blue_endGameOnStagePoints + 
+            blue_endGameParkPoints, 
+        red_endgame_pts = red_endGameHarmonyPoints + 
+            red_endGameNoteInTrapPoints + red_endGameOnStagePoints + 
+            red_endGameParkPoints,
+        blue_teleop_note_points = blue_teleopAmpNotePoints + 
+            blue_teleopSpeakerNoteAmplifiedPoints + 
+            blue_teleopSpeakerNotePoints, 
+        red_teleop_note_points = red_teleopAmpNotePoints + 
+            red_teleopSpeakerNoteAmplifiedPoints + red_teleopSpeakerNotePoints, 
+        blue_teleop_volume = blue_teleopAmpNoteCount + 
+            blue_teleopSpeakerNoteCount + blue_teleopSpeakerNoteAmplifiedCount, 
+        red_teleop_volume = red_teleopAmpNoteCount + 
+            red_teleopSpeakerNoteCount + red_teleopSpeakerNoteAmplifiedCount
+    )
+
+hou$blue_amp_eff <- hou$blue_teleop_note_points / hou$blue_teleop_volume
+hou$red_amp_eff <- hou$red_teleop_note_points / hou$red_teleop_volume
+hou$blue_amp_eff <- ifelse(is.nan(hou$blue_amp_eff), 0, hou$blue_amp_eff)
+hou$red_amp_eff <- ifelse(is.nan(hou$red_amp_eff), 0, hou$red_amp_eff)
+
+overall <- fit_lineup_lm(
+    hou, list(red = hou$red_score, blue = hou$blue_score), w = w_bins
+)
+
+teleop <- fit_lineup_lm(
+    hou, 
+    list(red = hou$red_teleop_note_points, blue = hou$blue_teleop_note_points), 
+    w = w_bins
+)
+
+auto <- fit_lineup_lm(
+    hou, list(red = hou$red_autoPoints, blue = hou$blue_autoPoints), w = w_bins
+)
+
+endgame <- fit_lineup_lm(
+    hou, list(red = hou$red_endgame_pts, blue = hou$blue_endgame_pts), w = w_bins
+)
+
+amp_eff <- fit_lineup_lm(
+    hou, list(red = hou$red_amp_eff, blue = hou$blue_amp_eff), w = w_bins
+)
+
+fouls_good <- fit_lineup_lm(
+    hou, 
+    list(red = hou$red_foulPoints, blue = hou$blue_foulPoints), 
+    w = w_bins
+)
+
+fouls_bad <- fit_lineup_lm(
+    hou, 
+    list(red = hou$blue_foulPoints, blue = hou$red_foulPoints), 
+    w = w_bins
+)
+
+oprs <- data.frame(
+    score = coefficients(overall), auto = coefficients(auto), 
+    teleop = coefficients(teleop), endgame = coefficients(endgame), 
+    amp_eff = coefficients(amp_eff), fouls_good = coefficients(fouls_good), 
+    fouls_bad = coefficients(fouls_bad)
+)
+
+oprs <- round(oprs, digits = 3)
+oprs$id <- rownames(oprs)
+oprs <- oprs %>%
+    select(id, everything())
+
+oprs$id <- substr(oprs$id, 4, nchar(oprs$id))
+
+tangibles <- event_robot_results("2024txhou", match_type = "qual")
+
+tangibles <- tangibles %>%
+    mutate(
+        mobility = autoLine.Yes / n_matches.count, 
+        climbs = (endGame.CenterStage + endGame.StageRight + endGame.StageLeft),
+        climb_rate = climbs / n_matches.count
+    )
+
+tangibles$mobility <- round(tangibles$mobility, digits = 3)
+tangibles$climb_rate <- round(tangibles$climb_rate, digits = 3)
+
+tangibles$id <- substr(tangibles$id, 4, nchar(tangibles$id))
+
+write_csv(oprs, file = "../data/events/2024txhou_oprs.csv")
+```
+
+```{r}
+library(extrafont)
+library(gt)
+library(plotly)
+
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
+
+plt <- ggplot(oprs, aes(x = teleop, y = auto + endgame)) + 
+    geom_text(aes(label = id, y = auto + endgame, x = teleop, size = amp_eff)) + 
+    geom_abline(intercept = seq(5, 25, by = 5), slope = -1, 
+                color = gos_blue, linetype = "dotted", linewidth = 0.25) + 
+    labs(title = "FiT Houston District OPRs", 
+         x = "Teleop", y = "Auto + Endgame") +
+    gos_theme
+
+ggplotly(plt)
+
+plt <- ggplot(tangibles, aes(x = climb_rate, y = mobility)) + 
+    geom_text(aes(label = id)) + 
+    labs(title = "FiT Houston District Tangibles", 
+         x = "Climb Rate", y = "Mobility Percentage") + 
+    gos_theme
+
+plt <- ggplot(summary, aes(x = `IQM Speaker`, y = `IQM Amp`)) + 
+    geom_text(aes(label = `Team #`)) +    
+    labs(title = "FiT Houston District Speaker & Amp", 
+         x = "Speaker IQM", y = "Amp IQM") +
+    gos_theme
+
+plt <- ggplot(summary, aes(x = factor(`Team #`), y = `IQM Auto`)) + 
+    geom_bar(stat = "identity", fill = gos_red) + 
+    coord_flip() + 
+    labs(title = "Auto Performance", 
+         x = "Team ID", y = "Auto # Of Notes IQM") +
+    gos_theme
+
+climbs <- as.numeric(unlist(strsplit(summary$`Climb Success`, " / ")))
+summary$climb_rate <- climbs[seq(1, length(climbs), 2)] / 
+    climbs[seq(2, length(climbs), 2)]
+summary$climb_rate <- ifelse(is.nan(summary$climb_rate), 0, summary$climb_rate)
+traps <- as.numeric(unlist(strsplit(summary$`Trap Success`, " / ")))
+summary$trap_rate <- climbs[seq(1, length(traps), 2)] / 
+    climbs[seq(2, length(traps), 2)]
+summary$trap_rate <- ifelse(is.nan(summary$trap_rate), 0, summary$trap_rate)
+summary$endgame_points <- summary$climb_rate*3 + summary$trap_rate*5
+
+plt <- ggplot(summary, aes(x = factor(`Team #`), y = `endgame_points`)) + 
+    geom_bar(stat = "identity", fill = gos_red) + 
+    coord_flip() + 
+    labs(title = "Endgame Point Contribution", 
+         x = "Team ID", y = "Endgame Points") +
+    gos_theme
+    
+ggplotly(plt)
+
+plt <- ggplot(summary, aes(x = `IQM Teleop`, y = `IQM Auto`)) +
+    geom_text(aes(label = `Team #`)) +
+    labs(title = "FiT Houston District Teleop & Auto", 
+         x = "Teleop IQM", y = "Auto IQM") +
+    gos_theme
+
+ggplotly(plt)
+
+plt
+```
+
+# TBA Scouting for FiT Apollo Division
+
+```{r}
+rm(list = ls())
+library(devtools)
+load_all()
+load("../data/opr_binvar.rda")
+apollo <- event_matches("2024txcmp2", match_type = "qual")
+
+# define "note points" to not include the Trap
+apollo <- apollo %>%
+    mutate(
+        blue_endgame_pts = blue_endGameHarmonyPoints + 
+            blue_endGameNoteInTrapPoints + blue_endGameOnStagePoints + 
+            blue_endGameParkPoints, 
+        red_endgame_pts = red_endGameHarmonyPoints + 
+            red_endGameNoteInTrapPoints + red_endGameOnStagePoints + 
+            red_endGameParkPoints,
+        blue_teleop_note_points = blue_teleopAmpNotePoints + 
+            blue_teleopSpeakerNoteAmplifiedPoints + 
+            blue_teleopSpeakerNotePoints, 
+        red_teleop_note_points = red_teleopAmpNotePoints + 
+            red_teleopSpeakerNoteAmplifiedPoints + red_teleopSpeakerNotePoints, 
+        blue_teleop_volume = blue_teleopAmpNoteCount + 
+            blue_teleopSpeakerNoteCount + blue_teleopSpeakerNoteAmplifiedCount, 
+        red_teleop_volume = red_teleopAmpNoteCount + 
+            red_teleopSpeakerNoteCount + red_teleopSpeakerNoteAmplifiedCount
+    )
+
+apollo$blue_amp_eff <- apollo$blue_teleop_note_points / apollo$blue_teleop_volume
+apollo$red_amp_eff <- apollo$red_teleop_note_points / apollo$red_teleop_volume
+apollo$blue_amp_eff <- ifelse(is.nan(apollo$blue_amp_eff), 0, apollo$blue_amp_eff)
+apollo$red_amp_eff <- ifelse(is.nan(apollo$red_amp_eff), 0, apollo$red_amp_eff)
+
+overall <- fit_lineup_lm(
+    apollo, list(red = apollo$red_score, blue = apollo$blue_score), w = w_bins
+)
+
+teleop <- fit_lineup_lm(
+    apollo, 
+    list(red = apollo$red_teleop_note_points, blue = apollo$blue_teleop_note_points), 
+    w = w_bins
+)
+
+auto <- fit_lineup_lm(
+    apollo, list(red = apollo$red_autoPoints, blue = apollo$blue_autoPoints), w = w_bins
+)
+
+endgame <- fit_lineup_lm(
+    apollo, list(red = apollo$red_endgame_pts, blue = apollo$blue_endgame_pts), w = w_bins
+)
+
+amp_eff <- fit_lineup_lm(
+    apollo, list(red = apollo$red_amp_eff, blue = apollo$blue_amp_eff), w = w_bins
+)
+
+fouls_good <- fit_lineup_lm(
+    apollo, 
+    list(red = apollo$red_foulPoints, blue = apollo$blue_foulPoints), 
+    w = w_bins
+)
+
+fouls_bad <- fit_lineup_lm(
+    apollo, 
+    list(red = apollo$blue_foulPoints, blue = apollo$red_foulPoints), 
+    w = w_bins
+)
+
+oprs <- data.frame(
+    score = coefficients(overall), auto = coefficients(auto), 
+    teleop = coefficients(teleop), endgame = coefficients(endgame), 
+    amp_eff = coefficients(amp_eff), fouls_good = coefficients(fouls_good), 
+    fouls_bad = coefficients(fouls_bad)
+)
+
+oprs <- round(oprs, digits = 3)
+oprs$id <- rownames(oprs)
+oprs <- oprs %>%
+    select(id, everything())
+
+oprs$id <- substr(oprs$id, 4, nchar(oprs$id))
+
+tangibles <- event_robot_results("2024txcmp2", match_type = "qual")
+
+tangibles <- tangibles %>%
+    mutate(
+        mobility = autoLine.Yes / n_matches.count, 
+        climbs = (endGame.CenterStage + endGame.StageRight + endGame.StageLeft),
+        climb_rate = climbs / n_matches.count
+    )
+
+tangibles$mobility <- round(tangibles$mobility, digits = 3)
+tangibles$climb_rate <- round(tangibles$climb_rate, digits = 3)
+
+tangibles$id <- substr(tangibles$id, 4, nchar(tangibles$id))
+
+write_csv(oprs, file = "../data/events/2024txcmp2_oprs.csv")
+```
+
+```{r}
+library(extrafont)
+library(gt)
+
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
+
+plt <- ggplot(oprs, aes(x = teleop, y = auto + endgame)) + 
+    geom_text(aes(label = id, y = auto + endgame, x = teleop, size = amp_eff)) + 
+    labs(title = "FiT Apollo Division OPRs", 
+         x = "Teleop", y = "Auto + Endgame") +
+    gos_theme
+
+ggplotly(plt)
+
+plt <- ggplot(tangibles, aes(x = climb_rate, y = mobility)) + 
+    geom_text(aes(label = id)) + 
+    labs(title = "FiT Apollo Division Tangibles", 
+         x = "Climb Rate", y = "Mobility Percentage") + 
+    gos_theme
+
+ggplotly(plt)
+```
+
+# TBA Scouting for Curie Division
+
+```{r}
+rm(list = ls())
+library(devtools)
+load_all()
+load("../data/opr_binvar.rda")
+cur <- event_matches("2024cur", match_type = "qual")
+
+# define "note points" to not include the Trap
+cur <- cur %>%
+    mutate(
+        blue_endgame_pts = blue_endGameHarmonyPoints + 
+            blue_endGameNoteInTrapPoints + blue_endGameOnStagePoints + 
+            blue_endGameParkPoints, 
+        red_endgame_pts = red_endGameHarmonyPoints + 
+            red_endGameNoteInTrapPoints + red_endGameOnStagePoints + 
+            red_endGameParkPoints,
+        blue_teleop_note_points = blue_teleopAmpNotePoints + 
+            blue_teleopSpeakerNoteAmplifiedPoints + 
+            blue_teleopSpeakerNotePoints, 
+        red_teleop_note_points = red_teleopAmpNotePoints + 
+            red_teleopSpeakerNoteAmplifiedPoints + red_teleopSpeakerNotePoints, 
+        blue_teleop_volume = blue_teleopAmpNoteCount + 
+            blue_teleopSpeakerNoteCount + blue_teleopSpeakerNoteAmplifiedCount, 
+        red_teleop_volume = red_teleopAmpNoteCount + 
+            red_teleopSpeakerNoteCount + red_teleopSpeakerNoteAmplifiedCount
+    )
+
+cur$blue_amp_eff <- cur$blue_teleop_note_points / cur$blue_teleop_volume
+cur$red_amp_eff <- cur$red_teleop_note_points / cur$red_teleop_volume
+cur$blue_amp_eff <- ifelse(is.nan(cur$blue_amp_eff), 0, cur$blue_amp_eff)
+cur$red_amp_eff <- ifelse(is.nan(cur$red_amp_eff), 0, cur$red_amp_eff)
+
+overall <- fit_lineup_lm(
+    cur, list(red = cur$red_score, blue = cur$blue_score), w = w_bins
+)
+
+teleop <- fit_lineup_lm(
+    cur, 
+    list(red = cur$red_teleop_note_points, blue = cur$blue_teleop_note_points), 
+    w = w_bins
+)
+
+auto <- fit_lineup_lm(
+    cur, list(red = cur$red_autoPoints, blue = cur$blue_autoPoints), w = w_bins
+)
+
+endgame <- fit_lineup_lm(
+    cur, list(red = cur$red_endgame_pts, blue = cur$blue_endgame_pts), w = w_bins
+)
+
+amp_eff <- fit_lineup_lm(
+    cur, list(red = cur$red_amp_eff, blue = cur$blue_amp_eff), w = w_bins
+)
+
+fouls_good <- fit_lineup_lm(
+    cur, 
+    list(red = cur$red_foulPoints, blue = cur$blue_foulPoints), 
+    w = w_bins
+)
+
+fouls_bad <- fit_lineup_lm(
+    cur, 
+    list(red = cur$blue_foulPoints, blue = cur$red_foulPoints), 
+    w = w_bins
+)
+
+oprs <- data.frame(
+    score = coefficients(overall), auto = coefficients(auto), 
+    teleop = coefficients(teleop), endgame = coefficients(endgame), 
+    amp_eff = coefficients(amp_eff), fouls_good = coefficients(fouls_good), 
+    fouls_bad = coefficients(fouls_bad)
+)
+
+oprs <- round(oprs, digits = 3)
+oprs$id <- rownames(oprs)
+oprs <- oprs %>%
+    select(id, everything())
+
+oprs$id <- substr(oprs$id, 4, nchar(oprs$id))
+
+tangibles <- event_robot_results("2024cur", match_type = "qual")
+
+tangibles <- tangibles %>%
+    mutate(
+        mobility = autoLine.Yes / n_matches.count, 
+        climbs = (endGame.CenterStage + endGame.StageRight + endGame.StageLeft),
+        climb_rate = climbs / n_matches.count
+    )
+
+tangibles$mobility <- round(tangibles$mobility, digits = 3)
+tangibles$climb_rate <- round(tangibles$climb_rate, digits = 3)
+
+tangibles$id <- substr(tangibles$id, 4, nchar(tangibles$id))
+
+write_csv(oprs, file = "../data/events/2024cur_oprs.csv")
+```
+
+```{r}
+library(extrafont)
+library(gt)
+
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
+
+plt <- ggplot(oprs, aes(x = teleop, y = auto + endgame)) + 
+    geom_text(aes(label = id, y = auto + endgame, x = teleop, size = amp_eff)) + 
+    labs(title = "Curie Division OPRs", 
+         x = "Teleop", y = "Auto + Endgame") +
+    gos_theme
+
+ggplotly(plt)
+
+plt <- ggplot(tangibles, aes(x = climb_rate, y = mobility)) + 
+    geom_text(aes(label = id)) + 
+    labs(title = "Curie Division Tangibles", 
+         x = "Climb Rate", y = "Mobility Percentage") + 
+    gos_theme
+
+ggplotly(plt)
+```
