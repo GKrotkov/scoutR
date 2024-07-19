@@ -72,7 +72,6 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' @param keys (bool) get only keys?
 #' @param alliances (bool) break out alliance column in match objects?
 #' @param breakdown (bool) break out score breakdown column?
-#' @param trim (bool) remove columns not relevant to game analysis?
 #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
 #' @return tidy tibble of team matches, or vector if keys = TRUE
 #' @author Gabriel Krotkov
@@ -198,7 +197,6 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 # return a tidy dataframe of the matches at an event
 # alliances/breakdown - (boolean) break out columns of the list?
 # match_type - ("all", "qual", or "playoff") what type of matches to get?
-# trim - remove usually unnecessary data?
 # simple/keys - (boolean) as usual
 #' Event Matches
 #'
