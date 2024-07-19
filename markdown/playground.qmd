@@ -3,11 +3,33 @@ title: "playground"
 format: html
 ---
 
+https://www.chiefdelphi.com/t/offense-defense-rankings-for-1043-teams/71490/19
+
+Check whether Scott Weingart's OPR is equal to TBA's implementation
+
 ```{r}
 library(devtools)
 load_all()
 rm(list = ls())
 
-
+gpr <- event_matches("2024paca", match_type = "qual")
+partners <- gpr[, c("blue1", "blue2", "blue3")]
+colnames(partners) <- c("robot1", "robot2", "robot3")
+tmp <- gpr[, c("red1", "red2", "red3")]
+colnames(tmp) <- colnames(partners)
+partners <- rbind(partners, tmp)
+rm(tmp)
+count_partners <- function(partners){
+    teams <- unique(unlist(partners))
+    teams <- sort(as.numeric(substr(teams, 4, nchar(teams))))
+    partner_mat <- matrix(0, nrow = length(teams), ncol = length(teams))
+    rownames(partner_mat) <- teams
+    colnames(partner_mat) <- teams
+    for (i in 1:length(teams)){
+        id <- paste0("frc", teams[i])
+        ridx <- which(rowSums(id == partners) != 0)
+        partners_i <- table(unlist(partners[ridx, ]))
+    }
+}
 ```
 
