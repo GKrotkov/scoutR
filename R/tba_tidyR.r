@@ -170,8 +170,9 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
                 "predicted_time", "time", "videos"))
             )
     }
+
     if(!unplayed){
-        event <- event[!(event$red_score == -1 & event$blue_score == -1), ]
+        event <- event[!id_unplayed(event), ]
     }
     return(event)
 }

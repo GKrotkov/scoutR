@@ -73,6 +73,7 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' @param alliances (bool) break out alliance column in match objects?
 #' @param breakdown (bool) break out score breakdown column?
 #' @param trim (bool) remove columns not relevant to game analysis?
+#' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
 #' @return tidy tibble of team matches, or vector if keys = TRUE
 #' @author Gabriel Krotkov
 #' @examples
@@ -82,7 +83,7 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
 team_matches <- function(key, year = NA, event = NA, official = FALSE,
                          simple = FALSE, keys = FALSE, alliances = TRUE,
-                         breakdown = TRUE, trim = TRUE){
+                         breakdown = TRUE, trim = TRUE, unplayed = FALSE){
     if (simple & keys) warning(warns()$simkey)
     if (!is.na(year) & !is.na(event)) warning(warns()$year_event)
 
@@ -90,7 +91,10 @@ team_matches <- function(key, year = NA, event = NA, official = FALSE,
 
     if (keys) return(unlist(data)) # if user expects keys, list is unnecessary
 
-    data <- tidy_matches(data, alliances, breakdown, trim)
+    data <- tidy_matches(
+        data, alliances = alliances, breakdown = breakdown,
+        trim = trim, unplayed = unplayed
+    )
 
     return(data)
 }
