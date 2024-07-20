@@ -1,11 +1,16 @@
 ---
 title: "OPR As Linear Regression"
-format: html
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
 ---
 
 This markdown document is intended to show that OPR is a special case of linear regression. 
 
-```{r setup}
+# Comparison between Linear Regression and TBA's OPR
+
+```{r setup, message=FALSE, warning=FALSE}
 rm(list = ls())
 library(devtools)
 load_all()
@@ -23,7 +28,7 @@ linear_fit <- fit_lineup_lm(
 linear_coef <- coefficients(linear_fit)
 ```
 
-Now we'll use tbaR to get the OPRs as TBA calculates them, and then check that all the values are equal (within a tolerance of 1.5e-8.)
+Now we'll use tbaR to get the OPRs as TBA calculates them, and then check that all the values are equal (within a tolerance of $1.5*10^{-8}$.)
 
 ```{r get-oprs}
 gpr_oprs <- event_oprs("2024paca")
@@ -36,10 +41,10 @@ names(tba_oprs) <- names(linear_coef)
 all.equal(tba_oprs, linear_coef)
 ```
 
-Now, to be additionally sure that it wasn't a fluke, let's do that comparison for every event in 2024. (Doing more than that would take the script a much longer time to run and be a lot of TBA queries for little reward.)
+Now, to check that it wasn't a fluke, let's do that comparison for every event 2014 - 2024. (Doing more than that would take the script a much longer time to run and be a lot of TBA queries for little reward. They very kindly provide these servers for us, I don't want to abuse them.)
 
 ```{r scale-up}
-compare_linear_to_tba <- function(key, margin = 1e-6){
+compare_linear_to_tba_opr <- function(key){
     data <- event_matches(key, match_type = "qual")
     # for handling events with no qual matches (i.e. 2024cmptx)
     if (length(data) == 1 && is.na(data)) return(NA)
@@ -54,21 +59,36 @@ compare_linear_to_tba <- function(key, margin = 1e-6){
     return(all.equal(tba_oprs, linear_coef))
 }
 
-event_keys <- events(2024, official = TRUE, keys = TRUE)
-result <- sapply(event_keys, compare_linear_to_tba)
+event_keys <- c(
+    events(2014, official = TRUE, keys = TRUE),
+    events(2015, official = TRUE, keys = TRUE), 
+    events(2016, official = TRUE, keys = TRUE), 
+    events(2017, official = TRUE, keys = TRUE), 
+    events(2018, official = TRUE, keys = TRUE), 
+    events(2019, official = TRUE, keys = TRUE),
+    events(2022, official = TRUE, keys = TRUE),
+    events(2023, official = TRUE, keys = TRUE), 
+    events(2024, official = TRUE, keys = TRUE)
+)
 
+result <- suppressWarnings(sapply(event_keys, compare_linear_to_tba_opr))
 # print out all results which are not TRUE
 result[which(result != "TRUE")]
 ```
 
-Take a look at both events for which TBA's OPR was not exactly equal to the linear model's coefficients, and notice that both events have null matches at the end of their schedule. That seems very likely to be our culprit somehow. Also notice that for Gwinnett, the event with the much higher mean relative difference, teams are assigned to those matches, while for Severn, no teams are assigned to those matches (or rather, TBA reports it as team number "0") in each alliance slot.
+## OPR Failure Analysis
 
-If we exclude the null matches, do the OPRs match exactly?
+For 2024mdsev:
+The difference is because for that event there are two null matches at the end - matches where both alliances are assigned to be FRC #0 and had a score of 0. tbaR's filtering correctly removes "frc0" from the matches dataframe and doesn't fit an OPR for them, but TBA's OPR calculation reports team 0 with an OPR, so the lengths are mismatched. 
+
+If we remove the team #0, we can see that the OPRs are in fact the same.
+
+This is the same issue for 2015abca: team #5645 exists only in a match that was never played, and the actual OPR values are identical for every other team. 
+
+Code below demonstrates this for both 2024mdsev and 2015abca.
 
 ```{r}
 sev <- event_matches("2024mdsev", match_type = "qual")
-
-sev <- sev[-c(71, 72), ]
 
 linear_fit <- fit_lineup_lm(
     sev, list(red = sev$red_score, blue = sev$blue_score)
@@ -86,6 +106,82 @@ names(tba_oprs) <- names(linear_coef)
 # 1.5e-8, and otherwise FALSE.
 all.equal(tba_oprs, linear_coef)
 
-gwin <- event_matches("2024gagwi", match_type = "qual")
+abca <- event_matches("2015abca", match_type = "qual")
+
+linear_fit <- fit_lineup_lm(
+    abca, list(red = abca$red_score, blue = abca$blue_score)
+)
+
+linear_coef <- coefficients(linear_fit)
+
+oprs_df <- event_oprs("2015abca")
+oprs_df <- oprs_df[oprs_df$team != 5645, ]
+tba_oprs <- oprs_df$opr[order(oprs_df$team)]
+names(tba_oprs) <- names(linear_coef)
+
+all.equal(tba_oprs, linear_coef)
 ```
 
+For 2022 OPR we have three different events with nonzero differences - all district championships. I'm honestly not certain what the problem is with these events - it seems pretty subtle to me. There is some small difference between what TBA is doing for these three events and what linear regression identifies, but the change is pretty small, as we can demonstrate below.
+
+```{r}
+aptiv <- event_matches("2022micmp3", match_type = "qual")
+aptiv_lm <- fit_lineup_lm(
+    aptiv, list(red = aptiv$red_score, blue = aptiv$blue_score)
+)
+oprs_df <- event_oprs("2022micmp3")
+tba_oprs <- oprs_df$opr[order(oprs_df$team)]
+aptiv_diffs <- coefficients(aptiv_lm) - tba_oprs
+
+iscmp <- event_matches("2022iscmp", match_type = "qual")
+iscmp_lm <- fit_lineup_lm(
+    iscmp, list(red = iscmp$red_score, blue = iscmp$blue_score)
+)
+oprs_df <- event_oprs("2022iscmp")
+tba_oprs <- oprs_df$opr[order(oprs_df$team)]
+iscmp_diffs <- coefficients(iscmp_lm) - tba_oprs
+
+
+chcmp <- event_matches("2022chcmp", match_type = "qual")
+chcmp_lm <- fit_lineup_lm(
+    chcmp, list(red = chcmp$red_score, blue = chcmp$blue_score)
+)
+oprs_df <- event_oprs("2022chcmp")
+tba_oprs <- oprs_df$opr[order(oprs_df$team)]
+chcmp_diffs <- coefficients(chcmp_lm) - tba_oprs
+
+cat("The avg diff between LR coefficients and TBA's OPR at 2022micmp3 was:", 
+    mean(aptiv_diffs), "\n")
+cat("The avg diff between LR coefficients and TBA's OPR at 2022iscmp was:", 
+    mean(iscmp_diffs), "\n")
+cat("The avg diff between LR coefficients and TBA's OPR at 2022chcmp was:", 
+    mean(chcmp_diffs), "\n")
+```
+
+# Repeating the analysis for CCWM
+
+```{r, eval=FALSE}
+compare_linear_to_tba_ccwm <- function(key){
+    data <- event_matches(key, match_type = "qual")
+    # for handling events with no qual matches (i.e. 2024cmptx)
+    if (length(data) == 1 && is.na(data)) return(NA)
+    linear_fit <- fit_lineup_lm(
+        data, list(red = data$red_score - data$blue_score, 
+                   blue = data$blue_score - data$red_score)
+    )
+    linear_coef <- coefficients(linear_fit)
+    
+    opr_df <- event_oprs(key)
+    tba_oprs <- opr_df$ccwm[order(opr_df$team)]
+    names(tba_oprs) <- names(linear_coef)
+    return(all.equal(tba_oprs, linear_coef))
+}
+
+result <- suppressWarnings(sapply(event_keys, compare_linear_to_tba_ccwm))
+# print out all results which are not TRUE
+result[which(result != "TRUE")]
+```
+
+## CCWM Failure Analysis
+
+Notably, CCWM has a nonzero difference for many (it looks like all?) events in 2022. This makes me really wonder what was going on with TBA's calculation of CCWM during the 2022 season. I also wonder whether it's related to the mismatches we saw between linear regression coefficients and TBA's OPR for the 2022 DCMPs in Cheseapeake, Israel, and Michigan (Aptiv).
