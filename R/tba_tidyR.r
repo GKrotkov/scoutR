@@ -155,9 +155,8 @@ tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
     if (breakdown && (!("score_breakdown" %in% colnames(event)) ||
                      all(is.na(event$score_breakdown)))){
         warning("tidy_matches called with breakdown = TRUE on null case \n
-                Recalling tidy_matches with breakdown = FALSE, trim = FALSE.")
-        return(tidy_matches(raw, alliances = alliances, breakdown = FALSE,
-                            trim = FALSE))
+                Recalling tidy_matches with breakdown = FALSE")
+        return(tidy_matches(raw, alliances = alliances, breakdown = FALSE))
     }
 
     if (alliances) event <- unpack_alliances(event)
