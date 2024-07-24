@@ -28,7 +28,19 @@ gos_red <- "#F7041A"
 gos_theme <- theme_bw() + 
     theme(text = element_text(family = "Futura"))
 
-load("../../data/opr_binvar.rda")
+load("../../data/opr_weights.rda")
+
+weighted_fit <- function(match_df, w){
+    return(
+        fit_lineup_lm(
+            match_df, 
+            responses = list(
+                red = match_df$red_score, blue = match_df$blue_score
+            ), 
+            w = w
+        )
+    )
+}
 ```
 
 # Test MSE
@@ -135,18 +147,6 @@ gt(viz) %>%
 # In-Sample MSE
 
 ```{r}
-weighted_fit <- function(match_df, w){
-    return(
-        fit_lineup_lm(
-            match_df, 
-            responses = list(
-                red = match_df$red_score, blue = match_df$blue_score
-            ), 
-            w = w
-        )
-    )
-}
-
 compute_in_sample_mse <- function(matches, w){
     fits <- lapply(matches, weighted_fit, w = w)
     mses <- sapply(
@@ -223,15 +223,15 @@ LOOCV <- function(fit){
 }
 
 linear_weight_fits <- lapply(matches, weighted_fit, w = w_linear)
-bin_weight_fits <- lapply(matches, weighted_fit, w = w_bins)
+bin_weight_fits <- lapply(matches, weighted_fit, w = w_bin_vars)
 raw_fits <- lapply(matches, weighted_fit, w = 1)
 
 linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
 bin_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
 raw_loocvs <- sapply(raw_fits, LOOCV)
 
-viz <- data.frame(linear_loocv_ratio = linear_weight_loocvs / raw_loocvs, 
-                  bin_loocv_ratio = bin_weight_loocvs / raw_loocvs,
+viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs, 
+                  bin_loocv_ratio = raw_loocvs / bin_weight_loocvs,
                   year = as.factor(substr(names(raw_loocvs), 1, 4)))
 
 ggplot(viz, aes(x = bin_loocv_ratio)) + 
@@ -289,5 +289,11 @@ Given the ratio in means; I would recommend using the `1 / bin_vars` as the weig
 ```{r}
 mean(bin_weight_loocvs - raw_loocvs) / 
     mean(linear_weight_loocvs - raw_loocvs)
+```
+
+How many events saw improvement in the OPR fit from weighting? 
+
+```{r}
+sum((raw_loocvs / bin_weight_loocvs) > 1) / nrow(viz)
 ```
 

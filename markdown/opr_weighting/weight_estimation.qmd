@@ -57,6 +57,7 @@ normalize_match_number <- function(opr_residual){
 fits <- lapply(matches, fit_opr)
 
 residuals <- lapply(fits, function(fit){return(residuals(fit))})
+fitteds <- lapply(fits, function(fit){return(fitted(fit))})
 
 viz <- data.frame(
     resids = unlist(residuals, use.names = FALSE),
@@ -126,14 +127,20 @@ cuts <- cut(viz$match_percentile, breaks = n_bins)
 labs <- levels(cuts)
 
 bin_vars <- rep(0, length(unique(cuts)))
+bin_fitteds <- rep(0, length(unique(cuts)))
 # use standardized residuals to account for year and event week
 for (i in 1:length(unique(cuts))){
     bin_vars[i] <- var(unlist(residuals)[cuts == levels(cuts)[i]])
+    bin_fitteds[i] <- var(unlist(fitteds)[cuts == levels(cuts)[i]])
 }
 
 plot(x = 1:length(bin_vars), y = bin_vars, 
      xlab = "Bin Number", ylab = "Normalized Residual Variance", 
      main = "Residual Variance by Binned Tournament Progress")
+
+plot(x = 1:length(bin_fitteds), y = bin_fitteds, 
+     xlab = "Bin Number", ylab = "Normalized Fitted Value Variance", 
+     main = "Residual Fitted Values by Binned Tournament Progress")
 ```
 
 # Linear Approximation to Bin Variance
@@ -172,7 +179,9 @@ w_linear <- weights_from_lines(
     coefficients(first_half_fit)[2], coefficients(second_half_fit)[2]
 )
 
-w_bins <- 1 / bin_vars
+w_bin_vars <- 1 / bin_vars
 
-save(w_linear, w_bins, file = "../../data/opr_binvar.rda")
+w_bin_fitteds <- 1 / bin_fitteds
+
+save(w_linear, w_bin_vars, w_bin_fitteds, file = "../../data/opr_weights.rda")
 ```
