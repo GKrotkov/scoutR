@@ -179,9 +179,10 @@ w_linear <- weights_from_lines(
     coefficients(first_half_fit)[2], coefficients(second_half_fit)[2]
 )
 
-w_bin_vars <- 1 / bin_vars
+w_bin_resid_vars <- 1 / bin_vars
 
-w_bin_fitteds <- 1 / bin_fitteds
+w_bin_fitted_vars <- 1 / bin_fitteds
 
-save(w_linear, w_bin_vars, w_bin_fitteds, file = "../../data/opr_weights.rda")
+save(w_linear, w_bin_resid_vars, w_bin_fitted_vars, 
+     file = "../../data/opr_weights.rda")
 ```

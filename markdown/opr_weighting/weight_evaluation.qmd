@@ -223,11 +223,13 @@ LOOCV <- function(fit){
 }
 
 linear_weight_fits <- lapply(matches, weighted_fit, w = w_linear)
-bin_weight_fits <- lapply(matches, weighted_fit, w = w_bin_vars)
+bin_weight_fits <- lapply(matches, weighted_fit, w = w_bin_resid_vars)
+fitted_var_weight_fits <- lapply(matches, weighted_fit, w = w_bin_fitted_vars)
 raw_fits <- lapply(matches, weighted_fit, w = 1)
 
 linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
 bin_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
+fitted_weight_loocvs <- sapply(fitted_var_weight_fits, LOOCV)
 raw_loocvs <- sapply(raw_fits, LOOCV)
 
 viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs, 
