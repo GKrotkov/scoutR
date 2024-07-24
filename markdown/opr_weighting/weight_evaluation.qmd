@@ -297,3 +297,8 @@ How many events saw improvement in the OPR fit from weighting?
 sum((raw_loocvs / bin_weight_loocvs) > 1) / nrow(viz)
 ```
 
+What percent better are the weighted values on average?
+
+```{r}
+mean(((raw_loocvs / bin_weight_loocvs) - 1) * 100)
+```
