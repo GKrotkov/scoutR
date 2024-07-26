@@ -75,7 +75,7 @@ compute_mse_diff <- function(matches, w){
     
     mse_null <- mean((preds_null - true_response) ^ 2)
     mse_weighted <- mean((preds_weighted - true_response) ^ 2)
-    return(mse_weighted - mse_null)
+    return(mse_null / mse_weighted)
 }
 
 # matches - list of dataframes, each with qual matches with >= 12 matches/team
@@ -105,16 +105,16 @@ ggplot(viz, aes(x = mse_diff)) +
     geom_vline(aes(xintercept = mean(mse_diff)), color = gos_red) + 
     annotate("label", x = mean(mse_diffs), y = 15, 
              label = paste0("Mean: ", round(mean(mse_diffs), 3))) +
-    labs(title = "Weighting Improves OPR Predictions", 
+    labs(title = "OPR Weighting Test MSE Ratio", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
-         x = "Event-Normalized Mean Squared Error Difference (Std Devs)", 
+         x = "Event-Normalized MSE Ratio (null:weighted)", 
          y = "# Events") +
     gos_theme
 
 ggplot(viz, aes(x = mse_diff)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
-    labs(title = "OPR Weighting MSE Difference", x = "MSE Difference", 
+    labs(title = "OPR Weighting Test MSE Ratio", x = "Test MSE Ratio", 
          y = "Density") + 
     gos_theme
 
@@ -125,12 +125,12 @@ viz <- viz %>%
               median_diff = median(mse_diff))
 
 colnames(viz) <- c(
-    "Year", "# Events", "Mean MSE Difference", "Median MSE Difference"
+    "Year", "# Events", "Mean MSE Ratio", "Median MSE Ratio"
 )
 
 gt(viz) %>%
     tab_header(
-        title = "Yearly MSE differences between null and weighted OPR"
+        title = "Yearly MSE ratios raw:weighted OPR"
     ) %>%
     tab_options(
         column_labels.background.color = gos_blue
@@ -243,9 +243,9 @@ ggplot(viz, aes(x = bin_loocv_ratio)) +
     annotate("label", x = mean(viz$bin_loocv_ratio), y = 15, 
              label = paste0("Mean: ", 
                             round(mean(viz$bin_loocv_ratio), 3))) +
-    labs(title = "Weighting Improves OPR Predictions", 
+    labs(title = "OPR Weighting LOOCV Ratio", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
-         x = "Event-Normalized LOOCV Error Ratio (Std Devs)", 
+         x = "Event-Normalized LOOCV Error Ratio (raw:weighted)", 
          y = "# Events") +
     gos_theme
 
