@@ -58,12 +58,14 @@ fits <- lapply(matches, fit_opr)
 
 residuals <- lapply(fits, function(fit){return(residuals(fit))})
 fitteds <- lapply(fits, function(fit){return(fitted(fit))})
+# match percentile is the match number divided by the number of matches
+match_percentile <- unlist(lapply(residuals, normalize_match_number), 
+                           use.names = FALSE)
 
 viz <- data.frame(
     resids = unlist(residuals, use.names = FALSE),
     sq_resids = unlist(residuals, use.names = FALSE) ^ 2,
-    match_percentile = unlist(lapply(residuals, normalize_match_number), 
-                              use.names = FALSE)
+    match_percentile = match_percentile
 )
 
 sq_resid_fit <- lm(sq_resids ~ match_percentile, data = viz)
@@ -123,8 +125,7 @@ rm(estimate_weights_by_residual)
 
 ```{r}
 n_bins <- 6
-cuts <- cut(viz$match_percentile, breaks = n_bins)
-labs <- levels(cuts)
+cuts <- cut(match_percentile, breaks = n_bins)
 
 bin_vars <- rep(0, length(unique(cuts)))
 bin_fitteds <- rep(0, length(unique(cuts)))

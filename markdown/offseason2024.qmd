@@ -115,13 +115,14 @@ viz$id <- substr(viz$id, 2, nchar(viz$id))
 ```
 
 ```{r}
-plt <- ggplot(viz, aes(label = id, x = total, y = auto, size = amp_eff)) + 
+library(plotly)
+plt <- ggplot(viz, aes(label = id, x = total, y = auto)) + 
     geom_label(alpha = 0.5)
 
 plt
 
-plt <- ggplot(viz, aes(label = id, x = total, y = auto, size = amp_eff)) + 
-    geom_point(alpha = 0.5)
+plt <- ggplot(viz, aes(label = id, x = total, y = auto)) + 
+    geom_text(alpha = 0.5)
 
 ggplotly(plt)
 ```
