@@ -146,7 +146,7 @@ gt(viz) %>%
 
 # In-Sample MSE
 
-```{r}
+```{r in-sample-mse}
 compute_in_sample_mse <- function(matches, w){
     fits <- lapply(matches, weighted_fit, w = w)
     mses <- sapply(
@@ -156,44 +156,46 @@ compute_in_sample_mse <- function(matches, w){
     return(mses)
 }
 
-weighted_mse <- compute_in_sample_mse(matches, w_linear)
+fitvar_weighted_mse <- compute_in_sample_mse(matches, w_bin_fitted_vars)
+residvar_weighted_mse <- compute_in_sample_mse(matches, w_bin_resid_vars)
 raw_mse <- compute_in_sample_mse(matches, 1)
 
-viz <- data.frame(mse_diff = raw_mse - weighted_mse, 
+viz <- data.frame(fitvar_ratio = raw_mse / fitvar_weighted_mse, 
+                  residvar_ratio = raw_mse / residvar_weighted_mse,
                   year = as.factor(substr(names(weighted_mse), 1, 4)))
 
-ggplot(viz, aes(x = mse_diff)) + 
+ggplot(viz, aes(x = fitvar_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
-    geom_vline(aes(xintercept = mean(mse_diff)), color = gos_red) + 
-    annotate("label", x = mean(viz$mse_diff), y = 15, 
-             label = paste0("Mean: ", round(mean(viz$mse_diff), 6))) +
-    labs(title = "Weighting Improves OPR Predictions", 
+    geom_vline(aes(xintercept = mean(fitvar_ratio)), color = gos_red) + 
+    annotate("label", x = mean(viz$fitvar_ratio), y = 15, 
+             label = paste0("Mean: ", round(mean(viz$fitvar_ratio), 6))) +
+    labs(title = "In-Sample MSE Ratio (raw / weighted by fitted variance)", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized Mean Squared Error Difference (Std Devs)", 
          y = "# Events") +
     gos_theme
 
-ggplot(viz, aes(x = mse_diff)) + 
+ggplot(viz, aes(x = fitvar_ratio)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
-    labs(title = "OPR Weighting MSE Difference", x = "MSE Difference", 
+    labs(title = "OPR Weighting MSE Ratio", x = "MSE Ratio", 
          y = "Density") + 
     gos_theme
 
 viz <- viz %>%
     group_by(year) %>%
     summarize(events = n(), 
-              mean_diff = mean(mse_diff), 
-              median_diff = median(mse_diff))
+              mean_diff = mean(fitvar_ratio), 
+              median_diff = median(fitvar_ratio))
 
 colnames(viz) <- c(
-    "Year", "# Events", "Mean MSE Difference", "Median MSE Difference"
+    "Year", "# Events", "Mean MSE Ratio", "Median MSE Ratio"
 )
 
 gt(viz) %>%
     tab_header(
-        title = "Yearly MSE differences between null and weighted OPR"
+        title = "Yearly MSE ratios between null and weighted OPR"
     ) %>%
     tab_options(
         column_labels.background.color = gos_blue
