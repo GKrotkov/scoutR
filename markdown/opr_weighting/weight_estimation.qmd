@@ -136,12 +136,12 @@ for (i in 1:length(unique(cuts))){
 }
 
 plot(x = 1:length(bin_vars), y = bin_vars, 
-     xlab = "Bin Number", ylab = "Normalized Residual Variance", 
+     xlab = "Bin Number", ylab = "Residual Variance", 
      main = "Residual Variance by Binned Tournament Progress")
 
 plot(x = 1:length(bin_fitteds), y = bin_fitteds, 
-     xlab = "Bin Number", ylab = "Normalized Fitted Value Variance", 
-     main = "Residual Fitted Values by Binned Tournament Progress")
+     xlab = "Bin Number", ylab = "Fitted Value Variance", 
+     main = "Fitted Value Variance by Binned Tournament Progress")
 ```
 
 # Linear Approximation to Bin Variance

@@ -722,3 +722,91 @@ plt <- ggplot(tangibles, aes(x = climb_rate, y = mobility)) +
 
 ggplotly(plt)
 ```
+
+# WVROX
+
+```{r}
+library(devtools)
+load_all()
+library(extrafont)
+library(plotly)
+
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
+
+# Silent matches were 111:115, but I won't exclude those
+specialty_matches <- c(31:35, 51:55, 71:75, 86:90)
+wvrox <- event_matches("2024wvrox")
+wvrox <- wvrox[-which(wvrox$match_number %in% specialty_matches), ]
+
+load("../data/opr_weights.rda")
+
+overall_fit <- fit_lineup_lm(
+    wvrox, list(red = wvrox$red_score, blue = wvrox$blue_score), 
+    w = w_bin_resid_vars
+)
+
+auto_fit <- fit_lineup_lm(
+    wvrox, list(red = wvrox$red_autoPoints, blue = wvrox$blue_autoPoints), 
+    w = w_bin_resid_vars
+)
+
+endgame_fit <- fit_lineup_lm(
+    wvrox, list(red = wvrox$red_endGameTotalStagePoints, 
+                blue = wvrox$blue_endGameTotalStagePoints), 
+    w = w_bin_resid_vars
+)
+
+teleop_fit <- fit_lineup_lm(
+    wvrox, list(red = wvrox$red_teleopPoints, blue = wvrox$blue_teleopPoints), 
+    w = w_bin_resid_vars
+)
+
+foul_good_fit <- fit_lineup_lm(
+    wvrox, list(red = wvrox$red_foulPoints, blue = wvrox$blue_foulPoints), 
+    w = w_bin_resid_vars
+)
+
+foul_bad_fit <- fit_lineup_lm(
+    wvrox, list(red = wvrox$blue_foulPoints, blue = wvrox$red_foulPoints), 
+    w = w_bin_resid_vars
+)
+
+
+oprs <- data.frame(
+    overall = coefficients(overall_fit), 
+    auto = coefficients(auto_fit), 
+    teleop = coefficients(teleop_fit), 
+    endgame = coefficients(endgame_fit),
+    fouls_good = coefficients(foul_good_fit), 
+    fouls_bad = coefficients(foul_bad_fit)
+)
+
+oprs$id <- as.numeric(substr(rownames(oprs), 4, nchar(rownames(oprs))))
+
+oprs <- round(oprs, digits = 3)
+
+plt <- ggplot(oprs, aes(x = teleop, y = auto + endgame)) + 
+    geom_text(aes(label = id, y = auto + endgame, x = teleop)) + 
+    labs(title = "WVROX OPRs", 
+         x = "Teleop", y = "Auto + Endgame") +
+    gos_theme
+
+ggplotly(plt)
+
+tangibles <- event_robot_results("2024wvrox")
+
+tangibles <- tangibles %>%
+    mutate(
+        mobility_pct = autoLine.Yes / n_matches.count, 
+        climb_pct = (endGame.StageRight + endGame.StageLeft + endGame.CenterStage) / n_matches.count
+    )
+
+tangibles$id <- as.numeric(substr(tangibles$id, 4, nchar(tangibles$id)))
+
+tangibles <- round(tangibles, digits = 3)
+```
+

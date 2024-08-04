@@ -230,28 +230,29 @@ fitted_var_weight_fits <- lapply(matches, weighted_fit, w = w_bin_fitted_vars)
 raw_fits <- lapply(matches, weighted_fit, w = 1)
 
 linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
-bin_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
+resid_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
 fitted_weight_loocvs <- sapply(fitted_var_weight_fits, LOOCV)
 raw_loocvs <- sapply(raw_fits, LOOCV)
 
 viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs, 
-                  bin_loocv_ratio = raw_loocvs / bin_weight_loocvs,
+                  resid_loocv_ratio = raw_loocvs / resid_weight_loocvs,
+                  fitted_loocv_ratio = raw_loocvs / fitted_weight_loocvs,
                   year = as.factor(substr(names(raw_loocvs), 1, 4)))
 
-ggplot(viz, aes(x = bin_loocv_ratio)) + 
+ggplot(viz, aes(x = resid_loocv_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
-    geom_vline(aes(xintercept = mean(bin_loocv_ratio)), color = gos_red) + 
-    annotate("label", x = mean(viz$bin_loocv_ratio), y = 15, 
+    geom_vline(aes(xintercept = mean(resid_loocv_ratio)), color = gos_red) + 
+    annotate("label", x = mean(viz$resid_loocv_ratio), y = 15, 
              label = paste0("Mean: ", 
-                            round(mean(viz$bin_loocv_ratio), 3))) +
+                            round(mean(viz$resid_loocv_ratio), 3))) +
     labs(title = "OPR Weighting LOOCV Ratio", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized LOOCV Error Ratio (raw:weighted)", 
          y = "# Events") +
     gos_theme
 
-ggplot(viz, aes(x = bin_loocv_ratio)) + 
+ggplot(viz, aes(x = resid_loocv_ratio)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
     labs(title = "OPR Weighting LOOCV Ratio", x = "LOOCV Difference", 
@@ -263,8 +264,8 @@ viz <- viz %>%
     summarize(events = n(), 
               linear_mean_ratio = mean(linear_loocv_ratio), 
               linear_median_ratio = median(linear_loocv_ratio), 
-              bin_mean_ratio = mean(bin_loocv_ratio), 
-              bin_median_ratio = median(bin_loocv_ratio))
+              bin_mean_ratio = mean(resid_loocv_ratio), 
+              bin_median_ratio = median(resid_loocv_ratio))
 
 colnames(viz) <- c(
     "Year", "# Events", 
