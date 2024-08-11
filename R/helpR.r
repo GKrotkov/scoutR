@@ -2,8 +2,8 @@
 #### helpeR ####
 ################
 
-# TBA HelpeR implements helper functions that are not necessarily core to the
-# funtionality of tbaR, but are useful for users to have access to. These are
+# helpeR implements helper functions that are not necessarily core to the
+# funtionality of scoutR, but are useful for users to have access to. These are
 # utility functions, more useful under the hood than for decisionmaking.
 
 #' Document
@@ -14,11 +14,11 @@ document <- function(){
     with_dir(here(), roxygen2::roxygenise())
 }
 
-#' Initialize tbaR
+#' Initialize scoutR
 #'
-#' Function to start tbaR by writing the auth key for tbaR as well as
-#' creating the documentation files for tbaR.
-initialize_tbaR <- function(auth_key = NA){
+#' Function to start scoutR by writing the auth key for scoutR as well as
+#' creating the documentation files for scoutR
+initialize_scoutR <- function(auth_key = NA){
     if (is.na(auth_key)){
         warning("No auth key supplied. We assume data/tba_auth_key.txt exists.")
     }
@@ -139,6 +139,30 @@ normalize_weights <- function(w, len_out = NA) {
         result <- rep_each_len(result, len_out)
     }
 
+    return(result)
+}
+
+#' Weight Rows
+#'
+#' Weights the rows of the input dataframe by cutting the dataframe into equal
+#' length bins and multiple-counting the rows for appropriate weight
+#' @param df input dataframe to be weighted
+#' @param w numeric vector of weights applied to `df`, assumed integers
+#' @details Weights are applied in uniform length bins (so if weights is
+#' length-2, there will be two bins with 50% of the data each, and if weights
+#' is length-5, there will be five bins with 20% of the data each). The
+#' weighting respects order.
+weight_rows <- function(df, w){
+    w <- normalize_weights(w)
+    stopifnot("weights must all be integers after normalization" =
+                  all(w == floor(w)))
+    # apply weighting by multiply-sampling the weighted rows
+    cuts <- cut(1:nrow(df), length(w))
+    result <- data.frame()
+    for (i in seq_along(w)){
+        bin <- df[cuts == levels(cuts)[i], ]
+        result <- rbind(result, bin[rep(seq_len(nrow(bin)), w[i]), ])
+    }
     return(result)
 }
 
@@ -353,30 +377,6 @@ get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
         result <- Reduce(function(x, y) merge(x, y, by = "id"), result)
         # rename columns to make result more interpretable
         colnames(result) <- c("id", paste(sources, titles, sep = "."))
-    }
-    return(result)
-}
-
-#' Weight Rows
-#'
-#' Weights the rows of the input dataframe by cutting the dataframe into equal
-#' length bins and multiple-counting the rows for appropriate weight
-#' @param df input dataframe to be weighted
-#' @param w numeric vector of weights applied to `df`, assumed integers
-#' @details Weights are applied in uniform length bins (so if weights is
-#' length-2, there will be two bins with 50% of the data each, and if weights
-#' is length-5, there will be five bins with 20% of the data each). The
-#' weighting respects order.
-weight_rows <- function(df, w){
-    w <- normalize_weights(w)
-    stopifnot("weights must all be integers after normalization" =
-                  all(w == floor(w)))
-    # apply weighting by multiply-sampling the weighted rows
-    cuts <- cut(1:nrow(df), length(w))
-    result <- data.frame()
-    for (i in seq_along(w)){
-        bin <- df[cuts == levels(cuts)[i], ]
-        result <- rbind(result, bin[rep(seq_len(nrow(bin)), w[i]), ])
     }
     return(result)
 }
