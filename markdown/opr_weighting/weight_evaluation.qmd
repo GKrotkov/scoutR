@@ -162,7 +162,7 @@ raw_mse <- compute_in_sample_mse(matches, 1)
 
 viz <- data.frame(fitvar_ratio = raw_mse / fitvar_weighted_mse, 
                   residvar_ratio = raw_mse / residvar_weighted_mse,
-                  year = as.factor(substr(names(weighted_mse), 1, 4)))
+                  year = as.factor(substr(names(raw_mse), 1, 4)))
 
 ggplot(viz, aes(x = fitvar_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
@@ -272,6 +272,9 @@ colnames(viz) <- c(
     "Mean Linear LOOCV Ratio", "Median Linear LOOCV Ratio", 
     "Mean bin LOOCV Ratio", "Median bin LOOCV Ratio"
 )
+
+viz$Year <- as.numeric(as.character(viz$Year))
+viz <- round(viz, digits = 4)
 
 gt(viz) %>%
     tab_header(
