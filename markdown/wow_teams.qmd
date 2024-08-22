@@ -1,40 +1,17 @@
 ---
-title: "Playground"
+title: "wow_teams"
 format: html
 ---
-
-
-```{r}
-# loading the scoutR library: 
-# https://github.com/GKrotkov/scoutR
-library(devtools); load_all()
-```
-
-# Double Harmonies?
-
-```{r}
-cresc_evnts <- events(2024, keys = TRUE)
-cresc_matches <- lapply(cresc_evnts, event_matches)
-cresc_matches <- cresc_matches[!is.na(cresc_matches)]
-
-get_harmonies <- function(df){
-    return(c(df$blue_endGameHarmonyPoints, df$red_endGameHarmonyPoints))
-}
-
-# How many alliances had 4 harmony points?
-suppressWarnings(
-    sum(unlist(sapply(cresc_matches, get_harmonies)) == 4, na.rm = TRUE)
-)
-```
 
 # WOW Team Counts
 
 ```{r}
+# data generated with teams_yearly.R in the scripts folder
 load("../data/teams_yearly_2024.rda")
 
 fma_teams <- c()
 
-# split into two loops bc 2019 was the first year of "FMA"
+# split into two loops bc 2019 was the first year of "FMA" instead of "MAR"
 for (i in 2012:2018){
     fma_teams <- c(fma_teams, district_teams(paste0(i, "mar"), keys = TRUE))
 }
@@ -77,4 +54,3 @@ ggplot(wow, aes(x = as.character(year), y = count, fill = state_prov)) +
     theme_bw()
 
 ```
-

@@ -290,23 +290,36 @@ gt(viz) %>%
     opt_table_font(
         font = "Futura"
     )
+
+viz$mean_pct_improvement <- (viz$`Mean bin LOOCV Ratio` - 1)
+
+ggplot(viz, aes(x = as.character(viz$Year), y = mean_pct_improvement)) + 
+    geom_point(aes(size = `# Events`), col = gos_red) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
+               yintercept = mean(viz$mean_pct_improvement)) + 
+    geom_hline(yintercept = 0) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(title = "Weighting Percent Improvement by Year", 
+         subtitle = "By Mean LOOCV", 
+         x = "Year", y = "Mean LOOCV Percent Improvement") + 
+    gos_theme
 ```
 
 Given the ratio in means; I would recommend using the `1 / bin_vars` as the weighting rather than the linear approximation; I trust the LOOCV evaluation over the test MSE evaluation.
 
 ```{r}
-mean(bin_weight_loocvs - raw_loocvs) / 
+mean(resid_weight_loocvs - raw_loocvs) / 
     mean(linear_weight_loocvs - raw_loocvs)
 ```
 
 How many events saw improvement in the OPR fit from weighting? 
 
 ```{r}
-sum((raw_loocvs / bin_weight_loocvs) > 1) / nrow(viz)
+sum((raw_loocvs / resid_weight_loocvs) > 1) / length(raw_loocvs)
 ```
 
 What percent better are the weighted values on average?
 
 ```{r}
-mean(((raw_loocvs / bin_weight_loocvs) - 1) * 100)
+mean(((raw_loocvs / resid_weight_loocvs) - 1) * 100)
 ```

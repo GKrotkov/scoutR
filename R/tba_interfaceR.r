@@ -2,8 +2,8 @@
 #### interfaceR ####
 ####################
 
-# tbaR implements functions that return tidy-style data, wrapping functions
-# both from tba_readR and tba_tidyR. tbaR uses valuable namespace like "event"
+# tba_interfaceR implements functions that return tidy-style data, wrapping fxns
+# from tba_readR -> tba_tidyR. tbaR uses valuable namespace like "event"
 # and "team_matches" to make the most elegant coding solution available. In
 # general, the naming convention is intended to reference the TBA API calls
 # relevant to the query to make the experience as seamless as possible between
