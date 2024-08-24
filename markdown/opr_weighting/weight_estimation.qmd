@@ -135,13 +135,20 @@ for (i in 1:length(unique(cuts))){
     bin_fitteds[i] <- var(unlist(fitteds)[cuts == levels(cuts)[i]])
 }
 
-plot(x = 1:length(bin_vars), y = bin_vars, 
-     xlab = "Bin Number", ylab = "Residual Variance", 
-     main = "Residual Variance by Binned Tournament Progress")
+viz <- data.frame(bin = as.character(1:length(bin_vars)), 
+                  bin_vars = bin_vars, bin_fitteds = bin_fitteds)
 
-plot(x = 1:length(bin_fitteds), y = bin_fitteds, 
-     xlab = "Bin Number", ylab = "Fitted Value Variance", 
-     main = "Fitted Value Variance by Binned Tournament Progress")
+ggplot(viz, aes(x = bin, y = bin_vars)) + 
+    geom_point() + 
+    labs(title = "Residual Variance by Binned Tournament Progress", 
+         x = "Bin Number", y = "Residual Variance") +
+    gos_theme
+
+ggplot(viz, aes(x = bin, y = bin_fitteds)) + 
+    geom_point() + 
+    labs(title = "Fitted Value Variance by Binned Tournament Progress", 
+         x = "Bin Number", y = "Normalized Residual Variance") +
+    gos_theme
 
 bin_vars22 <- rep(0, length(unique(cuts)))
 resids22 <- unlist(residuals)[startsWith(names(residuals), "2022")]
@@ -161,6 +168,18 @@ idx <- 1:(floor(length(bin_vars) / 2))
 first_half_fit <- lm(bin_vars[idx] ~ idx)
 idx <- (ceiling(length(bin_vars) / 2)):length(bin_vars)
 second_half_fit <- lm(bin_vars[idx] ~ idx)
+
+ggplot(viz, aes(x = bin, y = bin_vars)) + 
+    geom_point() + 
+    geom_abline(intercept = coefficients(first_half_fit)[1], 
+                slope = coefficients(first_half_fit)[2], 
+                col = gos_blue) +
+    geom_abline(intercept = coefficients(second_half_fit)[1], 
+                slope = coefficients(second_half_fit)[2], 
+                col = gos_red) +
+    labs(title = "Two lines approximate the variance relationship", 
+         x = "Bin Number", y = "Residual Variance") +
+    gos_theme
 
 plot(x = 1:length(bin_vars), y = bin_vars, 
      xlab = "Bin Number", ylab = "Normalized Residual Variance", 
