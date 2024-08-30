@@ -124,7 +124,7 @@ rm(estimate_weights_by_residual)
 # Bin Variance Weight Estimates
 
 ```{r}
-n_bins <- 6
+n_bins <- 12
 cuts <- cut(match_percentile, breaks = n_bins)
 
 bin_vars <- rep(0, length(unique(cuts)))
@@ -135,19 +135,21 @@ for (i in 1:length(unique(cuts))){
     bin_fitteds[i] <- var(unlist(fitteds)[cuts == levels(cuts)[i]])
 }
 
-viz <- data.frame(bin = as.character(1:length(bin_vars)), 
+viz <- data.frame(bin = 1:length(bin_vars), 
                   bin_vars = bin_vars, bin_fitteds = bin_fitteds)
 
 ggplot(viz, aes(x = bin, y = bin_vars)) + 
     geom_point() + 
     labs(title = "Residual Variance by Binned Tournament Progress", 
          x = "Bin Number", y = "Residual Variance") +
+    scale_x_continuous(breaks = viz$bin) +
     gos_theme
 
 ggplot(viz, aes(x = bin, y = bin_fitteds)) + 
     geom_point() + 
     labs(title = "Fitted Value Variance by Binned Tournament Progress", 
          x = "Bin Number", y = "Normalized Residual Variance") +
+    scale_x_continuous(breaks = viz$bin) +
     gos_theme
 
 bin_vars22 <- rep(0, length(unique(cuts)))
@@ -179,6 +181,7 @@ ggplot(viz, aes(x = bin, y = bin_vars)) +
                 col = gos_red) +
     labs(title = "Two lines approximate the variance relationship", 
          x = "Bin Number", y = "Residual Variance") +
+    scale_x_continuous(breaks = viz$bin) + 
     gos_theme
 
 plot(x = 1:length(bin_vars), y = bin_vars, 

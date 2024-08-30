@@ -108,6 +108,7 @@ ggplot(viz, aes(x = n_bins, y = mean_loocvs)) +
     geom_point(col = gos_red) + 
     labs(title = "Hyperparameter Tuning for Bins", 
          x = "Bin #", y = "LOOCV Mean") + 
+    scale_x_continuous(breaks = n_bins) + 
     gos_theme
 
 cat("The minimum occurs at", names(which.min(mean_loocvs)), 
