@@ -298,13 +298,13 @@ gt(viz) %>%
         font = "Futura"
     ) %>%
     tab_footnote(
-        footnote = "Higher values indicate the model is performing better", 
+        footnote = "Higher values indicate the weighting is performing better", 
         locations = cells_title("subtitle")
     )
 
-viz$mean_pct_improvement <- (viz$`Mean bin LOOCV Ratio` - 1)
+viz$mean_pct_improvement <- (viz$`Binned` - 1)
 
-ggplot(viz, aes(x = as.character(viz$Year), y = mean_pct_improvement)) + 
+ggplot(viz, aes(x = as.character(Year), y = mean_pct_improvement)) + 
     geom_point(aes(size = `# Events`), col = gos_red) + 
     geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
                yintercept = mean(viz$mean_pct_improvement)) + 
