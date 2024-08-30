@@ -1,0 +1,111 @@
+---
+title: "WLS Bin Hyperparameter Tuning"
+format: html
+---
+
+Applying hyperparameter tuning to optimze the number of bins for WLS methods established in [this paper](https://www.overleaf.com/read/dkmzrpspkhzb#0bd526).
+
+```{r setup, message=FALSE, warning=FALSE}
+library(devtools)
+load_all()
+rm(list = ls())
+load("../../data/district_quals_09_24.rda")
+
+# normalize match scores so we can do cross-week and cross-season comparisons
+# this simplifies a lot of later code
+matches <- lapply(
+    matches, 
+    function(match_df){
+        scaled <- scale(c(match_df$red_score, match_df$blue_score))
+        match_df$red_score <- scaled[1:nrow(match_df)]
+        match_df$blue_score <- scaled[(nrow(match_df) + 1):length(scaled)]
+        return(match_df)
+    })
+
+library(extrafont)
+library(gt)
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
+
+# fits WLS on the match dataframes
+weighted_fit <- function(match_df, w){
+    return(
+        fit_lineup_lm(
+            match_df, 
+            responses = list(
+                red = match_df$red_score, blue = match_df$blue_score
+            ), 
+            w = w
+        )
+    )
+}
+
+# fits the standard opr model on a regular match dataframe from TheBlueAlliance
+fit_opr <- function(match_df){
+    return(
+        fit_lineup_lm(
+            match_df, responses = list(
+                red = match_df$red_score, blue = match_df$blue_score)
+        )
+    )
+}
+
+# this uses the "shortcut" formula for LOOCV
+# see formula 5.2 in ISLR by James, Witten, Hastie, and Tibshirani (v2), pg 202
+LOOCV <- function(fit){
+    mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
+}
+```
+
+The following code chunk generates the key data - the model residuals and the normalized match number.
+
+```{r data-generation}
+normalize_match_number <- function(opr_residual){
+    # we know we can divide the length by 2 because there are 2 alliances/match
+    alliance_corrected <- ((1:length(opr_residual) - 1) %% 
+                               (length(opr_residual) / 2)) + 1
+    return((alliance_corrected / length(opr_residual)) * 2)
+}
+
+fits <- lapply(matches, fit_opr)
+
+residuals <- lapply(fits, function(fit){return(residuals(fit))})
+# match percentile is the match number divided by the number of matches
+match_percentile <- unlist(lapply(residuals, normalize_match_number), 
+                           use.names = FALSE)
+```
+
+A reasonable grid to optimize over is simply 2 through 12. 2 is as low as you could possibly go (only 1 bin is essentially unweighted), while 12 is one bin/round, which I have to imagine is too much.
+
+```{r}
+# assumes that residuals have been standardized
+generate_weights <- function(n_bins, residuals, match_percentile){
+    cuts <- cut(match_percentile, breaks = n_bins)
+    bin_vars <- rep(0, length(unique(cuts)))
+    for (i in 1:length(unique(cuts))){
+        bin_vars[i] <- var(unlist(residuals)[cuts == levels(cuts)[i]])
+    }
+    return(1 / bin_vars)
+}
+
+mean_loocvs <- c()
+n_bins <- 2:20
+for (k in n_bins){
+    bin_weight_fits <- lapply(
+        matches, weighted_fit, 
+        w = generate_weights(k, residuals, match_percentile)
+    )
+    mean_loocvs <- c(mean_loocvs, mean(sapply(bin_weight_fits, LOOCV)))
+}
+names(mean_loocvs) <- paste0("Bins = ", n_bins)
+
+plot(mean_loocvs, main = "Mean LOOCVs", xlab = "Bin #", ylab = "LOOCV")
+
+cat("The minimum occurs at", names(which.min(mean_loocvs)), 
+    "with LOOCV:", mean_loocvs[which.min(mean_loocvs)], "\n")
+```
+
+**Takeaway**: Really any number between 6 and 12 will be fine, but 12 does technically come out on top.
