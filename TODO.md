@@ -27,3 +27,4 @@
     - Number of matches you've played together divided by the expected number?
 - Statbotics tidyR, update tba_interfaceR to include the "tba_" prefix in each function name (maybe? That's a huge pain in the ass change.)
 - Local EPA calculation
+- Principled district points model

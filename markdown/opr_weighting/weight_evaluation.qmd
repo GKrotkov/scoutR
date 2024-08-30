@@ -263,14 +263,10 @@ viz <- viz %>%
     group_by(year) %>%
     summarize(events = n(), 
               linear_mean_ratio = mean(linear_loocv_ratio), 
-              linear_median_ratio = median(linear_loocv_ratio), 
-              bin_mean_ratio = mean(resid_loocv_ratio), 
-              bin_median_ratio = median(resid_loocv_ratio))
+              bin_mean_ratio = mean(resid_loocv_ratio))
 
 colnames(viz) <- c(
-    "Year", "# Events", 
-    "Mean Linear LOOCV Ratio", "Median Linear LOOCV Ratio", 
-    "Mean bin LOOCV Ratio", "Median bin LOOCV Ratio"
+    "Year", "# Events", "Linear", "Binned"
 )
 
 viz$Year <- as.numeric(as.character(viz$Year))
@@ -278,10 +274,21 @@ viz <- round(viz, digits = 4)
 
 gt(viz) %>%
     tab_header(
-        title = "LOOCV Ratios between weighted and raw OPR"
+        title = "Mean LOOCV Ratios", 
+        subtitle = "unweighted:weighted"
     ) %>%
     tab_options(
         column_labels.background.color = gos_blue
+    ) %>%
+    tab_style(
+        style = cell_text(weight = "bold"), 
+        locations = cells_body(columns = "Linear", 
+                               rows = which(viz$Linear > viz$Binned))
+    ) %>%
+    tab_style(
+        style = cell_text(weight = "bold"), 
+        locations = cells_body(columns = "Binned", 
+                               rows = which(viz$Binned >= viz$Linear))
     ) %>%
     tab_style(
         cell_borders(color = gos_blue), 
@@ -289,6 +296,10 @@ gt(viz) %>%
     ) %>%
     opt_table_font(
         font = "Futura"
+    ) %>%
+    tab_footnote(
+        footnote = "Higher values indicate the model is performing better", 
+        locations = cells_title("subtitle")
     )
 
 viz$mean_pct_improvement <- (viz$`Mean bin LOOCV Ratio` - 1)
