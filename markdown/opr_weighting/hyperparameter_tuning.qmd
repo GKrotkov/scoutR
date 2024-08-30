@@ -78,7 +78,7 @@ match_percentile <- unlist(lapply(residuals, normalize_match_number),
                            use.names = FALSE)
 ```
 
-A reasonable grid to optimize over is simply 2 through 12. 2 is as low as you could possibly go (only 1 bin is essentially unweighted), while 12 is one bin/round, which I have to imagine is too much.
+A reasonable grid to optimize over is simply 2 through 12. 2 is as low as you could possibly go (only 1 bin is essentially unweighted), while 12 is one bin/round, meaning many teams will not appear in bins.
 
 ```{r}
 # assumes that residuals have been standardized
@@ -92,7 +92,7 @@ generate_weights <- function(n_bins, residuals, match_percentile){
 }
 
 mean_loocvs <- c()
-n_bins <- 2:20
+n_bins <- 2:15
 for (k in n_bins){
     bin_weight_fits <- lapply(
         matches, weighted_fit, 
@@ -102,7 +102,13 @@ for (k in n_bins){
 }
 names(mean_loocvs) <- paste0("Bins = ", n_bins)
 
-plot(mean_loocvs, main = "Mean LOOCVs", xlab = "Bin #", ylab = "LOOCV")
+viz <- data.frame(bins = n_bins, mean_loocvs = mean_loocvs)
+
+ggplot(viz, aes(x = n_bins, y = mean_loocvs)) + 
+    geom_point(col = gos_red) + 
+    labs(title = "Hyperparameter Tuning for Bins", 
+         x = "Bin #", y = "LOOCV Mean") + 
+    gos_theme
 
 cat("The minimum occurs at", names(which.min(mean_loocvs)), 
     "with LOOCV:", mean_loocvs[which.min(mean_loocvs)], "\n")
