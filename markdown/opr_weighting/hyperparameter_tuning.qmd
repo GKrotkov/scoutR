@@ -235,3 +235,9 @@ cat("The minimum using fixing occurs at:\n",
     "with LOOCV:", mean(sapply(fits_star, LOOCV)), "\n")
 ```
 
+# Outputting
+
+```{r}
+save(w, file = "../../data/optimized_opr_weighting.rda")
+```
+
