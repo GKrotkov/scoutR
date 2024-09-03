@@ -1,6 +1,8 @@
 ---
 title: "WLS Bin Hyperparameter Tuning"
 format: html
+toc: true
+code-fold: show
 ---
 
 Applying hyperparameter tuning to optimze the number of bins for WLS methods established in [this paper](https://www.overleaf.com/read/dkmzrpspkhzb#0bd526).
@@ -80,7 +82,7 @@ match_percentile <- unlist(lapply(residuals, normalize_match_number),
 
 A reasonable grid to optimize over is simply 2 through 12. 2 is as low as you could possibly go (only 1 bin is essentially unweighted), while 12 is one bin/round, meaning many teams will not appear in bins.
 
-```{r}
+```{r bin-tuning}
 # assumes that residuals have been standardized
 generate_weights <- function(n_bins, residuals, match_percentile){
     cuts <- cut(match_percentile, breaks = n_bins)
@@ -91,8 +93,8 @@ generate_weights <- function(n_bins, residuals, match_percentile){
     return(1 / bin_vars)
 }
 
-mean_loocvs <- c()
-n_bins <- 2:15
+mean_loocvs <- c() # define an empty vector
+n_bins <- 2:15 # define n_bins
 for (k in n_bins){
     bin_weight_fits <- lapply(
         matches, weighted_fit, 
@@ -111,8 +113,125 @@ ggplot(viz, aes(x = n_bins, y = mean_loocvs)) +
     scale_x_continuous(breaks = n_bins) + 
     gos_theme
 
+loocv_min_bins <- mean_loocvs[which.min(mean_loocvs)]
+
 cat("The minimum occurs at", names(which.min(mean_loocvs)), 
-    "with LOOCV:", mean_loocvs[which.min(mean_loocvs)], "\n")
+    "with LOOCV:", loocv_min_bins, "\n")
 ```
 
 **Takeaway**: Really any number between 6 and 12 will be fine, but 12 does technically come out on top.
+
+# Stepwise Grid Optimization
+
+To optimize over 12 bins, we could skip interaction effects and optimize in a stepwise fashion. This will give up some precision, but $O(n^{12})$ is too much to optimize over exhaustively. 
+
+## Over 1 bin at a time
+
+```{r grid-optimization-stepwise}
+load("../../data/opr_weights.rda")
+
+step_size <- 0.1
+steps_radius <- 10
+
+# store the CV errors
+mean_loocvs <- matrix(
+    0, nrow = length(w_bin_resid_vars), ncol = steps_radius * 2 + 1
+)
+
+# store the weights in an indexable way
+w_lookup <- matrix(
+    0, nrow = length(w_bin_resid_vars), ncol = steps_radius * 2 + 1
+)
+
+# initialize tracking variables for the best LOOCV and weighting
+best_w <- w_bin_resid_vars
+best_loocv <- mean(
+    sapply(lapply(matches, weighted_fit, w = w_bin_resid_vars), LOOCV)
+)
+
+for (i in seq_along(w_bin_resid_vars)){ # i indexes the bins
+    grid <- seq(
+        w_bin_resid_vars[i] - (step_size * steps_radius), 
+        w_bin_resid_vars[i] + (step_size * steps_radius), by = step_size
+    )
+    # store the grid in our lookup matrix
+    w_lookup[i, ] <- grid
+    # reset w_star to the estimated weighting
+    w_star <- w_bin_resid_vars
+    # optimization within a single bin
+    for (j in seq_along(grid)){ # j indexes the grid
+        w_star[i] <- grid[j]
+        fits_star <- lapply(matches, weighted_fit, w = w_star)
+        mean_loocvs[i, j] <- mean(sapply(fits_star, LOOCV))
+    }
+}
+```
+
+## Over all bins (stepwise)
+
+```{r stepwise-reporting}
+loocv_min_onebin <-min(mean_loocvs)
+
+cidx_opt <- apply(mean_loocvs, 1, which.min)
+ridx_opt <- 1:12
+min_idx <- cbind(row = ridx_opt, col = cidx_opt)
+
+w_star <- w_bin_resid_vars
+w_star[min_idx[1, 1]] <- w_lookup[min_idx[1, 1], min_idx[1, 2]]
+
+cat("The minimum while changing only one bin occurs at",
+    "i =", opt_i, "j =", opt_j, "\n",
+    "with LOOCV:", loocv_min_onebin, "\n", 
+    "and weighting:", w_star, "\n")
+
+w_star <- w_lookup[cbind(min_idx[, 1], min_idx[, 2])]
+
+fits_opt <- lapply(matches, weighted_fit, w = w_star)
+
+loocv_stepwise <- mean(sapply(fits_opt, LOOCV))
+
+cat("The minimum using the optimum from each occurs at:", "\n", 
+    w_star, "\n", 
+    "with LOOCV:", loocv_stepwise, "\n")
+
+cat("Stepwise Optimization over all bins improves on the estimated binning by:", 
+    loocv_min_bins - loocv_stepwise, "standard deviations.", "\n", 
+    "Stepwise Optimization over a single bin improves on the estimated binning by:", 
+    loocv_min_bins - loocv_min_onebin, "standard deviations.", "\n")
+```
+
+## Fixing as you go
+
+```{r}
+load("../../data/opr_weights.rda")
+
+step_size <- 0.1
+steps_radius <- 10
+
+mean_loocvs <- matrix(
+    0, nrow = length(w_bin_resid_vars), ncol = steps_radius * 2 + 1
+)
+
+w_star <- w_bin_resid_vars
+for (i in seq_along(w_bin_resid_vars)){
+    grid <- seq(
+        w_bin_resid_vars[i] - (step_size * steps_radius), 
+        w_bin_resid_vars[i] + (step_size * steps_radius), by = step_size
+    )
+    # optimization within a single bin
+    for (j in seq_along(grid)){
+        w_star[i] <- grid[j]
+        fits_star <- lapply(matches, weighted_fit, w = w_star)
+        mean_loocvs[i, j] <- mean(sapply(fits_star, LOOCV))
+    }
+    # now fix the optimal value for bin i for the rest of the optimization
+    w_star[i] <- grid[which.min(mean_loocvs[, i])]
+}
+
+fits_star <- lapply(matches, weighted_fit, w_star)
+
+cat("The minimum using fixing occurs at:\n", 
+    w_star, "\n",
+    "with LOOCV:", mean(sapply(fits_star, LOOCV)), "\n")
+```
+

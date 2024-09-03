@@ -8,6 +8,7 @@
 - OPR calculated by linear regression is different from TBA's OPR for the events: 2022chcmp, 2022iscmp, 2022micmp3
 
 # Data Science Projects
+- Next Steps from OPR whitepaper - hyperparameter tuning
 - Find OPR's stabilization point (whole stabilization function?)
     - https://youtu.be/xJYv7uxXMn0?t=5774
 - "Precision" of OPR
