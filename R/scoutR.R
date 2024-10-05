@@ -163,8 +163,9 @@ fit_lineup_lm <- function(lineups, responses, w = NULL){
 #' fit_event_lr("2024new", match_type = "all")
 #' fit_event_lr("2024paca", response = "foulPoints", flip_response_alliance = T)
 fit_event_lr <- function(
-        event_code, match_type = "qual", response = "score", w = NULL,
-        flip_response_alliance = FALSE){
+    event_code, match_type = "qual", response = "score", w = NULL,
+    flip_response_alliance = FALSE
+){
     matches <- event_matches(event_code, match_type = match_type)
     matches <- matches[order(matches$match_number), ]
 
@@ -181,6 +182,65 @@ fit_event_lr <- function(
     }
 
     return(fit_lineup_lm(matches, responses, w = w))
+}
+
+#' Event OPR Progression
+#'
+#' Returns a dataframe tracking the progression of OPR over the course of an
+#' event. The rows are the number of matches played, and the columns are the
+#' team IDs, with additional columns for tracking the match number and
+#' matches per team.
+#' @param event_code TBA-legal event code
+#' @param response_name (chr) string for the column name suffix of the response
+#' variable. For raw OPR, this is "score" (accessing "red_score" and
+#' blue_score").
+#' @param standardize (bool) if TRUE, standardize event scores
+#' @param w optional WLS weighting for linear fits
+#' @details Spans the number of matches for which OPR is well-defined. Assumes
+#' that column names are formatted like: "(red/blue)_()"
+#' @examples
+#' result <- event_opr_progression("2024paca")
+#' result <- event_opr_progression("2024paca", response = "autoTotalNotePoints")
+event_opr_progression <- function(
+    event_code, response_name = "score", standardize = FALSE, w = NULL
+){
+    red_resp <- paste0("red_", response_name) # red response
+    blue_resp <- paste0("blue_", response_name) # blue response
+    matches <- event_matches(event_code, match_type = "qual")
+    if (standardize){ # handle response standardization
+        scores <- c(matches[[red_resp]], matches[[blue_resp]])
+        matches[[red_resp]] <- matches[[red_resp]] - mean(scores) / sd(scores)
+        matches[[blue_resp]] <- matches[[blue_resp]] - mean(scores) / sd(scores)
+    }
+    n_teams <- length(unique(c(matches$red1, matches$red2, matches$red3,
+                               matches$blue1, matches$blue2, matches$blue3)))
+    # the lowest number of matches for a valid fit is half the number of teams,
+    # because there are two alliances in each match.
+    lo <- (floor(n_teams / 2) + 1)
+    # the highest number of matches is all the matches
+    hi <- nrow(matches)
+    # rows are the progression, cols are teams
+    result <- matrix(NA, nrow = length(lo:hi), ncol = n_teams)
+
+    # loop through valid subsets, fit a linear regression, and store coeffs
+    for (i in lo:hi){
+        matches_subset <- matches[1:i, ]
+        # double bracket syntax allows dynamic construction of column names
+        fit <- fit_lineup_lm(
+            matches_subset,
+            list(red = matches_subset[[red_resp]],
+                 blue = matches_subset[[blue_resp]]),
+            w = w
+        )
+        result[i - lo + 1, ] <- coefficients(fit)
+    }
+
+    colnames(result) <- names(coefficients(fit))
+    result <- data.frame(result)
+    result$match_num <- lo:hi
+    # matches per team
+    result$mpt <- result$match_num / n_teams
+    return(result)
 }
 
 #############
