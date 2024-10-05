@@ -1,11 +1,16 @@
 ---
 title: "WLS Bin Hyperparameter Tuning"
 format: html
+author: Gabriel Krotkov
 toc: true
-code-fold: show
+code-fold: true
 ---
 
-Applying hyperparameter tuning to optimze the number of bins for WLS methods established in [this paper](https://www.overleaf.com/read/dkmzrpspkhzb#0bd526).
+This markdown file will implement hyperparameter tuning to optimize the weights estimated in [this paper](https://www.overleaf.com/read/dkmzrpspkhzb#0bd526). First I will tune over the number of bins, fix that number, and then explore various stepwise optimization strategies to find a best weighting.
+
+Timing note: running this code took my machine ~ 25 minutes.
+
+# Setup
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(devtools)
@@ -55,16 +60,6 @@ fit_opr <- function(match_df){
     )
 }
 
-# this uses the "shortcut" formula for LOOCV
-# see formula 5.2 in ISLR by James, Witten, Hastie, and Tibshirani (v2), pg 202
-LOOCV <- function(fit){
-    mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
-}
-```
-
-The following code chunk generates the key data - the model residuals and the normalized match number.
-
-```{r data-generation}
 normalize_match_number <- function(opr_residual){
     # we know we can divide the length by 2 because there are 2 alliances/match
     alliance_corrected <- ((1:length(opr_residual) - 1) %% 
@@ -80,9 +75,11 @@ match_percentile <- unlist(lapply(residuals, normalize_match_number),
                            use.names = FALSE)
 ```
 
-A reasonable grid to optimize over is simply 2 through 12. 2 is as low as you could possibly go (only 1 bin is essentially unweighted), while 12 is one bin/round, meaning many teams will not appear in bins.
+# Bin Number Optimization
 
-```{r bin-tuning}
+The key numbers to cover for the optimization were 2 through 12. 2 bins represents splitting the tournament in half, the fewest divisions we can make, and 12 represents treating each "round" of matches differently. Because teams will not fit precisely into evenly divided rounds, we cannot guarantee with 12 bins that each team gets 1 match in each bin, but on average it represents that division. 
+
+```{r n-bins-tuning}
 # assumes that residuals have been standardized
 generate_weights <- function(n_bins, residuals, match_percentile){
     cuts <- cut(match_percentile, breaks = n_bins)
@@ -125,9 +122,11 @@ cat("The minimum occurs at", names(which.min(mean_loocvs)),
 
 To optimize over 12 bins, we could skip interaction effects and optimize in a stepwise fashion. This will give up some precision, but $O(n^{12})$ is too much to optimize over exhaustively. 
 
-## Over 1 bin at a time
+## Single bin
 
-```{r grid-optimization-stepwise}
+The strategy only considers weightings that are identical to the originally estimated weights, except for a change in one bin.
+
+```{r grid-optimization-stepwise, cache=TRUE}
 load("../../data/opr_weights.rda")
 
 step_size <- 0.1
@@ -141,12 +140,6 @@ mean_loocvs <- matrix(
 # store the weights in an indexable way
 w_lookup <- matrix(
     0, nrow = length(w_bin_resid_vars), ncol = steps_radius * 2 + 1
-)
-
-# initialize tracking variables for the best LOOCV and weighting
-best_w <- w_bin_resid_vars
-best_loocv <- mean(
-    sapply(lapply(matches, weighted_fit, w = w_bin_resid_vars), LOOCV)
 )
 
 for (i in seq_along(w_bin_resid_vars)){ # i indexes the bins
@@ -165,33 +158,35 @@ for (i in seq_along(w_bin_resid_vars)){ # i indexes the bins
         mean_loocvs[i, j] <- mean(sapply(fits_star, LOOCV))
     }
 }
-```
 
-## Over all bins (stepwise)
+loocv_min_onebin <- min(mean_loocvs)
 
-```{r stepwise-reporting}
-loocv_min_onebin <-min(mean_loocvs)
+min_idx <- which(mean_loocvs == min(mean_loocvs), arr.ind = TRUE)
 
-cidx_opt <- apply(mean_loocvs, 1, which.min)
-ridx_opt <- 1:12
-min_idx <- cbind(row = ridx_opt, col = cidx_opt)
-
-w_star <- w_bin_resid_vars
-w_star[min_idx[1, 1]] <- w_lookup[min_idx[1, 1], min_idx[1, 2]]
+w_onebin <- w_bin_resid_vars
+w_onebin[min_idx[1, 1]] <- w_lookup[min_idx[1, 1], min_idx[1, 2]]
 
 cat("The minimum while changing only one bin occurs at",
-    "i =", opt_i, "j =", opt_j, "\n",
+    min_idx, "\n",
     "with LOOCV:", loocv_min_onebin, "\n", 
-    "and weighting:", w_star, "\n")
+    "and weighting:", w_onebin, "\n")
+```
 
-w_star <- w_lookup[cbind(min_idx[, 1], min_idx[, 2])]
+## Stepwise Simultaneous
 
-fits_opt <- lapply(matches, weighted_fit, w = w_star)
+This version optimizes each bin in the context of the weights estimated by residual variance binning, then adopts the optimal weight for each individual bin as the final weighting.
 
-loocv_stepwise <- mean(sapply(fits_opt, LOOCV))
+```{r stepwise-reporting}
+min_idx <- cbind(row = 1:12, col = apply(mean_loocvs, 1, which.min))
 
-cat("The minimum using the optimum from each occurs at:", "\n", 
-    w_star, "\n", 
+w_stepwise <- w_lookup[cbind(min_idx[, 1], min_idx[, 2])]
+
+fits_stepwise <- lapply(matches, weighted_fit, w = w_stepwise)
+
+loocv_stepwise <- mean(sapply(fits_stepwise, LOOCV))
+
+cat("The minimum using the optimum from each bin occurs with weighting:", "\n", 
+    w_stepwise, "\n", 
     "with LOOCV:", loocv_stepwise, "\n")
 
 cat("Stepwise Optimization over all bins improves on the estimated binning by:", 
@@ -200,11 +195,11 @@ cat("Stepwise Optimization over all bins improves on the estimated binning by:",
     loocv_min_bins - loocv_min_onebin, "standard deviations.", "\n")
 ```
 
-## Fixing as you go
+## Sequential Weight Fixing
 
-```{r}
-load("../../data/opr_weights.rda")
+This version optimizes in a single bin and then fixes that optimized value before evaluating the rest of the weights. 
 
+```{r, cache=TRUE}
 step_size <- 0.1
 steps_radius <- 10
 
@@ -228,16 +223,189 @@ for (i in seq_along(w_bin_resid_vars)){
     w_star[i] <- grid[which.min(mean_loocvs[, i])]
 }
 
-fits_star <- lapply(matches, weighted_fit, w_star)
+w_sequential <- w_star
+
+fits_star <- lapply(matches, weighted_fit, w_sequential)
 
 cat("The minimum using fixing occurs at:\n", 
-    w_star, "\n",
+    w_sequential, "\n",
     "with LOOCV:", mean(sapply(fits_star, LOOCV)), "\n")
 ```
 
-# Outputting
+# Results
 
-```{r}
-save(w, file = "../../data/optimized_opr_weighting.rda")
+Stepwise simultaneous weight optimization performed better than fixing and single bin optimization, so we'll save that weighting.
+
+```{r output}
+save(w_stepwise, file = "../../data/optimized_opr_weighting.rda")
+```
+
+Given the new weighting, let's show the improvement over unweighted OPR. 
+
+```{r setup-again, message=FALSE, warning=FALSE}
+rm(list = ls())
+library(devtools)
+load_all()
+rm(list = ls())
+load("../../data/district_quals_09_24.rda")
+load("../../data/optimized_opr_weighting.rda")
+
+# normalize match scores so we can do cross-week and cross-season comparisons
+# this simplifies a lot of later code
+matches <- lapply(
+    matches, 
+    function(match_df){
+        scaled <- scale(c(match_df$red_score, match_df$blue_score))
+        match_df$red_score <- scaled[1:nrow(match_df)]
+        match_df$blue_score <- scaled[(nrow(match_df) + 1):length(scaled)]
+        return(match_df)
+    })
+
+library(extrafont)
+library(gt)
+gos_blue <- "#337DFC"
+gos_red <- "#F7041A"
+
+gos_theme <- theme_bw() + 
+    theme(text = element_text(family = "Futura"))
+
+# fits WLS on the match dataframes
+weighted_fit <- function(match_df, w){
+    return(
+        fit_lineup_lm(
+            match_df, 
+            responses = list(
+                red = match_df$red_score, blue = match_df$blue_score
+            ), 
+            w = w
+        )
+    )
+}
+
+# fits the standard opr model on a regular match dataframe from TheBlueAlliance
+fit_opr <- function(match_df){
+    return(
+        fit_lineup_lm(
+            match_df, responses = list(
+                red = match_df$red_score, blue = match_df$blue_score)
+        )
+    )
+}
+
+normalize_match_number <- function(opr_residual){
+    # we know we can divide the length by 2 because there are 2 alliances/match
+    alliance_corrected <- ((1:length(opr_residual) - 1) %% 
+                               (length(opr_residual) / 2)) + 1
+    return((alliance_corrected / length(opr_residual)) * 2)
+}
+
+fits <- lapply(matches, fit_opr)
+
+residuals <- lapply(fits, function(fit){return(residuals(fit))})
+# match percentile is the match number divided by the number of matches
+match_percentile <- unlist(lapply(residuals, normalize_match_number), 
+                           use.names = FALSE)
+```
+
+```{r viz}
+linear_weight_fits <- lapply(matches, weighted_fit, w = w_linear)
+bin_weight_fits <- lapply(matches, weighted_fit, w = w_bin_resid_vars)
+stepwise_fits <- lapply(matches, weighted_fit, w = w_stepwise)
+raw_fits <- lapply(matches, weighted_fit, w = 1)
+
+linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
+resid_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
+stepwise_loocvs <- sapply(stepwise_fits, LOOCV)
+raw_loocvs <- sapply(raw_fits, LOOCV)
+
+viz <- data.frame(linear_ratio = raw_loocvs / linear_weight_loocvs, 
+                  residvar_ratio = raw_loocvs / resid_weight_loocvs,
+                  stepwise_ratio = raw_loocvs / stepwise_loocvs, 
+                  year = as.factor(substr(names(raw_loocvs), 1, 4)))
+
+ggplot(viz, aes(x = stepwise_ratio)) + 
+    geom_histogram(fill = gos_blue, color = "black", 
+                   bins = ceiling(sqrt(nrow(viz)))) + 
+    geom_vline(aes(xintercept = mean(stepwise_ratio)), color = gos_red) + 
+    annotate("label", x = mean(viz$stepwise_ratio), y = 15, 
+             label = paste0("Mean: ", 
+                            round(mean(viz$stepwise_ratio), 3))) +
+    labs(title = "OPR Weighting LOOCV Ratio", 
+         subtitle = "District Event Qualifications, 2009 - 2024", 
+         x = "Event-Normalized LOOCV Error Ratio (raw:stepwise-optimized)", 
+         y = "# Events") +
+    gos_theme
+
+ggplot(viz, aes(x = stepwise_ratio)) + 
+    geom_density(alpha = 0.2, fill = gos_blue) + 
+    facet_wrap(~year) +
+    labs(title = "OPR Weighting LOOCV Ratio", x = "LOOCV Ratio (raw:stepwise-optimized", 
+         y = "Density") + 
+    gos_theme
+
+viz <- viz %>%
+    group_by(year) %>%
+    summarize(events = n(), 
+              stepwise_ratio = mean(stepwise_ratio), 
+              linear_ratio = mean(linear_ratio), 
+              residvar_ratio = mean(residvar_ratio))
+
+colnames(viz) <- c(
+    "Year", "# Events", "Stepwise", "Linear", "Binned"
+)
+
+viz$Year <- as.numeric(as.character(viz$Year))
+viz <- round(viz, digits = 4)
+
+gt(viz) %>%
+    tab_header(
+        title = "Mean LOOCV Ratios", 
+        subtitle = "unweighted:weighted"
+    ) %>%
+    tab_options(
+        column_labels.background.color = gos_blue
+    ) %>%
+    tab_style(
+        style = cell_text(weight = "bold"), 
+        locations = cells_body(columns = "Linear", 
+                               rows = which((viz$Linear > viz$Binned) & 
+                                                viz$Linear > viz$Stepwise))
+    ) %>%
+    tab_style(
+        style = cell_text(weight = "bold"), 
+        locations = cells_body(columns = "Binned", 
+                               rows = which((viz$Binned > viz$Linear) & 
+                                                (viz$Binned > viz$Stepwise)))
+    ) %>%
+    tab_style(
+        style = cell_text(weight = "bold"), 
+        locations = cells_body(columns = "Stepwise", 
+                               rows = which((viz$Stepwise >= viz$Binned) &
+                                                (viz$Stepwise >= viz$Linear)))
+    ) %>%
+    tab_style(
+        cell_borders(color = gos_blue), 
+        cells_body()
+    ) %>%
+    opt_table_font(
+        font = "Futura"
+    ) %>%
+    tab_footnote(
+        footnote = "Higher values indicate the weighting is performing better", 
+        locations = cells_title("subtitle")
+    )
+
+viz$mean_pct_improvement <- (viz$`Stepwise` - 1)
+
+ggplot(viz, aes(x = as.character(Year), y = mean_pct_improvement)) + 
+    geom_point(aes(size = `# Events`), col = gos_red) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
+               yintercept = mean(viz$mean_pct_improvement)) + 
+    geom_hline(yintercept = 0) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(title = "Weighting Percent Improvement by Year", 
+         subtitle = "By Stepwise Bin Optimization", 
+         x = "Year", y = "Mean LOOCV Percent Improvement") + 
+    gos_theme
 ```
 

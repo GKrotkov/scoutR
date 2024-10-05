@@ -166,6 +166,18 @@ weight_rows <- function(df, w){
     return(result)
 }
 
+#' Leave-One-Out Cross Validation
+#'
+#' Computes the leave-one-out cross validation error of a regression fit object
+#' @param fit a fitted output of `lm` or `glm` or similar
+#' @return numeric estimate of leave-one-out CV risk
+#' @details Uses a "shortcut" formula for LOOCV. For details, see formula 5.2
+#' in ISLR by James, Witten, Hastie, and Tibshirani (v2), pg 202
+LOOCV <- function(fit){
+    mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
+}
+
+
 ##########################
 #### TBA Data Helpers ####
 ##########################

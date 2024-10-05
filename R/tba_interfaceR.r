@@ -150,6 +150,22 @@ team_awards <- function(key, year = NA, event = NA, recipients = FALSE){
     return(data)
 }
 
+#' Team Participation Years
+#'
+#' Returns a list of all years where the given team participated in at least
+#' one event. Because this function is so simple, I won't clutter the namespace
+#' by making a tba_readR and tba_tidyR version.
+#' @param n team number (either as number or string)
+#' @return vector of years
+#' @examples
+#' team_participation_years(1712)
+#' team_participation_years("3504")
+#'
+team_participation_years <- function(n){
+    request <- paste("team", tf(n), "years_participated", sep = "/")
+    return(unlist(get_content(request, base = TBA_BASE)))
+}
+
 ###############
 #### Event ####
 ###############

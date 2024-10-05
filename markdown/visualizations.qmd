@@ -43,3 +43,42 @@ library(babynames)
 
 ggplotly(plt)
 ```
+
+# 2017 Points Efficiency
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(reshape2)
+
+df <- data.frame(
+    gears = 1:12, 
+    pts = c(0, rep(40, 4), rep(80, 6), 120), 
+    eff = c(rep(40 / 2, 2), rep(40 / 4, 4), rep(40 / 6, 6))
+)
+
+ggplot(df, aes(x = gears, y = pts)) + 
+    geom_line() + 
+    labs(title = "Steamworks Gear Points", 
+         x = "# Of Gears Scored", y = "Points") + 
+    theme_bw()
+
+ggplot(df, aes(x = gears, y = eff)) + 
+    geom_line() + 
+    labs(title = "Steamworks Gear Point Efficiency", 
+         x = "# Of Gears Scored", y = "Points/Gear") + 
+    theme_bw()
+
+df <- melt(df, "gears")
+df$variable <- ifelse(df$variable == "pts", "Points", "Points/Gear")
+
+ggplot(df, aes(x = gears, y = value, col = variable)) + 
+    geom_step() + 
+    labs(title = "Steamworks (2017) Gear Scoring", 
+         subtitle = "Ignoring auto or playoff bonuses",
+         x = "# of Gears Scored", y = "Value", 
+         color = "") + 
+    scale_x_continuous(breaks = 1:12) + 
+    theme_bw()
+```
+

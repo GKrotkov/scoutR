@@ -8,7 +8,6 @@
 - OPR calculated by linear regression is different from TBA's OPR for the events: 2022chcmp, 2022iscmp, 2022micmp3
 
 # Data Science Projects
-- Take hyperparameter tuning for OPR whitepaper and write it up nicely
 - Find OPR's stabilization point (whole stabilization function?)
     - https://youtu.be/xJYv7uxXMn0?t=5774
 - "Precision" of OPR
@@ -29,3 +28,5 @@
 - Statbotics tidyR, update tba_interfaceR to include the "tba_" prefix in each function name (maybe? That's a huge pain in the ass change.)
 - Local EPA calculation
 - Principled district points model
+- Transition to frc-events api instead of using the tba API? 
+- ftc-events api functions ("ftc_readR" series)

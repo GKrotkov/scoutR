@@ -29,6 +29,7 @@ gos_theme <- theme_bw() +
     theme(text = element_text(family = "Futura"))
 
 load("../../data/opr_weights.rda")
+load("../../data/optimized_opr_weighting.rda")
 
 weighted_fit <- function(match_df, w){
     return(
@@ -156,21 +157,23 @@ compute_in_sample_mse <- function(matches, w){
     return(mses)
 }
 
+stepwise_weighted_mse <- compute_in_sample_mse(matches, w_stepwise)
 fitvar_weighted_mse <- compute_in_sample_mse(matches, w_bin_fitted_vars)
 residvar_weighted_mse <- compute_in_sample_mse(matches, w_bin_resid_vars)
 raw_mse <- compute_in_sample_mse(matches, 1)
 
-viz <- data.frame(fitvar_ratio = raw_mse / fitvar_weighted_mse, 
+viz <- data.frame(stepwise_ratio = raw_mse / stepwise_weighted_mse, 
+                  fitvar_ratio = raw_mse / fitvar_weighted_mse, 
                   residvar_ratio = raw_mse / residvar_weighted_mse,
                   year = as.factor(substr(names(raw_mse), 1, 4)))
 
-ggplot(viz, aes(x = fitvar_ratio)) + 
+ggplot(viz, aes(x = stepwise_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
-    geom_vline(aes(xintercept = mean(fitvar_ratio)), color = gos_red) + 
-    annotate("label", x = mean(viz$fitvar_ratio), y = 15, 
-             label = paste0("Mean: ", round(mean(viz$fitvar_ratio), 6))) +
-    labs(title = "In-Sample MSE Ratio (raw / weighted by fitted variance)", 
+    geom_vline(aes(xintercept = mean(stepwise_ratio)), color = gos_red) + 
+    annotate("label", x = mean(viz$stepwise_ratio), y = 15, 
+             label = paste0("Mean: ", round(mean(viz$stepwise_ratio), 6))) +
+    labs(title = "In-Sample MSE Ratio (raw / weighted by stepwise optimization)", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized Mean Squared Error Difference (Std Devs)", 
          y = "# Events") +
@@ -227,6 +230,7 @@ LOOCV <- function(fit){
 linear_weight_fits <- lapply(matches, weighted_fit, w = w_linear)
 bin_weight_fits <- lapply(matches, weighted_fit, w = w_bin_resid_vars)
 fitted_var_weight_fits <- lapply(matches, weighted_fit, w = w_bin_fitted_vars)
+optimized_fits <- lapply(matches, weighted_fit, w = w_opt)
 raw_fits <- lapply(matches, weighted_fit, w = 1)
 
 linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)

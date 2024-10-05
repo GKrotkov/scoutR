@@ -98,7 +98,7 @@ count_modern_awards <- function(team_award_history){
     }
     award_names <- team_award_history$name
     result <- data.frame(
-        impact = length(grep("(Impact|Chairman\'s)", award_names, ignore.case = TRUE)), 
+        impact = length(grep("(Impact|Chairman'?s)", award_names, ignore.case = TRUE)), 
         ei = length(grep("Engineering Inspiration", award_names, ignore.case = TRUE)), 
         ras = length(grep("(Rookie All-Star|Rookie All Star)", award_names, ignore.case = TRUE)), 
         autonomous = length(grep("Autonomous Award", award_names, ignore.case = TRUE)), 
@@ -109,7 +109,7 @@ count_modern_awards <- function(team_award_history){
         industrial_design = length(grep("(Imagery|Photogenic)", award_names, ignore.case = TRUE)), 
         innovation_control = length(grep("(Control|Controls)", award_names, ignore.case = TRUE)), 
         quality = length(grep("Quality", award_names, ignore.case = TRUE)), 
-        judges = length(grep("(Judges|Judge's|Judges')", award_names, ignore.case = TRUE)), 
+        judges = length(grep("(Judge'?s|Judges')", award_names, ignore.case = TRUE)), 
         rookie_insp = length(grep("Rookie Inspiration", award_names, ignore.case = TRUE)), 
         team_spirit = length(grep("Spirit", award_names, ignore.case = TRUE)), 
         sustainability = length(grep("(Sustainability|Entrepreneurship)", award_names, ignore.case = TRUE))

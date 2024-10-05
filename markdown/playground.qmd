@@ -124,3 +124,46 @@ predcmp_pts <- lapply(
 
 ```
 
+# RAS Sustainability
+
+teams who won RAS
+- rookie year
+- first Impact win
+
+Questions for Zaque: 
+- How did you account for "Rookie All-Star" as opposed to "Rookie All Star"
+- Did you count awards like "Chairman's Award Finalist"? Did you count "Chairmans Award"?
+
+```{r}
+all_team_awards <- readRDS("../data/awards/all_team_awards.rds")
+
+extract_cols <- function(team){
+    if (nrow(team) == 0) return(
+        data.frame(
+            ras_year = NA, first_impact = NA, n_impacts = 0, first_ei = NA,
+            n_eis = 0
+        )
+    )
+    return(data.frame(
+        ras_year = team$year[grep("Rookie All[- ]Star", team$name)[1]], 
+        first_impact = team$year[grep("Chairman'?s|Impact", team$name)[1]],
+        n_impacts = length(grep("Chairman'?s|Impact", team$name)),
+        first_ei = team$year[grep("Engineering Inspiration", team$name)[1]],
+        n_eis = length(grep("Engineering Inspiration", team$name))
+    ))
+}
+
+df <- lapply(all_team_awards, extract_cols)
+tmp <- names(df)
+df <- Reduce(rbind, df)
+df$id <- tmp
+
+ras <- df[!is.na(df$ras_year), ]
+ras$yrs_to_impact <- ras$first_impact - ras$ras_year
+ras$yrs_to_ei <- ras$first_ei - ras$ras_year
+
+hist(ras$yrs_to_impact, 
+     main = "Years between RAS and Impact", xlab = "Years", ylab = "# of Teams")
+hist(ras$yrs_to_ei, 
+     main = "Years between RAS and EI", xlab = "Years", ylab = "# of Teams")
+```
