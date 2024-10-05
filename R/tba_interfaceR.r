@@ -249,8 +249,8 @@ event_matches <- function(
     if (keys) return(unlist(data))
 
     if (is.null(data) | length(data) == 0){ # case where no matches are posted
-        warning("event_matches() call with no posted schedule; returning NA")
-        return(NA)
+        warning("event_matches() call with no posted schedule; returning NULL")
+        return(NULL)
     }
 
     data <- tidy_matches(
