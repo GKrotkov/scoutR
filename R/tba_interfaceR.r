@@ -80,9 +80,10 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' team_matches(1712, year = 2016)
 #' team_matches(1712, event = "2015paphi")
 #' team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
-team_matches <- function(key, year = NA, event = NA, official = FALSE,
-                         simple = FALSE, keys = FALSE, alliances = TRUE,
-                         breakdown = TRUE, unplayed = FALSE){
+team_matches <- function(
+    key, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE,
+    alliances = TRUE, breakdown = TRUE, unplayed = FALSE
+){
     if (simple & keys) warning(warns()$simkey)
     if (!is.na(year) & !is.na(event)) warning(warns()$year_event)
 
@@ -111,8 +112,9 @@ team_matches <- function(key, year = NA, event = NA, official = FALSE,
 #' team_events(1712, year = 2017)
 #' team_events("1712", year = 2018, official = TRUE)
 #' team_events("frc1712", keys = TRUE)
-team_events <- function(key, year = NA, official = FALSE,
-                        simple = FALSE, keys = FALSE){
+team_events <- function(
+    key, year = NA, official = FALSE, simple = FALSE, keys = FALSE
+){
     if (simple & keys) warning(warns()$simkey)
 
     data <- read_team_events(key, year, official, simple, keys)
@@ -229,9 +231,10 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' @examples
 #' event_matches("2015paphi", match_type = "playoff")
 #' event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
-event_matches <- function(event_key, alliances = TRUE, breakdown = TRUE,
-                          match_type = "all", unplayed = FALSE,
-                          simple = FALSE, keys = FALSE){
+event_matches <- function(
+    event_key, alliances = TRUE, breakdown = TRUE, match_type = "all",
+    unplayed = FALSE, simple = FALSE, keys = FALSE
+){
     if (simple & keys) warning(warns()$simkeys)
     if (!(match_type %in% c("all", "qual", "playoff"))) warning(warns()$mtype)
 
@@ -498,8 +501,9 @@ district_teams <- function(district_key, simple = FALSE, keys = FALSE){
 #' @examples
 #' district_rankings("2016mar", separate_events = TRUE, event_breakdown = TRUE)
 #' district_rankings("2022fit")
-district_rankings <- function(district_key, separate_events = FALSE,
-                              event_breakdown = FALSE){
+district_rankings <- function(
+    district_key, separate_events = FALSE, event_breakdown = FALSE
+){
     data <- read_district_rankings(district_key)
     return(tidy_district_rankings(data, separate_events, event_breakdown))
 }

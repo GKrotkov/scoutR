@@ -420,8 +420,9 @@ read_event_awards <- function(key){
 #' read_event_teams("2016hop", statuses = TRUE)
 #' read_event_teams("2016hop", simple = TRUE)
 #' read_event_teams("2016hop", keys = TRUE)
-read_event_teams <- function(event_key, statuses = FALSE,
-                        simple = FALSE, keys = FALSE){
+read_event_teams <- function(
+    event_key, statuses = FALSE, simple = FALSE, keys = FALSE
+){
     request <- paste("event", event_key, "teams", sep = "/")
     request <- simkeys(request, simple = simple, keys = keys)
     if (!simple & !keys & statuses){
@@ -465,8 +466,10 @@ read_year_events <- function(year = YEAR, simple = FALSE, keys = FALSE){
 #' @return List of year events
 #' @examples
 #' read_events(year = 2016, official = TRUE, trim_parents = TRUE)
-read_events <- function(year = NA, official = FALSE, trim_parents = FALSE,
-                       simple = FALSE, keys = FALSE){
+read_events <- function(
+    year = NA, official = FALSE, trim_parents = FALSE, simple = FALSE,
+    keys = FALSE
+){
     if (is.na(year)){ # year = NA implies we want all events
         result <- list()
         earliest <- 1992
@@ -548,7 +551,9 @@ read_event_qual_matches <- function(event_key, simple = FALSE, keys = FALSE){
 #' @return List of TBA Match objects, or vector of keys if keys = TRUE
 #' @examples
 #' read_event_playoff_matches("2018pawch")
-read_event_playoff_matches <- function(event_key, simple = FALSE, keys = FALSE){
+read_event_playoff_matches <- function(
+    event_key, simple = FALSE, keys = FALSE
+){
     # if the user asked only for keys, this is all we need
     if (keys){
         keys <- unlist(read_event_matches(event_key, keys = TRUE))
@@ -578,8 +583,9 @@ read_event_playoff_matches <- function(event_key, simple = FALSE, keys = FALSE){
 #' @return TBA event objects list, or vector if keys = TRUE
 #' @examples
 #' read_official_events(year = 2016, trim_parents = TRUE, keys = TRUE)
-read_official_events <- function(year = YEAR, trim_parents = TRUE,
-                                 simple = FALSE, keys = FALSE){
+read_official_events <- function(
+    year = YEAR, trim_parents = TRUE, simple = FALSE, keys = FALSE
+){
     # we need to start with the full event objects to filter for official events
     events <- read_year_events(year = year)
 
@@ -664,8 +670,9 @@ read_teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' @examples
 #' read_team_events(1712, year = 2018, simple = TRUE)
 #' read_team_events(1712, keys = TRUE)
-read_team_events <- function(n, year = NA, official = FALSE,
-                            simple = FALSE, keys = FALSE){
+read_team_events <- function(
+    n, year = NA, official = FALSE, simple = FALSE, keys = FALSE
+){
     request <- paste("team", tf(n), "events", sep = "/")
 
     if (!is.na(year)){
@@ -732,8 +739,9 @@ read_team_official_matches <- function(team, year, event, simple, keys){
 #' @return list of match objects with the given team
 #' @examples
 #' read_team_matches(1712, year = 2016, keys = TRUE)
-read_team_matches <- function(team, year = NA, event = NA, official = FALSE,
-                             simple = FALSE, keys = FALSE){
+read_team_matches <- function(
+    team, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE
+){
     if (official) return(read_team_official_matches(team, year, event,
                                                     simple, keys))
     if (!is.na(year)){

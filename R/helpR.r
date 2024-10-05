@@ -295,8 +295,9 @@ schema_csf <- function(color, station_num, field){
 #' get_robot_field(mil23, "endGameChargeStation", 2539)
 #' mar16 <- event_matches("2016mrcmp")
 #' get_robot_field(mar16, "auto", 1712, schema = schema_csf)
-get_robot_field <- function(matches, field, team_id,
-                            schema = schema_cfs, unlist = T){
+get_robot_field <- function(
+    matches, field, team_id, schema = schema_cfs, unlist = T
+){
     stations <- get_team_stations(matches, team_id)
     # assumption: station number is the last character of the string
     station_num <- substr_right(stations$station, 1)
@@ -322,7 +323,9 @@ get_robot_field <- function(matches, field, team_id,
 #' get_robot_field_df(mil23, "autoChargeStation")
 #' mar17 <- event_matches("2017mrcmp")
 #' get_robot_field_df(mar17, "auto", schema = schema_csf)
-get_robot_field_df <- function(matches, field, schema = schema_cfs, unlist = T){
+get_robot_field_df <- function(
+    matches, field, schema = schema_cfs, unlist = T
+){
     ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
                     matches$red1, matches$red2, matches$red3))
     df <- data.frame(id = ids)
@@ -370,8 +373,9 @@ count_team_matches <- function(matches){
 #' fma17 <- event_matches("2017mrcmp")
 #' fields <- c("auto")
 #' get_multifield_df(fma17, fields, schema = schema_csf)
-get_multifield_df <- function(matches, fields = NULL, schema = schema_cfs,
-                              unlist = TRUE, merge = TRUE){
+get_multifield_df <- function(
+    matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
+){
     if (is.null(fields)){
         fields <- id_robot_fields(matches)
     }

@@ -145,8 +145,9 @@ unpack_breakdown <- function(matches){
 #' @examples
 #' tidy_matches(read_event_matches("2016mrcmp"), alliances = TRUE,
 #'     breakdown = TRUE)
-tidy_matches <- function(raw, alliances = FALSE, breakdown = FALSE,
-                         unplayed = FALSE){
+tidy_matches <- function(
+    raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE
+){
     event <- tibble(matches = raw)
     event <- event %>%
         unnest_wider(matches)
@@ -387,8 +388,9 @@ tidy_districts <- function(raw){
 }
 
 # takes a raw district rankings like as output from read_district_rankings
-tidy_district_rankings <- function(raw, separate_events = FALSE,
-                                   event_breakdown = FALSE){
+tidy_district_rankings <- function(
+    raw, separate_events = FALSE, event_breakdown = FALSE
+){
     raw <- tibble(ranks = raw)
     rankings <- unnest_wider(raw, ranks)
 
