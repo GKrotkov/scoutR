@@ -57,18 +57,6 @@ df <- data.frame(
     eff = c(rep(40 / 2, 2), rep(40 / 4, 4), rep(40 / 6, 6))
 )
 
-ggplot(df, aes(x = gears, y = pts)) + 
-    geom_line() + 
-    labs(title = "Steamworks Gear Points", 
-         x = "# Of Gears Scored", y = "Points") + 
-    theme_bw()
-
-ggplot(df, aes(x = gears, y = eff)) + 
-    geom_line() + 
-    labs(title = "Steamworks Gear Point Efficiency", 
-         x = "# Of Gears Scored", y = "Points/Gear") + 
-    theme_bw()
-
 df <- melt(df, "gears")
 df$variable <- ifelse(df$variable == "pts", "Points", "Points/Gear")
 
