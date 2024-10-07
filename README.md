@@ -1,4 +1,6 @@
-<img src="logos/transparent.png" width="500">
+<p align="center">
+    <img src="logos/transparent.png" width="500">
+</p>
 
 # scoutR
 
