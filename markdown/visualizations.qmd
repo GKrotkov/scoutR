@@ -70,3 +70,87 @@ ggplot(df, aes(x = gears, y = value, col = variable)) +
     theme_bw()
 ```
 
+# OPR Stabilization
+
+for a given event, we want to graph the spread of OPRs as a function of the number of matches played.
+
+I'll choose not to use any weighting for now because I don't want to confuse anyone, but ideally we would use the stepwise-optimized weights in `../data/optimized_opr_weights.rda`.
+
+```{r}
+rm(list = ls())
+library(devtools)
+library(tidyverse)
+load_all()
+```
+
+```{r}
+event_code <- "2024paca"
+event_name <- event(event_code, TRUE)$name
+result <- event_opr_progression(event_code, standardize = TRUE)
+
+plot_event_opr_stability <- function(
+    event_code, response_name = "score", standardize = FALSE, w = NULL
+){
+    event_name <- event(event_code, TRUE)$name
+    df <- event_opr_progression(event_code, response_name, standardize, w)
+    viz <- df %>%
+        pivot_longer(cols = -c(match_num, mpt), 
+                     names_to = "team", values_to = "coefficient")
+    
+    team_plt <- ggplot(viz, aes(x = mpt, y = coefficient, color = team)) + 
+        geom_line(alpha = 0.5) + 
+        geom_point(alpha = 0.5, size = 0.2) + 
+        labs(title = "OPR Event Progression", 
+             subtitle = paste0(event_name, " (", event_code, ")"), 
+             x = "Matches per team", 
+             y = "OPR Value") + 
+        theme_bw() + 
+        guides(color = "none")
+    
+    viz <- data.frame(
+        sd = apply(df[, 1:(ncol(df) - 2)], 1, sd), 
+        mpt = df$mpt
+    )
+    
+    event_plt <- ggplot(viz, aes(x = mpt, y = sd)) + 
+        geom_line() + 
+        labs(title = "OPR Stability", 
+             subtitle = paste0(event_name, " (", event_code, ")"), 
+             x = "Matches per team", y = "OPR Standard Deviation") + 
+        theme_bw()
+    
+    # explicit plot output to avoid function suppression
+    print(team_plt)
+    print(event_plt) 
+}
+
+plot_event_opr_stability(event_code)
+```
+
+# Plot multiple event OPR SDs
+
+```{r}
+event_codes <- events(2024, official = TRUE, keys = TRUE)
+
+result <- data.frame()
+
+for (i in seq_along(event_codes)){
+    df <- event_opr_progression(event_codes[i])
+    if (is.null(df)) next # handles cases with no qual matches
+    result <- rbind(
+        result, 
+        data.frame(sd = apply(df[, 1:(ncol(df) - 2)], 1, sd), 
+                   mpt = df$mpt, 
+                   event = event_codes[i])
+    )
+}
+
+ggplot(result, aes(x = mpt, y = log(sd))) + 
+    geom_point(alpha = 0.1) + 
+    #geom_line(alpha = 0.4, aes(color = event)) + 
+    labs(title = "OPR Stability (log)", 
+         x = "Matches per team", y = "OPR Standard Deviation") + 
+    theme_bw() + 
+    guides(color = "none")
+```
+
