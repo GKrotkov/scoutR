@@ -7,10 +7,13 @@
 # Bugs
 - OPR calculated by linear regression is different from TBA's OPR for the events: 2022chcmp, 2022iscmp, 2022micmp3
 
-# Data Science Projects
+# OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
     - https://youtu.be/xJYv7uxXMn0?t=5774
 - "Precision" of OPR
+- Investigate "standardize" functionality of `event_opr_progression`. Is it working?
+
+# Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
     - Dropout: subtract out teams that no-showed the match or played exactly 0 offense
 - Typical week 1 winning scores as a percentage of theoretical max score; is there a consistent pattern?
