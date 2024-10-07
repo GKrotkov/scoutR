@@ -207,10 +207,11 @@ event_opr_progression <- function(
     red_resp <- paste0("red_", response_name) # red response
     blue_resp <- paste0("blue_", response_name) # blue response
     matches <- event_matches(event_code, match_type = "qual")
+    if (is.null(matches)) return(NULL) # handle null case
     if (standardize){ # handle response standardization
         scores <- c(matches[[red_resp]], matches[[blue_resp]])
-        matches[[red_resp]] <- matches[[red_resp]] - mean(scores) / sd(scores)
-        matches[[blue_resp]] <- matches[[blue_resp]] - mean(scores) / sd(scores)
+        matches[[red_resp]] <- (matches[[red_resp]] - mean(scores)) / sd(scores)
+        matches[[blue_resp]] <- (matches[[blue_resp]] - mean(scores)) / sd(scores)
     }
     n_teams <- length(unique(c(matches$red1, matches$red2, matches$red3,
                                matches$blue1, matches$blue2, matches$blue3)))
