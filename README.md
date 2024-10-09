@@ -6,27 +6,26 @@
 
 scoutR is an R library to facilitate usage of data from the TBA and Statbotics API for FRC scouts, strategists, and data-driven observers. The objective is to provide functions that allow a newcomer to R to write one line of code and retrieve exactly the right dataframe in a tidy format rather than as a JSON that needs massaging to be useful.
 
-## Setup
+## Setup - New User Checklist
 
-Install R and RStudio on your machine. You can find them both on Posit's website here: https://posit.co/download/rstudio-desktop/. tbaR assumes that you have R 4.3.0 or later.
+- [ ] Install R and RStudio on your machine. You can find them both on Posit's website here: https://posit.co/download/rstudio-desktop/. scoutR assumes that you have R 4.3.0 or later.
+- [ ] Download this repository locally and store in a convenient location on your machine. I suggest a separate directory that is only for scoutR for the most convenience.
+- [ ] Open `demo.rmd` using RStudio; I recommend setting RStudio to be your default for opening both .r files and .rmd files. The demo will walk you through some use cases of scoutR and especially useful functions from `tba_interfaceR` and `helpR`. It will also instruct you on installing tbaR's dependencies and generating documentation files to reference in the help pages as you work with tbaR.
 
-Now download this repository locally and store in a convenient location on your machine. I suggest a separate directory that is only for tbaR for the most convenience.
+## Roadmap to ScoutR
 
-Next, open `demo.rmd` using RStudio; I recommend setting RStudio to be your default for opening both .r files and .rmd files. The demo will walk you through some use cases of tbaR and especially useful functions from `tba_interfaceR` and `tba_helpR`. It will also instruct you on installing tbaR's dependencies and generating documentation files to reference in the help pages as you work with tbaR.
-
-## Roadmap to tbaR
-
-tbaR has 4 major files: `tba_readR`, `tba_tidyR`, `tba_interfaceR`, and `tba_helpR`. Their usage is summarized below. There are exceptions in individual functions but the documentation for each function will call that out.
+The below R files define functions that are the core engine of ScoutR
 
 | Name | Description | Input | Output | Public Facing?
 | ----- | ----- | ----- | ----- | -----
-| `tba_scoutR` | Analysis functions for at-event usage. | Event codes or match data | Tidy dataframes | Yes
+| `scoutR` | Analysis functions for at-event usage. | Event codes or match data | Tidy dataframes | Yes
 | `tba_interfaceR` | Provide a direct interface between the user and the TBA API | TBA-legal keys | Tidy dataframes | Yes
-| `tba_helpR` | Helper functions that do not directly interact with the TBA API | Varies, but mostly dataframes of match objects | Varies | Yes
-| `tba_readR` | Read data from the TBA API, helper library for `interfaceR` | TBA-legal keys| JSON | No
+| `helpR` | "Under the hood" helper functions that make other functions easy to use.  | Varies, but mostly dataframes of match objects | Varies | Yes
+| `tba_readR` | Read data from the TBA API, helper library for `tba_interfaceR` | TBA-legal keys| JSON | No
 | `tba_tidyR` | Reformat JSON data from TBA to Tidy format, helper library for `interfaceR` | JSON | Tidy dataframes | No
+| `statbotics_readR.R` | Read JSON data from Statbotics to Tidy format | Statbotics endpoints | Tidy data frames | Yes
 
-I recommend that new users to R only use `tba_interfaceR` and `tba_scoutR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of tbaR, `tba_helpR` `tba_readR` and `tba_tidyR` may be more useful to you.
+I recommend that new users to R start with `tba_interfaceR` and `scoutR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of scoutR, `helpR`, `tba_readR`, and `tba_tidyR` may be more useful to you.
 
 ## Why do I care about Tidy data? What even is it?
 
