@@ -15,6 +15,7 @@ library(data.table)
 library(roxygen2)
 library(withr)
 library(here)
+library(pracma)
 # library(renv)
 # leaving renv unloaded to avoid conflicts with base::load()
 # this isn't an issue because all renv calls can come with the renv:: prefix
