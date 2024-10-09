@@ -154,3 +154,25 @@ ggplot(result, aes(x = mpt, y = log(sd))) +
     guides(color = "none")
 ```
 
+# Time Series Modeling of Regression Stability
+
+```{r}
+rm(list = ls())
+library(devtools)
+load_all()
+
+event_code <- "2024paca"
+df <- event_opr_progression(event_code, standardize = TRUE)
+progression_ts <- ts(df[, 1:50])
+diff_ts <- diff(progression_ts)
+# take the absolute value because we're interested in the magnitude of the 
+# differences, not their direction
+# exercise for a student: delete this line, see if they can identify the 
+# problem!
+diff_ts <- abs(diff_ts)
+# @TODO maybe adjust this to a moving average
+mean_diff <- ts(apply(diff_ts, 1, mean))
+
+plot(mean_diff)
+```
+
