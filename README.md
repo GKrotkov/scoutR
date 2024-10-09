@@ -23,7 +23,7 @@ The below R files define functions that are the core engine of ScoutR
 | `helpR` | "Under the hood" helper functions that make other functions easy to use.  | Varies, but mostly dataframes of match objects | Varies | Yes
 | `tba_readR` | Read data from the TBA API, helper library for `tba_interfaceR` | TBA-legal keys| JSON | No
 | `tba_tidyR` | Reformat JSON data from TBA to Tidy format, helper library for `interfaceR` | JSON | Tidy dataframes | No
-| `statbotics_readR.R` | Read JSON data from Statbotics to Tidy format | Statbotics endpoints | Tidy data frames | Yes
+| `statbotics_readR` | Read JSON data from Statbotics to Tidy format | Statbotics endpoints | Tidy data frames | Yes
 
 I recommend that new users to R start with `tba_interfaceR` and `scoutR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of scoutR, `helpR`, `tba_readR`, and `tba_tidyR` may be more useful to you.
 
