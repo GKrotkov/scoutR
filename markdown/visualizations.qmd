@@ -160,10 +160,12 @@ ggplot(result, aes(x = mpt, y = log(sd))) +
 rm(list = ls())
 library(devtools)
 load_all()
+```
 
+```{r}
 event_code <- "2024paca"
 df <- event_opr_progression(event_code, standardize = TRUE)
-progression_ts <- ts(df[, 1:50])
+progression_ts <- ts(df[, 1:(ncol(df) - 2)])
 diff_ts <- diff(progression_ts)
 # take the absolute value because we're interested in the magnitude of the 
 # differences, not their direction
@@ -174,5 +176,30 @@ diff_ts <- abs(diff_ts)
 mean_diff <- ts(apply(diff_ts, 1, mean))
 
 plot(mean_diff)
+```
+
+```{r}
+event_stability_ts <- function(
+    event_code, response_name = "score", standardize = FALSE, w = NULL
+){
+    df <- event_opr_progression(event_code, response_name, standardize, w)
+    progression <- abs(diff(ts(df[, 1:(ncol(df) - 2)])))
+    return(ts(apply(progression, 1, mean)))
+}
+
+# pull the district events from 2024 that passed the conformance checks
+# i.e. that have 12 quals/team
+load("../data/district_quals_09_24.rda")
+event_codes <- names(matches)[startsWith(names(matches), "2024")]
+rm(matches)
+
+event_codes <- c("2024pahat", "2024paphi", "2024txfor", "2024txdal")
+
+# current problem: we don't have the MPT information for each event. And even
+# if we did, it isn't easy to plot them on the same plot.
+tmp <- lapply(event_codes, event_stability_ts, standardize = TRUE)
+
+plot(event_stability_ts("2024paca", standardize = TRUE), 
+     ylab = "2024 PACA Perturbations")
 ```
 
