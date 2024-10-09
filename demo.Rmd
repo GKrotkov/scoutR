@@ -1,5 +1,5 @@
 ---
-title: "tbaR demo"
+title: "scoutR demo"
 author: "Gabriel Krotkov"
 date: "2023-04-28"
 output: 
@@ -9,11 +9,11 @@ output:
 
 # Introduction
 
-Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the useful functions that tbaR provides for anyone interested in interacting with TBA data in a convenient format. 
+Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the useful functions that scoutR provides for anyone interested in interacting with TBA data in a convenient format. 
 
-If this is your first time using tbaR, you may need to install some packages. You can install a package by running code like below. You should only run the installation once, but loading a library with the `library` function will be run many times. (The tidyverse is a large package, don't worry if it's taking a long time to install.)
+If this is your first time using scoutR, you probably need to install some packages. You can install a package by running code like below. You should only run the installation once, but loading a library with the `library` function will be run many times. (The tidyverse is a large package, don't worry if it's taking a long time to install.)
 
-For those using an RMD file for the first time, RMD stands for "R Markdown", it is a file type that blends formattable text and chunks of R Code. To run the R code while viewing an rmd, click the green arrow on the top right corner of a code chunk.
+For those using a QMD file for the first time, RMD stands for "R Markdown", it is a file type that blends formattable text and chunks of R Code. To run the R code while viewing an rmd, click the green arrow on the top right corner of a code chunk.
 
 ```{r, eval = FALSE}
 install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat", 
