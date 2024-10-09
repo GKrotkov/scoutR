@@ -22,7 +22,7 @@ names(matches) <- event_keys
 
 # remove NAs, events with fewer than 12 matches/team, single-day events
 matches <- matches[!is.null(matches) & !is.na(matches)]
-matches <- matches[sapply(matches, flag_conformance)]
+matches <- matches[unlist(sapply(matches, flag_conformance))]
 
 # order matches by match number
 matches <- lapply(
