@@ -20,13 +20,14 @@ event_keys <- unlist(sapply(district_keys, district_events, keys = TRUE))
 matches <- lapply(event_keys, event_matches, match_type = "qual")
 names(matches) <- event_keys
 
-# remove NAs, events with fewer than 12 matches/team, single-day events
-matches <- matches[!is.null(matches) & !is.na(matches)]
+# remove null and NA values
+matches <- matches[!sapply(matches, is.null) & !is.na(matches)]
+# check conformance (12 matches/team, event results posted)
 matches <- matches[unlist(sapply(matches, flag_conformance))]
 
 # order matches by match number
 matches <- lapply(
-    matches, function(matches){matches[order(matches$match_number), ]}
+    matches, function(event_df){event_df[order(event_df$match_number), ]}
 )
 
 save(matches, file = "data/district_quals_09_24.rda")
