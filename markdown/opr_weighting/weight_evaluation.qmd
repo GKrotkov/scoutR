@@ -52,9 +52,10 @@ Reasons to reserve the last 3/12 matches instead of randomly selecting:
 - Treats every event in the same manner, while if we randomly picked there would be an interaction with the year effect which would be difficult to account for
 
 ```{r optimization-helpers}
-# redefine compute_mse_diff to use WLS
 # assume matches is a dataframe of matches with red_score and blue_score columns
-compute_mse_diff <- function(matches, w){
+# uses WLS for computational efficiency
+# computes the ratio between the unweighted and weighted model test MSE
+compute_mse_ratio <- function(matches, w){
     # reserve the last 3/12 matches for testing
     test <- weight_rows(matches, c(rep(0, 3), 1))
     train <- weight_rows(matches, c(rep(1, 3), 0))
@@ -87,38 +88,55 @@ compute_mse_diff <- function(matches, w){
 test_weighting <- function(matches, w){
     # don't need to normalize weights anymore because the helper function does
     diffs <- sapply(
-        matches, compute_mse_diff, w = w
+        matches, compute_mse_ratio, w = w
     )
     names(diffs) <- names(matches)
     return(diffs)
 }
 ```
 
-Use the bootstrap to approximate a confidence interval around the 
+Use the bootstrap to approximate a confidence interval for the ratio (raw OPR MSE / weighted OPR MSE)
 
 ```{r test-mse-bootstrap}
-mse_diffs <- test_weighting(matches, w_linear)
+mse_ratios <- test_weighting(matches, w_linear)
 
-viz <- data.frame(mse_diff = mse_diffs, 
-                  year = as.factor(substr(names(mse_diffs), 1, 4)))
+viz <- data.frame(mse_ratio = mse_ratios, 
+                  year = as.factor(substr(names(mse_ratios), 1, 4)))
 
-# @TODO bootstrap code here!
+# generate B bootstrap samples and compute the mean MSE ratio for each sample.
+B <- 1000
+bstrap_ratios <- rep(NA, B)
+for (i in 1:B){
+    bstrap_sample <- sample(mse_ratios, length(mse_ratios), replace = TRUE)
+    bstrap_ratios[i] <- mean(bstrap_sample)
+}
+# Now we can take the 2.5th percentile value and the 97.5th percentile value 
+# from those ratios to define the lower and upper bound for a 95% CI
+bstrap_ratios <- sort(bstrap_ratios)
+# lower bound for mean test MSE ratio
+bstrap_lower <- bstrap_ratios[floor(B * 0.025)]
+# upper bound for mean test MSE ratio
+bstrap_upper <- bstrap_ratios[ceiling(B * 0.975)]
 ```
 
-```{r visualization}
-ggplot(viz, aes(x = mse_diff)) + 
+```{r test-mse-visualization}
+ggplot(viz, aes(x = mse_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
-    geom_vline(aes(xintercept = mean(mse_diff)), color = gos_red) + 
-    annotate("label", x = mean(mse_diffs), y = 15, 
-             label = paste0("Mean: ", round(mean(mse_diffs), 3))) +
+    geom_vline(aes(xintercept = mean(mse_ratio)), color = gos_red) + 
+    geom_vline(aes(xintercept = bstrap_lower), color = gos_red, lty = 3) + 
+    geom_vline(aes(xintercept = bstrap_upper), color = gos_red, lty = 3) + 
+    annotate("label", x = mean(mse_ratios), y = 15, 
+             label = paste0("Mean: ", round(mean(mse_ratios), 3), "\n", 
+                            "95% CI: (", round(bstrap_lower, 4), ", ", 
+                            round(bstrap_upper, 4), ")")) +
     labs(title = "OPR Weighting Test MSE Ratio", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized MSE Ratio (null:weighted)", 
          y = "# Events") +
     gos_theme
 
-ggplot(viz, aes(x = mse_diff)) + 
+ggplot(viz, aes(x = mse_ratio)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
     labs(title = "OPR Weighting Test MSE Ratio", x = "Test MSE Ratio", 
@@ -128,8 +146,8 @@ ggplot(viz, aes(x = mse_diff)) +
 viz <- viz %>%
     group_by(year) %>%
     summarize(events = n(), 
-              mean_diff = mean(mse_diff), 
-              median_diff = median(mse_diff))
+              mean_diff = mean(mse_ratio), 
+              median_diff = median(mse_ratio))
 
 colnames(viz) <- c(
     "Year", "# Events", "Mean MSE Ratio", "Median MSE Ratio"
@@ -247,7 +265,7 @@ raw_loocvs <- sapply(raw_fits, LOOCV)
 
 Use the bootstrap to approximate the confidence interval on the ratio of LOOCV 
 
-@TODO
+@TODO bootstrap as with test MSE
 
 ```{r loocv-bootstrap}
 viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs, 
