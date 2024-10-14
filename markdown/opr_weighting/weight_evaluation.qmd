@@ -94,12 +94,18 @@ test_weighting <- function(matches, w){
 }
 ```
 
-```{r visualization}
+Use the bootstrap to approximate a confidence interval around the 
+
+```{r test-mse-bootstrap}
 mse_diffs <- test_weighting(matches, w_linear)
 
 viz <- data.frame(mse_diff = mse_diffs, 
                   year = as.factor(substr(names(mse_diffs), 1, 4)))
 
+# @TODO bootstrap code here!
+```
+
+```{r visualization}
 ggplot(viz, aes(x = mse_diff)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
@@ -220,7 +226,7 @@ Advantages of LOOCV:
 - Shortcut formula can make it computationally efficient
     - Makes weight optimization over a grid possible
 
-```{r}
+```{r loocv-compute}
 # this uses the "shortcut" formula for LOOCV
 # see formula 5.2 in ISLR by James, Witten, Hastie, and Tibshirani (v2), pg 202
 LOOCV <- function(fit){
@@ -237,12 +243,20 @@ linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
 resid_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
 fitted_weight_loocvs <- sapply(fitted_var_weight_fits, LOOCV)
 raw_loocvs <- sapply(raw_fits, LOOCV)
+```
 
+Use the bootstrap to approximate the confidence interval on the ratio of LOOCV 
+
+@TODO
+
+```{r loocv-bootstrap}
 viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs, 
                   resid_loocv_ratio = raw_loocvs / resid_weight_loocvs,
                   fitted_loocv_ratio = raw_loocvs / fitted_weight_loocvs,
                   year = as.factor(substr(names(raw_loocvs), 1, 4)))
+```
 
+```{r loocv-viz}
 ggplot(viz, aes(x = resid_loocv_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 

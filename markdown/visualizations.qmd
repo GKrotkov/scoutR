@@ -184,22 +184,44 @@ event_stability_ts <- function(
 ){
     df <- event_opr_progression(event_code, response_name, standardize, w)
     progression <- abs(diff(ts(df[, 1:(ncol(df) - 2)])))
-    return(ts(apply(progression, 1, mean)))
+    result <- ts(apply(progression, 1, mean))
+    # attach the matches/team information in the names of the time series
+    # need to remove the 1st idx because diff() removes one element
+    names(result) <- round(df$mpt[2:nrow(df)], digits = 3)
+    return(result)
 }
-
-# pull the district events from 2024 that passed the conformance checks
-# i.e. that have 12 quals/team
-load("../data/district_quals_09_24.rda")
-event_codes <- names(matches)[startsWith(names(matches), "2024")]
-rm(matches)
-
-event_codes <- c("2024pahat", "2024paphi", "2024txfor", "2024txdal")
-
-# current problem: we don't have the MPT information for each event. And even
-# if we did, it isn't easy to plot them on the same plot.
-tmp <- lapply(event_codes, event_stability_ts, standardize = TRUE)
 
 plot(event_stability_ts("2024paca", standardize = TRUE), 
      ylab = "2024 PACA Perturbations")
 ```
 
+# OPR Progression Viz for multiple events on the same plot
+
+```{r}
+# pull districts from 2024 that passed the conformance checks (12 quals/team)
+load("../data/district_quals_09_24.rda")
+event_codes <- names(matches)[startsWith(names(matches), "2024")]
+rm(matches)
+
+#event_codes <- c("2024pahat", "2024paphi", "2024txfor", "2024txdal", 
+#                 "2024paca")
+
+# current problem: the TS have different lengths
+tmp <- lapply(event_codes, event_stability_ts, standardize = TRUE)
+
+viz <- unlist(tmp)
+viz <- data.frame(
+    mpt = as.numeric(names(viz)), opr_diffs = viz, 
+    event = rep(event_codes, sapply(tmp, length))
+)
+
+ggplot(viz, aes(x = mpt, y = opr_diffs, color = event)) + 
+    geom_point(alpha = 0.3) + 
+    geom_line(alpha = 0.3) + 
+    guides(color = "none") + 
+    ylim(0, 2) + 
+    labs(title = "OPR Perturbations by MPT", 
+         subtitle = "All 2024 districts with 12 matches/team",
+         x = "Matches per team", y = "OPR Differences (standardized)")
+
+```
