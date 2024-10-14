@@ -98,7 +98,7 @@ test_weighting <- function(matches, w){
 Use the bootstrap to approximate a confidence interval for the ratio (raw OPR MSE / weighted OPR MSE)
 
 ```{r test-mse-bootstrap}
-mse_ratios <- test_weighting(matches, w_linear)
+mse_ratios <- test_weighting(matches, w_stepwise)
 
 viz <- data.frame(mse_ratio = mse_ratios, 
                   year = as.factor(substr(names(mse_ratios), 1, 4)))
@@ -128,9 +128,9 @@ ggplot(viz, aes(x = mse_ratio)) +
     geom_vline(aes(xintercept = bstrap_upper), color = gos_red, lty = 3) + 
     annotate("label", x = mean(mse_ratios), y = 15, 
              label = paste0("Mean: ", round(mean(mse_ratios), 3), "\n", 
-                            "95% CI: (", round(bstrap_lower, 4), ", ", 
-                            round(bstrap_upper, 4), ")")) +
-    labs(title = "OPR Weighting Test MSE Ratio", 
+                            "95% CI: (", round(bstrap_lower, 3), ", ", 
+                            round(bstrap_upper, 3), ")")) +
+    labs(title = "OPR Weighting Test MSE Ratio (Stepwise Optimized)", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized MSE Ratio (null:weighted)", 
          y = "# Events") +
@@ -254,41 +254,43 @@ LOOCV <- function(fit){
 linear_weight_fits <- lapply(matches, weighted_fit, w = w_linear)
 bin_weight_fits <- lapply(matches, weighted_fit, w = w_bin_resid_vars)
 fitted_var_weight_fits <- lapply(matches, weighted_fit, w = w_bin_fitted_vars)
-optimized_fits <- lapply(matches, weighted_fit, w = w_opt)
+stepwise_fits <- lapply(matches, weighted_fit, w = w_stepwise)
 raw_fits <- lapply(matches, weighted_fit, w = 1)
 
 linear_weight_loocvs <- sapply(linear_weight_fits, LOOCV)
 resid_weight_loocvs <- sapply(bin_weight_fits, LOOCV)
 fitted_weight_loocvs <- sapply(fitted_var_weight_fits, LOOCV)
+stepwise_loocvs <- sapply(stepwise_fits, LOOCV)
 raw_loocvs <- sapply(raw_fits, LOOCV)
 ```
 
 Use the bootstrap to approximate the confidence interval on the ratio of LOOCV 
 
-@TODO bootstrap as with test MSE
+@TODO bootstrap as with test MSE; probably also need to clean up the visualization code to show the stepwise-optimized values.
 
 ```{r loocv-bootstrap}
 viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs, 
                   resid_loocv_ratio = raw_loocvs / resid_weight_loocvs,
                   fitted_loocv_ratio = raw_loocvs / fitted_weight_loocvs,
+                  stepwise_loocv_ratio = raw_loocvs / stepwise_loocvs,
                   year = as.factor(substr(names(raw_loocvs), 1, 4)))
 ```
 
 ```{r loocv-viz}
-ggplot(viz, aes(x = resid_loocv_ratio)) + 
+ggplot(viz, aes(x = stepwise_loocv_ratio)) + 
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
-    geom_vline(aes(xintercept = mean(resid_loocv_ratio)), color = gos_red) + 
-    annotate("label", x = mean(viz$resid_loocv_ratio), y = 15, 
+    geom_vline(aes(xintercept = mean(stepwise_loocv_ratio)), color = gos_red) + 
+    annotate("label", x = mean(viz$stepwise_loocv_ratio), y = 15, 
              label = paste0("Mean: ", 
-                            round(mean(viz$resid_loocv_ratio), 3))) +
-    labs(title = "OPR Weighting LOOCV Ratio", 
+                            round(mean(viz$stepwise_loocv_ratio), 3))) +
+    labs(title = "OPR Weighting LOOCV Ratio (Stepwise Optimized)", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized LOOCV Error Ratio (raw:weighted)", 
          y = "# Events") +
     gos_theme
 
-ggplot(viz, aes(x = resid_loocv_ratio)) + 
+ggplot(viz, aes(x = stepwise_loocv_ratio)) + 
     geom_density(alpha = 0.2, fill = gos_blue) + 
     facet_wrap(~year) +
     labs(title = "OPR Weighting LOOCV Ratio", x = "LOOCV Difference", 
@@ -299,10 +301,11 @@ viz <- viz %>%
     group_by(year) %>%
     summarize(events = n(), 
               linear_mean_ratio = mean(linear_loocv_ratio), 
-              bin_mean_ratio = mean(resid_loocv_ratio))
+              bin_mean_ratio = mean(resid_loocv_ratio), 
+              stepwise_mean_ratio = mean(stepwise_loocv_ratio))
 
 colnames(viz) <- c(
-    "Year", "# Events", "Linear", "Binned"
+    "Year", "# Events", "Linear", "Binned", "Stepwise"
 )
 
 viz$Year <- as.numeric(as.character(viz$Year))
