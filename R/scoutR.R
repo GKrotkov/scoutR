@@ -112,7 +112,8 @@ lineup_design_matrix <- function(matches){
 #' @param w Weights for WLS fit. Weights will be extended with `rep_len` to have
 #' length corresponding to the rows of `lineups`.
 #' @details Key assumption - the order of `lineups` and the `responses` vector
-#' must line up exactly. Otherwise, the fit will be meaningless.
+#' must line up exactly. Otherwise, the fit will be meaningless. Fits a
+#' regression through the origin - fixing the intercept coefficient to be 0.
 #' @examples
 #' gpr <- event_matches("2024paca", match_type = "qual")
 #' opr <- fit_lineup_lm(gpr, list(red = gpr$red_score, blue = gpr$blue_score))
