@@ -312,9 +312,11 @@ tidy_coprs <- function(data){
 tidy_rankings <- function(raw, trim = TRUE){
     data <- tibble(ranking = raw$rankings)
     data <- unnest_wider(data, ranking)
-    data <- unnest_wider(data, record)
+    if ("record" %in% colnames(data) & !all(is.na(data$record))){
+        data <- unnest_wider(data, record)
+    }
 
-    # unpack sort order names and
+    # unpack sort order names
     sort_order <- tibble(rank = raw$sort_order_info)
     if (is.null(raw$sort_order_info)){
         labels <- seq(1, length(unlist(data$sort_orders[1])))
