@@ -373,7 +373,7 @@ ggplot(viz, aes(x = as.character(Year), y = mean_pct_improvement)) +
     geom_hline(yintercept = 0) +
     scale_y_continuous(labels = scales::percent) +
     labs(title = "Weighting Percent Improvement by Year", 
-         subtitle = "By Mean LOOCV (stepwise LOOCV)", 
+         subtitle = "By Mean LOOCV (stepwise optimized)", 
          x = "Year", y = "Mean LOOCV Percent Improvement") + 
     gos_theme
 ```
