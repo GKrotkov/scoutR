@@ -266,14 +266,27 @@ raw_loocvs <- sapply(raw_fits, LOOCV)
 
 Use the bootstrap to approximate the confidence interval on the ratio of LOOCV 
 
-@TODO bootstrap as with test MSE; probably also need to clean up the visualization code to show the stepwise-optimized values.
-
 ```{r loocv-bootstrap}
 viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs, 
                   resid_loocv_ratio = raw_loocvs / resid_weight_loocvs,
                   fitted_loocv_ratio = raw_loocvs / fitted_weight_loocvs,
                   stepwise_loocv_ratio = raw_loocvs / stepwise_loocvs,
                   year = as.factor(substr(names(raw_loocvs), 1, 4)))
+
+# generate B bootstrap samples and compute the mean MSE ratio for each sample.
+B <- 1000
+bstrap_ratios <- rep(NA, B)
+for (i in 1:B){
+    bstrap_sample <- sample(viz$stepwise_loocv_ratio, nrow(viz), replace = TRUE)
+    bstrap_ratios[i] <- mean(bstrap_sample)
+}
+# Now we can take the 2.5th percentile value and the 97.5th percentile value 
+# from those ratios to define the lower and upper bound for a 95% CI
+bstrap_ratios <- sort(bstrap_ratios)
+# lower bound for mean test MSE ratio
+bstrap_lower <- bstrap_ratios[floor(B * 0.025)]
+# upper bound for mean test MSE ratio
+bstrap_upper <- bstrap_ratios[ceiling(B * 0.975)]
 ```
 
 ```{r loocv-viz}
@@ -281,9 +294,13 @@ ggplot(viz, aes(x = stepwise_loocv_ratio)) +
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
     geom_vline(aes(xintercept = mean(stepwise_loocv_ratio)), color = gos_red) + 
+    geom_vline(aes(xintercept = bstrap_lower), color = gos_red, lty = 3) + 
+    geom_vline(aes(xintercept = bstrap_upper), color = gos_red, lty = 3) + 
     annotate("label", x = mean(viz$stepwise_loocv_ratio), y = 15, 
              label = paste0("Mean: ", 
-                            round(mean(viz$stepwise_loocv_ratio), 3))) +
+                            round(mean(viz$stepwise_loocv_ratio), 3), "\n", 
+                            "95% CI: (", round(bstrap_lower, 3), ", ", 
+                            round(bstrap_upper, 3), ")")) +
     labs(title = "OPR Weighting LOOCV Ratio (Stepwise Optimized)", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized LOOCV Error Ratio (raw:weighted)", 
@@ -310,6 +327,7 @@ colnames(viz) <- c(
 
 viz$Year <- as.numeric(as.character(viz$Year))
 viz <- round(viz, digits = 4)
+maxes <- pmax(viz$Linear, viz$Binned, viz$Stepwise)
 
 gt(viz) %>%
     tab_header(
@@ -322,12 +340,17 @@ gt(viz) %>%
     tab_style(
         style = cell_text(weight = "bold"), 
         locations = cells_body(columns = "Linear", 
-                               rows = which(viz$Linear > viz$Binned))
+                               rows = which(viz$Linear == maxes))
     ) %>%
     tab_style(
         style = cell_text(weight = "bold"), 
         locations = cells_body(columns = "Binned", 
-                               rows = which(viz$Binned >= viz$Linear))
+                               rows = which(viz$Binned == maxes))
+    ) %>%
+    tab_style(
+        style = cell_text(weight = "bold"), 
+        locations = cells_body(columns = "Stepwise", 
+                               rows = which(viz$Stepwise == maxes))
     ) %>%
     tab_style(
         cell_borders(color = gos_blue), 
@@ -341,7 +364,7 @@ gt(viz) %>%
         locations = cells_title("subtitle")
     )
 
-viz$mean_pct_improvement <- (viz$`Binned` - 1)
+viz$mean_pct_improvement <- (viz$`Stepwise` - 1)
 
 ggplot(viz, aes(x = as.character(Year), y = mean_pct_improvement)) + 
     geom_point(aes(size = `# Events`), col = gos_red) + 
