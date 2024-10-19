@@ -225,6 +225,7 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' @param breakdown (bool) break down score_breakdown column?
 #' @param match_type one of "all", "qual", or "playoff"
 #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
+#' @param sort (boolean) if TRUE, will sort the resulting match object by match number.
 #' @param simple (bool) simplify match object?
 #' @param keys (bool) get keys only?
 #' @return Tibble of matches from the given event.
@@ -233,7 +234,7 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
 event_matches <- function(
     event_key, alliances = TRUE, breakdown = TRUE, match_type = "all",
-    unplayed = FALSE, simple = FALSE, keys = FALSE
+    unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
 ){
     if (simple & keys) warning(warns()$simkeys)
     if (!(match_type %in% c("all", "qual", "playoff"))) warning(warns()$mtype)
@@ -254,7 +255,8 @@ event_matches <- function(
     }
 
     data <- tidy_matches(
-        data, alliances = alliances, breakdown = breakdown, unplayed = unplayed
+        data, alliances = alliances, breakdown = breakdown, unplayed = unplayed,
+        sort = sort
     )
 
     return(data)

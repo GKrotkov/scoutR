@@ -140,13 +140,14 @@ unpack_breakdown <- function(matches){
 #' @param alliances (boolean) unpack the alliances?
 #' @param breakdown (boolean) unpack the score breakdown?
 #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
+#' @param sort (boolean) if TRUE, will sort the output matches by competition level and match number.
 #' @author Gabriel Krotkov
 #' @return tidy tibble of matches
 #' @examples
 #' tidy_matches(read_event_matches("2016mrcmp"), alliances = TRUE,
 #'     breakdown = TRUE)
 tidy_matches <- function(
-    raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE
+    raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
 ){
     event <- tibble(matches = raw)
     event <- event %>%
@@ -165,6 +166,14 @@ tidy_matches <- function(
 
     if(!unplayed){
         event <- trim_unplayed(event)
+    }
+
+    # sort by competition level and match number
+    if(sort & all(c("match_number", "comp_level") %in% colnames(event))){
+        event <- event %>%
+            mutate(comp_level = factor(comp_level,
+                                       levels = c("qm", "qf", "sf", "f"))) %>%
+            arrange(comp_level, match_number)
     }
     return(event)
 }
