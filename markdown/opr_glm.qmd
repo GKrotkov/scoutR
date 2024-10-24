@@ -1,5 +1,5 @@
 ---
-title: "Generalized Linear Models for improving OPR"
+title: "OPR GLM"
 format: html
 ---
 
@@ -28,5 +28,54 @@ plot(linear_fit, which = 1:6)
 design <- lineup_design_matrix(gpr)
 response <- c(gpr$blue_score, gpr$red_score)
 rlm_fit <- rlm(design, response)
+```
+
+# Regularization
+
+```{r}
+rm(list = ls())
+library(devtools)
+library(glmnet)
+load_all()
+
+match_df <- event_matches("2023mil", match_type = "qual")
+design <- data.matrix(lineup_design_matrix(match_df))
+# could adjust this response to win margin; would be answering a different
+# question.
+response <- c(match_df$blue_score, match_df$red_score)
+
+# grid of lambdas to consider
+lambda_seq <- 10 ^ seq(-2, 2, by = .05)
+
+# Using cross validation glmnet
+ridge_cv <- cv.glmnet(design, response, alpha = 0, lambda = lambda_seq)
+# refit the ridge using the min-MSE lambda
+best_ridge <- glmnet(design, response, alpha = 0, lambda = ridge_cv$lambda.min)
+
+# Try a LASSO - could LASSO be used to kinda "auto-tier" teams?
+lasso_cv <- cv.glmnet(design, response, alpha = 1, lambda = lambda_seq)
+best_lasso <- glmnet(design, response, alpha = 1, lambda = lasso_cv$lambda.min)
+
+# refitting ridge & LASSO with the min-MSE lambda but insisting on regression 
+# through the origin
+origin_ridge <- glmnet(
+    design, response, alpa = 0, lambda = ridge_cv$lambda.min, intercept = FALSE
+)
+
+origin_lasso <- glmnet(
+    design, response, alpha = 1, lambda = lasso_cv$lambda.min, intercept = FALSE
+)
+
+results <- cbind(
+    coef(best_ridge), coef(best_lasso), coef(origin_ridge), coef(origin_lasso)
+)
+```
+
+Notably - without a constant, LASSO is unable to push many coefficients to exactly 0! It basically becomes very similar to ridge regression.
+
+# Elastic Net Regression
+
+```{r}
+
 ```
 
