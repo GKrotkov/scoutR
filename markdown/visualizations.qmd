@@ -127,7 +127,7 @@ plot_event_opr_stability <- function(
 plot_event_opr_stability(event_code)
 ```
 
-# Plot multiple event OPR SDs
+## Plot multiple event OPR SDs
 
 ```{r}
 event_codes <- events(2024, official = TRUE, keys = TRUE)
@@ -154,7 +154,7 @@ ggplot(result, aes(x = mpt, y = log(sd))) +
     guides(color = "none")
 ```
 
-# Time Series Modeling of Regression Stability
+## Time Series Modeling of Regression Stability
 
 ```{r}
 rm(list = ls())
@@ -195,7 +195,7 @@ plot(event_stability_ts("2024paca", standardize = TRUE),
      ylab = "2024 PACA Perturbations")
 ```
 
-# OPR Progression Viz for multiple events on the same plot
+## OPR Progression Viz for multiple events on the same plot
 
 ```{r}
 # pull districts from 2024 that passed the conformance checks (12 quals/team)
@@ -225,3 +225,4 @@ ggplot(viz, aes(x = mpt, y = opr_diffs, color = event)) +
          x = "Matches per team", y = "OPR Differences (standardized)")
 
 ```
+
