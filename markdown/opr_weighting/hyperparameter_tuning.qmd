@@ -16,7 +16,7 @@ Timing note: running this code took my machine ~ 25 minutes.
 library(devtools)
 load_all()
 rm(list = ls())
-load("../../data/district_quals_09_24.rda")
+load("../../data/district_quals_09_24.rda") # from scripts/get_district_quals.R
 
 # normalize match scores so we can do cross-week and cross-season comparisons
 # this simplifies a lot of later code
@@ -127,7 +127,8 @@ To optimize over 12 bins, we could skip interaction effects and optimize in a st
 The strategy only considers weightings that are identical to the originally estimated weights, except for a change in one bin.
 
 ```{r grid-optimization-stepwise, cache=TRUE}
-load("../../data/opr_weights.rda")
+# from markdown/opr_weighting/weight_evaluation.qmd
+load("../../data/opr_weights.rda") 
 
 step_size <- 0.1
 steps_radius <- 10

@@ -3,11 +3,13 @@ title: "OPR Weighting Evaluation"
 format: html
 ---
 
+Note: to run this file successfully, you should already have run `markdown/opr_weighting/weight_estimation.qmd` and `markdown/opr_weighting/hyperparameter_tuning.qmd`. 
+
 ```{r setup, message = FALSE, warning = FALSE}
 library(devtools)
 load_all()
 rm(list = ls())
-load("../../data/district_quals_09_24.rda")
+load("../../data/district_quals_09_24.rda") # from scripts/get_district_quals.R
 
 # normalize match scores so we can do cross-week and cross-season comparisons
 # this simplifies a lot of later code
@@ -28,7 +30,9 @@ gos_red <- "#F7041A"
 gos_theme <- theme_bw() + 
     theme(text = element_text(family = "Futura"))
 
+# from markdown/opr_weighting/weight_estimation.qmd
 load("../../data/opr_weights.rda")
+# from markdown/opr_weighting/hyperparameter_tuning.qmd
 load("../../data/optimized_opr_weighting.rda")
 
 weighted_fit <- function(match_df, w){
