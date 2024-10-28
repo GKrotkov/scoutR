@@ -1,5 +1,8 @@
 # Reading all district quals 2009 - 2024
 
+library(devtools)
+load_all()
+
 # check that a matches dataframe has the correct number of matches and doesn't
 # have NA values in key places
 flag_conformance <- function(matches){
