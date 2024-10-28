@@ -396,17 +396,62 @@ gt(viz) %>%
         locations = cells_title("subtitle")
     )
 
-viz$mean_pct_improvement <- (viz$`Stepwise` - 1)
+viz$stepwise_mean_pct_improvement <- (viz$`Stepwise` - 1)
+viz$binned_mean_pct_improvement <- (viz$`Binned` - 1)
 
-ggplot(viz, aes(x = as.character(Year), y = mean_pct_improvement)) + 
+ggplot(viz, aes(x = as.character(Year), y = stepwise_mean_pct_improvement)) + 
     geom_point(aes(size = `# Events`), col = gos_red) + 
     geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
-               yintercept = mean(viz$mean_pct_improvement)) + 
+               yintercept = mean(viz$stepwise_mean_pct_improvement)) + 
     geom_hline(yintercept = 0) +
     scale_y_continuous(labels = scales::percent) +
     labs(title = "Weighting Percent Improvement by Year", 
          subtitle = "By Stepwise Bin Optimization", 
          x = "Year", y = "Mean LOOCV Percent Improvement") + 
     gos_theme
+
+ggplot(viz, aes(x = as.character(Year), y = binned_mean_pct_improvement)) + 
+    geom_point(aes(size = `# Events`), col = gos_red) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
+               yintercept = mean(viz$binned_mean_pct_improvement)) + 
+    geom_hline(yintercept = 0) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(title = "Weighting Percent Improvement by Year", 
+         subtitle = "By Residual Variance Binning", 
+         x = "Year", y = "Mean LOOCV Percent Improvement") + 
+    gos_theme
+
+viz <- pivot_longer(
+    viz, 
+    cols = c("binned_mean_pct_improvement", 
+             "stepwise_mean_pct_improvement"), 
+    names_to = "method", 
+    values_to = "mean_pct_improvement"
+)
+
+viz$method <- ifelse(viz$method == "binned_mean_pct_improvement", 
+                     "binned", "stepwise")
+
+avg_binned_improvement <- 
+    mean(viz$mean_pct_improvement[viz$method == "binned"])
+avg_stepwise_improvement <- 
+    mean(viz$mean_pct_improvement[viz$method == "stepwise"])
+
+ggplot(
+    viz, aes(x = as.character(Year), y = mean_pct_improvement, color = method)
+    ) + 
+    geom_point(aes(size = `# Events`), alpha = 0.65) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, color = gos_blue,
+               yintercept = avg_binned_improvement) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, color = gos_red,
+               yintercept = avg_stepwise_improvement) + 
+    geom_hline(yintercept = 0) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(title = "Weighting Percent Improvement by Year", 
+         subtitle = "With weighting method comparison", 
+         x = "Year", y = "Mean LOOCV Percent Improvement", 
+         color = "Method") + 
+    gos_theme + 
+    scale_color_manual(values = c(gos_blue, gos_red))
 ```
 
