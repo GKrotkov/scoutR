@@ -226,3 +226,29 @@ ggplot(viz, aes(x = mpt, y = opr_diffs, color = event)) +
 
 ```
 
+# OPR Regularization
+
+```{r, message = FALSE, warning = FALSE}
+rm(list = ls())
+library(devtools)
+load_all()
+library(glmnet)
+
+# ok, ridge regression is definitely better than LASSO - because it doesn't
+# make sense to shrink to exactly 0 strongly (we don't want to push teams out)
+# of the model
+evnt <- event_matches("2016mrcmp", match_type = "qual")
+fit <- fit_lineup_lm(evnt, list(red = evnt$red_score, blue = evnt$blue_score))
+design <- data.matrix(fit$model[, -c(1, ncol(fit$model))]) # (drop the weights)
+response <- fit$model$response
+
+lambda_seq <- 10 ^ seq(2, -2, by = -.1)
+fit <- glmnet(design, response, alpha = 0, lambda  = lambda_seq)
+
+ridge_cv <- cv.glmnet(design, response, alpha = 0, lambda = lambda_seq)
+best_lambda <- ridge_cv$lambda.min
+
+best_fit <- glmnet(design, response, alpha = 0, lambda = best_lambda)
+
+coef(best_fit)
+```
