@@ -275,18 +275,24 @@ viz <- data.frame(linear_loocv_ratio = raw_loocvs / linear_weight_loocvs,
 
 # generate B bootstrap samples and compute the mean MSE ratio for each sample.
 B <- 1000
-bstrap_ratios <- rep(NA, B)
+stepwise_bstrap_ratios <- rep(NA, B)
+binned_bstrap_ratios <- rep(NA, B)
 for (i in 1:B){
     bstrap_sample <- sample(viz$stepwise_loocv_ratio, nrow(viz), replace = TRUE)
-    bstrap_ratios[i] <- mean(bstrap_sample)
+    stepwise_bstrap_ratios[i] <- mean(bstrap_sample)
+    bstrap_sample <- sample(viz$resid_loocv_ratio, nrow(viz), replace = TRUE)
+    binned_bstrap_ratios[i] <- mean(bstrap_sample)
 }
 # Now we can take the 2.5th percentile value and the 97.5th percentile value 
 # from those ratios to define the lower and upper bound for a 95% CI
-bstrap_ratios <- sort(bstrap_ratios)
-# lower bound for mean test MSE ratio
-bstrap_lower <- bstrap_ratios[floor(B * 0.025)]
-# upper bound for mean test MSE ratio
-bstrap_upper <- bstrap_ratios[ceiling(B * 0.975)]
+stepwise_bstrap_ratios <- sort(stepwise_bstrap_ratios)
+binned_bstrap_ratios <- sort(binned_bstrap_ratios)
+# lower bound for mean LOOCV ratio
+stepwise_bstrap_lower <- stepwise_bstrap_ratios[floor(B * 0.025)]
+binned_bstrap_lower <- binned_bstrap_ratios[floor(B * 0.025)]
+# upper bound for mean LOOCV ratio
+stepwise_bstrap_upper <- stepwise_bstrap_ratios[ceiling(B * 0.975)]
+binned_bstrap_upper <- binned_bstrap_ratios[ceiling(B * 0.975)]
 ```
 
 ```{r loocv-viz}
@@ -294,14 +300,35 @@ ggplot(viz, aes(x = stepwise_loocv_ratio)) +
     geom_histogram(fill = gos_blue, color = "black", 
                    bins = ceiling(sqrt(nrow(viz)))) + 
     geom_vline(aes(xintercept = mean(stepwise_loocv_ratio)), color = gos_red) + 
-    geom_vline(aes(xintercept = bstrap_lower), color = gos_red, lty = 3) + 
-    geom_vline(aes(xintercept = bstrap_upper), color = gos_red, lty = 3) + 
+    geom_vline(aes(xintercept = stepwise_bstrap_lower), 
+               color = gos_red, lty = 3) + 
+    geom_vline(aes(xintercept = stepwise_bstrap_upper), 
+               color = gos_red, lty = 3) + 
     annotate("label", x = mean(viz$stepwise_loocv_ratio), y = 15, 
              label = paste0("Mean: ", 
                             round(mean(viz$stepwise_loocv_ratio), 3), "\n", 
-                            "95% CI: (", round(bstrap_lower, 3), ", ", 
-                            round(bstrap_upper, 3), ")")) +
+                            "95% CI: (", round(stepwise_bstrap_lower, 3), ", ", 
+                            round(stepwise_bstrap_upper, 3), ")")) +
     labs(title = "OPR Weighting LOOCV Ratio (Stepwise Optimized)", 
+         subtitle = "District Event Qualifications, 2009 - 2024", 
+         x = "Event-Normalized LOOCV Error Ratio (raw:weighted)", 
+         y = "# Events") +
+    gos_theme
+
+ggplot(viz, aes(x = resid_loocv_ratio)) + 
+    geom_histogram(fill = gos_blue, color = "black", 
+                   bins = ceiling(sqrt(nrow(viz)))) + 
+    geom_vline(aes(xintercept = mean(resid_loocv_ratio)), color = gos_red) + 
+    geom_vline(aes(xintercept = binned_bstrap_lower), 
+               color = gos_red, lty = 3) + 
+    geom_vline(aes(xintercept = binned_bstrap_upper), 
+               color = gos_red, lty = 3) + 
+    annotate("label", x = mean(viz$resid_loocv_ratio), y = 15, 
+             label = paste0("Mean: ", 
+                            round(mean(viz$resid_loocv_ratio), 3), "\n", 
+                            "95% CI: (", round(binned_bstrap_lower, 3), ", ", 
+                            round(binned_bstrap_upper, 3), ")")) +
+    labs(title = "OPR Weighting LOOCV Ratio (Residual Binning)", 
          subtitle = "District Event Qualifications, 2009 - 2024", 
          x = "Event-Normalized LOOCV Error Ratio (raw:weighted)", 
          y = "# Events") +
@@ -364,16 +391,28 @@ gt(viz) %>%
         locations = cells_title("subtitle")
     )
 
-viz$mean_pct_improvement <- (viz$`Stepwise` - 1)
+viz$stepwise_mean_pct_improvement <- (viz$`Stepwise` - 1)
+viz$binned_mean_pct_improvement <- (viz$Binned - 1)
 
-ggplot(viz, aes(x = as.character(Year), y = mean_pct_improvement)) + 
+ggplot(viz, aes(x = as.character(Year), y = stepwise_mean_pct_improvement)) + 
     geom_point(aes(size = `# Events`), col = gos_red) + 
     geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
-               yintercept = mean(viz$mean_pct_improvement)) + 
+               yintercept = mean(viz$stepwise_mean_pct_improvement)) + 
     geom_hline(yintercept = 0) +
     scale_y_continuous(labels = scales::percent) +
     labs(title = "Weighting Percent Improvement by Year", 
          subtitle = "By Mean LOOCV (stepwise optimized)", 
+         x = "Year", y = "Mean LOOCV Percent Improvement") + 
+    gos_theme
+
+ggplot(viz, aes(x = as.character(Year), y = binned_mean_pct_improvement)) + 
+    geom_point(aes(size = `# Events`), col = gos_red) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
+               yintercept = mean(viz$binned_mean_pct_improvement)) + 
+    geom_hline(yintercept = 0) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(title = "Weighting Percent Improvement by Year", 
+         subtitle = "By Mean LOOCV (residual binning)", 
          x = "Year", y = "Mean LOOCV Percent Improvement") + 
     gos_theme
 ```
