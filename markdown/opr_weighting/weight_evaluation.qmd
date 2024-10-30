@@ -3,11 +3,13 @@ title: "OPR Weighting Evaluation"
 format: html
 ---
 
+Note: to run this file successfully, you should already have run `markdown/opr_weighting/weight_estimation.qmd` and `markdown/opr_weighting/hyperparameter_tuning.qmd`. 
+
 ```{r setup, message = FALSE, warning = FALSE}
 library(devtools)
 load_all()
 rm(list = ls())
-load("../../data/district_quals_09_24.rda")
+load("../../data/district_quals_09_24.rda") # from scripts/get_district_quals.R
 
 # normalize match scores so we can do cross-week and cross-season comparisons
 # this simplifies a lot of later code
@@ -28,7 +30,9 @@ gos_red <- "#F7041A"
 gos_theme <- theme_bw() + 
     theme(text = element_text(family = "Futura"))
 
+# from markdown/opr_weighting/weight_estimation.qmd
 load("../../data/opr_weights.rda")
+# from markdown/opr_weighting/hyperparameter_tuning.qmd
 load("../../data/optimized_opr_weighting.rda")
 
 weighted_fit <- function(match_df, w){
@@ -417,18 +421,27 @@ ggplot(viz, aes(x = as.character(Year), y = binned_mean_pct_improvement)) +
     gos_theme
 ```
 
-Given the ratio in means; I would recommend using the `1 / bin_vars` as the weighting rather than the linear approximation; I trust the LOOCV evaluation over the test MSE evaluation.
+How much better are the stepwise optimized LOOCVs than the residual binning loocvs? (As a ratio)
 
 ```{r}
-mean(resid_weight_loocvs - raw_loocvs) / 
-    mean(linear_weight_loocvs - raw_loocvs)
+mean(stepwise_loocvs - raw_loocvs) / 
+    mean(resid_weight_loocvs - raw_loocvs)
 ```
 
-How many events saw improvement in the OPR fit from weighting? 
+How many events saw improvement in the OPR fit from weighting?
 
 ```{r}
-sum((raw_loocvs / resid_weight_loocvs) > 1) / length(raw_loocvs)
+cat(round(sum((raw_loocvs / stepwise_loocvs) > 1) / length(raw_loocvs), 4) * 
+        100, 
+    "% of events saw improvement using the stepwise-optimzed weights", "\n")
+
+cat(round(sum((raw_loocvs / resid_weight_loocvs) > 1) / length(raw_loocvs), 4) * 
+        100, 
+    "% of events saw improvement using the residual bin variance weights", "\n")
+
 ```
+
+**Takeaway**: The stepwise-optimized weights are very, very good for years that are "normal" for OPR, while the residual bin variance weights are more conservative and flexible for years that do not satisfy the OPR assumptions very well (example: 2014, 2018)
 
 What percent better are the weighted values on average?
 

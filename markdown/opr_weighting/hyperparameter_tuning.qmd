@@ -8,7 +8,7 @@ code-fold: true
 
 This markdown file will implement hyperparameter tuning to optimize the weights estimated in [this paper](https://www.overleaf.com/read/dkmzrpspkhzb#0bd526). First I will tune over the number of bins, fix that number, and then explore various stepwise optimization strategies to find a best weighting.
 
-Timing note: running this code took my machine ~ 25 minutes.
+Timing note: running this code took my machine ~ 2 hours.
 
 # Setup
 
@@ -16,7 +16,7 @@ Timing note: running this code took my machine ~ 25 minutes.
 library(devtools)
 load_all()
 rm(list = ls())
-load("../../data/district_quals_09_24.rda")
+load("../../data/district_quals_09_24.rda") # from scripts/get_district_quals.R
 
 # normalize match scores so we can do cross-week and cross-season comparisons
 # this simplifies a lot of later code
@@ -127,7 +127,8 @@ To optimize over 12 bins, we could skip interaction effects and optimize in a st
 The strategy only considers weightings that are identical to the originally estimated weights, except for a change in one bin.
 
 ```{r grid-optimization-stepwise, cache=TRUE}
-load("../../data/opr_weights.rda")
+# from markdown/opr_weighting/weight_evaluation.qmd
+load("../../data/opr_weights.rda") 
 
 step_size <- 0.1
 steps_radius <- 10
@@ -395,17 +396,62 @@ gt(viz) %>%
         locations = cells_title("subtitle")
     )
 
-viz$mean_pct_improvement <- (viz$`Stepwise` - 1)
+viz$stepwise_mean_pct_improvement <- (viz$`Stepwise` - 1)
+viz$binned_mean_pct_improvement <- (viz$`Binned` - 1)
 
-ggplot(viz, aes(x = as.character(Year), y = mean_pct_improvement)) + 
+ggplot(viz, aes(x = as.character(Year), y = stepwise_mean_pct_improvement)) + 
     geom_point(aes(size = `# Events`), col = gos_red) + 
     geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
-               yintercept = mean(viz$mean_pct_improvement)) + 
+               yintercept = mean(viz$stepwise_mean_pct_improvement)) + 
     geom_hline(yintercept = 0) +
     scale_y_continuous(labels = scales::percent) +
     labs(title = "Weighting Percent Improvement by Year", 
          subtitle = "By Stepwise Bin Optimization", 
          x = "Year", y = "Mean LOOCV Percent Improvement") + 
     gos_theme
+
+ggplot(viz, aes(x = as.character(Year), y = binned_mean_pct_improvement)) + 
+    geom_point(aes(size = `# Events`), col = gos_red) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, col = gos_blue, 
+               yintercept = mean(viz$binned_mean_pct_improvement)) + 
+    geom_hline(yintercept = 0) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(title = "Weighting Percent Improvement by Year", 
+         subtitle = "By Residual Variance Binning", 
+         x = "Year", y = "Mean LOOCV Percent Improvement") + 
+    gos_theme
+
+viz <- pivot_longer(
+    viz, 
+    cols = c("binned_mean_pct_improvement", 
+             "stepwise_mean_pct_improvement"), 
+    names_to = "method", 
+    values_to = "mean_pct_improvement"
+)
+
+viz$method <- ifelse(viz$method == "binned_mean_pct_improvement", 
+                     "Binned", "Stepwise")
+
+avg_binned_improvement <- 
+    mean(viz$mean_pct_improvement[viz$method == "binned"])
+avg_stepwise_improvement <- 
+    mean(viz$mean_pct_improvement[viz$method == "stepwise"])
+
+ggplot(
+    viz, aes(x = as.character(Year), y = mean_pct_improvement, color = method)
+    ) + 
+    geom_point(aes(size = `# Events`), alpha = 0.65) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, color = gos_blue,
+               yintercept = avg_binned_improvement) + 
+    geom_hline(linetype = "dotted", linewidth = 1.25, color = gos_red,
+               yintercept = avg_stepwise_improvement) + 
+    geom_hline(yintercept = 0) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(title = "Weighting Percent Improvement by Year", 
+         subtitle = "With weighting method comparison", 
+         x = "Year", y = "Mean LOOCV Percent Improvement", 
+         color = "Method") + 
+    gos_theme + 
+    scale_color_manual(values = c(gos_blue, gos_red))
 ```
 
