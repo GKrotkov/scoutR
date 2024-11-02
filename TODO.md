@@ -12,7 +12,6 @@
 - Find OPR's stabilization point (whole stabilization function?)
     - https://youtu.be/xJYv7uxXMn0?t=5774
 - "Precision" of OPR
-- Investigate "standardize" functionality of `event_opr_progression`. Is it working?
 
 # Regularization
 - Should we regularize with ridge regression to stabilize OPR?
