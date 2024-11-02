@@ -433,9 +433,9 @@ viz$method <- ifelse(viz$method == "binned_mean_pct_improvement",
                      "Binned", "Stepwise")
 
 avg_binned_improvement <- 
-    mean(viz$mean_pct_improvement[viz$method == "binned"])
+    mean(viz$mean_pct_improvement[viz$method == "Binned"])
 avg_stepwise_improvement <- 
-    mean(viz$mean_pct_improvement[viz$method == "stepwise"])
+    mean(viz$mean_pct_improvement[viz$method == "Stepwise"])
 
 ggplot(
     viz, aes(x = as.character(Year), y = mean_pct_improvement, color = method)
