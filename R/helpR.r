@@ -187,6 +187,15 @@ LOOCV <- function(fit){
 #### TBA Data Helpers ####
 ##########################
 
+#' ID to Int
+#'
+#' Coerce a string in team formatting to an int
+#' @param id TBA-legal team formatted string (i.e. "frc3504")
+#' @param prefix string prefix for id (in overwhelming majority of cases "frc")
+id2int <- function(id, prefix = "frc"){
+    return(as.numeric(substr(id, nchar(prefix) + 1, nchar(id))))
+}
+
 #' ID Robot Fields
 #'
 #' Helper function that returns the column names of matches that include "robot"
