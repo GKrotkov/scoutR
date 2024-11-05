@@ -400,12 +400,13 @@ event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
 #' year_events(year = 2022, keys = TRUE)
 #' year_events(year = 2018)
 #' year_events(year = 2014, simple = TRUE)
-year_events <- function(year = YEAR, simple = FALSE, keys = FALSE){
+year_events <- function(
+        year = YEAR, official = FALSE, simple = FALSE, keys = FALSE){
     data <- read_year_events(year, simple, keys)
 
     if (keys) return(data)
 
-    data <- tidy_events(data)
+    data <- tidy_events(data, official = official)
     return(data)
 }
 

@@ -203,13 +203,18 @@ tidy_event <- function(raw){
 #'
 #' Returns a tidy tibble of event objects given a list of TBA event objects
 #' @param raw list of TBA event objects
+#' @param official return only official events?
 #' @author Gabriel Krotkov
 #' @return Tidy tibble of events
 #' @examples
 #' tidy_events(read_district_events("2016mar"))
-tidy_events <- function(raw){
+tidy_events <- function(raw, official = FALSE){
     data <- tibble(event = raw)
     data <- unnest_wider(data, event)
+    # 99 and 100 are offseason and preseason events, respectively
+    if (official){
+        data <- data[!(data$event_type %in% c(99, 100)), ]
+    }
     return(data)
 }
 

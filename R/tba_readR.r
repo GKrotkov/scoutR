@@ -780,11 +780,11 @@ read_team_matches <- function(
 #' @return List of award objects
 #' @examples
 #' read_team_awards(1712, year = 2018)
-read_team_awards <- function(team, year = NA, event = NA){
+read_team_awards <- function(team, year = NULL, event = NULL){
     request <- paste("team", tf(team), "awards", sep = "/")
-    if (!is.na(year)){
+    if (!is.null(year)){
         request <- paste(request, as.character(year), sep = "/")
-    } else if (!is.na(event)){
+    } else if (!is.null(event)){
         request <- paste("team", tf(team), "event", event, "awards", sep = "/")
     }
     return(get_content(request))
