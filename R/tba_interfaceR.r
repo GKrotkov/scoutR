@@ -142,8 +142,8 @@ team_events <- function(
 #' team_awards("1712", year = 2016)
 #' team_awards("frc1712", year = 2010, recipients = TRUE)
 #' team_awards(1712, event = "2017pawch")
-team_awards <- function(key, year = NA, event = NA, recipients = FALSE){
-    if (!is.na(year) & !is.na(event)) warning(warns()$year_event)
+team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE){
+    if (!is.null(year) & !is.null(event)) warning(warns()$year_event)
 
     data <- read_team_awards(key, year, event)
 
