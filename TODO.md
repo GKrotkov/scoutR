@@ -20,11 +20,6 @@
 - Could we compute the optimal lambda as a function of matches/team?
 - How can we combine the optimzation results from multiple different events? (both for lambda and alpha)
 
-# Questions for CMSAC
-- How does basketball APM compute the regression? Do they use a constant term? Does that introduce problems with the rank of the matrix?
-    - Judging by this, they fit with an intercept. https://squared2020.com/2017/09/18/deep-dive-on-regularized-adjusted-plus-minus-ii-basic-application-to-2017-nba-data-with-r/
-- How well does RAPM improve on APM?
-
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
     - Dropout: subtract out teams that no-showed the match or played exactly 0 offense
