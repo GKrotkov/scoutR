@@ -23,8 +23,6 @@
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
     - Dropout: subtract out teams that no-showed the match or played exactly 0 offense
-- Should we consider linear regression with an intercept as a more insightful measure?
-    - When I try linear regression with a free intercept parameter, I get one of the coefficients as NA because the problem is overdetermined. How does basketball/hockey APM solve this issue?
 - Typical week 1 winning scores as a percentage of theoretical max score; is there a consistent pattern?
     - Goal is to help provide more principled insight one day one of build season
 - From Andy: "Is there, like, a typical saturation of teams that population centers hit before capping out or does it look different place to place?"
