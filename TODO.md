@@ -7,7 +7,11 @@
 # Bugs
 - OPR calculated by linear regression is different from TBA's OPR for the events: 2022chcmp, 2022iscmp, 2022micmp3
     - All of these are district championships in 2022.
+<<<<<<< HEAD
     - `mean(abs(c(chcmp$blue_score - chcmp$red_score)))` does not get the same result as we observe in the "Insights" tab for the average win margin
+=======
+    - For each of those, the mean margin (`abs(iscmp$red_score - iscmp$blue_score)`) does not match the margin as calculated by TBA Insights
+>>>>>>> c32c2704a411513fd4fa9e6c06aeb580dfb66c2a
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
@@ -20,13 +24,14 @@
     - Could we use a penalty term like lambda to stabilize OPR early, so you can use it effectively with less data?
 - Could we compute the optimal lambda as a function of matches/team?
 - How can we combine the optimzation results from multiple different events? (both for lambda and alpha)
+<<<<<<< HEAD
 - Quang & Ron's code for RAPM: https://ryurko.github.io/cmu_score_preprints/basketball/nba-rapm.html
+=======
+>>>>>>> c32c2704a411513fd4fa9e6c06aeb580dfb66c2a
 
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
     - Dropout: subtract out teams that no-showed the match or played exactly 0 offense
-- Should we consider linear regression with an intercept as a more insightful measure?
-    - When I try linear regression with a free intercept parameter, I get one of the coefficients as NA because the problem is overdetermined. How does basketball/hockey APM solve this issue?
 - Typical week 1 winning scores as a percentage of theoretical max score; is there a consistent pattern?
     - Goal is to help provide more principled insight one day one of build season
 - From Andy: "Is there, like, a typical saturation of teams that population centers hit before capping out or does it look different place to place?"

@@ -10,6 +10,42 @@ format: html
 library(devtools); load_all()
 ```
 
+# WTF is up with 2022iscmp, 2022chcmp, and 2022micmp3?
+
+```{r}
+rm(list = ls())
+iscmp <- event_matches("2022iscmp", match_type = "qual")
+chcmp <- event_matches("2022chcmp", match_type = "qual")
+aptiv <- event_matches("2022micmp3", match_type = "qual")
+```
+
+Looking at this event report, none of these match what `TBA Insights` shows (they are pretty close, usually within 0.5 - however the problems are more pronounced for APTIV.)
+
+```{r}
+event_report <- function(evnt, label){
+    margin <- abs(evnt$red_score - evnt$blue_score)
+    winning_score <- pmax(evnt$red_score, evnt$blue_score)
+    scores <- c(evnt$red_score, evnt$blue_score)
+    cat("For the", label, "event, the data shows:\n", 
+        "Average score -", mean(scores), "\n", 
+        "Average winning score -", mean(winning_score), "\n", 
+        "Average winning margin -", mean(margin), "\n")
+}
+
+event_report(iscmp, "Israel DCMP")
+event_report(chcmp, "CHS DCMP")
+event_report(aptiv, "Aptiv Division")
+```
+
+Let's take a look at APTIV specifically since the disagreement is the most pronounced there. 
+
+```{r}
+margin <- abs(aptiv$red_score - aptiv$blue_score)
+winning_score <- pmax(aptiv$red_score, aptiv$blue_score)
+```
+
+Manual inspection of the scores doesn't reveal a difference between the scores listed on TBA and the scores output by the API.
+
 # Double Harmonies?
 
 ```{r}
