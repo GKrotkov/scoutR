@@ -7,6 +7,7 @@
 # Bugs
 - OPR calculated by linear regression is different from TBA's OPR for the events: 2022chcmp, 2022iscmp, 2022micmp3
     - All of these are district championships in 2022.
+    - `mean(abs(c(chcmp$blue_score - chcmp$red_score)))` does not get the same result as we observe in the "Insights" tab for the average win margin
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
@@ -19,11 +20,7 @@
     - Could we use a penalty term like lambda to stabilize OPR early, so you can use it effectively with less data?
 - Could we compute the optimal lambda as a function of matches/team?
 - How can we combine the optimzation results from multiple different events? (both for lambda and alpha)
-
-# Questions for CMSAC
-- How does basketball APM compute the regression? Do they use a constant term? Does that introduce problems with the rank of the matrix?
-    - Judging by this, they fit with an intercept. https://squared2020.com/2017/09/18/deep-dive-on-regularized-adjusted-plus-minus-ii-basic-application-to-2017-nba-data-with-r/
-- How well does RAPM improve on APM?
+- Quang & Ron's code for RAPM: https://ryurko.github.io/cmu_score_preprints/basketball/nba-rapm.html
 
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
