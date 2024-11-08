@@ -75,6 +75,9 @@ Notably - without a constant, LASSO is unable to push many coefficients to exact
 
 # Elastic Net Regression
 
+Use elastic net tuning as shown here: 
+https://daviddalpiaz.github.io/r4sl/elastic-net.html
+
 ```{r}
 
 ```

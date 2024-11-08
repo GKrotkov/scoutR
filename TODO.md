@@ -7,6 +7,7 @@
 # Bugs
 - OPR calculated by linear regression is different from TBA's OPR for the events: 2022chcmp, 2022iscmp, 2022micmp3
     - All of these are district championships in 2022.
+    - For each of those, the mean margin (`abs(iscmp$red_score - iscmp$blue_score)`) does not match the margin as calculated by TBA Insights
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
