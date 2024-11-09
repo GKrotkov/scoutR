@@ -37,7 +37,9 @@ rm(list = ls())
 library(devtools)
 library(glmnet)
 load_all()
+```
 
+```{r}
 match_df <- event_matches("2023mil", match_type = "qual")
 design <- data.matrix(lineup_design_matrix(match_df))
 # could adjust this response to win margin; would be answering a different
@@ -73,7 +75,63 @@ results <- cbind(
 
 Notably - without a constant, LASSO is unable to push many coefficients to exactly 0! It basically becomes very similar to ridge regression.
 
-# Elastic Net Regression
+## Ridge Regression for a given event
+
+```{r}
+opt_lambda <- function(event_code, step = 0.1){
+    match_df <- event_matches(event_code, match_type = "qual")
+    if (is.null(match_df)) return(NA)
+    design <- data.matrix(lineup_design_matrix(match_df))
+    response <- c(match_df$blue_score, match_df$red_score)
+    # lambdas to consider
+    grid <- 10 ^ seq(-2, 2, by = step)
+    ridge_cv <- cv.glmnet(
+        design, response, alpha = 0, lambda = grid, intercept = FALSE
+    )
+    return(ridge_cv$lambda.min)
+}
+
+cv_elasticnet <- function(event_code, lambda_step = 0.1, alpha_step = 0.05){
+    match_df <- event_matches(event_code, match_type = "qual")
+    if (is.null(match_df)) return(NA)
+    design <- data.matrix(lineup_design_matrix(match_df))
+    response <- c(match_df$blue_score, match_df$red_score)
+    # setup CV grid
+    lambda_grid <- 10 ^ seq(-2, 2, by = lambda_step)
+    alpha_grid <- seq(0, 1, by = alpha_step)
+    cv_results <- matrix(
+        NA, nrow = length(alpha_grid), ncol = length(lambda_grid)
+    )
+    colnames(cv_results) <- paste("Lambda:", lambda_grid)
+    rownames(cv_results) <- paste("Alpha:", alpha_grid)
+    
+    for (i in seq_along(alpha_grid)){
+        # nfolds = nrow(match_df), grouped = FALSE gives LOOCV
+        ridge_cv <- cv.glmnet(
+            design, response, alpha = alpha_grid[i], lambda = lambda_grid, 
+            intercept = FALSE, nfolds = nrow(match_df), grouped = FALSE
+        )
+        # CVM retrieves the cross validated MSEs
+        cv_results[i, ] <- ridge_cv$cvm
+    }
+    return(cv_results)
+}
+
+events <- c(
+    year_events(2022, official = TRUE, keys = TRUE), 
+    year_events(2023, official = TRUE, keys = TRUE),
+    year_events(2024, official = TRUE, keys = TRUE)
+)
+
+cv_results <- list()
+
+for (i in seq_along(events)){
+    cv_results <- cv_elasticnet(events[i])
+}
+
+```
+
+## Elastic Net Regression
 
 Use elastic net tuning as shown here: 
 https://daviddalpiaz.github.io/r4sl/elastic-net.html
