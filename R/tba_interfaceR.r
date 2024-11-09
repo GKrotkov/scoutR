@@ -402,6 +402,12 @@ event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
 #' year_events(year = 2014, simple = TRUE)
 year_events <- function(
         year = YEAR, official = FALSE, simple = FALSE, keys = FALSE){
+    # keys needs to override official because the official check requires
+    # information from the whole events object
+    if (keys & official){
+        df <- year_events(year, official = TRUE, simple = simple, keys = FALSE)
+        return(df$key)
+    }
     data <- read_year_events(year, simple, keys)
 
     if (keys) return(data)
