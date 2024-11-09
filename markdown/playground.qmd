@@ -46,6 +46,43 @@ winning_score <- pmax(aptiv$red_score, aptiv$blue_score)
 
 Manual inspection of the scores doesn't reveal a difference between the scores listed on TBA and the scores output by the API.
 
+```{r}
+library(rvest)
+
+report_from_tbl <- function(tbl){
+    red_scores <- tbl %>%
+        html_elements(".redScore span") %>%
+        html_text() %>%
+        as.numeric()
+    red_scores <- red_scores[seq(1, length(red_scores), by = 2)]
+    
+    blue_scores <- tbl %>%
+        html_elements(".blueScore span") %>%
+        html_text() %>%
+        as.numeric()
+    blue_scores <- blue_scores[seq(1, length(blue_scores), by = 2)]
+
+    cat("Avg:", mean(c(red_scores, blue_scores)), "\n", 
+        "Winning Score Avg:", mean(pmax(red_scores, blue_scores)), "\n",
+        "Margin:", mean(abs(red_scores - blue_scores)), "\n")
+}
+
+discrepancy_report <- function(url){
+    html <- read_html(url)
+    
+    cat("\nQUALS:\n")
+    report_from_tbl(html_elements(html, "#qual-match-table"))
+
+    cat("\nPLAYOFFS\n")
+    report_from_tbl(html_elements(html, "#elim-match-table"))
+}
+
+discrepancy_report("https://www.thebluealliance.com/event/2022chcmp#results")
+discrepancy_report("https://www.thebluealliance.com/event/2022iscmp#results")
+discrepancy_report("https://www.thebluealliance.com/event/2022micmp3#results")
+
+```
+
 # Double Harmonies?
 
 ```{r}
