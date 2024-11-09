@@ -1,4 +1,5 @@
 man/* linguist-documentation
 markdown/opr_weighting/wls_row_replication_files/libs/quarto-html/quarto.js linguist-generated
-markdown/opr_weighting/hyperparameter_tuning_files/libs/quarto-html/quarto.js linguist-generated
-markdown/opr_weighting/opr_as_linear_regression_files/libs/quarto-html/quarto.js linguist-generated
+markdown/opr_weighting/hyperparameter_tuning_files/* linguist-generated
+markdown/opr_weighting/opr_as_linear_regression_files/* linguist-generated
+markdown/opr_weighting/wls_row_replication_files linguist-generated
