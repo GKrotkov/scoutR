@@ -18,6 +18,7 @@
     - Also: elasticnet regression, optimizing over both lambda (the penalty value) and alpha (the mixing parameter)
     - Could we use a penalty term like lambda to stabilize OPR early, so you can use it effectively with less data?
 - Could we compute the optimal lambda as a function of matches/team?
+- Could we regularize, but instead of biasing towards 0 (like with Ridge) bias towards a good prior, like the average of their previous years' performances?
 - How can we combine the optimzation results from multiple different events? (both for lambda and alpha)
 - Quang & Ron's code for RAPM: https://ryurko.github.io/cmu_score_preprints/basketball/nba-rapm.html
 
@@ -30,9 +31,6 @@
 
 ## Long term:
 - Generic, automated data validation via `tba_validatoR`
-- Team comparison generator (based on award history, performance over time, etc.)
-    - Idea is to make a big dataframe, run PCA on it, and then use that to evaluate "distances" between teams.
-    - Data to include: yearly EPA, # of competitions each year, 
 - Team History tracker
     - Who have you played with the most? Played against the most?
     - Number of matches you've played together divided by the expected number?

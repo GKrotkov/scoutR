@@ -39,43 +39,7 @@ library(glmnet)
 load_all()
 ```
 
-```{r}
-match_df <- event_matches("2023mil", match_type = "qual")
-design <- data.matrix(lineup_design_matrix(match_df))
-# could adjust this response to win margin; would be answering a different
-# question.
-response <- c(match_df$blue_score, match_df$red_score)
-
-# grid of lambdas to consider
-lambda_seq <- 10 ^ seq(-2, 2, by = .05)
-
-# Using cross validation glmnet
-ridge_cv <- cv.glmnet(design, response, alpha = 0, lambda = lambda_seq)
-# refit the ridge using the min-MSE lambda
-best_ridge <- glmnet(design, response, alpha = 0, lambda = ridge_cv$lambda.min)
-
-# Try a LASSO - could LASSO be used to kinda "auto-tier" teams?
-lasso_cv <- cv.glmnet(design, response, alpha = 1, lambda = lambda_seq)
-best_lasso <- glmnet(design, response, alpha = 1, lambda = lasso_cv$lambda.min)
-
-# refitting ridge & LASSO with the min-MSE lambda but insisting on regression 
-# through the origin
-origin_ridge <- glmnet(
-    design, response, alpa = 0, lambda = ridge_cv$lambda.min, intercept = FALSE
-)
-
-origin_lasso <- glmnet(
-    design, response, alpha = 1, lambda = lasso_cv$lambda.min, intercept = FALSE
-)
-
-results <- cbind(
-    coef(best_ridge), coef(best_lasso), coef(origin_ridge), coef(origin_lasso)
-)
-```
-
-Notably - without a constant, LASSO is unable to push many coefficients to exactly 0! It basically becomes very similar to ridge regression.
-
-## Ridge Regression for a given event
+## Elastic Net Regression CV Optimization
 
 ```{r}
 opt_lambda <- function(event_code, step = 0.1){
@@ -98,6 +62,7 @@ cv_elasticnet <- function(event_code, lambda_step = 0.1, alpha_step = 0.05){
     response <- c(match_df$blue_score, match_df$red_score)
     # setup CV grid
     lambda_grid <- 10 ^ seq(-2, 2, by = lambda_step)
+    lambda_grid <- c(0, lambda_grid) # lambda = 0 --> SLR, as control
     alpha_grid <- seq(0, 1, by = alpha_step)
     cv_results <- matrix(
         NA, nrow = length(alpha_grid), ncol = length(lambda_grid)
@@ -126,17 +91,48 @@ events <- c(
 cv_results <- list()
 
 for (i in seq_along(events)){
-    cv_results <- cv_elasticnet(events[i])
+    cv_results[[i]] <- cv_elasticnet(events[i])
 }
 
+names(cv_results) <- events
+
+save(cv_results, file = "data/elasticnet_cv.rda")
+
 ```
 
-## Elastic Net Regression
+## BRMS with Statbotics as a prior
 
-Use elastic net tuning as shown here: 
-https://daviddalpiaz.github.io/r4sl/elastic-net.html
+Can we use a team's Statbotics EPA as a prior?
 
 ```{r}
+library(brms)
+event_key <- "2024new"
+std_dev <- 5 # how much should we expect a normal team's EPA to shift?
 
+match_df <- event_matches(event_key, match_type = "qual")
+teams <- id2int(event_teams(event_key, keys = TRUE))
+sb_data <- lapply(teams, read_team_event_statbotics, event_key)
+pre_epas <- sapply(sb_data, function(sb){sb$epa_start})
+coef_names <- paste0("frc", sapply(sb_data, function(sb){sb$team}))
+
+priors <- do.call(c, lapply(1:length(coef_names), function(i) {
+    set_prior(paste0("normal(", pre_epas[i], ", ", std_dev, ")"), 
+              class = "b", coef = coef_names[i])
+}))
+
+
+design <- lineup_design_matrix(match_df)
+design$response <- c(match_df$blue_score, match_df$red_score)
+
+model <- brm(
+    formula = response ~ 0 + .,
+    data = design,
+    prior = priors,
+    family = gaussian()
+)
+
+preds <- predict(model)
+mse_brms <- mean((preds[, "Estimate"] - design$response) ^ 2)
+lr_fit <- fit_event_lr(event_key)
+mse_lr <- mean((predict(lr_fit) - design$response) ^ 2)
 ```
-
