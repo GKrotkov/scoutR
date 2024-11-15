@@ -3,33 +3,6 @@ title: "OPR GLM"
 format: html
 ---
 
-Key Question: Can we improve OPR's fit to the data by using a GLM? 
-
-I would expect 2018 to be the best candidate year for this method, so we'll test using that at the beginning to see if we can get a meaningful enough improvement to continue investigating. 
-
-```{r}
-rm(list = ls())
-library(devtools)
-load_all()
-
-gpr <- event_matches("2024paca", match_type = "qual")
-load("../data/opr_binvar.rda")
-
-linear_fit <- fit_lineup_lm(
-    gpr, 
-    list(red = gpr$red_score, blue = gpr$blue_score), 
-    w_bins
-)
-
-plot(linear_fit, which = 1:6)
-```
-
-```{r}
-design <- lineup_design_matrix(gpr)
-response <- c(gpr$blue_score, gpr$red_score)
-rlm_fit <- rlm(design, response)
-```
-
 # Regularization
 
 ```{r}
