@@ -3,10 +3,9 @@
 ## Periodic
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
-
-# Bugs
-- OPR calculated by linear regression is different from TBA's OPR for the events: 2022chcmp, 2022iscmp, 2022micmp3
-    - All of these are district championships in 2022.
+ 
+# Package Management
+- Switch from `renv` to `groundhog`
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
