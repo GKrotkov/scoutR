@@ -5,7 +5,7 @@
 - document() to call roxygen documentation handlers
  
 # Package Management
-- Switch from `renv` to `groundhog`
+- Switch from `renv` to `groundhog`; use DAI-style like "prep" files for "dependencies.R"
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
