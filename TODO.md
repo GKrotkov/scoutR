@@ -39,3 +39,4 @@
 - Local EPA calculation
 - Transition to frc-events api instead of using the tba API? 
 - ftc-events api functions ("ftc_readR" series)
+- Rebrand to something like "frc_scoutR"?
