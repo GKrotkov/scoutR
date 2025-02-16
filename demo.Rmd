@@ -27,7 +27,7 @@ my_auth_key <- scan("tba_auth_key.txt", what = character())
 
 library(devtools)
 load_all()
-initialize_tbaR(my_auth_key)
+initialize_scoutR(my_auth_key)
 ```
 
 Now that you have run `initialize_tbaR()`, you have access to all of tbaR's help files. For any function in tbaR, you can call `help(fxn_of_interest)` and get access to its documentation. For example, try running `help(event_matches)`. 
