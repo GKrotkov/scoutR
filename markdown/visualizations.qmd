@@ -252,3 +252,43 @@ best_fit <- glmnet(design, response, alpha = 0, lambda = best_lambda)
 
 coef(best_fit)
 ```
+
+# Crash course in tidy visualization
+
+```{r}
+library(tidyverse)
+library(plotly)
+mrcmp <- read_csv("../../data/2023fmacmp.csv")
+
+blair_red <- "#a70009"
+
+blair_theme <- theme_bw() + 
+    theme(text = element_text(family = ""))
+
+# what is the distribution of median PPG? 
+# geoms 
+#     - geom_density (parameters: adjust, bw) [adjust is multiplicative]
+#     - geom_histogram (pick bins/binwidth)
+#     - geom_text
+#     - geom_bar
+#     - geom_violin and geom_boxplot
+# learn how to use labs()
+# learn how to attach themes
+ggplot(mrcmp, aes(x = median_ppg)) + 
+    #geom_histogram(bins = 12, fill = blair_red, color = "black") + 
+    geom_density(fill = blair_red, bw = 3) + 
+    labs(title = "2023 Mid-Atlantic District Championship Scoring", 
+         x = "Median Points Per Game", 
+         y = "Density") + 
+    blair_theme
+
+plt <- ggplot(mrcmp, aes(x = median_auto_pts, y = median_pts_tele)) + 
+    geom_text(aes(label = team), alpha = 0.6) + 
+    labs(title = "2023 Mid-Atlantic District Championship Scoring", 
+         x = "Median Auto Points Per Game", 
+         y = "Median Teleop Points Per Game")
+
+ggplotly(plt)
+
+```
+

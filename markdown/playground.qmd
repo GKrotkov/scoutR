@@ -240,3 +240,4 @@ hist(ras$yrs_to_impact,
 hist(ras$yrs_to_ei, 
      main = "Years between RAS and EI", xlab = "Years", ylab = "# of Teams")
 ```
+
