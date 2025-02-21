@@ -1,0 +1,72 @@
+---
+title: "District Points Modelling"
+format: html
+---
+
+```{r}
+devtools::load_all()
+```
+
+# Modeling District Point Threshold - DCMP
+
+I'll start with predicting the cutoff to qualify for DCMP, since that is a more stable problem than CMP qualification. 
+
+What are the key variables? 
+- number of teams that competed in the district
+- number of slots at the DCMP
+- 
+
+```{r}
+# TBA first started reporting CMP qualification in 2018
+district_keys <- c(
+    "2019tx", paste0(2022:2024, "fit"), paste0(2018:2024, "fim"), 
+    paste0(2018:2024, "chs"), paste0(2018:2024, "isr"), 
+    paste0(2018:2024, "fma"), paste0(2018:2024, "fnc"), 
+    paste0(2018:2024, "ne"), paste0(2018:2024, "ont"), 
+    paste0(2018:2024, "pnw"), paste0(2018:2024, "pch"), 
+    paste0(2018:2024, "fin")
+)
+
+# remove 2020 and 2021 bc COVID
+district_keys <- district_keys[-grep("(2020|2021)", district_keys)]
+
+rankings <- lapply(district_keys, district_rankings, 
+                   separate_events = TRUE, event_breakdown = TRUE)
+names(rankings) <- district_keys
+
+district_size <- sapply(
+    rankings, 
+    function(rankings){ 
+        # count a team only if they showed up to at least one event
+        sum(rankings$point_total > rankings$rookie_bonus, na.rm = TRUE)
+    }
+)
+
+# @TODO debug - look at 2022ont???
+dcmp_size <- sapply(
+    rankings, 
+    function(rankings){
+        # uses event_3 because that's the district championship
+        # uses qual points because teams can score district points without
+        # attending DCMP via EI or RAS
+        sum(rankings$qual_points_event_3 > 0, na.rm = TRUE)
+    }
+)
+
+predcmp_pts <- lapply(
+    rankings, function(rankings){
+        predcmp_pts <- rankings$total_event_1 + rankings$total_event_2
+        names(predcmp_pts) <- rankings$team_key
+        return(predcmp_pts)
+    }
+)
+
+analysis <- data.frame(
+    key = district_keys, size = district_size, dcmp_size = dcmp_size
+)
+
+```
+
+@TODO (once modelling CMP cutoff) need to account for the overall size of the championship in each given year
+
+Maybe it would be easier to just try to model it based on percentile points?

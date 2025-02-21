@@ -151,52 +151,6 @@ ggplot(wow, aes(x = as.character(year), y = count, fill = state_prov)) +
 
 ```
 
-# Modeling District Point Threshold
-
-We'll start with just CMP qualification. I'm choosing to subset to 2018 and later because that's when TBA starts reporting CMP qualification.
-
-@TODO need to account for the overall size of the championship in each given year
-
-Maybe it would be easier to just try to model it based on percentile points?
-
-```{r}
-# TBA first started reporting CMP qualification in 2018
-district_keys <- c(
-    "2019tx", paste0(2022:2024, "fit"), paste0(2018:2024, "fim"), 
-    paste0(2018:2024, "chs"), paste0(2018:2024, "isr"), 
-    paste0(2018:2024, "fma"), paste0(2018:2024, "fnc"), 
-    paste0(2018:2024, "ne"), paste0(2018:2024, "ont"), 
-    paste0(2018:2024, "pnw"), paste0(2018:2024, "pch"), 
-    paste0(2018:2024, "fin")
-)
-
-# remove 2020 and 2021 bc COVID
-district_keys <- district_keys[-grep("(2020|2021)", district_keys)]
-
-rankings <- lapply(district_keys, district_rankings, 
-                   separate_events = TRUE, event_breakdown = TRUE)
-names(rankings) <- district_keys
-
-district_size <- sapply(
-    rankings, 
-    function(rankings){ 
-        sum(rankings$point_total > 0, na.rm = TRUE)
-    }
-)
-district_df <- data.frame(key = district_keys, size = district_size)
-names(district_size) <- district_keys
-
-predcmp_pts <- lapply(
-    rankings, function(rankings){
-        predcmp_pts <- rankings$total_event_1 + rankings$total_event_2
-        names(predcmp_pts) <- rankings$team_key
-        return(predcmp_pts)
-    }
-)
-
-
-```
-
 # RAS Sustainability
 
 teams who won RAS
