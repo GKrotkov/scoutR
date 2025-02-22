@@ -20,8 +20,9 @@ What are the key variables?
 - cutoff
 
 ```{r}
-# TBA first started reporting CMP qualification in 2018
-district_keys <- c(
+# in 2018 they changed the format of the data from the FIRST database, so we'll
+# start there.
+dkeys <- c(
     "2019tx", paste0(2022:2024, "fit"), paste0(2018:2024, "fim"), 
     paste0(2018:2024, "chs"), paste0(2018:2024, "isr"), 
     paste0(2018:2024, "fma"), paste0(2018:2024, "fnc"), 
@@ -31,11 +32,11 @@ district_keys <- c(
 )
 
 # remove 2020 and 2021 bc COVID
-district_keys <- district_keys[-grep("(2020|2021)", district_keys)]
+dkeys <- dkeys[-grep("(2020|2021)", dkeys)]
 
-rankings <- lapply(district_keys, district_rankings, 
+rankings <- lapply(dkeys, district_rankings, 
                    separate_events = TRUE, event_breakdown = TRUE)
-names(rankings) <- district_keys
+names(rankings) <- dkeys
 
 district_size <- sapply(
     rankings, 
@@ -83,10 +84,17 @@ for (i in seq_along(predcmp_pts)){
     dcmp_cutoffs <- c(dcmp_cutoffs, predcmp_pts[[i]][dcmp_size[i]])
 }
 
+# define dcmp "selectivity" as |district| / |dcmp| so that higher numbers
+# mean a more selective DCMP
 analysis <- data.frame(
-    key = district_keys, district_size = district_size, dcmp_size = dcmp_size, 
+    key = dkeys, year = as.numeric(substr(dkeys, 1, 4)), 
+    district = substr(dkeys, 5, nchar(dkeys)),
+    district_size = district_size, dcmp_size = dcmp_size, 
     dcmp_cutoff = dcmp_cutoffs, dcmp_selectivity = district_size / dcmp_size
 )
+
+# handle renaming
+renames <- c(tx = "fit", mar = "fma")
 ```
 
 ## Analysis
@@ -114,7 +122,27 @@ plot(fit, which = 1:6)
 summary(fit)
 ```
 
-# CMP Qualification Modelling
-@TODO (once modelling CMP cutoff) need to account for the overall size of the championship in each given year
+## Testing
 
-Maybe it would be easier to just try to model it based on percentile points?
+Let's test on some data we didn't include in the training set! That is, districts before 2018. 
+
+```{r}
+dkeys_pre2018 <- c(
+    paste0(2009:2017, "fim"), paste0(2012:2017, "mar"), 
+    paste0(2013:2017, "ne"), paste0(2014:2017, "pnw"), 
+    paste0(2015:2017, "fin", paste0(2016:2017, "chs")), 
+    paste0(2016:2017, "pch"), paste0(2016:2017, "fnc"), 
+    "2017isr", "2017ont"
+)
+
+# oh man never mind the data format changes makes this really annoying.
+# I did manually check it for Michigan and Mid-Atlantic. Overall was pretty 
+# good (average error around 5), but there were 2 years with 8ish point error
+# which is a little rough.
+```
+
+
+# CMP Qualification Modelling
+@TODO (once modelling CMP cutoff) need to account for the overall size of the championship in each given year. 
+
+Actually wait, do we? Or just the number of slots that district gets?
