@@ -195,3 +195,21 @@ hist(ras$yrs_to_ei,
      main = "Years between RAS and EI", xlab = "Years", ylab = "# of Teams")
 ```
 
+# Impact DCMP Streaks
+
+```{r}
+rm(list = ls())
+devtools::load_all()
+all_team_awards <- readRDS("~/Desktop/Robotics/Data Science/scoutR/data/awards/all_team_awards.rds")
+
+get_dcmp_key <- function(dkey){
+    district_events(dkey)$event_code
+}
+
+# get a list of all dcmp event keys
+for (yr in 2015:2024){
+    dkeys <- districts(yr)$key
+    
+}
+```
+
