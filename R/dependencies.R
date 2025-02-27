@@ -5,8 +5,13 @@
 #' @import rvest
 #' @import data.table
 #' @import dplyr
+#' @import tidyr
+#' @import readr
+#' @importFrom pracma Lcm
 #' @importFrom httr content
 #' @importFrom httr GET
+#' @importFrom here here
+#' @importFrom withr with_dir
 
 packages <- c("devtools", "jsonlite", "httr", "sys", "stringr", "rvest",
               "MASS", "tidyverse", "data.table", "roxygen2",
