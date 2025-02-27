@@ -374,12 +374,14 @@ count_team_matches <- function(matches){
 #' Applies the get_robot_field_df function to all fields provided and returns a
 #' dataframe with all the resulting data
 #' @param matches dataframe with matches on the rows
-#' @param fields vector of name of the fields you want pulled out
+#' @param fields vector of name of the fields you want pulled out. If NULL,
+#' scoutR will guess with id_robot_fields()
 #' @param schema function defining schema for column names
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 #'  if the content of a given field has complicated content not fit for a vector
 #' @details This assumes that all the fields considered are categorical - it
 #' will treat numeric variables as categorical.
+#' @export
 #' @examples
 #' mil23 <- event_matches("2023mil")
 #' fields <- id_robot_fields(mil23)

@@ -33,6 +33,7 @@ warns <- function(){
 #' @param simple (bool) simplify object?
 #' @author Gabriel Krotkov
 #' @return Team object in list format
+#' @export
 team <- function(key, simple = FALSE){
     return(read_team(key, simple))
 }
@@ -48,6 +49,7 @@ team <- function(key, simple = FALSE){
 #' @param simple (bool) simplify return objects?
 #' @param keys (bool) return keys only?
 #' @return tidy tibble of teams
+#' @export
 #' @examples
 #' teams(0)
 #' teams(4)
@@ -75,6 +77,7 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
 #' @return tidy tibble of team matches, or vector if keys = TRUE
 #' @author Gabriel Krotkov
+#' @export
 #' @examples
 #' team_matches(1712, keys = TRUE)
 #' team_matches(1712, year = 2016)
@@ -108,6 +111,7 @@ team_matches <- function(
 #' @param simple (bool) simplify event objects?
 #' @param keys (bool) return keys only?
 #' @return tidy tibble of event objects, or vector if keys = TRUE
+#' @export
 #' @examples
 #' team_events(1712, year = 2017)
 #' team_events("1712", year = 2018, official = TRUE)
@@ -138,6 +142,7 @@ team_events <- function(
 #' @param event event of interest
 #' @param recipients (bool) break out recipients column?
 #' @return tidy tibble of award history
+#' @export
 #' @examples
 #' team_awards("1712", year = 2016)
 #' team_awards("frc1712", year = 2010, recipients = TRUE)
@@ -159,6 +164,7 @@ team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE){
 #' by making a tba_readR and tba_tidyR version.
 #' @param n team number (either as number or string)
 #' @return vector of years
+#' @export
 #' @examples
 #' team_participation_years(1712)
 #' team_participation_years("3504")
@@ -179,6 +185,7 @@ team_participation_years <- function(n){
 #' @param key TBA legal event key
 #' @param simple (bool) simplify event objects?
 #' @return tidy tibble of one row with an event object
+#' @export
 #' @examples
 #' event("2022txirv")
 #' event("2016pahat", simple = TRUE)
@@ -195,6 +202,7 @@ event <- function(key, simple = FALSE){
 #' @param simple (bool) simplify event objects?
 #' @param keys (bool) get keys only?
 #' @return tidy tibble of event objects, or vector if keys = TRUE
+#' @export
 #' @examples
 #' events(2019)
 #' events(2010, official = TRUE)
@@ -229,6 +237,7 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' @param simple (bool) simplify match object?
 #' @param keys (bool) get keys only?
 #' @return Tibble of matches from the given event.
+#' @export
 #' @examples
 #' event_matches("2015paphi", match_type = "playoff")
 #' event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
@@ -269,6 +278,7 @@ event_matches <- function(
 #' @param key TBA legal event key
 #' @param unpack_picks (bool) break out alliance column?
 #' @return Tidy tibble of event alliances
+#' @export
 #' @examples
 #' event_alliances("2016hop", unpack_picks = TRUE)
 #' event_alliances("2015paphi")
@@ -290,6 +300,7 @@ event_alliances <- function(key, unpack_picks = TRUE){
 #' @details We assume that sublists have the same number and names for fields.
 #' That is, quals and playoffs will have the same length of list, and have
 #' the same fields filled out in both lists, in the same order.
+#' @export
 event_insights <- function(key, insight_as_col = FALSE){
     data <- tidy_insights(read_event_insights(key), insight_as_col)
     if(insight_as_col){
@@ -310,6 +321,7 @@ event_insights <- function(key, insight_as_col = FALSE){
 #' Creates a single insights dataframe for a vector of event keys
 #' @param keys vector or list of TBA event keys (ex. "2023txfor")
 #' @param insight_as_col (bool)
+#' @export
 multievent_insights <- function(keys, insight_as_col = FALSE){
     lst <- lapply(as.list(keys), event_insights, insight_as_col)
     data <- bind_rows(lst)
@@ -322,6 +334,7 @@ multievent_insights <- function(keys, insight_as_col = FALSE){
 #' @author Gabriel Krotkov
 #' @param key TBA legal event key
 #' @return tidy tibble of event OPRs with columns: opr, dpr, ccwm, team
+#' @export
 #' @examples
 #' event_oprs("2015paphi")
 event_oprs <- function(key){
@@ -335,6 +348,7 @@ event_oprs <- function(key){
 #' Wrapper function for read_event_coprs and tidy_event_coprs
 #' @param key (string) event key
 #' @author Dr. Holt Oliver
+#' @export
 event_coprs <- function(key){
     data <- read_event_coprs(key)
     return(tidy_coprs(data))
@@ -347,6 +361,7 @@ event_coprs <- function(key){
 #' @param key TBA legal event key
 #' @param trim (bool) remove data unrelated to game analysis?
 #' @return tidy tibble of event rankings
+#' @export
 #' @examples
 #' event_rankings("2016hop")
 event_rankings <- function(key, trim = TRUE){
@@ -362,6 +377,7 @@ event_rankings <- function(key, trim = TRUE){
 #' @param key TBA legal event key
 #' @param tiebreakers (bool) unpack tiebreakers?
 #' @return tidy tibble of district points?
+#' @export
 #' @examples
 #' event_district_points("2016mrcmp", tiebreakers = TRUE)
 #' event_district_points("2015padre")
@@ -379,6 +395,7 @@ event_district_points <- function(key, tiebreakers = FALSE){
 #' @param statuses (bool) unpack event statuses?
 #' @param simple (bool) simplify teams objects?
 #' @param keys (bool) get keys only?
+#' @export
 #' @examples
 #' event_teams("2015padre", keys = TRUE)
 event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
@@ -396,6 +413,7 @@ event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
 #' @param simple (bool) simplify event objects?
 #' @param keys (bool) get keys only?
 #' @return tidy tibble of events, or vector if keys = TRUE
+#' @export
 #' @examples
 #' year_events(year = 2022, keys = TRUE)
 #' year_events(year = 2018)
@@ -423,6 +441,7 @@ year_events <- function(
 #' @param key TBA legal event key
 #' @param recipients (bool) unpack recipients column?
 #' @return tidy tibble of event awards
+#' @export
 #' @examples
 #' event_awards("2015padre")
 #' event_awards("2010ein", recipients = TRUE)
@@ -444,6 +463,7 @@ event_awards <- function(key, recipients = FALSE){
 #' @author Gabriel Krotkov
 #' @param year (int) year of interest
 #' @return tidy tibble of districts in the given year
+#' @export
 #' @examples
 #' districts(2012)
 #' districts(2023)
@@ -459,6 +479,7 @@ districts <- function(year = YEAR){
 #' @param simple (bool) simplify event objects?
 #' @param keys (bool) return keys only?
 #' @return tidy tibble of district events, or vector if keys = TRUE
+#' @export
 #' @examples
 #' district_events("2016mar")
 #' district_events("2018fma", keys = TRUE)
@@ -482,6 +503,7 @@ district_events <- function(district_key, simple = FALSE, keys = FALSE){
 #' @param simple (bool) simplify team objects?
 #' @param keys (bool) get keys only?
 #' @return Tidy tibble of teams objects in a given district (or vector if keys)
+#' @export
 #' @examples
 #' district_teams("2022fit", keys = TRUE)
 #' district_teams("2014mar", simple = TRUE)
@@ -507,6 +529,7 @@ district_teams <- function(district_key, simple = FALSE, keys = FALSE){
 #' @param separate_events (bool) split up team performance across each event?
 #' @param event_breakdown (bool) breakdown event performance?
 #' @return tidy tibble of event rankings
+#' @export
 #' @examples
 #' district_rankings("2016mar", separate_events = TRUE, event_breakdown = TRUE)
 #' district_rankings("2022fit")
@@ -529,6 +552,7 @@ district_rankings <- function(
 #' @author Gabriel Krotkov
 #' @param event_key TBA legal event key
 #' @return No return value, directly writes to tbasync.rda
+#' @export
 #' @examples
 #' tba_sync("2022txirv")
 #' tba_sync("2017pawch")
@@ -549,6 +573,7 @@ tba_sync <- function(event_key){
 #' @author Gabriel Krotkov
 #' @return Returns list with items "team_list", "rankings", "oprs", "alliances",
 #' "match_schedule".
+#' @export
 #' @examples
 #' load_sync()
 load_sync <- function(){
