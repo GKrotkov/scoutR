@@ -2,9 +2,15 @@
 #### Dependencies ####
 ######################
 
+#' @import rvest
+#' @import data.table
+#' @import dplyr
+#' @importFrom httr content
+#' @importFrom httr GET
+
 packages <- c("devtools", "jsonlite", "httr", "sys", "stringr", "rvest",
-              "assertthat", "MASS", "tidyverse", "data.table", "roxygen2",
-              "withr", "here", "pracma", "groundhog", "renv")
+              "MASS", "tidyverse", "data.table", "roxygen2",
+              "withr", "here", "pracma", "renv")
 
 # Install missing packages
 installed_packages <- packages %in% rownames(installed.packages())

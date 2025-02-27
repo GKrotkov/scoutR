@@ -8,6 +8,8 @@
 - Rewrite the whole `demo.rmd`; it should be a QMD, and also it needs a complete revamp
     - Should be able to install with `install_github("gkrotkov/scoutR")`
     - only discuss exported functions
+- Find a better way to manage dependencies. I shouldn't be importing all of the tidyverse or all of devtools, that's absurd.
+- On scoutR initialization, should check for uninstalled packages and install them.
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)

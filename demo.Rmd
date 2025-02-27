@@ -16,7 +16,7 @@ If this is your first time using scoutR, you probably need to install some packa
 For those using a QMD file for the first time, RMD stands for "R Markdown", it is a file type that blends formattable text and chunks of R Code. To run the R code while viewing an rmd, click the green arrow on the top right corner of a code chunk.
 
 ```{r, eval = FALSE}
-install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat", 
+install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", 
                    "httr", "sys", "stringr", "roxygen2", "rvest", "data.table"))
 ```
 

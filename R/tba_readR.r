@@ -43,8 +43,9 @@ numbers_only <- function(x) !grepl("\\D", x)
 #' @examples
 #' auth("")
 auth <- function(req){
-    assert_that(!is.na(TBA_KEY), msg = "Authentication key uninitialized.
-                Run: initialize_scoutR('your_tba_auth_key').")
+    stopifnot("Authentication key uninitialized.
+              To resolve, run: initialize_scoutR('your_tba_auth_key')." =
+                  !is_na(TBA_KEY))
     return(paste(req, "?X-TBA-Auth-Key=", TBA_KEY, sep = ""))
 }
 
