@@ -94,7 +94,7 @@ get_response <- function(req, base = TBA_BASE){
 #' get_content("team/frc1712/awards")
 #' get_content("team/3504", base = STATBOTICS_BASE)
 get_content <- function(req, base = TBA_BASE){
-    return(content(get_response(req, base = base)))
+    return(httr::content(get_response(req, base = base)))
 }
 
 #' Simkeys
