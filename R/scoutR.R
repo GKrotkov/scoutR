@@ -6,6 +6,7 @@
 #'
 #' Returns a dataframe with the event's qualification match schedule
 #' @param event_code TBA-legal event key
+#' @export
 qual_schedule <- function(event_code){
     matches <- event_matches(event_code, match_type = "qual", unplayed = TRUE)
     if (is.null(matches)) return(NULL)
@@ -25,6 +26,7 @@ qual_schedule <- function(event_code){
 #' @param match_type One of "all", "qual", or "playoff"
 #' @details Assumes that names of robot-level information follow the convention:
 #' "(red/blue)_robot_(1/2/3)"
+#' @export
 #' @examples
 #' mil23_individual <- event_robot_results("2023mil", match_type = "qual")
 #' gpr24_individual <- event_robot_results("2024paca")
@@ -45,6 +47,7 @@ event_robot_results <- function(event_code, match_type = "all"){
 #' `id_robot_fields()` to get individual robot-level fields automatically.
 #' @details
 #' Checks for match duplication, which will stop execution if TRUE.
+#' @export
 #' @examples
 #' gpr24 <- event_season_history("2024paca")
 event_season_history <- function(event_code, fields = NULL){
@@ -90,6 +93,7 @@ event_season_history <- function(event_code, fields = NULL){
 #' alliances as a block, and then red alliances. We call this function the
 #' "design matrix" because it only includes the indicator variables, and not
 #' any of the responses.
+#' @export
 #' @examples
 #' matches <- event_matches("2023mil", match_type = "qual")
 #' matches <- matches[order(matches$match_number), ]
@@ -130,6 +134,7 @@ lineup_design_matrix <- function(matches){
 #' Regression should always be through the origin both for model validity (we
 #' want the matrix to have full rank) and because, unlike with basketball
 #' (R)APM, there is no home team advantage to account for.
+#' @export
 #' @examples
 #' gpr <- event_matches("2024paca", match_type = "qual")
 #' opr <- fit_lineup_lm(gpr, list(red = gpr$red_score, blue = gpr$blue_score))
@@ -174,6 +179,7 @@ fit_lineup_lm <- function(lineups, responses, w = NULL){
 #' @details Assumes that the event matches dataframe follows the convention
 #' "(red/blue)_(response)" where (response) is the type of score we are
 #' interested in computing an approximation contribution for.
+#' @export
 #' @examples
 #' fit_event_lr("2024paca")
 #' fit_event_lr("2023mil", response = "teleopGamePieceCount")
@@ -215,6 +221,7 @@ fit_event_lr <- function(
 #' @param w optional WLS weighting for linear fits
 #' @details Spans the number of matches for which OPR is well-defined. Assumes
 #' that column names are formatted like: "(red/blue)_()"
+#' @export
 #' @examples
 #' result <- event_opr_progression("2024paca")
 #' result <- event_opr_progression("2024paca", response = "autoTotalNotePoints")
