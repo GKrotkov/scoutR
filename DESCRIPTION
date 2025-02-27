@@ -4,8 +4,7 @@ Title: What the Package Does (Title Case)
 Version: 1.0
 Author: Gabriel Krotkov
 Maintainer: Gabriel Krotkov
-Description: Scouting package to make TBA & Statbotics API data more accessible
-for FRC data science students.
+Description: Scouting package to make TBA & Statbotics API data more accessible for FRC data science students.
 License: MIT
 Encoding: UTF-8
 LazyData: true
