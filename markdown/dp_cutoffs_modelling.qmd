@@ -8,6 +8,10 @@ rm(list = ls())
 devtools::load_all()
 ```
 
+@TODO could I include some aspects of frclocks.com? To improve 
+
+@TODO another thing to do might be model the probability of advancement based on points, rather than directly estimating the cutoff (i.e. logistic regression, instead of linear)
+
 # Modeling District Point Threshold - DCMP
 
 I'll start with predicting the cutoff to qualify for DCMP, since that is a more stable problem than CMP qualification. 
@@ -18,10 +22,12 @@ What are the key variables?
 - number of teams that competed in the district
 - number of slots at the DCMP
 - cutoff
+- each team's predcmp points
+- 
+
+In 2018 they changed the format of the data from the FIRST API, so we'll start there
 
 ```{r}
-# in 2018 they changed the format of the data from the FIRST database, so we'll
-# start there.
 dkeys <- c(
     "2019tx", paste0(2022:2024, "fit"), paste0(2018:2024, "fim"), 
     paste0(2018:2024, "chs"), paste0(2018:2024, "isr"), 
@@ -37,7 +43,13 @@ dkeys <- dkeys[-grep("(2020|2021)", dkeys)]
 rankings <- lapply(dkeys, district_rankings, 
                    separate_events = TRUE, event_breakdown = TRUE)
 names(rankings) <- dkeys
+```
 
+Define some functions to compute district size and dcmp size. 
+
+I choose to count a team only if they earned points at at least one event, because team registration data from the FIRST API (via TBA) is somewhat unreliable as we go back in time. This means that our predictions will be slightly conservative - we will predict a slightly higher threshold than what I'd actually expect in advance of the season.
+
+```{r}
 district_size <- sapply(
     rankings, 
     function(d_rankings){ 
@@ -92,9 +104,6 @@ analysis <- data.frame(
     district_size = district_size, dcmp_size = dcmp_size, 
     dcmp_cutoff = dcmp_cutoffs, dcmp_selectivity = district_size / dcmp_size
 )
-
-# handle renaming
-renames <- c(tx = "fit", mar = "fma")
 ```
 
 ## Analysis
@@ -137,8 +146,29 @@ dkeys_pre2018 <- c(
 
 # oh man never mind the data format changes makes this really annoying.
 # I did manually check it for Michigan and Mid-Atlantic. Overall was pretty 
-# good (average error around 5), but there were 2 years with 8ish point error
+# good (median error ~ 4), but there were 2 years with 8ish point error
 # which is a little rough.
+```
+
+## Predictions for 2025
+
+```{r}
+pred_keys <- districts(2025)$key
+
+district_sizes <- sapply(pred_keys, function(dkey){
+    return(nrow(district_teams(dkey)))
+})
+
+# from the 2025 manual
+dcmp_sizes <- c("2025chs" = 54, "2025fim" = 160, "2025fin" = 38, "2025fit" = 90, 
+                "2025fma" = 60, "2025fnc" = 40, "2025fsc" = 35, "2025isr" = 45, 
+                "2025ne" = 96, "2025ont" = 100, "2025pch" = 45, "2025pnw" = 50)
+
+newdata <- data.frame(
+    dcmp_selectivity = district_sizes / dcmp_sizes
+)
+
+round(predict(fit, newdata = newdata), 0)
 ```
 
 
@@ -147,6 +177,8 @@ dkeys_pre2018 <- c(
 ## Data Collection
 
 Ok, so how do I find the number of slots each district had at the world championship each year... in a programmatic way?
+
+@TODO need to account for awards slots (FIA, RAS, EI)
 
 ```{r}
 
