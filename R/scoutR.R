@@ -2,6 +2,19 @@
 #### ScoutR ####
 ################
 
+#' Event Schedule
+#'
+#' Returns a dataframe with the event's qualification match schedule
+#' @param event_code TBA-legal event key
+qual_schedule <- function(event_code){
+    matches <- event_matches(event_code, match_type = "qual", unplayed = TRUE)
+    if (is.null(matches)) return(NULL)
+
+    matches <- matches %>%
+        dplyr::select(match_number, red1, red2, red3, blue1, blue2, blue3)
+    return(matches)
+}
+
 # ScoutR provides an array of useful, event-ready analysis functions for
 # data-driven decisionmaking at FRC events.
 

@@ -143,6 +143,12 @@ dkeys_pre2018 <- c(
 
 
 # CMP Qualification Modelling
-@TODO (once modelling CMP cutoff) need to account for the overall size of the championship in each given year. 
 
-Actually wait, do we? Or just the number of slots that district gets?
+## Data Collection
+
+Ok, so how do I find the number of slots each district had at the world championship each year... in a programmatic way?
+
+```{r}
+
+```
+
