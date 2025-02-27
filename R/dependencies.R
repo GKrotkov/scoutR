@@ -2,20 +2,14 @@
 #### Dependencies ####
 ######################
 
-library(devtools)
-library(jsonlite)
-library(httr)
-library(sys)
-library(stringr)
-library(rvest)
-library(assertthat)
-library(MASS)
-library(tidyverse)
-library(data.table)
-library(roxygen2)
-library(withr)
-library(here)
-library(pracma)
-# library(renv)
-# leaving renv unloaded to avoid conflicts with base::load()
-# this isn't an issue because all renv calls can come with the renv:: prefix
+packages <- c("devtools", "jsonlite", "httr", "sys", "stringr", "rvest",
+              "assertthat", "MASS", "tidyverse", "data.table", "roxygen2",
+              "withr", "here", "pracma", "groundhog", "renv")
+
+# Install missing packages
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+    install.packages(packages[!installed_packages], dependencies = TRUE)
+}
+
+invisible(lapply(packages, library, character.only = TRUE))

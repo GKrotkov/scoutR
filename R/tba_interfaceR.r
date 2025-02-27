@@ -3,11 +3,11 @@
 ####################
 
 # tba_interfaceR implements functions that return tidy-style data, wrapping fxns
-# from tba_readR -> tba_tidyR. tbaR uses valuable namespace like "event"
+# from tba_readR -> tba_tidyR. scoutR uses valuable namespace like "event"
 # and "team_matches" to make the most elegant coding solution available. In
 # general, the naming convention is intended to reference the TBA API calls
 # relevant to the query to make the experience as seamless as possible between
-# tbaR and the TBA API. Advanced R users are encouraged to use the functions
+# scoutR and the TBA API. Advanced R users are encouraged to use the functions
 # available in tba_readR and tba_tidyR to get more low level control.
 
 # in general "keys" will override many other optional parameters in this file

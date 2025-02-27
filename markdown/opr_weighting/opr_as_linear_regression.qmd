@@ -28,7 +28,7 @@ linear_fit <- fit_lineup_lm(
 linear_coef <- coefficients(linear_fit)
 ```
 
-Now we'll use tbaR to get the OPRs as TBA calculates them, and then check that all the values are equal (within a tolerance of $1.5*10^{-8}$.)
+Now we'll use scoutR to get the OPRs as TBA calculates them, and then check that all the values are equal (within a tolerance of $1.5*10^{-8}$.)
 
 ```{r get-oprs}
 gpr_oprs <- event_oprs("2024paca")
@@ -79,7 +79,7 @@ result[which(result != "TRUE")]
 ## OPR Failure Analysis
 
 For 2024mdsev:
-The difference is because for that event there are two null matches at the end - matches where both alliances are assigned to be FRC #0 and had a score of 0. tbaR's filtering correctly removes "frc0" from the matches dataframe and doesn't fit an OPR for them, but TBA's OPR calculation reports team 0 with an OPR, so the lengths are mismatched. 
+The difference is because for that event there are two null matches at the end - matches where both alliances are assigned to be FRC #0 and had a score of 0. scoutR's filtering correctly removes "frc0" from the matches dataframe and doesn't fit an OPR for them, but TBA's OPR calculation reports team 0 with an OPR, so the lengths are mismatched. 
 
 If we remove the team #0, we can see that the OPRs are in fact the same.
 

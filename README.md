@@ -35,7 +35,7 @@ Tidy data has 3 features.
 2.  Each observation forms a row.
 3.  Each type of observational unit forms a separate table.
 
-This is a pretty simple set of rules for data to follow, but keeping strictly to it enables powerful data manipulation libraries like the `tidyverse`. Once we have tidy data, visualization and analysis become streamlined. We can rely on R's inbuilt functions as well as R's robust open source developer community to implement functions to do most of anything we want to do with the data. Luckily for us, tbaR makes getting tidy data straightforward.
+This is a pretty simple set of rules for data to follow, but keeping strictly to it enables powerful data manipulation libraries like the `tidyverse`. Once we have tidy data, visualization and analysis become streamlined. We can rely on R's inbuilt functions as well as R's robust open source developer community to implement functions to do most of anything we want to do with the data. Luckily for us, scoutR makes getting tidy data straightforward.
 
 # Dependencies
 

@@ -20,7 +20,7 @@ install.packages(c("devtools", "tidyverse", "stringr", "jsonlite", "assertthat",
                    "httr", "sys", "stringr", "roxygen2", "rvest", "data.table"))
 ```
 
-The below chunk of code loads all of tbaR's dependencies (implicitly) as well as all of tbaR's files. It also executes the `document()` function to create local documentation of the tbaR files. This code assumes that you have a authorization key stored in "tba_auth_key.txt" in the same directory as demo.rmd. You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header; put the key you generated into a raw .txt with no other text and store it in the same directory as demo.rmd.
+The below chunk of code loads all of scoutR's dependencies (implicitly) as well as all of scoutR's files. It also executes the `document()` function to create local documentation of the scoutR files. This code assumes that you have a authorization key stored in "tba_auth_key.txt" in the same directory as demo.rmd. You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header; put the key you generated into a raw .txt with no other text and store it in the same directory as demo.rmd.
 
 ```{r}
 my_auth_key <- scan("tba_auth_key.txt", what = character())
@@ -30,22 +30,22 @@ load_all()
 initialize_scoutR(my_auth_key)
 ```
 
-Now that you have run `initialize_tbaR()`, you have access to all of tbaR's help files. For any function in tbaR, you can call `help(fxn_of_interest)` and get access to its documentation. For example, try running `help(event_matches)`. 
+Now that you have run `initialize_tbaR()`, you have access to all of scoutR's help files. For any function in scoutR, you can call `help(fxn_of_interest)` and get access to its documentation. For example, try running `help(event_matches)`. 
 
-If you wanted to utilize tbaR from outside the tbaR directory, you would use code in this form. I have set this code chunk to not evaluate by default, since I assume that we have already initialized tbaR in this example!
+If you wanted to utilize scoutR from outside the scoutR directory, you would use code in this form. I have set this code chunk to not evaluate by default, since I assume that we have already initialized scoutR in this example!
 
 ```{r, eval = FALSE}
 # for example, this code would work if called from a file that sees the 
-# directory "tbaR"
-path_to_tbaR <- "tbaR"
+# directory "scoutR"
+path_to_scoutR <- "scoutR"
 library(devtools)
-load_all(path_to_tbaR)
+load_all(path_to_scoutR)
 initialize_tbaR(my_auth_key)
 ```
 
 # tba_interfaceR
 
-InterfaceR (pronounce "interfacer") is the primary product of tbaR. It provides R functions that connect to the TBA API. Each function returns a tidied dataframe of data instead of the JSON output of the TBA API.
+InterfaceR (pronounce "interfacer") is the primary product of scoutR. It provides R functions that connect to the TBA API. Each function returns a tidied dataframe of data instead of the JSON output of the TBA API.
 
 Below is an example of calling one useful function from interfaceR - `team_awards`. This loads a dataframe with all the awards that team 321 won in the year 2023. 
 
