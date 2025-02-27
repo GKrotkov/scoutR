@@ -5,7 +5,9 @@
 - document() to call roxygen documentation handlers
  
 # Package Management
-- Switch from `renv` to `groundhog`; use DAI-style like "prep" files for "dependencies.R"
+- Rewrite the whole `demo.rmd`; it should be a QMD, and also it needs a complete revamp
+    - Should be able to install with `install_github("gkrotkov/scoutR")`
+    - only discuss exported functions
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
