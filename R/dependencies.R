@@ -7,6 +7,9 @@
 #' @import dplyr
 #' @import tidyr
 #' @import readr
+#' @import tibble
+#' @importFrom forcats factor
+#' @importFrom forcats levels
 #' @importFrom pracma Lcm
 #' @importFrom httr content
 #' @importFrom httr GET
