@@ -12,6 +12,7 @@
 - On scoutR initialization, should check for uninstalled packages and install them.
 - Should absolutely not have a `devtools` dependency - the document() function has got to go. 
     - Need to find another solution for `man` files, then.
+- Need another solution for storing auth keys because we won't necessarily be in a directory on the user's machine. That'll also let us get rid of another dependency. 
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
