@@ -10,6 +10,8 @@
     - only discuss exported functions
 - Find a better way to manage dependencies. I shouldn't be importing all of the tidyverse or all of devtools, that's absurd.
 - On scoutR initialization, should check for uninstalled packages and install them.
+- Should absolutely not have a `devtools` dependency - the document() function has got to go. 
+    - Need to find another solution for `man` files, then.
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
