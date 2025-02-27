@@ -3,7 +3,7 @@ Type: Package
 Title: What the Package Does (Title Case)
 Version: 1.0
 Author: Gabriel Krotkov
-Maintainer: Gabriel Krotkov
+Maintainer: Gabriel Krotkov <gabriel.gk.mail@gmail.com>
 Description: Scouting package to make TBA & Statbotics API data more accessible for FRC data science students.
 License: MIT
 Encoding: UTF-8
