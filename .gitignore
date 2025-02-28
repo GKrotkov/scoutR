@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-man
 data
 .DS_Store
 *.html
