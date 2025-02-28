@@ -2,7 +2,6 @@
 #### Dependencies ####
 ######################
 
-#' @import rvest
 #' @import dplyr
 #' @import tidyr
 #' @import readr
