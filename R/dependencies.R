@@ -13,4 +13,4 @@
 #' @importFrom tibble tibble
 #' @importFrom rvest html_text
 #' @importFrom stringr str_detect str_sub str_extract
-
+NULL
