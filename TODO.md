@@ -5,11 +5,7 @@
 - document() to call roxygen documentation handlers
  
 # Package Management
-- Rewrite the whole `demo.rmd`; it should be a QMD, and also it needs a complete revamp
-    - Should be able to install with `install_github("gkrotkov/scoutR")`
-    - only discuss exported functions
 - Document & export statbotics reading fxns
-- Need another solution for storing auth keys because we won't necessarily be in a directory on the user's machine. That'll also let us get rid of another dependency.
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
