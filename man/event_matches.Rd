@@ -10,6 +10,7 @@ event_matches(
   breakdown = TRUE,
   match_type = "all",
   unplayed = FALSE,
+  sort = TRUE,
   simple = FALSE,
   keys = FALSE
 )
@@ -24,6 +25,8 @@ event_matches(
 \item{match_type}{one of "all", "qual", or "playoff"}
 
 \item{unplayed}{(boolean) include matches with scores of -1 (indicating that the match has not been played?)}
+
+\item{sort}{(boolean) if TRUE, will sort the resulting match object by match number.}
 
 \item{simple}{(bool) simplify match object?}
 

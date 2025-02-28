@@ -15,7 +15,8 @@ get_multifield_df(
 \arguments{
 \item{matches}{dataframe with matches on the rows}
 
-\item{fields}{vector of name of the fields you want pulled out}
+\item{fields}{vector of name of the fields you want pulled out. If NULL,
+scoutR will guess with id_robot_fields()}
 
 \item{schema}{function defining schema for column names}
 

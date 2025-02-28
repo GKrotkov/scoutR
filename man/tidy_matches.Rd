@@ -4,7 +4,13 @@
 \alias{tidy_matches}
 \title{Tidy Matches}
 \usage{
-tidy_matches(raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE)
+tidy_matches(
+  raw,
+  alliances = FALSE,
+  breakdown = FALSE,
+  unplayed = FALSE,
+  sort = TRUE
+)
 }
 \arguments{
 \item{raw}{list of match objects from TBA API as read by tba_readR}
@@ -14,6 +20,8 @@ tidy_matches(raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE)
 \item{breakdown}{(boolean) unpack the score breakdown?}
 
 \item{unplayed}{(boolean) include matches with scores of -1 (indicating that the match has not been played?)}
+
+\item{sort}{(boolean) if TRUE, will sort the output matches by competition level and match number.}
 }
 \value{
 tidy tibble of matches

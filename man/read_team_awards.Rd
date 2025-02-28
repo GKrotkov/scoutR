@@ -4,7 +4,7 @@
 \alias{read_team_awards}
 \title{Read Team Awards}
 \usage{
-read_team_awards(team, year = NA, event = NA)
+read_team_awards(team, year = NULL, event = NULL)
 }
 \arguments{
 \item{team}{(numeric/character) team of interest}

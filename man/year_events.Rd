@@ -4,7 +4,7 @@
 \alias{year_events}
 \title{Year Events}
 \usage{
-year_events(year = YEAR, simple = FALSE, keys = FALSE)
+year_events(year = YEAR, official = FALSE, simple = FALSE, keys = FALSE)
 }
 \arguments{
 \item{year}{(int) year of interest}

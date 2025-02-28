@@ -24,7 +24,11 @@ fits a linear model using the given `responses`.
 }
 \details{
 Key assumption - the order of `lineups` and the `responses` vector
-must line up exactly. Otherwise, the fit will be meaningless.
+must line up exactly. Otherwise, the fit will be meaningless. Fits a
+regression through the origin - fixing the intercept coefficient to be 0.
+Regression should always be through the origin both for model validity (we
+want the matrix to have full rank) and because, unlike with basketball
+(R)APM, there is no home team advantage to account for.
 }
 \examples{
 gpr <- event_matches("2024paca", match_type = "qual")

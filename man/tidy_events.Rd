@@ -4,10 +4,12 @@
 \alias{tidy_events}
 \title{Tidy Events}
 \usage{
-tidy_events(raw)
+tidy_events(raw, official = FALSE)
 }
 \arguments{
 \item{raw}{list of TBA event objects}
+
+\item{official}{return only official events?}
 }
 \value{
 Tidy tibble of events

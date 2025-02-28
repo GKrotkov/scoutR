@@ -4,7 +4,7 @@
 \alias{team_awards}
 \title{Team Awards}
 \usage{
-team_awards(key, year = NA, event = NA, recipients = FALSE)
+team_awards(key, year = NULL, event = NULL, recipients = FALSE)
 }
 \arguments{
 \item{key}{TBA legal team key}

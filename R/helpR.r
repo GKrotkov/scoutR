@@ -6,18 +6,11 @@
 # funtionality of scoutR, but are useful for users to have access to. These are
 # utility functions, more useful under the hood than for decisionmaking.
 
-#' Document
-#'
-#' Automatically creates .rd documentation files for each function in scoutR
-#' @details Uses here() to always call from the project root.
-document <- function(){
-    with_dir(here(), roxygen2::roxygenise())
-}
-
 #' Initialize scoutR
 #'
 #' Function to start scoutR by writing the auth key for scoutR as well as
 #' creating the documentation files for scoutR
+#' @export
 initialize_scoutR <- function(auth_key = NULL){
     if (is.null(auth_key)){
         warning("No auth key supplied. We assume data/tba_auth_key.txt exists.")
