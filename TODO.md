@@ -6,6 +6,8 @@
  
 # Package Management
 - Document & export statbotics reading fxns
+- Finish reworking `demo.qmd`
+- Learn how to export data from a package so I can include the OPR weights
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)

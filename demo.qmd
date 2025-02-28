@@ -4,7 +4,7 @@ author: "Gabriel Krotkov"
 format: html
 ---
 
-# Introduction
+# Getting Started
 
 Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the useful functions that scoutR provides to use TBA/Statbotics data in R. 
 
@@ -24,7 +24,7 @@ To install `scoutR`, simply run the following line of code in your R console.
 devtools::install_github("gkrotkov/scoutR")
 ```
 
-## ScoutR initialization
+## Initialization
 
 Next, you will need to initialize scoutR with your TBA auth key. TheBlueAlliance API needs an authorization key 
 
@@ -37,3 +37,11 @@ library(scoutR)
 initialize_scoutR(my_auth_key)
 ```
 
+# Functions Demo
+
+scoutR provides a *lot* of handy functions. Here, I'll show you some of the ones I find myself using the most. 
+
+@TODO do a tour of key functions
+
+- get_multifield_df()
+- 
