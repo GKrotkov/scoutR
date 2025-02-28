@@ -3,17 +3,17 @@
 ######################
 
 #' @import rvest
-#' @import data.table
 #' @import dplyr
 #' @import tidyr
 #' @import readr
 #' @import tibble
 #' @importFrom pracma Lcm
-#' @importFrom httr content
-#' @importFrom httr GET
+#' @importFrom httr content GET
 #' @importFrom here here
 #' @importFrom withr with_dir
 #' @importFrom tibble tibble
+#' @importFrom rvest html_text
+#' @importFrom stringr str_detect str_sub str_extract
 
 #' Install Dependencies
 #' @details
@@ -23,8 +23,7 @@
 install_dependencies <- function(){
     packages <- c(
         "devtools", "jsonlite", "httr", "sys", "stringr", "rvest", "MASS",
-        "tidyverse", "data.table", "roxygen2", "withr", "here", "pracma",
-        "renv","tibble"
+        "tidyverse", "roxygen2", "withr", "here", "pracma", "renv","tibble"
     )
     installed_packages <- packages %in% rownames(installed.packages())
 
