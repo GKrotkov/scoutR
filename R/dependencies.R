@@ -8,7 +8,6 @@
 #' @import tibble
 #' @importFrom pracma Lcm
 #' @importFrom httr content GET
-#' @importFrom here here
 #' @importFrom withr with_dir
 #' @importFrom tibble tibble
 #' @importFrom rvest html_text

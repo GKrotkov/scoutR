@@ -4,7 +4,7 @@
 \alias{initialize_scoutR}
 \title{Initialize scoutR}
 \usage{
-initialize_scoutR(auth_key = NULL)
+initialize_scoutR(auth_key)
 }
 \description{
 Function to start scoutR by writing the auth key for scoutR as well as
