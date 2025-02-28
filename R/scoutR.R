@@ -8,7 +8,9 @@
 #' @param event_code TBA-legal event key
 #' @export
 qual_schedule <- function(event_code){
-    matches <- event_matches(event_code, match_type = "qual", unplayed = TRUE)
+    matches <- event_matches(
+        event_code, match_type = "qual", breakdown = FALSE, unplayed = TRUE
+    )
     if (is.null(matches)) return(NULL)
 
     matches <- matches %>%
