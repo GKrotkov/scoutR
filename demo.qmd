@@ -1,0 +1,39 @@
+---
+title: "demo"
+author: "Gabriel Krotkov"
+format: html
+---
+
+# Introduction
+
+Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the useful functions that scoutR provides to use TBA/Statbotics data in R. 
+
+For those using a QMD file for the first time, QMD stands for "Quarto Markdown", it is a file type that blends formattable text, chunks of code, and output. To run the code while viewing a qmd, click the green arrow on the top right corner of a code chunk.
+
+## Installation
+
+If you do not already have `devtools` installed, you will need to install that first. The below line of code installs devtools. If you're new to R programming, I also recommend installing the package `tidyverse`; it is an extremely large package and takes a long time to install, but having access to the Tidyverse will make your R programming life much easier.
+
+```{r}
+install.packages("devtools")
+```
+
+To install `scoutR`, simply run the following line of code in your R console.
+
+```{r}
+devtools::install_github("gkrotkov/scoutR")
+```
+
+## ScoutR initialization
+
+Next, you will need to initialize scoutR with your TBA auth key. TheBlueAlliance API needs an authorization key 
+
+You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header; put the key you generated into a raw .txt with no other text and store it in your working directory.
+
+```{r}
+my_auth_key <- scan("tba_auth_key.txt", what = character())
+
+library(scoutR)
+initialize_scoutR(my_auth_key)
+```
+

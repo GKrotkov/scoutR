@@ -11,16 +11,15 @@
 #' Function to start scoutR by writing the auth key for scoutR as well as
 #' creating the documentation files for scoutR
 #' @export
-initialize_scoutR <- function(auth_key = NULL){
+initialize_scoutR <- function(auth_key){
+    home <- Sys.getenv("HOME")
     if (is.null(auth_key)){
-        warning("No auth key supplied. We assume data/tba_auth_key.txt exists.")
+        warning("No auth key supplied. We assume HOME/.scoutR_auth exists.")
     }
     else{
-        with_dir(here(),{
-            # first, if `data` does not exist, create it
-            if (!dir.exists("data")) dir.create("data", recursive = TRUE)
-            # then create the auth key text file
-            write_file(auth_key, file = "data/tba_auth_key.txt")
+        with_dir(home,{
+            # write the auth key text file
+            write_file(auth_key, file = ".scoutR_auth.txt")
         })
     }
 }

@@ -11,8 +11,11 @@
 # API (so we're giving the nomenclature "right of way" to TBA)
 
 #' @export
-TBA_KEY <- ifelse(file.exists(here::here("data/tba_auth_key.txt")),
-              readr::read_file(here::here("data/tba_auth_key.txt")), NA)
+TBA_KEY <- ifelse(
+    file.exists(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
+    readr::read_file(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
+    NA
+)
 
 #' @export
 TBA_BASE <- "https://www.thebluealliance.com/api/v3"

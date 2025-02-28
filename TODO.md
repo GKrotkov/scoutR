@@ -8,10 +8,7 @@
 - Rewrite the whole `demo.rmd`; it should be a QMD, and also it needs a complete revamp
     - Should be able to install with `install_github("gkrotkov/scoutR")`
     - only discuss exported functions
-- Find a better way to manage dependencies. I shouldn't be importing all of the tidyverse or all of devtools, that's absurd.
-- On scoutR initialization, should check for uninstalled packages and install them.
-- Should absolutely not have a `devtools` dependency - the document() function has got to go. 
-    - Need to find another solution for `man` files, then.
+- Document & export statbotics reading fxns
 - Need another solution for storing auth keys because we won't necessarily be in a directory on the user's machine. That'll also let us get rid of another dependency.
 
 # OPR Stabilization
