@@ -13,7 +13,6 @@
 - Should absolutely not have a `devtools` dependency - the document() function has got to go. 
     - Need to find another solution for `man` files, then.
 - Need another solution for storing auth keys because we won't necessarily be in a directory on the user's machine. That'll also let us get rid of another dependency.
-- Most of the files in `markdown/` should come out of scoutR and be hosted elsewhere
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)

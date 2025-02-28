@@ -14,3 +14,15 @@ BugReports: https://github.com/GKrotkov/tbaR/issues
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Imports: 
+    dplyr,
+    here,
+    httr,
+    pracma,
+    readr,
+    rvest,
+    stringr,
+    sys,
+    tibble,
+    tidyr,
+    withr
