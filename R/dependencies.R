@@ -19,7 +19,6 @@
 #' @details
 #' Some packages we don't actually depend on (like devtools) we still want
 #' the user to install.
-#'
 install_dependencies <- function(){
     packages <- c(
         "devtools", "jsonlite", "httr", "sys", "stringr", "rvest", "MASS",
@@ -28,7 +27,7 @@ install_dependencies <- function(){
     installed_packages <- packages %in% rownames(installed.packages())
 
     if(any(!installed_packages)){
-        install.packages(packges[!installed_packages], dependencies = TRUE)
+        install.packages(packages[!installed_packages], dependencies = TRUE)
     }
 }
 
