@@ -9,8 +9,8 @@ scoutR is an R library to facilitate usage of data from the TBA and Statbotics A
 ## Setup - New User Checklist
 
 - [ ] Install R and RStudio on your machine. You can find them both on Posit's website here: https://posit.co/download/rstudio-desktop/. scoutR assumes that you have R 4.3.0 or later.
-- [ ] Download this repository locally and store in a convenient location on your machine. I suggest a separate directory that is only for scoutR for the most convenience.
-- [ ] Open `demo.rmd` using RStudio; I recommend setting RStudio to be your default for opening both .r files and .rmd files. The demo will walk you through some use cases of scoutR and especially useful functions from `tba_interfaceR` and `helpR`. It will also instruct you on installing tbaR's dependencies and generating documentation files to reference in the help pages as you work with tbaR.
+- [ ] Run `devtools::install_github("gkrotkov/scoutR") in your R console to install the scoutR package and its dependencies.
+- [ ] Open `demo.qmd` using RStudio; I recommend setting RStudio to be your default for opening both .r, .rmd, and .qmd files. The demo will walk you through some use cases of scoutR and show you the functions that it exports.
 
 ## Roadmap to ScoutR
 
@@ -25,8 +25,6 @@ The below R files define functions that are the core engine of ScoutR
 | `tba_tidyR` | Reformat JSON data from TBA to Tidy format, helper library for `interfaceR` | JSON | Tidy dataframes | No
 | `statbotics_readR` | Read JSON data from Statbotics to Tidy format | Statbotics endpoints | Tidy data frames | Yes
 
-I recommend that new users to R start with `tba_interfaceR` and `scoutR` - these are the only functions you should need (and the ones I go to come competition time.) If you want to get into the guts of scoutR, `helpR`, `tba_readR`, and `tba_tidyR` may be more useful to you.
-
 ## Why do I care about Tidy data? What even is it?
 
 Tidy data has 3 features.
@@ -39,4 +37,4 @@ This is a pretty simple set of rules for data to follow, but keeping strictly to
 
 # Dependencies
 
-`scoutR` manages dependencies with the `renv` package. This means to start up `scoutR` on your local machine, all you need to do is clone this repository and then run `renv::init()` and `renv::restore()` in the R console. (You will also need to make your own TBA auth key.)
+`scoutR` manages dependencies with the `renv` package. This means we can resolve package issues by references the renv lockfile.
