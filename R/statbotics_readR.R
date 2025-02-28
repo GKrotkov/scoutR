@@ -13,6 +13,7 @@ STATBOTICS_BASE <- "https://api.statbotics.io/v2"
 #' read_team(6672)
 #' read_team(1712)
 #' read_team(708)
+#' @export
 read_team_statbotics <- function(team){
     req <- paste("team", as.character(team), sep = "/")
     return(get_content(req, base = STATBOTICS_BASE))
@@ -33,6 +34,7 @@ read_team_statbotics <- function(team){
 #' @param offset (int) Length of the offset of the beginning of the pull from
 #' the sorted list.
 #' @return List of team objects with statbotics information
+#' @export
 read_teams_statbotics <- function(
         metric = "team", country = NA, district = NA, state = NA, active = NA,
         ascending = TRUE, limit = 100, offset = 0){
@@ -52,6 +54,7 @@ read_teams_statbotics <- function(
 #' @return list object of team-year data
 #' @examples
 #' read_team_year(1712, 2016)
+#' @export
 read_team_year_statbotics <- function(n, year){
     req <- paste("team_year", as.character(n), as.character(year), sep = "/")
     return(get_content(req, base = STATBOTICS_BASE))
@@ -70,6 +73,7 @@ read_team_year_statbotics <- function(n, year){
 #' @param limit (int) maximum length of the desired output.
 #' @param offset (int) Length of the offset of the beginning of the pull from
 #' the sorted list.
+#' @export
 read_team_years_statbotics <- function(
         team = NA, year = NA, country = NA, district = NA, state = NA,
         metric = NA, ascending = NA, limit = NA, offset = NA){
@@ -101,6 +105,7 @@ read_team_event_statbotics <- function(n, key){
 #' @param limit (int) maximum length of the desired output.
 #' @param offset (int) Length of the offset of the beginning of the pull from
 #' the sorted list.
+#' @export
 read_team_events_statbotics <- function(
         team = NA, year = NA, event = NA, country = NA, district = NA,
         state = NA, type = NA, week = NA, metric = NA, ascending = NA,
@@ -131,6 +136,7 @@ read_team_match_statbotics <- function(team, key){
 #' @param limit (int) maximum length of the desired output.
 #' @param offset (int) Length of the offset of the beginning of the pull from
 #' the sorted list.
+#' @export
 read_team_matches_statbotics <- function(
         team = NA, year = NA, event = NA, week = NA, match = NA, elims = NA,
         metric = NA, ascending = NA, limit = NA, offset = NA){
@@ -188,6 +194,7 @@ read_match_statbotics <- function(key){
 #' @param limit (int) maximum length of the desired output.
 #' @param offset (int) Length of the offset of the beginning of the pull from
 #' the sorted list.
+#' @export
 read_matches_statbotics <- function(
         team = NA, year = NA, event = NA, week = NA, elims = NA, metric = NA,
         ascending = NA, limit = NA, offset = NA){
