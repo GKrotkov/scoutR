@@ -5,8 +5,6 @@
 # tba_validatoR provides functions to compare your scouted data to
 # TheBlueAlliance data.
 
-require(tidyverse)
-
 # tba_cols <- c("blue1", "blue2", "blue3", "red1", "red2", "red3", "match_number",
 #               "blue_autoChargeStationRobot1",
 #               "blue_autoChargeStationRobot2",
