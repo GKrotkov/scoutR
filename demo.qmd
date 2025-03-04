@@ -42,6 +42,7 @@ scoutR provides a *lot* of handy functions. Here, I'll show you some of the ones
 
 @TODO do a tour of key functions
 
+- event_matches()
 - get_multifield_df()
 - 
 
