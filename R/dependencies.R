@@ -13,4 +13,5 @@
 #' @importFrom rvest html_text
 #' @importFrom stringr str_detect str_sub str_extract
 #' @importFrom purrr is_empty
+#' @importFrom purrr flatten_chr
 NULL

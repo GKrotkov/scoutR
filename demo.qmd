@@ -14,11 +14,14 @@ For those using a QMD file for the first time, QMD stands for "Quarto Markdown",
 
 If you do not already have `devtools` installed, you will need to install that first. The below line of code installs devtools. If you're new to R programming, I also recommend installing the package `tidyverse`; it is an extremely large package and takes a long time to install, but having access to the Tidyverse will make your R programming life much easier.
 
+Installation code should only be run once. Once you have run the installation on your machine, I suggest commenting out installation code so you don't accidentally rerun that code by running the entire file.
+
 ```{r}
+# only run this code once!
 install.packages("devtools")
 ```
 
-To install `scoutR`, simply run the following line of code in your R console.
+To install `scoutR`, run the following line of code in your R console.
 
 ```{r}
 devtools::install_github("gkrotkov/scoutR")
@@ -26,15 +29,11 @@ devtools::install_github("gkrotkov/scoutR")
 
 ## Initialization
 
-Next, you will need to initialize scoutR with your TBA auth key. TheBlueAlliance API needs an authorization key 
-
-You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header; put the key you generated into a raw .txt with no other text and store it in your working directory.
+Next, you will need to initialize scoutR with your TBA auth key. You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header. Once you have an auth key, replace the string in this code with your auth key! (The auth key needs quotations around it)
 
 ```{r}
-my_auth_key <- scan("tba_auth_key.txt", what = character())
-
 library(scoutR)
-initialize_scoutR(my_auth_key)
+initialize_scoutR("<replace this with your auth key!>")
 ```
 
 # Functions Demo
@@ -45,3 +44,12 @@ scoutR provides a *lot* of handy functions. Here, I'll show you some of the ones
 
 - get_multifield_df()
 - 
+
+## get_multifield_df()
+
+I need to come up with a better name for this function; but it keeps being handy so I want to highlight it. `get_multifield_df()` returns a dataframe 
+
+```{r}
+vagle <- get_multifield_df(event_matches("2025vagle"))
+```
+
