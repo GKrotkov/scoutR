@@ -32,5 +32,5 @@
 
 #' Teams by Year
 #'
-#' Indicates each team-year competed.
+#' Indicates each team-year competed (as of 2024)
 "teams_yearly"
