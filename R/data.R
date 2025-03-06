@@ -29,3 +29,8 @@
 #' as of 2024.
 #' @source thebluealliance.com
 "ta_hexafecta24"
+
+#' Teams by Year
+#'
+#' Indicates each team-year competed.
+"teams_yearly"
