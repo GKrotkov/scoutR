@@ -22,3 +22,15 @@
 #' List of all team official award histories as of the 2024 season
 #' @source thebluealliance.com
 "awards24"
+
+#' Team Attributes Hexafecta
+#'
+#' DF noting whether each team has achieved the Team Attributes Hexafecta
+#' as of 2024.
+#' @source thebluealliance.com
+"ta_hexafecta24"
+
+#' Teams by Year
+#'
+#' Indicates each team-year competed (as of 2024)
+"teams_yearly"
