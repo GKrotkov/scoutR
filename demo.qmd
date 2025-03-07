@@ -6,7 +6,7 @@ format: html
 
 # Getting Started
 
-Hello! I'm Gabriel, and I'll be using this rmarkdown to give you a demo of the useful functions that scoutR provides to use TBA/Statbotics data in R. 
+Hello! I'm Gabriel, and I'll be using this guide to give you a demo of the useful functions that scoutR provides to use TBA/Statbotics data in R. 
 
 For those using a QMD file for the first time, QMD stands for "Quarto Markdown", it is a file type that blends formattable text, chunks of code, and output. To run the code while viewing a qmd, click the green arrow on the top right corner of a code chunk.
 
@@ -43,14 +43,15 @@ scoutR provides a *lot* of handy functions. Here, I'll show you some of the ones
 @TODO do a tour of key functions
 
 - event_matches()
-- get_multifield_df()
 - 
 
-## get_multifield_df()
+## event_tangibles()
 
-I need to come up with a better name for this function; but it keeps being handy so I want to highlight it. `get_multifield_df()` returns a dataframe 
+`event_tangibles()` allows you to pull all the single-robot records from TBA in one line of code, based on the standard TBA naming schema since 2018. 
 
 ```{r}
-vagle <- get_multifield_df(event_matches("2025vagle"))
+vagle25 <- event_tangibles("2025vagle")
+
+View(vagle25)
 ```
 
