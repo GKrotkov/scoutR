@@ -400,7 +400,7 @@ get_multifield_df <- function(
         # call Reduce to do the actual merging
         result <- Reduce(function(x, y) merge(x, y, by = "id"), result)
         # rename columns to make result more interpretable
-        colnames(result) <- c("id", paste(sources, titles, sep = "."))
+        colnames(result) <- c("id", paste(sources, titles, sep = "_"))
     }
     return(result)
 }

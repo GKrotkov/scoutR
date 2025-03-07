@@ -88,15 +88,30 @@ event_season_history <- function(event_code, fields = NULL){
 #' been the standard for 2018 - 2025 (and likely beyond)
 #' @param qual_only (logical) include only qual matches? If FALSE, will include
 #' both qualification and playoff matches.
+#' @param pct Convert all data columns to a percentage rather than a count?
 #' @examples
 #' event_tangibles("2025vagle")
 #' event_tangibles("2025vagle", qual_only = FALSE)
 #' event_tangibles("2017mrcmp", schema = schema_csf)
 #' @export
-event_tangibles <- function(event_key, schema = schema_cfs, qual_only = T){
+event_tangibles <- function(
+    event_key, schema = schema_cfs, qual_only = T, pct = T
+){
     type <- ifelse(qual_only, "qual", "all")
     matches_df <- event_matches(event_key, match_type = type)
-    return(get_multifield_df(matches_df, schema = schema))
+    result <- get_multifield_df(matches_df, schema = schema)
+    if (pct){
+        # start at 2 to exclude ids, end before last col to exclude match count
+        tangible_cidx <- 2:(ncol(result) - 1)
+        tangibles <- result[, tangible_cidx]
+        tangibles <- tangibles / result$n_matches_count
+        tangibles <- round(tangibles, digits = 2)
+        result[, tangible_cidx] <- tangibles
+        colnames(result)[tangible_cidx] <-
+            paste(colnames(result)[tangible_cidx], "pct", sep = "_")
+        colnames(result) <- tolower(colnames(result))
+    }
+    return(result)
 }
 
 #######################################################

@@ -4,7 +4,7 @@
 \alias{event_tangibles}
 \title{Event Tangibles}
 \usage{
-event_tangibles(event_key, schema = schema_cfs, qual_only = T)
+event_tangibles(event_key, schema = schema_cfs, qual_only = T, pct = T)
 }
 \arguments{
 \item{event_key}{TBA-legal event key (i.e. "2025vagle")}
@@ -14,6 +14,8 @@ been the standard for 2018 - 2025 (and likely beyond)}
 
 \item{qual_only}{(logical) include only qual matches? If FALSE, will include
 both qualification and playoff matches.}
+
+\item{pct}{Convert all data columns to a percentage rather than a count?}
 }
 \description{
 Pulls the "tangible" results for a given event from TBA. Identifies
