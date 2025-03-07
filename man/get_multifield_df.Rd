@@ -22,6 +22,9 @@ scoutR will guess with id_robot_fields()}
 
 \item{unlist}{(boolean) unlist the result? Vast majority of time TRUE, FALSE
 if the content of a given field has complicated content not fit for a vector}
+
+\item{merge}{if TRUE, simplifying the resulting list of dataframes to a
+single dataframe using Reduce}
 }
 \description{
 Applies the get_robot_field_df function to all fields provided and returns a

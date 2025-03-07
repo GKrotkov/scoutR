@@ -370,9 +370,10 @@ count_team_matches <- function(matches){
 #' @param schema function defining schema for column names
 #' @param unlist (boolean) unlist the result? Vast majority of time TRUE, FALSE
 #'  if the content of a given field has complicated content not fit for a vector
+#' @param merge if TRUE, simplifying the resulting list of dataframes to a
+#' single dataframe using Reduce
 #' @details This assumes that all the fields considered are categorical - it
 #' will treat numeric variables as categorical.
-#' @export
 #' @examples
 #' mil23 <- event_matches("2023mil")
 #' fields <- id_robot_fields(mil23)

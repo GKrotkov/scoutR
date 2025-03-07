@@ -78,6 +78,27 @@ event_season_history <- function(event_code, fields = NULL){
     return(history)
 }
 
+#' Event Tangibles
+#'
+#' Pulls the "tangible" results for a given event from TBA. Identifies
+#' "tangible" fields by the standard "robot" naming schema that TBA and the
+#' FIRST API tends to use to describe any robot-specific fields.
+#' @param event_key TBA-legal event key (i.e. "2025vagle")
+#' @param schema function defining schema for column names. schema_cfs() has
+#' been the standard for 2018 - 2025 (and likely beyond)
+#' @param qual_only (logical) include only qual matches? If FALSE, will include
+#' both qualification and playoff matches.
+#' @examples
+#' event_tangibles("2025vagle")
+#' event_tangibles("2025vagle", qual_only = FALSE)
+#' event_tangibles("2017mrcmp", schema = schema_csf)
+#' @export
+event_tangibles <- function(event_key, schema = schema_cfs, qual_only = T){
+    type <- ifelse(qual_only, "qual", "all")
+    matches_df <- event_matches(event_key, match_type = type)
+    return(get_multifield_df(matches_df, schema = schema))
+}
+
 #######################################################
 #### Linear Modeling (Calculated Contribution/OPR) ####
 #######################################################
