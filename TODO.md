@@ -1,5 +1,8 @@
 # TODO
 
+## Bugs
+- event_tangibles("2025nysu"); why does 4467 only have 1 deep climb marked?
+
 ## Periodic
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
