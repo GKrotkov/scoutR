@@ -131,10 +131,13 @@ event_tangibles <- function(
 #'
 event_winner_seed <- function(key){
     alliances <- event_alliances(key)
-    alliances$result <- sapply(
+    result <- sapply(
         alliances$status, function(status){return(status$status)}
     )
-    return(which(alliances$result == "won"))
+    result <- which(result == "won")
+    # length can be 0 if no alliances were made or no alliance is marked as
+    # having won (example: 2023tuis3)
+    return(ifelse(length(result) == 0, NA, result))
 }
 
 #' Week Event Wins Table by Seed

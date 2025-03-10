@@ -3,7 +3,7 @@
 ## Periodic
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
- 
+
 # Package Management
 - Document & export statbotics reading fxns
 - Finish reworking `demo.qmd`

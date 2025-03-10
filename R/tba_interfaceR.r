@@ -285,7 +285,8 @@ event_matches <- function(
 #' event_alliances("2014mrcmp", unpack_picks = FALSE)
 event_alliances <- function(key, unpack_picks = TRUE){
     data <- read_event_alliances(key)
-    if (is.null(data) | nrow(data) == 0) return(NULL)
+    # short-circuit eval to safely check null case
+    if (is.null(data) || length(data) == 0) return(NULL)
     data <- tidy_alliances(data, unpack_picks)
     return(data)
 }
