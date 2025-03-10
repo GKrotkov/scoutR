@@ -137,7 +137,8 @@ event_winner_seed <- function(key){
     result <- which(result == "won")
     # length can be 0 if no alliances were made or no alliance is marked as
     # having won (example: 2023tuis3)
-    return(ifelse(length(result) == 0, NA, result))
+    if (length(result) == 0) return(NA)
+    return(result)
 }
 
 #' Week Event Wins Table by Seed
