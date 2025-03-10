@@ -2,6 +2,10 @@
 #### ScoutR ####
 ################
 
+#######################
+#### Event Utility ####
+#######################
+
 #' Event Schedule
 #'
 #' Returns a dataframe with the event's qualification match schedule
@@ -113,6 +117,48 @@ event_tangibles <- function(
     }
     return(result)
 }
+
+##################
+#### Analysis ####
+##################
+
+#' Event Winner Seed
+#'
+#' Given an event, retrieves the seed of the winning alliance.
+#' @param key TBA-legal event key (ex. "2025vagle")
+#' @examples
+#' event_winner_seed("2025vagle")
+#'
+event_winner_seed <- function(key){
+    alliances <- event_alliances(key)
+    alliances$result <- sapply(
+        alliances$status, function(status){return(status$status)}
+    )
+    return(which(alliances$result == "won"))
+}
+
+#' Week Event Wins Table by Seed
+#'
+#' Given a competition week and year, returns a table showing the distribution
+#' of event seeds.
+#' @param wk Single integer between 1 and 6 representing the week of competition
+#' @param year Year of interest, defaults to current year.
+#' @export
+#' @examples
+#' week_winning_seed_table(1)
+#' week_winning_seed_table(4, 2023)
+week_winning_seed_table <- function(wk, year = YEAR){
+    stopifnot("Week should be a single integer between 1 and 6" = {
+        length(wk) == 1 && 0 < wk && wk <= 6
+    })
+    wk <- wk - 1 # TBA uses 0-indexing for week numbering
+    keys <- events(year) %>%
+        dplyr::filter(week == wk) %>%
+        dplyr::select(key)
+    keys <- unlist(keys)
+    return(table(sapply(keys, event_winner_seed)))
+}
+
 
 #######################################################
 #### Linear Modeling (Calculated Contribution/OPR) ####
