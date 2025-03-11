@@ -412,6 +412,7 @@ event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
 #' Reads events in a given year
 #' @author Gabriel Krotkov
 #' @param year (int) year of interest
+#' @param official (logical) get only official events?
 #' @param simple (bool) simplify event objects?
 #' @param keys (bool) get keys only?
 #' @return tidy tibble of events, or vector if keys = TRUE

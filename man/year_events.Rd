@@ -9,6 +9,8 @@ year_events(year = YEAR, official = FALSE, simple = FALSE, keys = FALSE)
 \arguments{
 \item{year}{(int) year of interest}
 
+\item{official}{(logical) get only official events?}
+
 \item{simple}{(bool) simplify event objects?}
 
 \item{keys}{(bool) get keys only?}
