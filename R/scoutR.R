@@ -25,24 +25,6 @@ qual_schedule <- function(event_code){
 # ScoutR provides an array of useful, event-ready analysis functions for
 # data-driven decisionmaking at FRC events.
 
-#' Robot Results
-#'
-#' Get all the robot-level results available in TBA, under a few assumptions.
-#' @param event_code Event code of interest
-#' @param match_type One of "all", "qual", or "playoff"
-#' @details Assumes that names of robot-level information follow the convention:
-#' "(red/blue)_robot_(1/2/3)"
-#' @export
-#' @examples
-#' mil23_individual <- event_robot_results("2023mil", match_type = "qual")
-#' gpr24_individual <- event_robot_results("2024paca")
-#'
-event_robot_results <- function(event_code, match_type = "all"){
-    matches <- event_matches(event_code, match_type = match_type)
-    robot_results <- get_multifield_df(matches)
-    return(robot_results)
-}
-
 #' Event Season History
 #'
 #' Given an event code, this function returns all a dataframe with all the
