@@ -11,7 +11,7 @@ Returns list with items "team_list", "rankings", "oprs", "alliances",
 "match_schedule".
 }
 \description{
-Loads synced data saved by tba_sync
+Returns synced data saved by tba_sync
 }
 \examples{
 load_sync()
