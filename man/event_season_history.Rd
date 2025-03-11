@@ -14,8 +14,7 @@ event_season_history(event_code, fields = NULL)
 }
 \description{
 Given an event code, this function returns all a dataframe with all the
-matches played by every team registered for that event. The output is
-filtered through `get_multifield_df`
+robot-level results of teams registered for a particular event.
 }
 \details{
 Checks for match duplication, which will stop execution if TRUE.
