@@ -563,16 +563,17 @@ tba_sync <- function(event_key){
     team_list <- event_teams(event_key, statuses = TRUE)
     rankings <- event_rankings(event_key)
     oprs <- event_oprs(event_key)
+    coprs <- event_coprs(event_key)
     alliances <- event_alliances(event_key)
-    match_schedule <- event_matches(event_key)
+    matches <- event_matches(event_key)
     unlink("tbasync.rda", recursive = TRUE)
-    save(team_list, rankings, oprs, alliances,
-         match_schedule, file = "tbasync.rda")
+    save(team_list, rankings, oprs, coprs, alliances, matches,
+         file = "tbasync.rda")
 }
 
 #' Load Sync
 #'
-#' Loads synced data saved by tba_sync
+#' Returns synced data saved by tba_sync
 #' @author Gabriel Krotkov
 #' @return Returns list with items "team_list", "rankings", "oprs", "alliances",
 #' "match_schedule".
