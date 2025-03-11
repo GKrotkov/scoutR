@@ -5,14 +5,12 @@
 - document() to call roxygen documentation handlers
 
 # Bugs
-- `event_insights("2025vagle", insight_as_col = T)`
+- `event_insights("2025vagle", insight_as_col = T)`; `event_insights("2024paca")`
 - `event_season_history("2024new")`; `event_season_history("2025mdsev")` (matches unplayed)
     - Why does this function vomit output to the console?
 
 # Package Management
 - Document & export statbotics reading fxns
-- Finish reworking `demo.qmd`
-- Learn how to export data from a package so I can include the OPR weights
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)

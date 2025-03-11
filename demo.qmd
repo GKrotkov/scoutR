@@ -40,8 +40,6 @@ initialize_scoutR("<replace this with your auth key!>")
 
 scoutR provides a *lot* of handy functions. Here, I'll show you some of the ones I find myself using the most. For every exported function in `scoutR`, you can run `help(fxn_name)` to pull up documentation listing the function's usage, parameters, and some examples.
 
-@TODO do a tour of key functions
-
 ## event_matches()
 
 I find this function to be the real workhorse for scouting applications. This function takes a TBA-legal event key (examples: "2023mil", "2025njtab") and returns a dataframe with data for the matches played at that event. A key parameter for this function is `match_type`, which can be "all", "qual", or "playoff".
@@ -61,18 +59,20 @@ View(mil23)
 `event_tangibles()` allows you to pull all the single-robot records from TBA in one line of code, based on the standard TBA naming schema since 2018. 
 
 ```{r}
-vagle25 <- event_tangibles("2025vagle")
-
-View(vagle25)
+# defaults to only pulling data from qualification matches
+vagle25_tangibles <- event_tangibles("2025vagle")
+# but if you suppress the qual_only flag, you'll get playoffs as well
+vagle25_tangibles <- event_tangibles("2025vagle", qual_only = FALSE)
 ```
 
 ## events()
 
-Retrieve all the events in a given year
+Retrieve all the events in a given year, with flags to get key-only return or official-only events
 
 ```{r}
-chargedup_events <- year_events(2023)
-crescendo_keys <- year_events(2024, keys = TRUE)
+chargedup_events <- events(2023)
+chargedup_official_events <- events(2023, official = TRUE)
+crescendo_keys <- events(2024, keys = TRUE)
 ```
 
 ## qual_schedule()
@@ -84,20 +84,29 @@ mdpas <- qual_schedule("2025mdpas")
 # write.csv(mdpas, file = "2025mdpas_schedule.csv")
 ```
 
-## events()
+## team_awards()
 
-## event_awards()
+Get all the awards won by a given team. Includes optional parameters to filter for year or event.
+
+```{r}
+gos_awards_history <- team_awards(3504)
+team_awards(6672, event = "2023txfor")
+```
 
 ## event_coprs()
 
-## event_insights()
+Retrieve all component OPRs posted by TBA on the "Insights" page. 
+
+```{r}
+vagle25_coprs <- event_coprs("2025vagle")
+```
 
 ## event_season_history()
 
 This function is useful mostly for prescouting - it retrieves robot-level results for every team registered for a given event.
 
 ```{r}
-
+newton24_prescout <- event_season_history("2024new")
 ```
 
 ## load_sync() / tba_sync()
@@ -114,27 +123,35 @@ sync <- load_sync()
 
 These functions are also see semi-frequent usage, but I want to keep the focus on the workhorses. The names are pretty explanatory, and I encourage you to check out the help pages for the parameters!
 
+District functions:
 - district_events
 - district_rankings
 - district_teams
 - districts
+
+Event functions:
 - event
 - event_alliances
 - event_district_points
 - event_opr_progression
 - event_oprs
 - event_rankings
+- event_awards
+- event_insights
 - event_teams
+- multievent_insights
+
+Linear Regression Functions:
 - fit_event_lr
 - fit_lineup_lm
 - lineup_design_matrix
-- load_sync
-- tba_sync
-- multievent_insights
+
+Team Functions:
 - team
-- team_awards
 - team_events
 - team_matches
 - team_participation_years
 - teams
+
+Misc:
 - week_winning_seed_table
