@@ -4,12 +4,14 @@
 \alias{event_alliances}
 \title{Event Alliances}
 \usage{
-event_alliances(key, unpack_picks = TRUE)
+event_alliances(key, unpack_picks = TRUE, attach_finish = TRUE)
 }
 \arguments{
 \item{key}{TBA legal event key}
 
-\item{unpack_picks}{(bool) break out alliance column?}
+\item{unpack_picks}{(logical) break out alliance column?}
+
+\item{attach_finish}{(logical)}
 }
 \value{
 Tidy tibble of event alliances

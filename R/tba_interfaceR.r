@@ -280,18 +280,22 @@ event_matches <- function(
 #' Read event alliances
 #' @author Gabriel Krotkov
 #' @param key TBA legal event key
-#' @param unpack_picks (bool) break out alliance column?
+#' @param unpack_picks (logical) break out alliance column?
+#' @param attach_finish (logical)
 #' @return Tidy tibble of event alliances
 #' @export
 #' @examples
 #' event_alliances("2016hop", unpack_picks = TRUE)
 #' event_alliances("2015paphi")
 #' event_alliances("2014mrcmp", unpack_picks = FALSE)
-event_alliances <- function(key, unpack_picks = TRUE){
+event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE){
     data <- read_event_alliances(key)
     # short-circuit eval to safely check null case
     if (is.null(data) || length(data) == 0) return(NULL)
     data <- tidy_alliances(data, unpack_picks)
+    if (attach_finish){
+        data$finish <- sapply(data$status, alliance_finish)
+    }
     return(data)
 }
 

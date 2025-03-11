@@ -404,3 +404,65 @@ get_multifield_df <- function(
     }
     return(result)
 }
+
+#' Double Elimination Alliance Finish
+#'
+#' Returns a character vector representing the finish (placement) of the
+#' alliances from a double elimination bracket.
+#' @param status alliance "status" object as returned in a column of the output
+#' of event_alliances(). A list, usually of length 8.
+#' @details
+#' case_when uses a "step-down" resolution; so we rely on the first condition
+#' being false to make later conditions correctly specified.
+de_alliance_finish <- function(status){
+    finish <- dplyr::case_when(
+        status$status == "won" ~ "Winner",
+        status$double_elim_round == "Finals" &
+            status$status == "eliminated" ~ "Finalist",
+        status$double_elim_round == "Round 5"&
+            status$status == "eliminated" ~ "3rd",
+        status$double_elim_round == "Round 4"&
+            status$status == "eliminated" ~ "4th",
+        status$double_elim_round == "Round 3"&
+            status$status == "eliminated" ~ "5th/6th",
+        status$double_elim_round == "Round 2"&
+            status$status == "eliminated" ~ "7th/8th",
+        .default = "Still Competing"
+    )
+    return(finish)
+}
+
+#' Best of 3 Bracket Alliance Finish
+#'
+#' Returns a character vector representing the finish of the alliances from a
+#' single elimation, best of three bracket.
+#' @param status alliance "status" object as return in the column of the output
+#' of scoutR::event_alliances(). A list, usually of length 8.
+#' @details
+#' case_when uses a "step-down" resolution; so we rely on the first condition
+#' being false to make later conditions correctly specified.
+bo3_alliance_finish <- function(status){
+    finish <- dplyr::case_when(
+        status$status == "won" ~ "Winner",
+        status$level == "f" &
+            status$status == "eliminated" ~ "Finalist",
+        status$level == "sf" &
+            status$status == "eliminated" ~ "Semifinalist",
+        status$level == "qf" &
+            status$status == "eliminated" ~ "Quarterfinalist",
+        .default = "Still Competing"
+    )
+    return(finish)
+}
+
+#' Alliance Finish
+#'
+#' Switching fxn to use appropriate "alliance_finish" status (double elim or
+#' bo3) based on the internal structure of the input status object
+#' @param status status object as output in a column of event_alliances()
+alliance_finish <- function(status){
+    if ("double_elim_round" %in% names(status)){
+        return(de_alliance_finish(status))
+    }
+    return(bo3_alliance_finish(status))
+}

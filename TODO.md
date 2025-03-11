@@ -11,6 +11,7 @@
 
 # Package Management
 - Document & export statbotics reading fxns
+- `testthat` validation of recently developed fxns
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
