@@ -210,13 +210,17 @@ event <- function(key, simple = FALSE){
 #' events(2015, keys = TRUE)
 events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
     if (simple & keys) warning(warns()$simkeys)
-    data <- read_events(year = year, official = official,
-                        simple = simple, keys = keys)
+    # keys needs to short-circuit official because the official check requires
+    # information from the whole events object
+    if (keys & official){
+        df <- events(year, official = TRUE, simple = simple, keys = FALSE)
+        return(df$key)
+    }
+    data <- read_year_events(year, simple, keys)
 
-    if (keys) return(unlist(data))
+    if (keys) return(data)
 
     data <- tidy_events(data, official = official)
-
     return(data)
 }
 
