@@ -4,6 +4,11 @@
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
 
+# Bugs
+- `event_insights("2025vagle", insight_as_col = T)`
+- `event_season_history("2024new")`; `event_season_history("2025mdsev")` (matches unplayed)
+    - Why does this function vomit output to the console?
+
 # Package Management
 - Document & export statbotics reading fxns
 - Finish reworking `demo.qmd`

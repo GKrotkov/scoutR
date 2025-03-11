@@ -38,12 +38,23 @@ initialize_scoutR("<replace this with your auth key!>")
 
 # Functions Demo
 
-scoutR provides a *lot* of handy functions. Here, I'll show you some of the ones I find myself using the most. 
+scoutR provides a *lot* of handy functions. Here, I'll show you some of the ones I find myself using the most. For every exported function in `scoutR`, you can run `help(fxn_name)` to pull up documentation listing the function's usage, parameters, and some examples.
 
 @TODO do a tour of key functions
 
-- event_matches()
-- 
+## event_matches()
+
+I find this function to be the real workhorse for scouting applications. This function takes a TBA-legal event key (examples: "2023mil", "2025njtab") and returns a dataframe with data for the matches played at that event. A key parameter for this function is `match_type`, which can be "all", "qual", or "playoff".
+
+```{r}
+mil23 <- event_matches("2023mil")
+# use match_type to subset down to only the matches you want
+mil23_quals <- event_matches("2023mil", match_type = "qual")
+mil23_playoffs <- event_matches("2023mil", match_type = "playoff")
+
+# take a look at all the useful data!
+View(mil23)
+```
 
 ## event_tangibles()
 
@@ -55,3 +66,75 @@ vagle25 <- event_tangibles("2025vagle")
 View(vagle25)
 ```
 
+## events()
+
+Retrieve all the events in a given year
+
+```{r}
+chargedup_events <- year_events(2023)
+crescendo_keys <- year_events(2024, keys = TRUE)
+```
+
+## qual_schedule()
+
+Retrieve the posted qual schedule. Usually, you'll want to direct this to a CSV for use in whatever scouting application you're using that depends on the schedule. 
+
+```{r}
+mdpas <- qual_schedule("2025mdpas")
+# write.csv(mdpas, file = "2025mdpas_schedule.csv")
+```
+
+## events()
+
+## event_awards()
+
+## event_coprs()
+
+## event_insights()
+
+## event_season_history()
+
+This function is useful mostly for prescouting - it retrieves robot-level results for every team registered for a given event.
+
+```{r}
+
+```
+
+## load_sync() / tba_sync()
+
+This pair of functions provides a quick way to download all the TBA data that's likely of interest to you while you don't have connectivity at a venue and store it locally, and load it into your local environment when you need it.
+
+```{r}
+tba_sync("2024paca")
+sync <- load_sync()
+```
+
+
+## Other exported functions
+
+These functions are also see semi-frequent usage, but I want to keep the focus on the workhorses. The names are pretty explanatory, and I encourage you to check out the help pages for the parameters!
+
+- district_events
+- district_rankings
+- district_teams
+- districts
+- event
+- event_alliances
+- event_district_points
+- event_opr_progression
+- event_oprs
+- event_rankings
+- event_teams
+- fit_event_lr
+- fit_lineup_lm
+- lineup_design_matrix
+- load_sync
+- tba_sync
+- multievent_insights
+- team
+- team_awards
+- team_events
+- team_matches
+- team_participation_years
+- teams
+- week_winning_seed_table

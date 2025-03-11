@@ -215,7 +215,7 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 
     if (keys) return(unlist(data))
 
-    data <- tidy_events(data)
+    data <- tidy_events(data, official = official)
 
     return(data)
 }
@@ -404,36 +404,6 @@ event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
     data <- read_event_teams(key, statuses, simple, keys)
     if (keys) return(data)
     data <- tidy_teams(data)
-    return(data)
-}
-
-#' Year Events
-#'
-#' Reads events in a given year
-#' @author Gabriel Krotkov
-#' @param year (int) year of interest
-#' @param official (logical) get only official events?
-#' @param simple (bool) simplify event objects?
-#' @param keys (bool) get keys only?
-#' @return tidy tibble of events, or vector if keys = TRUE
-#' @export
-#' @examples
-#' year_events(year = 2022, keys = TRUE)
-#' year_events(year = 2018)
-#' year_events(year = 2014, simple = TRUE)
-year_events <- function(
-        year = YEAR, official = FALSE, simple = FALSE, keys = FALSE){
-    # keys needs to override official because the official check requires
-    # information from the whole events object
-    if (keys & official){
-        df <- year_events(year, official = TRUE, simple = simple, keys = FALSE)
-        return(df$key)
-    }
-    data <- read_year_events(year, simple, keys)
-
-    if (keys) return(data)
-
-    data <- tidy_events(data, official = official)
     return(data)
 }
 
