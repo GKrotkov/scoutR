@@ -352,7 +352,7 @@ read_event_coprs <- function(key){
 
     data <- str_extract(raw, pattern = pat) %>%
         str_sub(start = head, end = str_length(.) - tail) %>%
-        fromJSON()
+        jsonlite::fromJSON()
 
     for(i in 1:length(data)){
         colnames(data[[i]]) <- c('team','value')
