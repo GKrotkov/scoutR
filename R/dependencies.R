@@ -15,4 +15,5 @@
 #' @importFrom purrr is_empty
 #' @importFrom purrr flatten_chr
 #' @importFrom jsonlite fromJSON
+#' @importFrom stringr str_length
 NULL

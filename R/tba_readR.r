@@ -351,7 +351,7 @@ read_event_coprs <- function(key){
     tail <- 4 # there will be 4 unnecessary characters at the end
 
     data <- str_extract(raw, pattern = pat) %>%
-        str_sub(start = head, end = str_length(.) - tail) %>%
+        str_sub(start = head, end = stringr::str_length(.) - tail) %>%
         jsonlite::fromJSON()
 
     for(i in 1:length(data)){
