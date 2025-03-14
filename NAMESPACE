@@ -3,6 +3,7 @@
 export(TBA_BASE)
 export(TBA_KEY)
 export(YEAR)
+export(combine_tbls)
 export(district_events)
 export(district_rankings)
 export(district_teams)
