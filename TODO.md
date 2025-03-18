@@ -4,6 +4,9 @@
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
 
+# Little questions
+- How many teams have ever gotten a double-gold from the #1 seed?
+
 # Bugs
 - `event_insights("2025vagle", insight_as_col = T)`; `event_insights("2024paca")`
 - `event_season_history("2024new")`; `event_season_history("2025mdsev")` (matches unplayed)
