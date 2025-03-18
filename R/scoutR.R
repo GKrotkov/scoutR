@@ -103,26 +103,22 @@ event_tangibles <- function(
 #### Analysis ####
 ##################
 
-#' Event Winner Seed
+#' Event Finish Seed
 #'
-#' Given an event, retrieves the seed of the winning alliance.
+#' Given an event, retrieves the seed(s) of alliances with a particular playoffs
+#' finish, defaulting to "Winner"
 #' @param key TBA-legal event key (ex. "2025vagle")
 #' @param size (int) Check event size; return NA if not the input integer.
 #' Ignored if NULL.
 #' @examples
 #' event_winner_seed("2025vagle")
 #'
-event_winner_seed <- function(key, size = NULL){
+event_finish_seed <- function(key, size = NULL, finish = "Winner"){
     alliances <- event_alliances(key)
-    if (is.null(alliances)) return(NA)
+    # special case for null results (ex. 2023tuis3)
+    if (is.null(alliances) || nrow(alliances) == 0) return(NA)
     if (!is.null(size) && nrow(alliances) != size) return(NA)
-    result <- sapply(
-        alliances$status, function(status){return(status$status)}
-    )
-    result <- which(result == "won")
-    # length can be 0 if no alliances were made or no alliance is marked as
-    # having won (example: 2023tuis3)
-    if (length(result) == 0) return(NA)
+    result <- which(alliances$finish == finish)
     return(result)
 }
 
@@ -147,7 +143,7 @@ week_winning_seed_table <- function(wk, year = YEAR, size = NULL){
         dplyr::filter(week == wk) %>%
         dplyr::select(key)
     keys <- unlist(keys)
-    return(table(sapply(keys, event_winner_seed, size)))
+    return(table(sapply(keys, event_finish_seed, size)))
 }
 
 
