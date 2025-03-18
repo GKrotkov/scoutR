@@ -111,9 +111,9 @@ event_tangibles <- function(
 #' @param size (int) Check event size; return NA if not the input integer.
 #' Ignored if NULL.
 #' @examples
-#' event_winner_seed("2025vagle")
+#' event_finish_seed("2025vagle")
 #'
-event_finish_seed <- function(key, size = NULL, finish = "Winner"){
+event_finish_seed <- function(key, finish = "Winner", size = NULL){
     alliances <- event_alliances(key)
     # special case for null results (ex. 2023tuis3)
     if (is.null(alliances) || nrow(alliances) == 0) return(NA)
@@ -122,19 +122,20 @@ event_finish_seed <- function(key, size = NULL, finish = "Winner"){
     return(result)
 }
 
-#' Week Event Wins Table by Seed
+#' Event Finish Table by Seed and Week
 #'
 #' Given a competition week and year, returns a table showing the distribution
-#' of event seeds.
+#' of event seed for a particular finish (default "Winner")
 #' @param wk Single integer between 1 and 6 representing the week of competition
 #' @param year Year of interest, defaults to current year.
 #' @param size (int) If NULL, include all events. Otherwise, only include
 #' events with the specified number of alliances.
 #' @export
 #' @examples
-#' week_winning_seed_table(1)
-#' week_winning_seed_table(4, 2023)
-week_winning_seed_table <- function(wk, year = YEAR, size = NULL){
+#' week_seed_finish_table(1)
+#' week_seed_finish_table(4, 2023)
+week_seed_finish_table <- function(wk, year = YEAR,
+                                   finish = "Winner", size = NULL){
     stopifnot("Week should be a single integer between 1 and 6" = {
         length(wk) == 1 && 0 < wk && wk <= 6
     })
@@ -143,7 +144,8 @@ week_winning_seed_table <- function(wk, year = YEAR, size = NULL){
         dplyr::filter(week == wk) %>%
         dplyr::select(key)
     keys <- unlist(keys)
-    return(table(sapply(keys, event_finish_seed, size)))
+    return(table(sapply(keys, event_finish_seed,
+                        finish = finish, size = size)))
 }
 
 
