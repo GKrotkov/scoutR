@@ -107,11 +107,14 @@ event_tangibles <- function(
 #'
 #' Given an event, retrieves the seed of the winning alliance.
 #' @param key TBA-legal event key (ex. "2025vagle")
+#' @param size (int) Check event size; return NA if not the input integer.
+#' Ignored if NULL.
 #' @examples
 #' event_winner_seed("2025vagle")
 #'
-event_winner_seed <- function(key){
+event_winner_seed <- function(key, size = NULL){
     alliances <- event_alliances(key)
+    if (!is.null(size) && nrow(alliances) != size) return(NA)
     result <- sapply(
         alliances$status, function(status){return(status$status)}
     )
@@ -128,11 +131,13 @@ event_winner_seed <- function(key){
 #' of event seeds.
 #' @param wk Single integer between 1 and 6 representing the week of competition
 #' @param year Year of interest, defaults to current year.
+#' @param size (int) If NULL, include all events. Otherwise, only include
+#' events with the specified number of alliances.
 #' @export
 #' @examples
 #' week_winning_seed_table(1)
 #' week_winning_seed_table(4, 2023)
-week_winning_seed_table <- function(wk, year = YEAR){
+week_winning_seed_table <- function(wk, year = YEAR, size = NULL){
     stopifnot("Week should be a single integer between 1 and 6" = {
         length(wk) == 1 && 0 < wk && wk <= 6
     })
@@ -141,7 +146,7 @@ week_winning_seed_table <- function(wk, year = YEAR){
         dplyr::filter(week == wk) %>%
         dplyr::select(key)
     keys <- unlist(keys)
-    return(table(sapply(keys, event_winner_seed)))
+    return(table(sapply(keys, event_winner_seed, size)))
 }
 
 
