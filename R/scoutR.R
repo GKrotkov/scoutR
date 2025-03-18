@@ -114,6 +114,7 @@ event_tangibles <- function(
 #'
 event_winner_seed <- function(key, size = NULL){
     alliances <- event_alliances(key)
+    if (is.null(alliances)) return(NA)
     if (!is.null(size) && nrow(alliances) != size) return(NA)
     result <- sapply(
         alliances$status, function(status){return(status$status)}
