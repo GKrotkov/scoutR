@@ -7,8 +7,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - document() to call roxygen documentation handlers
 
 # Bugs
-- `event_season_history("2024new")`; `event_season_history("2025mdsev")` (matches unplayed)
-    - Why does this function vomit output to the console?
+- `event_season_history("2025mdsev")` (matches unplayed)
 
 # Package Management
 - Document & export statbotics reading fxns

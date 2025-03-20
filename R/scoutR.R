@@ -45,7 +45,7 @@ event_season_history <- function(event_code, fields = NULL){
     year <- as.numeric(substr(event_code, 1, 4))
     matches <- lapply(registered_teams, team_matches, year = year)
     matches <- matches %>%
-        purrr::reduce(full_join)
+        purrr::reduce(full_join, by = join_by(key))
     # check for duplicated matches
     stopifnot(!any(duplicated(matches)))
 
