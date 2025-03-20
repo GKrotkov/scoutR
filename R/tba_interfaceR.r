@@ -293,7 +293,8 @@ event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE){
     # short-circuit eval to safely check null case
     if (is.null(data) || length(data) == 0) return(NULL)
     data <- tidy_alliances(data, unpack_picks)
-    if (attach_finish){
+    # check for null status, otherwise we'll crash when attempting to access it
+    if (attach_finish && !is.null(data$status)){
         data$finish <- sapply(data$status, alliance_finish)
     }
     return(data)
