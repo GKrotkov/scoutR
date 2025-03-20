@@ -313,7 +313,9 @@ event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE){
 #' the same fields filled out in both lists, in the same order.
 #' @export
 event_insights <- function(key, insight_as_col = FALSE){
-    data <- tidy_insights(read_event_insights(key), insight_as_col)
+    response <- read_event_insights(key)
+    if (is.null(response)) return(NULL)
+    data <- tidy_insights(response, insight_as_col)
     if(insight_as_col){
         data$event <- key
         data <- data %>%

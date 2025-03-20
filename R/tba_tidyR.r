@@ -245,11 +245,13 @@ tidy_alliances <- function(raw, unpack_picks = FALSE){
 #'
 #' Helper function for tidy_insights, handles the transpose case.
 #' @param data long dataframe of insights
+#' @importFrom data.table transpose
 transpose_insights <- function(data){
+    browser()
     phase <- data$phase
     data$phase <- NULL
     data <- split(data, phase)
-    data <- lapply(data, transpose)
+    data <- lapply(data, data.table::transpose)
     data <- lapply(data, function(subl){
         colnames(subl) <- subl[1, ]
         subl <- subl[-1, ]

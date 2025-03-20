@@ -17,4 +17,5 @@
 #' @importFrom purrr reduce
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_length
+#' @importFrom data.table transpose
 NULL
