@@ -1,6 +1,10 @@
 # TODO
 
-Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR disciplined, modular, and testable.
+Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
+
+## Statbotics interface overhaul
+- Statbotics tidyR, update tba_interfaceR to include the "tba_" prefix in each function name (maybe? That's a huge pain in the ass change.)
+- Document & export statbotics reading fxns
 
 ## Periodic
 - renv::snapshot() to update libraries
@@ -10,7 +14,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - `event_season_history("2025mdsev")` (matches unplayed)
 
 # Package Management
-- Document & export statbotics reading fxns
 - `testthat` validation of recently developed fxns
 
 # OPR Stabilization
@@ -32,7 +35,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
     - Dropout: subtract out teams that no-showed the match or played exactly 0 offense
 - Typical week 1 winning scores as a percentage of theoretical max score; is there a consistent pattern?
     - Goal is to help provide more principled insight one day one of build season
-- From Andy: "Is there, like, a typical saturation of teams that population centers hit before capping out or does it look different place to place?"
 - How many matches are needed to get a good seeding? (https://www.chiefdelphi.com/t/how-many-matches-are-needed-to-get-good-seeding/462857)
 - Principled model to predict district points cutoff
 
@@ -41,8 +43,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - Team History tracker
     - Who have you played with the most? Played against the most?
     - Number of matches you've played together divided by the expected number?
-- Statbotics tidyR, update tba_interfaceR to include the "tba_" prefix in each function name (maybe? That's a huge pain in the ass change.)
 - Local EPA calculation
 - Transition to frc-events api instead of using the tba API? 
 - ftc-events api functions ("ftc_readR" series)
-- Rebrand to something like "frc_scoutR"?
