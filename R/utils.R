@@ -85,3 +85,16 @@ combine_tbls <- function(tbl1, tbl2){
     tbl2 <- tbl2[order(names(tbl2))]
     return(tbl1 + tbl2)
 }
+
+#' Round Numerics
+#'
+#' Rounds all non-integer numeric columns to a specified precision
+#' @param df input data.frame
+#' @param digits precision to round to
+#' @noRd
+round_numerics <- function(df, ...){
+    numeric_cidx <- which(unlist(lapply(df, is.numeric)))
+    df[numeric_cidx] <- lapply(df[numeric_cidx], round, ...)
+    return(df)
+}
+
