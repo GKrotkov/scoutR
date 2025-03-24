@@ -360,11 +360,14 @@ event_oprs <- function(key){
 #'
 #' Wrapper function for read_event_coprs and tidy_event_coprs
 #' @param key (string) event key
+#' @param digits number of digits to round the result to
 #' @author Dr. Holt Oliver
 #' @export
-event_coprs <- function(key){
+event_coprs <- function(key, digits = 2){
     data <- read_event_coprs(key)
-    return(tidy_coprs(data))
+    result <- tidy_coprs(data)
+    result <- round_numerics(result, digits = digits)
+    return(result)
 }
 
 #' Event Rankings
