@@ -74,13 +74,15 @@ event_season_history <- function(event_code, fields = NULL){
 #' @param qual_only (logical) include only qual matches? If FALSE, will include
 #' both qualification and playoff matches.
 #' @param pct Convert all data columns to a percentage rather than a count?
+#' @param digits if non-NULL, rounds all numeric columns to the number of digits
+#' supplied.
 #' @examples
 #' event_tangibles("2025vagle")
 #' event_tangibles("2025vagle", qual_only = FALSE)
 #' event_tangibles("2017mrcmp", schema = schema_csf)
 #' @export
 event_tangibles <- function(
-    event_key, schema = schema_cfs, qual_only = T, pct = T
+    event_key, schema = schema_cfs, qual_only = T, pct = T, digits = 2
 ){
     type <- ifelse(qual_only, "qual", "all")
     matches_df <- event_matches(event_key, match_type = type)
@@ -95,6 +97,9 @@ event_tangibles <- function(
         colnames(result)[tangible_cidx] <-
             paste(colnames(result)[tangible_cidx], "pct", sep = "_")
         colnames(result) <- tolower(colnames(result))
+    }
+    if (!is.null(digits)){
+        result <- round_numerics(result, digits = digits)
     }
     return(result)
 }
