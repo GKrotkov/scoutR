@@ -11,7 +11,6 @@ test_that("event_winner_seed", {
     expect_equal(event_finish_seed("2025mdsev", finish = "4th"), 5)
 })
 
-# @TODO need to do event_season_history
 test_that("event_season_history", {
     load("data/event_season_history.rda")
 

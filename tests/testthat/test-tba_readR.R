@@ -23,7 +23,3 @@ test_that("Testing simkeys()", {
     expect_warning(simkeys("req", simple = TRUE, keys = TRUE),
                    "both simple and keys = TRUE")
 })
-
-test_that("Testing is_qual_match()", {
-
-})
