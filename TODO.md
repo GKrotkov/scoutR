@@ -3,8 +3,10 @@
 Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
 
 ## Statbotics interface overhaul
-- Statbotics tidyR, update tba_interfaceR to include the "tba_" prefix in each function name (maybe? That's a huge pain in the ass change.)
-- Document & export statbotics reading fxns
+- Maybe: update tba_interfaceR to just be interfaceR and include an optional param to do statbotics instead
+- Statbotics v3 API coverage for "plural" functions
+- Possibly use `httr2` instead of `httr::GET` for all the API requests we make in scoutR? (Would require changing tba_readR as well)
+    - https://httr2.r-lib.org/articles/wrapping-apis.html
 
 ## Periodic
 - renv::snapshot() to update libraries

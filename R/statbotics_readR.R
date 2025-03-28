@@ -67,5 +67,12 @@ year_sb <- function(yr){
     return(result)
 }
 
+#' Years (Statbotics)
+#'
+#' Returns the
+years_sb <- function(){
+
+}
+
 #' @TODO remember to write test files for these
 # endpoints to (consider) add(ing): years, teams, team_years, events, team_events, team_matches, matches
