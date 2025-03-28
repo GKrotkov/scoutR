@@ -4,15 +4,21 @@
 \alias{team_sb}
 \title{Team (Statbotics)}
 \usage{
-team_sb(tm)
+team_sb(tm, yr = NULL, event = NULL, match = NULL)
 }
 \arguments{
 \item{tm}{(int/chr) team number}
+
+\item{yr}{(int) year of interest}
+
+\item{event}{(chr) event key of interest (ex. "2023mil")}
+
+\item{match}{(chr) match key of interest (ex. "2024new_qm110")}
 }
 \description{
-Returns a 1-row dataframe representing a team's statbotics results
+Returns a list representing a team's statbotics results
 }
 \examples{
 dawgma <- team_sb(1712)
-blair <- team_sb(449)
+blair_at_severn <- team_sb(449, event = "2025mdsev")
 }

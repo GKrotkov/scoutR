@@ -10,7 +10,7 @@ event_sb(key)
 \item{key}{event key (e.g. "2025mdpas")}
 }
 \description{
-Returns a 1-row dataframe for a given event
+Returns a list representing statbotics info for a given event
 }
 \examples{
 pasadena <- event_sb("2025mdpas")

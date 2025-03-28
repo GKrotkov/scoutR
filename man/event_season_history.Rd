@@ -4,13 +4,15 @@
 \alias{event_season_history}
 \title{Event Season History}
 \usage{
-event_season_history(event_code, fields = NULL)
+event_season_history(event_code, fields = NULL, manual_teams = NULL)
 }
 \arguments{
 \item{event_code}{TBA-legal event code (ex. "2024paca")}
 
 \item{fields}{optional, robot fields you want to retrieve. If NULL, uses
 `id_robot_fields()` to get individual robot-level fields automatically.}
+
+\item{manual_teams}{(int) additional teams to manually add to the team list}
 }
 \description{
 Given an event code, this function returns all a dataframe with all the
