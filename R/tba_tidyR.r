@@ -95,6 +95,10 @@ unnest_alliances <- function(matches){
 #' @param matches tibble of matches
 #' @return tibble of matches with alliance compositions broken down
 unpack_alliances <- function(matches){
+    if (!("alliances" %in% colnames(matches))){
+        warning("unpack_alliances() called with no `alliance` column")
+        return(matches)
+    }
     matches <- matches %>%
         unnest_wider(alliances)
 
@@ -109,6 +113,10 @@ unpack_alliances <- function(matches){
 #' @param matches Tibble of TBA match objects (unnested)
 #' @return Tibble of matches with additional columns for the score breakdown.
 unpack_breakdown <- function(matches){
+    if (!("score_breakdown" %in% colnames(matches))){
+        warning("unpack_breakdown() called with no `score_breakdown` column")
+        return(matches)
+    }
     # unpack score_breakdown into red and blue
     matches <- matches %>%
         unnest_wider("score_breakdown")
@@ -149,6 +157,7 @@ unpack_breakdown <- function(matches){
 tidy_matches <- function(
     raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
 ){
+    browser()
     event <- tibble(matches = raw)
     event <- event %>%
         unnest_wider(matches)
