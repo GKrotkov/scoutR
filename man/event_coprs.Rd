@@ -4,10 +4,12 @@
 \alias{event_coprs}
 \title{Get Event cOPRs}
 \usage{
-event_coprs(key)
+event_coprs(key, digits = 2)
 }
 \arguments{
 \item{key}{(string) event key}
+
+\item{digits}{number of digits to round the result to}
 }
 \description{
 Wrapper function for read_event_coprs and tidy_event_coprs
