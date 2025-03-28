@@ -94,7 +94,7 @@ combine_tbls <- function(tbl1, tbl2){
 #' @noRd
 round_numerics <- function(df, digits = 2){
     numeric_cidx <- which(unlist(lapply(df, is.numeric)))
-    df[numeric_cidx] <- lapply(df[numeric_cidx], round, digits = 2)
+    df[numeric_cidx] <- lapply(df[numeric_cidx], round, digits = digits)
     return(df)
 }
 
