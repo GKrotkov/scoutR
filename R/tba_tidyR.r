@@ -157,8 +157,11 @@ unpack_breakdown <- function(matches){
 tidy_matches <- function(
     raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
 ){
-    browser()
     event <- tibble(matches = raw)
+
+    # if there are no matches, we can return the empty tibble
+    if (nrow(event) == 0) return(event)
+
     event <- event %>%
         unnest_wider(matches)
 

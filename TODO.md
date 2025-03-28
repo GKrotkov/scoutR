@@ -10,11 +10,8 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
 
-# Bugs
-- `event_season_history("2025mdsev")` (matches unplayed)
-
 # Package Management
-- `testthat` validation of recently developed fxns
+- `testthat` validation of key fxns
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
@@ -33,8 +30,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
     - Dropout: subtract out teams that no-showed the match or played exactly 0 offense
-- Typical week 1 winning scores as a percentage of theoretical max score; is there a consistent pattern?
-    - Goal is to help provide more principled insight one day one of build season
 - How many matches are needed to get a good seeding? (https://www.chiefdelphi.com/t/how-many-matches-are-needed-to-get-good-seeding/462857)
 - Principled model to predict district points cutoff
 

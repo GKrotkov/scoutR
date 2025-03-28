@@ -13,8 +13,7 @@ test_that("event_winner_seed", {
 
 # @TODO need to do event_season_history
 test_that("event_season_history", {
-    # event_season_history("2024paca")
-    # event_season_history("2024new")
-    # event_season_history("2025mdsev")
+    load("data/event_season_history.rda")
 
+    expect_equal(event_season_history("2024paca"), test1)
 })
