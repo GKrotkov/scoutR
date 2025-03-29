@@ -7,6 +7,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - Statbotics v3 API coverage for "plural" functions
 - Possibly use `httr2` instead of `httr::GET` for all the API requests we make in scoutR? (Would require changing tba_readR as well)
     - https://httr2.r-lib.org/articles/wrapping-apis.html
+- Should I be using `as_tibble` so that all the statbotics functions return a tibble instead of a list? This would remove the need for purrr::pluck, etc.
 
 ## Periodic
 - renv::snapshot() to update libraries
