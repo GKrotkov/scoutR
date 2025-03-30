@@ -9,6 +9,9 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
     - https://httr2.r-lib.org/articles/wrapping-apis.html
 - Should I be using `as_tibble` so that all the statbotics functions return a tibble instead of a list? This would remove the need for purrr::pluck, etc.
 
+## Bugs
+- initialize_scoutR doesn't force an update of scoutR::TBA_KEY when it's done updating the file
+
 ## Periodic
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
