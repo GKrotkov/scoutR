@@ -2,9 +2,8 @@
 
 Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
 
-## Statbotics interface overhaul
-- Statbotics v3 API coverage for "plural" functions
-- Use `httr2` for the statbotics calls, but we can leave the `httr` structure in place for the TBA calls. Maybe revisit later and update to `httr2`
+## httr interface overhaul
+- Update TBA-side to use httr2 instead of httr?
 
 ## Periodic
 - renv::snapshot() to update libraries
