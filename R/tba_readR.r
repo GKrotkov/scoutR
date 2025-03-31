@@ -132,28 +132,21 @@ simkeys <- function(req, simple = FALSE, keys = FALSE){
     return(req)
 }
 
-#' Attach parameters
+#' Attach Optional Parameters
 #'
-#' Helper function to write API calls, adds parameters to the request
-#' @param req Request string prior to operation
-#' @param parameters Vector of parameter titles
-#' @param values Vector of parameter values
-#' @author Gabriel Krotkov
-#' @return String request with parameter attached
-#' @examples
-#' attach_parameters("api.example/v2/root", "option", "2")
-attach_parameters <- function(req, parameters, values){
-    req <- paste(req, "?", sep = "")
-    for (i in 1:length(parameters)){
-        if (i != 1) req <- paste0(req, "&")
-        if (!is.na(values[i])){
-            req <- paste0(req, as.character(parameters[i]),
-                          "=", as.character(values[i]))
-        }
-
-    }
+#' Attaches optional parameters to an API request
+#' @param req Length-1 character vector representing an API request
+#' @param params named list of desired params, where the name is the parameter
+#' title and the value is the parameter value.
+#' @param marker the character used to separate the params in the url
+attach_opt_params <- function(req, params, marker = "?"){
+    stopifnot(length(req) == 1)
+    # paste/collapse the params into a single chr
+    params <- paste(names(params), params, sep = "=", collapse = "&")
+    req <- paste(req, params, sep = marker)
     return(req)
 }
+
 
 ####################
 #### Match Fxns ####

@@ -69,9 +69,12 @@ year_sb <- function(yr){
 
 #' Years (Statbotics)
 #'
-#' Returns the
-years_sb <- function(){
-
+#' Return a batch of year objects
+#' @param params Named list of parameters to pass to the statbotics API call.
+years_sb <- function(params){
+    req <- attach_opt_params("years", params)
+    result <- get_content(req, base = STATBOTICS_BASE)
+    return(result)
 }
 
 #' @TODO remember to write test files for these
