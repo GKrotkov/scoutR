@@ -12,9 +12,7 @@
 #' @importFrom tibble tibble
 #' @importFrom rvest html_text
 #' @importFrom stringr str_detect str_sub str_extract
-#' @importFrom purrr is_empty
-#' @importFrom purrr flatten_chr
-#' @importFrom purrr reduce
+#' @importFrom purrr is_empty flatten_chr reduce
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_length
 #' @importFrom data.table transpose
