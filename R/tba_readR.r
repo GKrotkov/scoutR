@@ -11,13 +11,6 @@
 # API (so we're giving the nomenclature "right of way" to TBA)
 
 #' @export
-TBA_KEY <- ifelse(
-    file.exists(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
-    readr::read_file(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
-    NA
-)
-
-#' @export
 TBA_BASE <- "https://www.thebluealliance.com/api/v3"
 
 # returns the current year
@@ -35,6 +28,19 @@ YEAR <- format(Sys.time(), "%Y")
 #### Base Helpers ####
 ######################
 
+#' tba_key
+#'
+#' Function to retrieve the user's TBA key as stored in their HOME directory
+#' @export
+tba_key <- function(){
+    path <- file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")
+    if(file.exists(path)){
+        return(readr::read_file(path))
+    } else{
+        return(NA)
+    }
+}
+
 numbers_only <- function(x) !grepl("\\D", x)
 
 #' API Authorization
@@ -48,8 +54,8 @@ numbers_only <- function(x) !grepl("\\D", x)
 auth <- function(req){
     stopifnot("Authentication key uninitialized.
               To resolve, run: initialize_scoutR('your_tba_auth_key')." =
-                  !is.na(TBA_KEY))
-    return(paste(req, "?X-TBA-Auth-Key=", TBA_KEY, sep = ""))
+                  !is.na(tba_key()))
+    return(paste(req, "?X-TBA-Auth-Key=", tba_key(), sep = ""))
 }
 
 #' Team Formatting

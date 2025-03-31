@@ -21,12 +21,6 @@ initialize_scoutR <- function(auth_key){
             write_file(auth_key, file = ".scoutR_auth.txt")
         })
     }
-    # using global assignment operator to force update of TBA_KEY
-    TBA_KEY <<- ifelse(
-        file.exists(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
-        readr::read_file(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
-        NA
-    )
 }
 
 #########################
