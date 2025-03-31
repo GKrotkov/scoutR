@@ -7,6 +7,5 @@
 initialize_scoutR(auth_key)
 }
 \description{
-Function to start scoutR by writing the auth key for scoutR as well as
-creating the documentation files for scoutR
+Function to store the auth key for scoutR in the user's HOME directory
 }

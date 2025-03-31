@@ -8,8 +8,7 @@
 
 #' Initialize scoutR
 #'
-#' Function to start scoutR by writing the auth key for scoutR as well as
-#' creating the documentation files for scoutR
+#' Function to store the auth key for scoutR in the user's HOME directory
 #' @export
 initialize_scoutR <- function(auth_key){
     home <- Sys.getenv("HOME")
@@ -22,6 +21,7 @@ initialize_scoutR <- function(auth_key){
             write_file(auth_key, file = ".scoutR_auth.txt")
         })
     }
+    # using global assignment operator to force update of TBA_KEY
     TBA_KEY <<- ifelse(
         file.exists(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
         readr::read_file(file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")),
