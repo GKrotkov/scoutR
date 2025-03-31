@@ -79,32 +79,41 @@ tf <- function(n){
     return(n)
 }
 
-#' Get Response
+#' Attach Optional Parameters
 #'
-#' Wrapper for httr:GET attaches TBA base and auth key to input request
-#' @param req request string
-#' @param base API base string (for example, TBA or Statbotics API root)
-#' @author Gabriel Krotkov
-#' @return API response
-#' @examples
-#' get_response("team/frc1712/awards")
-#' get_response("team/3504", base = STATBOTICS_BASE)
-get_response <- function(req, base = TBA_BASE){
-    return(GET(auth(paste(base, req, sep = "/"))))
+#' Attaches optional parameters to an API request
+#' @param req Length-1 character vector representing an API request
+#' @param params named list of desired params, where the name is the parameter
+#' title and the value is the parameter value.
+#' @param marker the character used to separate the params in the url
+attach_opt_params <- function(req, params, marker = "?"){
+    stopifnot(length(req) == 1)
+    # paste/collapse the params into a single chr
+    params <- paste(names(params), params, sep = "=", collapse = "&")
+    req <- paste(req, params, sep = marker)
+    return(req)
 }
 
 #' Get Content
 #'
-#' Wrapper for get_reponse, uses content() to retrieve a list of the content
-#' @param req request string
+#' Executes an API request given an endpoint and an API base
+#' @param req request string endpoint
 #' @param base API base string (for example, TBA or Statbotics API root)
 #' @author Gabriel Krotkov
 #' @return JSON list of result string
 #' @examples
 #' get_content("team/frc1712/awards")
 #' get_content("team/3504", base = STATBOTICS_BASE)
-get_content <- function(req, base = TBA_BASE){
-    return(httr::content(get_response(req, base = base)))
+get_content <- function(req, params = list(), base = TBA_BASE){
+    req <- paste(base, req, sep = "/")
+    # Add TBA Authorization to params
+    params <- append(params, list(`X-TBA-Auth-Key` = tba_key()))
+    # add auth param and *then* attach the params so we only introduce
+    # one "&" character
+    req <- req |>
+        attach_opt_params(params)
+
+    return(httr::content(httr::GET(req)))
 }
 
 #' Simkeys
@@ -131,22 +140,6 @@ simkeys <- function(req, simple = FALSE, keys = FALSE){
     }
     return(req)
 }
-
-#' Attach Optional Parameters
-#'
-#' Attaches optional parameters to an API request
-#' @param req Length-1 character vector representing an API request
-#' @param params named list of desired params, where the name is the parameter
-#' title and the value is the parameter value.
-#' @param marker the character used to separate the params in the url
-attach_opt_params <- function(req, params, marker = "?"){
-    stopifnot(length(req) == 1)
-    # paste/collapse the params into a single chr
-    params <- paste(names(params), params, sep = "=", collapse = "&")
-    req <- paste(req, params, sep = marker)
-    return(req)
-}
-
 
 ####################
 #### Match Fxns ####

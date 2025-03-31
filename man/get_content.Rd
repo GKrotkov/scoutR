@@ -4,10 +4,10 @@
 \alias{get_content}
 \title{Get Content}
 \usage{
-get_content(req, base = TBA_BASE)
+get_content(req, params = list(), base = TBA_BASE)
 }
 \arguments{
-\item{req}{request string}
+\item{req}{request string endpoint}
 
 \item{base}{API base string (for example, TBA or Statbotics API root)}
 }
@@ -15,7 +15,7 @@ get_content(req, base = TBA_BASE)
 JSON list of result string
 }
 \description{
-Wrapper for get_reponse, uses content() to retrieve a list of the content
+Executes an API request given an endpoint and an API base
 }
 \examples{
 get_content("team/frc1712/awards")

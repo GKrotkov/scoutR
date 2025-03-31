@@ -3,12 +3,8 @@
 Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
 
 ## Statbotics interface overhaul
-- Maybe: update tba_interfaceR to just be interfaceR and include an optional param to do statbotics instead
 - Statbotics v3 API coverage for "plural" functions
-    - `attach_opt_params` conflicts with `auth` and it's causing "plural" statbotics api calls to fail - I should update the structure of authorization to conform to `attach_opt_params`
-- Possibly use `httr2` instead of `httr::GET` for all the API requests we make in scoutR? (Would require changing tba_readR as well)
-    - https://httr2.r-lib.org/articles/wrapping-apis.html
-- Should I be using `as_tibble` so that all the statbotics functions return a tibble instead of a list? This would remove the need for purrr::pluck, etc.
+- Use `httr2` for the statbotics calls, but we can leave the `httr` structure in place for the TBA calls. Maybe revisit later and update to `httr2`
 
 ## Periodic
 - renv::snapshot() to update libraries
