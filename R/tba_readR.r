@@ -31,7 +31,7 @@ YEAR <- format(Sys.time(), "%Y")
 #' tba_key
 #'
 #' Function to retrieve the user's TBA key as stored in their HOME directory
-#' @export
+#' @noRd
 tba_key <- function(){
     path <- file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")
     if(file.exists(path)){
