@@ -4,11 +4,11 @@
 \alias{events_sb}
 \title{Events (Statbotics)}
 \usage{
-events_sb(params)
+events_sb(...)
 }
 \arguments{
-\item{params}{Named list of parameters to pass to the statbotics API call.}
+\item{...}{Parameters passed to the statbotics /v3/{events} endpoint}
 }
 \description{
-Events (Statbotics)
+Returns a batch of statbotics event objects conforming to the given parameters
 }

@@ -4,11 +4,18 @@
 \alias{teams_sb}
 \title{Teams (Statbotics)}
 \usage{
-teams_sb(params)
+teams_sb(..., yr = NULL, event = NULL, match = NULL)
 }
 \arguments{
-\item{params}{Named list of parameters to pass to the statbotics API call.}
+\item{...}{Optional parameters passed to v3/{teams} endpoint}
+
+\item{yr}{(optional) year of interest}
+
+\item{event}{(optional) event of interest}
+
+\item{match}{(optional) match of interest}
 }
 \description{
-Teams (Statbotics)
+Returns a batch of team (or team-year, or team-event, or team-match) objects
+conforming to the provided parameters.
 }

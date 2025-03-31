@@ -4,11 +4,11 @@
 \alias{years_sb}
 \title{Years (Statbotics)}
 \usage{
-years_sb(params)
+years_sb(...)
 }
 \arguments{
-\item{params}{Named list of parameters to pass to the statbotics API call.}
+\item{...}{Parameters to be passed to the statbotics /v3/{years}/ endpoint}
 }
 \description{
-Return a batch of year objects
+Returns a batch of statbotics event objects conforming to the given parameters
 }

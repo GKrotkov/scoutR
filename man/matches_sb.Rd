@@ -4,11 +4,11 @@
 \alias{matches_sb}
 \title{Matches (Statbotics)}
 \usage{
-matches_sb(params)
+matches_sb(...)
 }
 \arguments{
-\item{params}{Named list of parameters to pass to the statbotics API call.}
+\item{...}{Parameters passed to the statbotics /v3/{matches} endpoint}
 }
 \description{
-Matches (Statbotics)
+Returns a batch of statbotics match objects conforming to the given parameters
 }
