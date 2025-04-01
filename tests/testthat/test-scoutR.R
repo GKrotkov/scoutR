@@ -15,4 +15,5 @@ test_that("event_season_history", {
     load("data/event_season_history.rda")
 
     expect_equal(event_season_history("2024paca"), test1)
+    expect_equal(event_season_history("2024new"), test2)
 })

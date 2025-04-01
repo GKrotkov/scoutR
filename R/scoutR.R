@@ -53,7 +53,9 @@ event_season_history <- function(
         registered_teams <- union(registered_teams, manual_teams)
     }
     year <- as.numeric(substr(event_code, 1, 4))
-    matches <- lapply(registered_teams, team_matches, year = year)
+    # only consider official matches to avoid data irregularities
+    matches <- lapply(registered_teams, team_matches,
+                      year = year, official = TRUE)
     # join by every column, because we don't want duplicated vars in the output
     matches <- matches %>%
         purrr::reduce(full_join, by = colnames(matches[[1]]))
