@@ -133,7 +133,7 @@ id2int <- function(id, prefix = "frc"){
 #' naming schema to cut away alliance color and the robot number so that we can
 #' make the output a little less ugly.
 id_robot_fields <- function(matches, simplify = TRUE){
-    idx <- grep("robot", colnames(matches), ignore.case = TRUE)
+    idx <- grep("robot[1-3]", colnames(matches), ignore.case = TRUE)
     result <- colnames(matches)[idx]
     if (simplify){
         result <- gsub("red|blue", "", result, ignore.case = TRUE)
@@ -320,6 +320,7 @@ count_team_matches <- function(matches){
 get_multifield_df <- function(
     matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
 ){
+    browser()
     if (is.null(fields)){
         fields <- id_robot_fields(matches)
     }
