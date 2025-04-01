@@ -320,7 +320,6 @@ count_team_matches <- function(matches){
 get_multifield_df <- function(
     matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
 ){
-    browser()
     if (is.null(fields)){
         fields <- id_robot_fields(matches)
     }
