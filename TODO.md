@@ -2,8 +2,8 @@
 
 Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
 
-## httr interface overhaul
-- Update TBA-side to use httr2 instead of httr?
+## httr decisions
+- Statbotics API functions will use httr2, while the TBA API functions will use httr. This avoids me needing to revamp all of the TBA readR, 
 
 ## Periodic
 - renv::snapshot() to update libraries
@@ -38,5 +38,4 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
     - Who have you played with the most? Played against the most?
     - Number of matches you've played together divided by the expected number?
 - Local EPA calculation
-- Transition to frc-events api instead of using the tba API? 
 - ftc-events api functions ("ftc_readR" series)
