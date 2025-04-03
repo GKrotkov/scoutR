@@ -7,6 +7,7 @@
 #' @import readr
 #' @import tibble
 #' @import httr2
+#' @import data.table
 #' @importFrom pracma Lcm
 #' @importFrom httr content GET
 #' @importFrom httr2 request req_url_path_append req_url_query req_perform resp_body_json
