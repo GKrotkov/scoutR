@@ -567,5 +567,5 @@ tba_sync <- function(event_key){
 load_sync <- function(){
     load("tbasync.rda")
     return(list(team_list = team_list, rankings = rankings, oprs = oprs,
-                alliances = alliances, match_schedule = match_schedule))
+                coprs = coprs, alliances = alliances, matches = matches))
 }

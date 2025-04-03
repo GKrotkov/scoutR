@@ -11,6 +11,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 # Package Management
 - `testthat` validation of key fxns
+- pkgdown documentation (with scoutR rebrand of the logo)
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
@@ -32,10 +33,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - How many matches are needed to get a good seeding? (https://www.chiefdelphi.com/t/how-many-matches-are-needed-to-get-good-seeding/462857)
 - Principled model to predict district points cutoff
 
-## Long term:
-- Generic, automated data validation via `tba_validatoR`
-- Team History tracker
-    - Who have you played with the most? Played against the most?
-    - Number of matches you've played together divided by the expected number?
+## Long term
+- Generic, automated data validation; `validatoR`
 - Local EPA calculation
 - ftc-events api functions ("ftc_readR" series)
