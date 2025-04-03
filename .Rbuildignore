@@ -4,3 +4,7 @@
 ^\.Rproj\.user$
 (^|/)[^/]*(?:_cache|_files)(/.*)?$
 ^scripts$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
