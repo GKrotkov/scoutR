@@ -23,7 +23,7 @@ Hello! This is your introduction to using `scoutR`, assuming you might even be a
 
 ## R and RStudio
 
-`scoutR` is a package for the R programming language, an open-source statistical programming language popular for its support for statistical programming, data science, and data visualization. The most typical IDE used for R programming is RStudio, published by Posit. You can download and install the R programming language and RStudio ![here](https://posit.co/download/rstudio-desktop/). You can use other IDEs (Visual Studio Code is a popular one, for example) to program in R, but RStudio is specifically designed to support R programming.
+`scoutR` is a package for the R programming language, an open-source statistical programming language popular for its support for statistical programming, data science, and data visualization. The most typical IDE used for R programming is RStudio, published by Posit. You can download and install the R programming language and RStudio [here](https://posit.co/download/rstudio-desktop/). You can use other IDEs (Visual Studio Code is a popular one, for example) to program in R, but RStudio is specifically designed to support R programming.
 
 ## Package Installation
 
