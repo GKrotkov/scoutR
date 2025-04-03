@@ -2,12 +2,12 @@
 
 Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
 
-## httr decisions
-- Statbotics API functions will use httr2, while the TBA API functions will use httr. This avoids me needing to revamp all of the TBA readR, 
-
 ## Periodic
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
+
+# Bugs
+- event_season_history() with an input event with an unposted match schedule
 
 # Package Management
 - `testthat` validation of key fxns
@@ -37,3 +37,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - Generic, automated data validation; `validatoR`
 - Local EPA calculation
 - ftc-events api functions ("ftc_readR" series)
+
+## httr decisions
+- Statbotics API functions will use httr2, while the TBA API functions will use httr. This avoids me needing to revamp all of the TBA readR.
