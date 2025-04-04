@@ -4,7 +4,7 @@ author: "Gabriel Krotkov"
 date: "2025-04-03"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Indentation}
+  %\VignetteIndexEntry{intro}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
