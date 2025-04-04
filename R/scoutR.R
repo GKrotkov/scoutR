@@ -56,6 +56,8 @@ event_season_history <- function(
     # only consider official matches to avoid data irregularities
     matches <- lapply(registered_teams, team_matches,
                       year = year, official = TRUE)
+    # filter out teams with no matches played:
+    matches <- matches[sapply(matches, nrow) > 0]
     # join by every column, because we don't want duplicated vars in the output
     matches <- matches %>%
         purrr::reduce(full_join, by = colnames(matches[[1]]))
