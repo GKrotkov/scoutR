@@ -4,10 +4,12 @@
 \alias{qual_schedule}
 \title{Event Schedule}
 \usage{
-qual_schedule(event_code)
+qual_schedule(event_code, id2int = TRUE)
 }
 \arguments{
 \item{event_code}{TBA-legal event key}
+
+\item{id2int}{convert TBA keys (e.g. "frc1712") to int ("1712")?}
 }
 \description{
 Returns a dataframe with the event's qualification match schedule
