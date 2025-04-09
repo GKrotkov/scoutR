@@ -446,7 +446,7 @@ read_event_teams <- function(
 #' read_year_events(year = 2014)
 #' read_year_events(year = 2015, simple = TRUE)
 #' read_year_events(year = 2016, keys = TRUE)
-#' read_year_events(year = 2017 simple = TRUE, keys = TRUE)
+#' read_year_events(year = 2017, simple = TRUE, keys = TRUE)
 read_year_events <- function(year = YEAR, simple = FALSE, keys = FALSE){
     request <- paste("events", year, sep = "/")
     request <- simkeys(request, simple = simple, keys = keys)
