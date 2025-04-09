@@ -23,7 +23,7 @@ Returns all events for a given year. Keys overrides simple.
 read_year_events(year = 2014)
 read_year_events(year = 2015, simple = TRUE)
 read_year_events(year = 2016, keys = TRUE)
-read_year_events(year = 2017 simple = TRUE, keys = TRUE)
+read_year_events(year = 2017, simple = TRUE, keys = TRUE)
 }
 \author{
 Gabriel Krotkov
