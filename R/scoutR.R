@@ -10,9 +10,9 @@
 #'
 #' Returns a dataframe with the event's qualification match schedule
 #' @param event_code TBA-legal event key
-#' @param id2int convert TBA keys (e.g. "frc1712") to int ("1712")?
+#' @param int_output convert TBA keys (e.g. "frc1712") to int ("1712")?
 #' @export
-qual_schedule <- function(event_code, id2int = TRUE){
+qual_schedule <- function(event_code, int_output = TRUE){
     matches <- event_matches(
         event_code, match_type = "qual", breakdown = FALSE, unplayed = TRUE
     )
@@ -21,10 +21,11 @@ qual_schedule <- function(event_code, id2int = TRUE){
     matches <- matches %>%
         dplyr::select(match_number, red1, red2, red3, blue1, blue2, blue3)
 
-    if (id2int){
-        matches <- dplyr::mutate(dplyr::across(
-            c(red1, red2, red3, blue1, blue2, blue3), id2int
-        ))
+    if (int_output){
+        matches <- matches %>%
+            dplyr::mutate(dplyr::across(
+                c(red1, red2, red3, blue1, blue2, blue3), id2int
+            ))
     }
 
     return(matches)
