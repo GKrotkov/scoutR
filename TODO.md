@@ -6,8 +6,15 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - renv::snapshot() to update libraries
 - document() to call roxygen documentation handlers
 
+# Prescouting
+- Should "event_season_history" also include EPA and season record or other key markers?
+- Should I have a function called "prescout" that gets all that stuff? 
+- Should I rename "event_season_history" to "event_season_tangibles" or something?
+- I would like to have "most recent event competed" data; at least "what was the last week they competed?"
+
 # Bugs
 - event_season_history() with an input event with an unposted match schedule
+- Annoying warning messages when you load the package between of data.table and dplyr overlap over "first", "last", and "between"
 
 # Package Management
 - `testthat` validation of key fxns
