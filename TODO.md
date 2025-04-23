@@ -16,6 +16,9 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - event_season_history() with an input event with an unposted match schedule
 - Annoying warning messages when you load the package between of data.table and dplyr overlap over "first", "last", and "between"
 
+# Prescouting
+- View for Max OPR, max cOPRs
+
 # Package Management
 - `testthat` validation of key fxns
 - pkgdown documentation (with scoutR rebrand of the logo)
