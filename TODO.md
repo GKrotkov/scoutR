@@ -7,7 +7,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - document() to call roxygen documentation handlers
 
 # Prescouting
-- Should "event_season_history" also include EPA and season record or other key markers?
+- Should "event_season_history" also include EPA and season record or other key markers (max OPR/cOPR)?
 - Should I have a function called "prescout" that gets all that stuff? 
 - Should I rename "event_season_history" to "event_season_tangibles" or something?
 - I would like to have "most recent event competed" data; at least "what was the last week they competed?"
@@ -15,9 +15,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 # Bugs
 - event_season_history() with an input event with an unposted match schedule
 - Annoying warning messages when you load the package between of data.table and dplyr overlap over "first", "last", and "between"
-
-# Prescouting
-- View for Max OPR, max cOPRs
+- pkgdown debugging
 
 # Package Management
 - `testthat` validation of key fxns
