@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="logos/transparent.png" width="500">
+    <img src="man/figures/transparent.png" width="500">
 </p>
 
 # scoutR
