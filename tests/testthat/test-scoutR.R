@@ -11,9 +11,18 @@ test_that("event_winner_seed", {
     expect_equal(event_finish_seed("2025mdsev", finish = "4th"), 5)
 })
 
+test_that("event_matchups", {
+    load("data/event_matchups.rda")
+
+    expect_equal(event_matchups("2025mdsev", 449), test1)
+    expect_equal(event_matchups("2025paca", 3504), test2)
+    expect_equal(event_matchups("2025chcmp", 4821), test3)
+})
+
 test_that("event_season_tangibles", {
     load("data/event_season_tangibles.rda")
 
     expect_equal(event_season_tangibles("2024paca"), test1)
     expect_equal(event_season_tangibles("2024new"), test2)
 })
+

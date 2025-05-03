@@ -31,18 +31,29 @@ qual_schedule <- function(event_code, int_output = TRUE){
     return(matches)
 }
 
-# @TODO WORK IN PROGRESS
-qual_partners <- function(event_code, team_id){
+#' Event Matchups
+#'
+#' Returns a list containing all a team's partners and opponents for a
+#' particular event.
+#' @param event_code TBA-legal event code (ex. "2025chcmp")
+#' @param team_id team of interest as int or TBA id (ex. "frc449", 449)
+#' @export
+event_matchups <- function(event_code, team_id){
     if (is.character(team_id)) team_id <- id2int(team_id)
     schedule <- qual_schedule(event_code, int_output = TRUE)
     filtered <- schedule %>%
         filter(team_id == red1 | team_id == red2 | team_id == red3 |
                    team_id == blue1 | team_id == blue2 | team_id == blue3)
-    on_blue <-
-        449 == filtered$blue1 | 449 == filtered$blue2 | 449 == filtered$blue3
+    # logical vector: is the team of interest on the blue alliance?
+    on_blue <- team_id == filtered$blue1 |
+        team_id == filtered$blue2 |
+        team_id == filtered$blue3
     red <- c(filtered$red1, filtered$red2, filtered$red3)
     blue <- c(filtered$blue1, filtered$blue2, filtered$blue3)
-    return(filtered)
+    idx <- rep(on_blue, 3)
+    partners <- sort(unique(c(red[!idx], blue[idx])))
+    opponents <- sort(unique(c(red[idx], blue[!idx])))
+    return(list(partners = partners, opponents = opponents))
 }
 
 # ScoutR provides an array of useful, event-ready analysis functions for
@@ -190,7 +201,6 @@ week_seed_finish_table <- function(wk, year = YEAR,
     return(table(sapply(keys, event_finish_seed,
                         finish = finish, size = size)))
 }
-
 
 #######################################################
 #### Linear Modeling (Calculated Contribution/OPR) ####
