@@ -31,10 +31,24 @@ qual_schedule <- function(event_code, int_output = TRUE){
     return(matches)
 }
 
+# @TODO WORK IN PROGRESS
+qual_partners <- function(event_code, team_id){
+    if (is.character(team_id)) team_id <- id2int(team_id)
+    schedule <- qual_schedule(event_code, int_output = TRUE)
+    filtered <- schedule %>%
+        filter(team_id == red1 | team_id == red2 | team_id == red3 |
+                   team_id == blue1 | team_id == blue2 | team_id == blue3)
+    on_blue <-
+        449 == filtered$blue1 | 449 == filtered$blue2 | 449 == filtered$blue3
+    red <- c(filtered$red1, filtered$red2, filtered$red3)
+    blue <- c(filtered$blue1, filtered$blue2, filtered$blue3)
+    return(filtered)
+}
+
 # ScoutR provides an array of useful, event-ready analysis functions for
 # data-driven decisionmaking at FRC events.
 
-#' Event Season History
+#' Event Season Tangibles
 #'
 #' Given an event code, this function returns all a dataframe with all the
 #' robot-level results of teams registered for a particular event.
@@ -46,8 +60,8 @@ qual_schedule <- function(event_code, int_output = TRUE){
 #' Checks for match duplication, which will stop execution if TRUE.
 #' @export
 #' @examples
-#' gpr24 <- event_season_history("2024paca")
-event_season_history <- function(
+#' gpr24 <- event_season_tangibles("2024paca")
+event_season_tangibles <- function(
         event_code, fields = NULL, manual_teams = NULL
 ){
     registered_teams <- event_teams(event_code, keys = TRUE)
