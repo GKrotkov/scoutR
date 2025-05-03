@@ -30,9 +30,13 @@ YEAR <- format(Sys.time(), "%Y")
 
 #' tba_key
 #'
-#' Function to retrieve the user's TBA key as stored in their HOME directory
+#' Function to retrieve the user's TBA key. First, looks for the auth key
+#' as an environment variable, and if that fails it will retrieve it from
+#' the user's HOME directory in the hidden auth text file. Looking for the
+#' environment variable first is required for the pkgdown site build.
 #' @noRd
 tba_key <- function(){
+    if (Sys.getenv("TBA_AUTH") != "") return(Sys.getenv("TBA_AUTH"))
     path <- file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")
     if(file.exists(path)){
         return(readr::read_file(path))
