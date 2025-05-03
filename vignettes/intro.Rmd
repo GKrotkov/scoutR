@@ -122,11 +122,11 @@ vagle25_coprs <- event_coprs("2025vagle")
 head(vagle25_coprs)
 ```
 
-## event_season_history()
+## event_season_tangibles()
 
 This function is useful mostly for prescouting - it retrieves robot-level results for every team registered for a given event. Note that this differs from `event_tangibles` in that this function gets *all* the matches a team has played this season, while `event_tangibles` focused on what happened *at a particular event.*
 
 ```{r}
-newton24_prescout <- event_season_history("2024new")
+newton24_prescout <- event_season_tangibles("2024new")
 head(newton24_prescout)
 ```
