@@ -67,12 +67,6 @@ Krotkov</h4>
 
     
     
-<pre><code><span><span class="co">## Warning: replacing previous import 'data.table::first' by 'dplyr::first' when</span></span>
-<span><span class="co">## loading 'scoutR'</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: replacing previous import 'data.table::last' by 'dplyr::last' when</span></span>
-<span><span class="co">## loading 'scoutR'</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: replacing previous import 'data.table::between' by 'dplyr::between'</span></span>
-<span><span class="co">## when loading 'scoutR'</span></span></code></pre>
 <div class="section level2">
 <h2 id="getting-started">Getting Started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
@@ -97,7 +91,7 @@ in R, but RStudio is specifically designed to support R programming.</p>
 <p>If you do not already have <code>devtools</code> installed, you will
 need to install that first. To do that, run this line of code in your R
 console:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># only run this code once!</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span></code></pre></div>
 <p>Installation code should only be run once. Once you have run the
@@ -107,7 +101,7 @@ the entire file.</p>
 <p>Once you have installed <code>devtools</code>, you can install
 <code>scoutR</code>. To install <code>scoutR</code>, run the following
 line of code in your R console.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gkrotkov/scoutR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -118,7 +112,7 @@ can generate a TBA authorization key at www.thebluealliance.com/account
 under the “Read API Keys” header. Once you have an auth key, replace the
 string in this code with your auth key! (The auth key needs quotations
 around it)</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GKrotkov/scoutR" class="external-link">scoutR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/initialize_scoutR.html">initialize_scoutR</a></span><span class="op">(</span><span class="st">"&lt;replace this with your auth key!&gt;"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -140,7 +134,7 @@ applications. This function takes a TBA-legal event key (examples:
 “2023mil”, “2025njtab”) and returns a dataframe with data for the
 matches played at that event. A key parameter for this function is
 <code>match_type</code>, which can be “all”, “qual”, or “playoff”.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mil23</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_matches.html">event_matches</a></span><span class="op">(</span><span class="st">"2023mil"</span><span class="op">)</span></span>
 <span><span class="co"># use match_type to subset down to only the matches you want</span></span>
 <span><span class="va">mil23_quals</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_matches.html">event_matches</a></span><span class="op">(</span><span class="st">"2023mil"</span>, match_type <span class="op">=</span> <span class="st">"qual"</span><span class="op">)</span></span>
@@ -171,7 +165,7 @@ matches played at that event. A key parameter for this function is
 <p><code><a href="../reference/event_tangibles.html">event_tangibles()</a></code> allows you to pull all the
 single-robot records from TBA in one line of code, based on the standard
 TBA naming schema since 2018.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># defaults to only pulling data from qualification matches</span></span>
 <span><span class="va">vagle25_tangibles</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_tangibles.html">event_tangibles</a></span><span class="op">(</span><span class="st">"2025vagle"</span><span class="op">)</span></span>
 <span><span class="co"># but if you suppress the qual_only flag, you'll get playoffs as well</span></span>
@@ -197,7 +191,7 @@ TBA naming schema since 2018.</p>
 </h3>
 <p>Retrieve all the events in a given year, with flags to get key-only
 return or official-only events</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chargedup_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/events.html">events</a></span><span class="op">(</span><span class="fl">2023</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">chargedup_events</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 30</span></span></span>
@@ -215,7 +209,7 @@ return or official-only events</p>
 <span><span class="co">## <span style="color: #949494;">#   parent_event_key &lt;chr&gt;, playoff_type &lt;int&gt;, playoff_type_string &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   postal_code &lt;chr&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chargedup_official_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/events.html">events</a></span><span class="op">(</span><span class="fl">2023</span>, official <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">chargedup_official_events</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 30</span></span></span>
@@ -233,7 +227,7 @@ return or official-only events</p>
 <span><span class="co">## <span style="color: #949494;">#   parent_event_key &lt;chr&gt;, playoff_type &lt;int&gt;, playoff_type_string &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   postal_code &lt;chr&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span></span></code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crescendo_keys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/events.html">events</a></span><span class="op">(</span><span class="fl">2024</span>, keys <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">crescendo_keys</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "2024alhu" "2024arc"  "2024arli" "2024aroz" "2024audd" "2024ausc"</span></span></code></pre>
@@ -244,7 +238,7 @@ return or official-only events</p>
 <p>Retrieve the posted qual schedule. Usually, you’ll want to direct
 this to a CSV for use in whatever scouting application you’re using that
 depends on the schedule.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mdpas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qual_schedule.html">qual_schedule</a></span><span class="op">(</span><span class="st">"2025mdpas"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mdpas</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
@@ -256,7 +250,7 @@ depends on the schedule.</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span>            4  <span style="text-decoration: underline;">2</span>537  <span style="text-decoration: underline;">6</span>213  <span style="text-decoration: underline;">1</span>629   686  <span style="text-decoration: underline;">4</span>821   888</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">5</span>            5  <span style="text-decoration: underline;">2</span>912  <span style="text-decoration: underline;">1</span>719   612  <span style="text-decoration: underline;">5</span>338   116  <span style="text-decoration: underline;">1</span>915</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">6</span>            6  <span style="text-decoration: underline;">4</span>456  <span style="text-decoration: underline;">4</span>541  <span style="text-decoration: underline;">7</span>770  <span style="text-decoration: underline;">9</span>072  <span style="text-decoration: underline;">8</span>726  <span style="text-decoration: underline;">5</span>549</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># write.csv(mdpas, file = "2025mdpas_schedule.csv")</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -264,7 +258,7 @@ depends on the schedule.</p>
 </h3>
 <p>Get all the awards won by a given team. Includes optional parameters
 to filter for year or event.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gos_awards_history</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/team_awards.html">team_awards</a></span><span class="op">(</span><span class="fl">3504</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gos_awards_history</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
@@ -281,7 +275,7 @@ to filter for year or event.</p>
 <h3 id="event_coprs">event_coprs()<a class="anchor" aria-label="anchor" href="#event_coprs"></a>
 </h3>
 <p>Retrieve all component OPRs posted by TBA on the “Insights” page.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vagle25_coprs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_coprs.html">event_coprs</a></span><span class="op">(</span><span class="st">"2025vagle"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">vagle25_coprs</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 35</span></span></span>
@@ -302,7 +296,7 @@ to filter for year or event.</p>
 <span><span class="co">## <span style="color: #949494;">#   endGameBargePoints &lt;dbl&gt;, autoBonusAchieved &lt;dbl&gt;, …</span></span></span></code></pre>
 </div>
 <div class="section level3">
-<h3 id="event_season_history">event_season_history()<a class="anchor" aria-label="anchor" href="#event_season_history"></a>
+<h3 id="event_season_tangibles">event_season_tangibles()<a class="anchor" aria-label="anchor" href="#event_season_tangibles"></a>
 </h3>
 <p>This function is useful mostly for prescouting - it retrieves
 robot-level results for every team registered for a given event. Note
@@ -310,8 +304,8 @@ that this differs from <code>event_tangibles</code> in that this
 function gets <em>all</em> the matches a team has played this season,
 while <code>event_tangibles</code> focused on what happened <em>at a
 particular event.</em></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">newton24_prescout</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_season_history.html">event_season_history</a></span><span class="op">(</span><span class="st">"2024new"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">newton24_prescout</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_season_tangibles.html">event_season_tangibles</a></span><span class="op">(</span><span class="st">"2024new"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">newton24_prescout</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      id autoLine_No autoLine_Yes endGame_Parked endGame_StageLeft</span></span>
 <span><span class="co">## 58   58           3           58             19                13</span></span>

@@ -3,7 +3,7 @@ pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   intro: intro.html
-last_built: 2025-05-01T14:50Z
+last_built: 2025-05-03T02:53Z
 urls:
   reference: https://gkrotkov.github.io/scoutR/reference
   article: https://gkrotkov.github.io/scoutR/articles
