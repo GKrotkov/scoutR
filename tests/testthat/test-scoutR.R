@@ -19,10 +19,18 @@ test_that("event_matchups", {
     expect_equal(event_matchups("2025chcmp", 4821), test3)
 })
 
+test_that("event_tangibles", {
+    load("data/event_tangibles.rda")
+
+    expect_equal(event_tangibles("2025vagle"), test1)
+    expect_equal(event_tangibles("2025tnkn"), test2)
+    expect_equal(event_tangibles("2018pawch"), test3)
+    expect_equal(event_tangibles("2025new", qual_only = F, pct = F), test4)
+})
+
 test_that("event_season_tangibles", {
     load("data/event_season_tangibles.rda")
 
     expect_equal(event_season_tangibles("2024paca"), test1)
     expect_equal(event_season_tangibles("2024new"), test2)
 })
-

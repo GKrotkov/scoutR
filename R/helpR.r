@@ -155,19 +155,20 @@ id_robot_fields <- function(matches, simplify = TRUE){
 get_team_stations <- function(matches, key){
     key <- tf(key)
     stations <- matches[, c(paste0("blue", 1:3), paste0("red", 1:3))]
-    idx <- which(stations == key)
-    col_idx <- trunc(idx / nrow(stations)) + 1
-    row_idx <- idx %% nrow(stations)
-    # mod operator fails on the nrow edge case
-    row_idx[which(row_idx == 0)] <- nrow(stations)
+    idx <- which(stations == key, arr.ind = TRUE)
+    ridx <- idx[, "row"]
+    cidx <- idx[, "col"]
     # convert the column indexes into alliance station formats
-    team_stations <- ifelse(col_idx == 1, "blue1",
-                            ifelse(col_idx == 2, "blue2",
-                                   ifelse(col_idx == 3, "blue3",
-                                          ifelse(col_idx == 4, "red1",
-                                                 ifelse(col_idx == 5, "red2",
-                                                        "red3")))))
-    return(data.frame(match = row_idx, station = team_stations))
+    team_stations <- dplyr::case_when(
+        cidx == 1 ~ "blue1",
+        cidx == 2 ~ "blue2",
+        cidx == 3 ~ "blue3",
+        cidx == 4 ~ "red1",
+        cidx == 5 ~ "red2",
+        cidx == 6 ~ "red3",
+        .default = NA
+    )
+    return(data.frame(match = ridx, station = team_stations))
 }
 
 #' ID Unplayed Matches
