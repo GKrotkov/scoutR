@@ -361,11 +361,14 @@ event_oprs <- function(key){
 #' Wrapper function for read_event_coprs and tidy_event_coprs
 #' @param key (string) event key
 #' @param digits number of digits to round the result to
-#' @author Dr. Holt Oliver
+#' @details
+#' TBA exports cOPRs for events as early as 2023. If you want cOPRs for earlier
+#' events, you can compute them with `fit_event_lr` and a wise response choice
+#'
 #' @export
 event_coprs <- function(key, digits = 2){
-    data <- read_event_coprs(key)
-    result <- tidy_coprs(data)
+    raw <- read_event_coprs(key)
+    result <- tidy_coprs(raw)
     result <- round_numerics(result, digits = digits)
     return(result)
 }

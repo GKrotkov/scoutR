@@ -317,14 +317,16 @@ tidy_oprs <- function(raw){
 #'
 #' Turns list of event cOPRs (from read_event_coprs) to a tidy dataframe
 #' @param data list of cOPR data
-#' @author Dr. Holt Oliver
 tidy_coprs <- function(data){
-    long_df <- Reduce(rbind, data)
-    long_df$value <- as.numeric(long_df$value)
-    wide_df <- long_df %>% pivot_wider(id_cols=`team`,
-                                       values_from = value,
-                                       names_from = stat)
-    return(wide_df)
+    # strategy: unlist() all the elements of data, and then cbind them
+    result <- lapply(data, unlist)
+    result <- do.call(cbind, result)
+    ids <- rownames(result)
+    result <- as_tibble(result)
+    result$team <- ids
+    result <- result |>
+        dplyr::relocate(team, everything())
+    return(result)
 }
 
 #' Tidy Rankings

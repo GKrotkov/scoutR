@@ -16,7 +16,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 # Package Management
 - `testthat` validation of key fxns
-- pkgdown documentation (with scoutR rebrand of the logo)
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
