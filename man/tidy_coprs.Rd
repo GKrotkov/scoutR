@@ -12,6 +12,3 @@ tidy_coprs(data)
 \description{
 Turns list of event cOPRs (from read_event_coprs) to a tidy dataframe
 }
-\author{
-Dr. Holt Oliver
-}
