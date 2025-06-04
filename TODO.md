@@ -4,7 +4,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 ## Periodic
 - renv::snapshot() to update libraries
-- document() to call roxygen documentation handlers
+- devtools::document() to call roxygen documentation handlers
 
 # Prescouting
 - Should "event_season_history" also include EPA and season record or other key markers (max OPR/cOPR)?
@@ -16,6 +16,9 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 # Package Management
 - `testthat` validation of key fxns
+- Functions that might need to get consolidated or removed from the package: 
+    - `multievent_insights()`; doesn't look like I've touched it since 2023 - would removing it break anything? (see git log -S multievent_insights)
+    - `event_season_tangibles()` into a "prescout" function
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
