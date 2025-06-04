@@ -42,7 +42,7 @@
 <div class="section level2">
 <h2 id="periodic">Periodic<a class="anchor" aria-label="anchor" href="#periodic"></a></h2>
 <ul><li>renv::snapshot() to update libraries</li>
-<li>document() to call roxygen documentation handlers</li>
+<li>devtools::document() to call roxygen documentation handlers</li>
 </ul></div>
 </div>
 <div class="section level1">
@@ -59,6 +59,12 @@
 <h1 id="package-management">Package Management<a class="anchor" aria-label="anchor" href="#package-management"></a></h1>
 <ul><li>
 <code>testthat</code> validation of key fxns</li>
+<li>Functions that might need to get consolidated or removed from the package:
+<ul><li>
+<code><a href="reference/multievent_insights.html">multievent_insights()</a></code>; doesn’t look like I’ve touched it since 2023 - would removing it break anything? (see git log -S multievent_insights)</li>
+<li>
+<code><a href="reference/event_season_tangibles.html">event_season_tangibles()</a></code> into a “prescout” function</li>
+</ul></li>
 </ul></div>
 <div class="section level1">
 <h1 id="opr-stabilization">OPR Stabilization<a class="anchor" aria-label="anchor" href="#opr-stabilization"></a></h1>
