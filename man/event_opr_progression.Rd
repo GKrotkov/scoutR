@@ -24,8 +24,8 @@ blue_score").}
 }
 \description{
 Returns a dataframe tracking the progression of OPR over the course of an
-event. The rows are the number of matches played, and the columns are the
-team IDs, with additional columns for tracking the match number and
+event. The rows scale with the number of matches played, and the columns are
+the team IDs, with additional columns for tracking the match number and
 matches per team.
 }
 \details{

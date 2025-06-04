@@ -7,11 +7,8 @@
 read_event_coprs(key)
 }
 \arguments{
-\item{key}{(string) event key}
+\item{key}{(chr) event key (e.g. "2025vagle")}
 }
 \description{
-Reads event cOPRs from the event_insights tab and returns them as a list.
-}
-\author{
-Dr. Holt Oliver
+Read Event cOPRs
 }
