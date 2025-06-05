@@ -47,15 +47,13 @@
 </div>
 <div class="section level1">
 <h1 id="prescouting">Prescouting<a class="anchor" aria-label="anchor" href="#prescouting"></a></h1>
-<ul><li>Update the prescout() fxn to include some soft info (team name? where are they from? district team?)</li>
-<li>Add max (c)OPR to prescout()</li>
+<ul><li>Add max (c)OPR to prescout()</li>
 <li>Add “last week competed” info to prescout()</li>
-<li>Update the season_tangibles() code to clean up 0 columns (e.x. shallow climb stuff)</li>
 <li>Add the ability to get EPA breakdown info in a year-general way</li>
 </ul></div>
 <div class="section level1">
 <h1 id="bugs">Bugs<a class="anchor" aria-label="anchor" href="#bugs"></a></h1>
-<ul><li>event_season_history() with an input event with an unposted match schedule</li>
+<ul><li>event_tangibles() with an input event with an unposted match schedule</li>
 </ul></div>
 <div class="section level1">
 <h1 id="package-management">Package Management<a class="anchor" aria-label="anchor" href="#package-management"></a></h1>
@@ -64,8 +62,6 @@
 <li>Functions that might need to get consolidated or removed from the package:
 <ul><li>
 <code><a href="reference/multievent_insights.html">multievent_insights()</a></code>; doesn’t look like I’ve touched it since 2023 - would removing it break anything? (see git log -S multievent_insights)</li>
-<li>
-<code>event_season_tangibles()</code> into a “prescout” function</li>
 </ul></li>
 </ul></div>
 <div class="section level1">
