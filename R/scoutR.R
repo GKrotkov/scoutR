@@ -59,10 +59,9 @@ event_matchups <- function(event_code, team_id){
 # ScoutR provides an array of useful, event-ready analysis functions for
 # data-driven decisionmaking at FRC events.
 
-#' Event Season Tangibles
+#' Prescout
 #'
-#' Given an event code, this function returns all a dataframe with all the
-#' robot-level results of teams registered for a particular event.
+#' Given an event code, return a df with prescouting data
 #' @param event_code TBA-legal event code (ex. "2024paca")
 #' @param fields optional, robot fields you want to retrieve. If NULL, uses
 #' `id_robot_fields()` to get individual robot-level fields automatically.
@@ -71,45 +70,23 @@ event_matchups <- function(event_code, team_id){
 #' Checks for match duplication, which will stop execution if TRUE.
 #' @export
 #' @examples
-#' gpr24 <- event_season_tangibles("2024paca")
-event_season_tangibles <- function(
-        event_code, fields = NULL, manual_teams = NULL
-){
-    registered_teams <- event_teams(event_code, keys = TRUE)
-    registered_teams <- as.numeric(
-        substr(registered_teams, 4, nchar(registered_teams))
-    )
+#' gpr24 <- prescout("2024paca")
+#' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672))
+prescout <- function(event_code, fields = NULL, manual_teams = NULL){
+    tms <- event_teams(event_code, keys = TRUE)
+    tms <- id2int(tms)
     # add teams manually to the list of registered teams
     if (!is.null(manual_teams)){
         stopifnot("manual_teams should be a numeric vector of integers" = {
             is.numeric(manual_teams) && all(manual_teams == trunc(manual_teams))
         })
-        registered_teams <- union(registered_teams, manual_teams)
+        tms <- union(tms, manual_teams)
     }
-    year <- as.numeric(substr(event_code, 1, 4))
-    # only consider official matches to avoid data irregularities
-    matches <- lapply(registered_teams, team_matches,
-                      year = year, official = TRUE)
-    # filter out teams with no matches played:
-    matches <- matches[sapply(matches, nrow) > 0]
-    # join by every column, because we don't want duplicated vars in the output
-    matches <- matches %>%
-        purrr::reduce(full_join, by = colnames(matches[[1]]))
-    # check for duplicated matches
-    stopifnot(!any(duplicated(matches)))
-
-    if (is.null(fields)){
-        fields <- id_robot_fields(matches)
-    }
-
-    history <- get_multifield_df(matches, fields)
-
-    # filter history
-    history$id <- as.numeric(substr(history$id, 4, nchar(history$id)))
-    history <- history[history$id %in% registered_teams, ]
-    history <- history[order(history$id), ]
-    rownames(history) <- history$id
-    return(history)
+    yr <- as.numeric(substr(event_code, 1, 4))
+    tangibles <- season_tangibles(tms, yr)
+    sb <- prescout_sb(tms, yr)
+    result <- merge(tangibles, sb, by = "id")
+    return(result)
 }
 
 #' Event Tangibles
