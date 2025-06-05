@@ -120,6 +120,8 @@ LOOCV <- function(fit){
 #' @param id TBA-legal team formatted string (i.e. "frc3504")
 #' @param prefix string prefix for id (in overwhelming majority of cases "frc")
 id2int <- function(id, prefix = "frc"){
+    # if the user accidentally input a numeric, just return it
+    if (is.numeric(id)) return(id)
     return(as.numeric(substr(id, nchar(prefix) + 1, nchar(id))))
 }
 

@@ -73,8 +73,10 @@ event_matchups <- function(event_code, team_id){
 #' gpr24 <- prescout("2024paca")
 #' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672))
 prescout <- function(event_code, fields = NULL, manual_teams = NULL){
-    tms <- event_teams(event_code, keys = TRUE)
-    tms <- id2int(tms)
+    team_data <- event_teams(event_code) |>
+        dplyr::select(team_number, nickname, city, state_prov, country) |>
+        dplyr::rename(id = team_number, name = nickname)
+    tms <- team_data$id
     # add teams manually to the list of registered teams
     if (!is.null(manual_teams)){
         stopifnot("manual_teams should be a numeric vector of integers" = {
@@ -85,7 +87,7 @@ prescout <- function(event_code, fields = NULL, manual_teams = NULL){
     yr <- as.numeric(substr(event_code, 1, 4))
     tangibles <- season_tangibles(tms, yr)
     sb <- prescout_sb(tms, yr)
-    result <- merge(tangibles, sb, by = "id")
+    result <- purrr::reduce(list(team_data, tangibles, sb), merge, by = "id")
     return(result)
 }
 
