@@ -441,7 +441,7 @@ season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL){
     history <- get_multifield_df(matches, fields)
 
     # filter history
-    history$id <- as.numeric(substr(history$id, 4, nchar(history$id)))
+    history$id <- id2int(history$id)
     history <- history[history$id %in% tms, ]
     history <- history[order(history$id), ]
     rownames(history) <- history$id

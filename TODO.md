@@ -7,20 +7,17 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - devtools::document() to call roxygen documentation handlers
 
 # Prescouting
-- Update the prescout() fxn to include some soft info (team name? where are they from? district team?)
 - Add max (c)OPR to prescout()
 - Add "last week competed" info to prescout()
-- Update the season_tangibles() code to clean up 0 columns (e.x. shallow climb stuff)
 - Add the ability to get EPA breakdown info in a year-general way
 
 # Bugs
-- event_season_history() with an input event with an unposted match schedule
+- event_tangibles() with an input event with an unposted match schedule
 
 # Package Management
 - `testthat` validation of key fxns
 - Functions that might need to get consolidated or removed from the package: 
     - `multievent_insights()`; doesn't look like I've touched it since 2023 - would removing it break anything? (see git log -S multievent_insights)
-    - `event_season_tangibles()` into a "prescout" function
 
 # OPR Stabilization
 - Find OPR's stabilization point (whole stabilization function?)
