@@ -47,9 +47,11 @@
 </div>
 <div class="section level1">
 <h1 id="prescouting">Prescouting<a class="anchor" aria-label="anchor" href="#prescouting"></a></h1>
-<ul><li>Should “event_season_history” also include EPA and season record or other key markers (max OPR/cOPR)?</li>
-<li>Should I have a function called “prescout” that gets all that stuff?</li>
-<li>I would like to have “most recent event competed” data; at least “what was the last week they competed?”</li>
+<ul><li>Update the prescout() fxn to include some soft info (team name? where are they from? district team?)</li>
+<li>Add max (c)OPR to prescout()</li>
+<li>Add “last week competed” info to prescout()</li>
+<li>Update the season_tangibles() code to clean up 0 columns (e.x. shallow climb stuff)</li>
+<li>Add the ability to get EPA breakdown info in a year-general way</li>
 </ul></div>
 <div class="section level1">
 <h1 id="bugs">Bugs<a class="anchor" aria-label="anchor" href="#bugs"></a></h1>
@@ -63,7 +65,7 @@
 <ul><li>
 <code><a href="reference/multievent_insights.html">multievent_insights()</a></code>; doesn’t look like I’ve touched it since 2023 - would removing it break anything? (see git log -S multievent_insights)</li>
 <li>
-<code><a href="reference/event_season_tangibles.html">event_season_tangibles()</a></code> into a “prescout” function</li>
+<code>event_season_tangibles()</code> into a “prescout” function</li>
 </ul></li>
 </ul></div>
 <div class="section level1">

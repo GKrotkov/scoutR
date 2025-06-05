@@ -296,31 +296,36 @@ to filter for year or event.</p>
 <span><span class="co">## <span style="color: #949494;">#   foulPoints &lt;dbl&gt;, g206Penalty &lt;dbl&gt;, g410Penalty &lt;dbl&gt;, …</span></span></span></code></pre>
 </div>
 <div class="section level3">
-<h3 id="event_season_tangibles">event_season_tangibles()<a class="anchor" aria-label="anchor" href="#event_season_tangibles"></a>
+<h3 id="prescout">prescout()<a class="anchor" aria-label="anchor" href="#prescout"></a>
 </h3>
-<p>This function is useful mostly for prescouting - it retrieves
-robot-level results for every team registered for a given event. Note
-that this differs from <code>event_tangibles</code> in that this
-function gets <em>all</em> the matches a team has played this season,
-while <code>event_tangibles</code> focused on what happened <em>at a
-particular event.</em></p>
+<p>This function is useful mostly for prescouting - it retrieves all the
+tangibles results available in TBA, along with the team’s record and
+EPA. Future updates will include season max (c)OPRs and last week
+seen.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">newton24_prescout</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/event_season_tangibles.html">event_season_tangibles</a></span><span class="op">(</span><span class="st">"2024new"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">newton24_prescout</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prescout.html">prescout</a></span><span class="op">(</span><span class="st">"2024new"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">newton24_prescout</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##      id autoLine_No autoLine_Yes endGame_Parked endGame_StageLeft</span></span>
-<span><span class="co">## 58   58           3           58             19                13</span></span>
-<span><span class="co">## 59   59           2           56             14                20</span></span>
-<span><span class="co">## 85   85           1           58             18                15</span></span>
-<span><span class="co">## 111 111           1           44             23                 0</span></span>
-<span><span class="co">## 254 254           0           51              4                 2</span></span>
-<span><span class="co">## 294 294           2           52             12                 7</span></span>
-<span><span class="co">##     endGame_StageRight endGame_None endGame_CenterStage n_matches_count</span></span>
-<span><span class="co">## 58                  21            3                   5              61</span></span>
-<span><span class="co">## 59                  14            6                   4              58</span></span>
-<span><span class="co">## 85                  10           14                   2              59</span></span>
-<span><span class="co">## 111                  0           22                   0              45</span></span>
-<span><span class="co">## 254                  7            1                  37              51</span></span>
-<span><span class="co">## 294                 16            3                  16              54</span></span></code></pre>
+<pre><code><span><span class="co">##    id autoLine_No autoLine_Yes endGame_Parked endGame_StageLeft</span></span>
+<span><span class="co">## 1  58           3           58             19                13</span></span>
+<span><span class="co">## 2  59           2           56             14                20</span></span>
+<span><span class="co">## 3  85           1           58             18                15</span></span>
+<span><span class="co">## 4 111           1           44             23                 0</span></span>
+<span><span class="co">## 5 254           0           51              4                 2</span></span>
+<span><span class="co">## 6 294           2           52             12                 7</span></span>
+<span><span class="co">##   endGame_StageRight endGame_None endGame_CenterStage n_matches_count wins</span></span>
+<span><span class="co">## 1                 21            3                   5              61   40</span></span>
+<span><span class="co">## 2                 14            6                   4              58   32</span></span>
+<span><span class="co">## 3                 10           14                   2              59   33</span></span>
+<span><span class="co">## 4                  0           22                   0              45   22</span></span>
+<span><span class="co">## 5                  7            1                  37              51   45</span></span>
+<span><span class="co">## 6                 16            3                  16              54   37</span></span>
+<span><span class="co">##   losses ties winrate   epa</span></span>
+<span><span class="co">## 1     21    0  0.6557 27.08</span></span>
+<span><span class="co">## 2     26    0  0.5517 35.79</span></span>
+<span><span class="co">## 3     23    0  0.5893 32.61</span></span>
+<span><span class="co">## 4     23    0  0.4889 38.28</span></span>
+<span><span class="co">## 5      5    0  0.9000 51.44</span></span>
+<span><span class="co">## 6     16    0  0.6981 25.36</span></span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
