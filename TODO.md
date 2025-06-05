@@ -7,9 +7,11 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - devtools::document() to call roxygen documentation handlers
 
 # Prescouting
-- Should "event_season_history" also include EPA and season record or other key markers (max OPR/cOPR)?
-- Should I have a function called "prescout" that gets all that stuff? 
-- I would like to have "most recent event competed" data; at least "what was the last week they competed?"
+- Update the prescout() fxn to include some soft info (team name? where are they from? district team?)
+- Add max (c)OPR to prescout()
+- Add "last week competed" info to prescout()
+- Update the season_tangibles() code to clean up 0 columns (e.x. shallow climb stuff)
+- Add the ability to get EPA breakdown info in a year-general way
 
 # Bugs
 - event_season_history() with an input event with an unposted match schedule

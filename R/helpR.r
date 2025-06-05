@@ -403,3 +403,66 @@ alliance_finish <- function(status){
     }
     return(bo3_alliance_finish(status))
 }
+
+#' Season Tangibles
+#'
+#' Given a vector of team numbers, this function returns a df with all the
+#' robot-level results of those teams in the given official season
+#' @param tms (numeric) vector of team numbers
+#' @param yr (int) integer year number of interest
+#' @param fields optional, robot fields you want to retrieve. If NULL, uses
+#' `id_robot_fields()` to get individual robot-level fields automatically.
+#' @param manual_teams (int) additional teams to manually add to the team list
+#' @noRd
+#' @details
+#' Checks for match duplication, which will stop execution if TRUE.
+#' @examples
+#' tms <- event_teams("2024paca", keys = TRUE)
+#' tms <- id2int(tms)
+#' tangibles <- season_tangibles(tms)
+season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL){
+    stopifnot("yr should be length 1" = {length(yr) == 1})
+    # only consider official matches to avoid data irregularities
+    matches <- lapply(tms, team_matches, year = yr, official = TRUE)
+    # filter out teams with no matches played:
+    matches <- matches[sapply(matches, nrow) > 0]
+    # join by every column, because we don't want duplicated vars in the output
+    matches <- matches %>%
+        purrr::reduce(full_join, by = colnames(matches[[1]]))
+    # check for duplicated matches
+    stopifnot(!any(duplicated(matches)))
+
+    if (is.null(fields)){
+        fields <- id_robot_fields(matches)
+    }
+
+    history <- get_multifield_df(matches, fields)
+
+    # filter history
+    history$id <- as.numeric(substr(history$id, 4, nchar(history$id)))
+    history <- history[history$id %in% tms, ]
+    history <- history[order(history$id), ]
+    rownames(history) <- history$id
+    return(history)
+}
+
+#' Prescout Statbotics
+#'
+#' Retrieves team record and EPA from statbotics
+#' @param tms (numeric) vector of teams
+#' @param yr (int) length-1 integer for the year of interest
+#' @noRd
+prescout_sb <- function(tms, yr){
+    get_data <- function(tm, yr = NULL){
+        sb_data <- team_sb(tm, yr = yr)
+        record <- data.frame(sb_data$record)
+        record$count <- NULL
+        record$epa <- sb_data$epa$total_points$mean
+        return(record)
+    }
+
+    result <- lapply(tms, get_data, yr = yr)
+    result <- Reduce(rbind, result)
+    result$id <- tms
+    return(result)
+}
