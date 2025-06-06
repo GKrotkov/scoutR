@@ -71,20 +71,22 @@ event_matchups <- function(event_code, team_id){
 #' @export
 #' @examples
 #' gpr24 <- prescout("2024paca")
-#' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672))
+#' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672, 3504))
 prescout <- function(event_code, fields = NULL, manual_teams = NULL){
-    # @TODO handle the case where event_teams() is a 0x0 tibble
-    team_data <- event_teams(event_code) |>
+    team_data <- event_teams(event_code)
+    # add manual teams - suppressing warnings for the 0x0 tibble case
+    tms <- union(suppressWarnings(team_data$team_number), manual_teams)
+    # for manual additions, add to team_data
+    for (i in seq_along(manual_teams)){
+        no_nulls <- Filter(Negate(is.null), team(manual_teams[i]))
+        team_data <- team_data |>
+            # bind_rows fills missing columns with NA
+            dplyr::bind_rows(as.data.frame(no_nulls))
+    }
+    stopifnot("At least one team needed to prescout()" = {nrow(team_data) > 0})
+    team_data <- team_data |>
         dplyr::select(team_number, nickname, city, state_prov, country) |>
         dplyr::rename(id = team_number, name = nickname)
-    tms <- team_data$id
-    # add teams manually to the list of registered teams
-    if (!is.null(manual_teams)){
-        stopifnot("manual_teams should be a numeric vector of integers" = {
-            is.numeric(manual_teams) && all(manual_teams == trunc(manual_teams))
-        })
-        tms <- union(tms, manual_teams)
-    }
     yr <- as.numeric(substr(event_code, 1, 4))
     tangibles <- season_tangibles(tms, yr)
     sb <- prescout_sb(tms, yr)
