@@ -73,6 +73,7 @@ event_matchups <- function(event_code, team_id){
 #' gpr24 <- prescout("2024paca")
 #' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672))
 prescout <- function(event_code, fields = NULL, manual_teams = NULL){
+    # @TODO handle the case where event_teams() is a 0x0 tibble
     team_data <- event_teams(event_code) |>
         dplyr::select(team_number, nickname, city, state_prov, country) |>
         dplyr::rename(id = team_number, name = nickname)
