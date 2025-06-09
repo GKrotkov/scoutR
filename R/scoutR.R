@@ -90,7 +90,9 @@ prescout <- function(event_code, fields = NULL, manual_teams = NULL){
     yr <- as.numeric(substr(event_code, 1, 4))
     tangibles <- season_tangibles(tms, yr)
     sb <- prescout_sb(tms, yr)
-    result <- purrr::reduce(list(team_data, tangibles, sb), merge, by = "id")
+    oprs <- max_coprs(tms, yr, fields)
+    result <- purrr::reduce(list(team_data, tangibles, sb, oprs),
+                            merge, by = "id")
     return(result)
 }
 

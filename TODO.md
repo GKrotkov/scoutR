@@ -7,9 +7,9 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - devtools::document() to call roxygen documentation handlers
 
 # Prescouting
-- Add max (c)OPR to prescout()
-- Add "last week competed" info to prescout()
 - Add the ability to get EPA breakdown info in a year-general way
+- maybe clean up the namespace of the prescout helper functions
+- debug with old events (2015 and 2019 both crashed, 2023txwac fails the opr prescouter)
 
 # Bugs
 - event_tangibles() with an input event with an unposted match schedule

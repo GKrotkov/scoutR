@@ -468,3 +468,51 @@ prescout_sb <- function(tms, yr){
     result$id <- tms
     return(result)
 }
+
+#' Individual Team Max (c)OPRs
+#'
+#' @param team_id team number
+#' @param yr year
+#' @param fields response variables (cOPRs) of interest; if NULL, includes all
+#' @noRd
+team_max_coprs <- function(team_id, yr, fields = NULL){
+    # get only official events to cut down on malformed inputs (i.e. offseasons)
+    event_history <- team_events(team_id, year = yr, official = TRUE)
+
+    event_keys <- event_history |>
+        # filter out events w/o quals; bc cOPRs will be malformed
+        # needs both conditions bc one non-NA row, will coerce NAs to NULL
+        dplyr::filter(is.na(division_keys) | division_keys == "NULL") |>
+        dplyr::pull(key)
+    last_week <- max(event_history$week, na.rm = TRUE) + 1 # +1 bc TBA 0-indexes
+
+    get_coprs <- function(event_id, team_id, fields = NULL){
+        team_id <- tf(team_id)
+        coprs <- event_coprs(event_id)
+        if (is.null(fields)) fields <- colnames(coprs)
+        # pull "team" out of the coprs matrix so we don't double-include it
+        fields <- setdiff(fields, "team")
+        coprs <- coprs[coprs$team == team_id, fields]
+        return(coprs)
+    }
+
+    # take the max in each category, rather than picking a single best event
+    coprs <- lapply(event_keys, get_coprs, team_id, fields)
+    coprs <- purrr::reduce(coprs, rbind)
+    colnames(coprs) <- paste0(colnames(coprs), "_opr")
+    result <- matrix(c(apply(coprs, 2, max, na.rm = TRUE),
+                       last_week, id2int(team_id)), nrow = 1)
+    colnames(result) <- c(colnames(coprs), "last week seen", "id")
+    return(result)
+}
+
+#' Max cOPRs
+#'
+#' @param tms (numeric) vector of team ids
+#' @param yr (numeric) year
+#' @param ... additional arguments passed to team_max_coprs()
+max_coprs <- function(tms, yr, ...){
+    result <- lapply(tms, team_max_coprs, yr = yr, ...)
+    result <- Reduce(rbind, result)
+    return(as.data.frame(result))
+}
