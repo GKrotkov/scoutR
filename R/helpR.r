@@ -498,9 +498,7 @@ team_max_coprs <- function(team_id, yr, fields = NULL){
 
     # take the max in each category, rather than picking a single best event
     coprs <- lapply(event_keys, get_coprs, team_id, fields)
-    # @TODO here's where the bug is; use the case of 1477 @ 2023 TXWAC; the columns changed between
-    # the different years, and that's why rbinding isn't doing what we want.
-    coprs <- purrr::reduce(coprs, rbind)
+    coprs <- dplyr::bind_rows(coprs)
     colnames(coprs) <- paste0(colnames(coprs), "_opr")
     result <- matrix(c(apply(coprs, 2, max, na.rm = TRUE),
                        last_week, id2int(team_id)), nrow = 1)
