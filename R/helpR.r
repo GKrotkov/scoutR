@@ -503,7 +503,7 @@ team_max_coprs <- function(team_id, yr, fields = NULL){
     result <- matrix(c(apply(coprs, 2, max, na.rm = TRUE),
                        last_week, id2int(team_id)), nrow = 1)
     colnames(result) <- c(colnames(coprs), "last week seen", "id")
-    return(result)
+    return(as.data.frame(result))
 }
 
 #' Max cOPRs
@@ -513,6 +513,6 @@ team_max_coprs <- function(team_id, yr, fields = NULL){
 #' @param ... additional arguments passed to team_max_coprs()
 max_coprs <- function(tms, yr, ...){
     result <- lapply(tms, team_max_coprs, yr = yr, ...)
-    result <- Reduce(rbind, result)
-    return(as.data.frame(result))
+    result <- bind_rows(result)
+    return(result)
 }
