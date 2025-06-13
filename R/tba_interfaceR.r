@@ -329,18 +329,6 @@ event_insights <- function(key, insight_as_col = FALSE){
     return(data)
 }
 
-#' Multievent Insights
-#'
-#' Creates a single insights dataframe for a vector of event keys
-#' @param keys vector or list of TBA event keys (ex. "2023txfor")
-#' @param insight_as_col (bool)
-#' @export
-multievent_insights <- function(keys, insight_as_col = FALSE){
-    lst <- lapply(as.list(keys), event_insights, insight_as_col)
-    data <- bind_rows(lst)
-    return(data)
-}
-
 #' Event OPRs
 #'
 #' Read event OPRs

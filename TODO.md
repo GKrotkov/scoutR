@@ -8,7 +8,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 # Prescouting
 - Add the ability to get EPA breakdown info in a year-general way
-- Test cases (2022txirv, 2023txwac, 2025new, 2025iri with manuals, farther back like 2015/2019?)
 
 # Bugs
 - event_tangibles() with an input event with an unposted match schedule
