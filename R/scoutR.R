@@ -90,11 +90,7 @@ prescout <- function(event_code, fields = NULL, manual_teams = NULL){
     yr <- as.numeric(substr(event_code, 1, 4))
     tangibles <- season_tangibles(tms, yr)
     sb <- prescout_sb(tms, yr)
-    # @TODO I think I can do better - can we move the tryCatch inside helpR.r to the get_coprs fxn in team_max_coprs?
-    oprs <- tryCatch(
-        max_coprs(tms, yr, fields),
-        error = function(e) return(data.frame(id = character()))
-    )
+    oprs <- max_coprs(tms, yr, fields)
     result <- purrr::reduce(list(team_data, tangibles, sb, oprs),
                             merge, by = "id", all = TRUE)
     return(result)
