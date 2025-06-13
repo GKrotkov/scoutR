@@ -28,9 +28,17 @@ test_that("event_tangibles", {
     expect_equal(event_tangibles("2025new", qual_only = F, pct = F), test4)
 })
 
-test_that("event_season_tangibles", {
-    load("data/event_season_tangibles.rda")
+test_that("prescout", {
+    load("data/prescout.rda")
 
-    expect_equal(event_season_tangibles("2024paca"), test1)
-    expect_equal(event_season_tangibles("2024new"), test2)
+    expect_equal(prescout("2025new"), test1)
+    # 2024ncrc conveniently has no teams assigned, so natural test case
+    expect_equal(
+        prescout("2024ncrc", manual_teams = c(1712, 6672, 3504, 449, 4821)),
+        test2
+    )
+    # case before 2023, when the coprs endpoint starts being valid
+    # the warnings are expected, so we don't need to account for them.
+    actual <- suppressWarnings(prescout("2019pahat"))
+    expect_equal(actual, test3)
 })
