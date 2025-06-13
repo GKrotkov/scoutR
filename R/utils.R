@@ -1,5 +1,8 @@
 # utils.R
 
+# A function is a util if its functionality is not restricted to the context
+# of the TBA or Statbotics API
+
 #' Substring Right
 #'
 #' Returns the n rightmost characters in s.

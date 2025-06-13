@@ -469,6 +469,29 @@ prescout_sb <- function(tms, yr){
     return(result)
 }
 
+#' Team-Event cOPRs
+#'
+#' Retrieve cOPRs of interest for a particular team in a particular event
+#' @param event_id event key (i.e. "2022txirv")
+#' @param team_id team key (i.e. "frc1712")
+#' @param fields (character vector) cOPRs of interest (i.e. "totalScore")
+#' @noRd
+team_event_coprs <- function(event_id, team_id, fields = NULL){
+    team_id <- tf(team_id)
+    coprs <- tryCatch(
+        event_coprs(event_id),
+        error = function(e){
+            warning("event_coprs() fails for this event")
+            return(data.frame())
+        }
+    )
+    if (is.null(fields)) fields <- colnames(coprs)
+    # pull "team" out of the coprs matrix so we don't double-include it
+    fields <- setdiff(fields, "team")
+    coprs <- coprs[coprs$team == team_id, fields]
+    return(coprs)
+}
+
 #' Individual Team Max (c)OPRs
 #'
 #' @param team_id team number
@@ -486,20 +509,10 @@ team_max_coprs <- function(team_id, yr, fields = NULL){
         dplyr::pull(key)
     last_week <- max(event_history$week, na.rm = TRUE) + 1 # +1 bc TBA 0-indexes
 
-    get_coprs <- function(event_id, team_id, fields = NULL){
-        team_id <- tf(team_id)
-        coprs <- event_coprs(event_id)
-        if (is.null(fields)) fields <- colnames(coprs)
-        # pull "team" out of the coprs matrix so we don't double-include it
-        fields <- setdiff(fields, "team")
-        coprs <- coprs[coprs$team == team_id, fields]
-        return(coprs)
-    }
-
     # take the max in each category, rather than picking a single best event
-    coprs <- lapply(event_keys, get_coprs, team_id, fields)
+    coprs <- lapply(event_keys, team_event_coprs, team_id, fields)
     coprs <- dplyr::bind_rows(coprs)
-    colnames(coprs) <- paste0(colnames(coprs), "_opr")
+    if (ncol(coprs) > 0) colnames(coprs) <- paste0(colnames(coprs), "_opr")
     result <- matrix(c(apply(coprs, 2, max, na.rm = TRUE),
                        last_week, id2int(team_id)), nrow = 1)
     colnames(result) <- c(colnames(coprs), "last week seen", "id")
