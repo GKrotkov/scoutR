@@ -6,11 +6,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - renv::snapshot() to update libraries
 - devtools::document() to call roxygen documentation handlers
 
-# Prescouting
-- Add the ability to get EPA breakdown info in a year-general way
-- Turn the "fields" parameter of prescout() to "opr_breakdown" and "epa_breakdown" flags; if FALSE, only return the topline value. If TRUE, return the maximal breakdown. 
-    - This eliminates the need for the user to know the name of the fields before they call the fxn.
-
 # Package Management
 - `testthat` validation of key fxns
 
