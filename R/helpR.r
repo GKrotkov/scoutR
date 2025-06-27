@@ -453,17 +453,26 @@ season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL){
 #' Retrieves team record and EPA from statbotics
 #' @param tms (numeric) vector of teams
 #' @param yr (int) length-1 integer for the year of interest
+#' @param breakdown (bool) If FALSE, result includes only the overall EPA value.
+#' If TRUE, the result includes all component EPA values.
 #' @noRd
-prescout_sb <- function(tms, yr){
-    get_data <- function(tm, yr = NULL){
+prescout_sb <- function(tms, yr, breakdown = FALSE){
+    get_data <- function(tm, yr = NULL, breakdown = FALSE){
         sb_data <- team_sb(tm, yr = yr)
         record <- data.frame(sb_data$record)
         record$count <- NULL
-        record$epa <- sb_data$epa$total_points$mean
+
+        if (breakdown){
+            epas <- data.frame(sb_data$epa$breakdown)
+            colnames(epas) <- paste0(colnames(epas), "_epa")
+            record <- dplyr::bind_cols(record, epas)
+        } else {
+            record$epa <- sb_data$epa$total_points$mean
+        }
         return(record)
     }
 
-    result <- lapply(tms, get_data, yr = yr)
+    result <- lapply(tms, get_data, yr = yr, breakdown = breakdown)
     result <- Reduce(rbind, result)
     result$id <- tms
     return(result)
