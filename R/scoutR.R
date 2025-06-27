@@ -63,8 +63,8 @@ event_matchups <- function(event_code, team_id){
 #'
 #' Given an event code, return a df with prescouting data
 #' @param event_code TBA-legal event code (ex. "2024paca")
-#' @param fields optional, robot fields you want to retrieve. If NULL, uses
-#' `id_robot_fields()` to get individual robot-level fields automatically.
+#' @param opr_breakdown (bool) Get all LR coefficients for all response
+#' variables? If FALSE, only returns overall OPR.
 #' @param manual_teams (int) additional teams to manually add to the team list
 #' @details
 #' Checks for match duplication, which will stop execution if TRUE.
@@ -72,7 +72,7 @@ event_matchups <- function(event_code, team_id){
 #' @examples
 #' gpr24 <- prescout("2024paca")
 #' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672, 3504))
-prescout <- function(event_code, fields = NULL, manual_teams = NULL){
+prescout <- function(event_code, opr_breakdown = TRUE, manual_teams = NULL){
     team_data <- event_teams(event_code)
     # add manual teams - suppressing warnings for the 0x0 tibble case
     tms <- union(suppressWarnings(team_data$team_number), manual_teams)
@@ -90,7 +90,7 @@ prescout <- function(event_code, fields = NULL, manual_teams = NULL){
     yr <- as.numeric(substr(event_code, 1, 4))
     tangibles <- season_tangibles(tms, yr)
     sb <- prescout_sb(tms, yr)
-    oprs <- max_coprs(tms, yr, fields)
+    oprs <- max_oprs(tms, yr, opr_breakdown)
     result <- purrr::reduce(list(team_data, tangibles, sb, oprs),
                             merge, by = "id", all = TRUE)
     return(result)

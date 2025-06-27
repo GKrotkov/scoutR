@@ -469,36 +469,40 @@ prescout_sb <- function(tms, yr){
     return(result)
 }
 
-#' Team-Event cOPRs
+#' Team-Event OPRs
 #'
-#' Retrieve cOPRs of interest for a particular team in a particular event
+#' Retrieve linear regression coefficients of interest (OPRs) for a particular team in a particular event
 #' @param event_id event key (i.e. "2022txirv")
 #' @param team_id team key (i.e. "frc1712")
-#' @param fields (character vector) cOPRs of interest (i.e. "totalScore")
+#' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
 #' @noRd
-team_event_coprs <- function(event_id, team_id, fields = NULL){
+team_event_oprs <- function(event_id, team_id, breakdown = TRUE){
     team_id <- tf(team_id)
-    coprs <- tryCatch(
-        event_coprs(event_id),
-        error = function(e){
-            warning("event_coprs() fails for this event")
-            return(data.frame())
-        }
-    )
-    if (is.null(fields)) fields <- colnames(coprs)
-    # pull "team" out of the coprs matrix so we don't double-include it
-    fields <- setdiff(fields, "team")
-    coprs <- coprs[coprs$team == team_id, fields]
-    return(coprs)
+    if (!breakdown){
+        result <- event_oprs(event_id)[, c("team", "opr")] |>
+            dplyr::rename(score = opr)
+    } else {
+        result <- tryCatch(
+            event_coprs(event_id),
+            error = function(e){
+                warning("event_coprs() fails for this event")
+                return(data.frame())
+            }
+        )
+    }
+    # return only the row for the relevant team; id2int both sides for safety
+    team_id <- id2int(team_id)
+    result$team <- id2int(result$team)
+    return(result[result$team == team_id, setdiff(colnames(result), "team")])
 }
 
 #' Individual Team Max (c)OPRs
 #'
 #' @param team_id team number
 #' @param yr year
-#' @param fields response variables (cOPRs) of interest; if NULL, includes all
+#' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
 #' @noRd
-team_max_coprs <- function(team_id, yr, fields = NULL){
+team_max_oprs <- function(team_id, yr, breakdown = TRUE){
     # get only official events to cut down on malformed inputs (i.e. offseasons)
     event_history <- team_events(team_id, year = yr, official = TRUE)
 
@@ -510,22 +514,22 @@ team_max_coprs <- function(team_id, yr, fields = NULL){
     last_week <- max(event_history$week, na.rm = TRUE) + 1 # +1 bc TBA 0-indexes
 
     # take the max in each category, rather than picking a single best event
-    coprs <- lapply(event_keys, team_event_coprs, team_id, fields)
-    coprs <- dplyr::bind_rows(coprs)
-    if (ncol(coprs) > 0) colnames(coprs) <- paste0(colnames(coprs), "_opr")
-    result <- matrix(c(apply(coprs, 2, max, na.rm = TRUE),
+    oprs <- lapply(event_keys, team_event_oprs, team_id, breakdown)
+    oprs <- dplyr::bind_rows(oprs)
+    if (ncol(oprs) > 0) colnames(oprs) <- paste0(colnames(oprs), "_opr_max")
+    result <- matrix(c(apply(oprs, 2, max, na.rm = TRUE),
                        last_week, id2int(team_id)), nrow = 1)
-    colnames(result) <- c(colnames(coprs), "last week seen", "id")
+    colnames(result) <- c(colnames(oprs), "last week seen", "id")
     return(as.data.frame(result))
 }
 
-#' Max cOPRs
+#' Max OPRs
 #'
 #' @param tms (numeric) vector of team ids
 #' @param yr (numeric) year
-#' @param ... additional arguments passed to team_max_coprs()
-max_coprs <- function(tms, yr, ...){
-    result <- lapply(tms, team_max_coprs, yr = yr, ...)
+#' @param ... additional arguments passed to team_max_oprs()
+max_oprs <- function(tms, yr, ...){
+    result <- lapply(tms, team_max_oprs, yr = yr, ...)
     result <- bind_rows(result)
     return(result)
 }
