@@ -12,4 +12,9 @@ test_that("prescout", {
     # the warnings are expected, so we don't need to account for them.
     actual <- suppressWarnings(prescout("2019pahat"))
     expect_equal(actual, test3)
+
+    # test the epa_breakdown param
+    actual <- prescout("2024ncrc", opr_breakdown = FALSE, epa_breakdown = TRUE,
+                       manual_teams = c(1712, 6672, 3504, 4821, 449, 117))
+    expect_equal(actual, test4)
 })
