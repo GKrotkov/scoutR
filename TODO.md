@@ -32,7 +32,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 ## Long term
 - Generic, automated data validation; `validatoR`
 - Local EPA calculation
-- ftc-events api functions ("ftc_readR" series)
 
 ## httr decisions
 - Statbotics API functions will use httr2, while the TBA API functions will use httr. This avoids me needing to revamp all of the TBA readR.
