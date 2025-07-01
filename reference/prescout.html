@@ -42,7 +42,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prescout</span><span class="op">(</span><span class="va">event_code</span>, fields <span class="op">=</span> <span class="cn">NULL</span>, manual_teams <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prescout</span><span class="op">(</span><span class="va">event_code</span>, breakdown <span class="op">=</span> <span class="cn">TRUE</span>, manual_teams <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -53,9 +53,9 @@
 <dd><p>TBA-legal event code (ex. "2024paca")</p></dd>
 
 
-<dt id="arg-fields">fields<a class="anchor" aria-label="anchor" href="#arg-fields"></a></dt>
-<dd><p>optional, robot fields you want to retrieve. If NULL, uses
-`id_robot_fields()` to get individual robot-level fields automatically.</p></dd>
+<dt id="arg-breakdown">breakdown<a class="anchor" aria-label="anchor" href="#arg-breakdown"></a></dt>
+<dd><p>(bool) Compute OPR and EPA for all possible response
+variables? If FALSE, will only return topline values.</p></dd>
 
 
 <dt id="arg-manual-teams">manual_teams<a class="anchor" aria-label="anchor" href="#arg-manual-teams"></a></dt>
