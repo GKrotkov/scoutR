@@ -4,13 +4,13 @@
 \alias{prescout}
 \title{Prescout}
 \usage{
-prescout(event_code, fields = NULL, manual_teams = NULL)
+prescout(event_code, breakdown = TRUE, manual_teams = NULL)
 }
 \arguments{
 \item{event_code}{TBA-legal event code (ex. "2024paca")}
 
-\item{fields}{optional, robot fields you want to retrieve. If NULL, uses
-`id_robot_fields()` to get individual robot-level fields automatically.}
+\item{breakdown}{(bool) Compute OPR and EPA for all possible response
+variables? If FALSE, will only return topline values.}
 
 \item{manual_teams}{(int) additional teams to manually add to the team list}
 }
