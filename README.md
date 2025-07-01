@@ -9,6 +9,8 @@ scoutR is an R library to facilitate usage of data from the TBA and Statbotics A
 ## Setup - New User Checklist
 
 - [ ] Install R and RStudio on your machine. You can find them both on Posit's website here: https://posit.co/download/rstudio-desktop/. scoutR assumes that you have R 4.3.0 or later.
+- [ ] Install devtools by running `install.packages("devtools")` in the R console
+- [ ] Install scoutR by running `devtools::install_github("gkrotkov/scoutR")` in the R console.
 - [ ] Open [`demo.qmd`](https://github.com/GKrotkov/scoutR/blob/master/demo.qmd) using RStudio; I recommend setting RStudio to be your default for opening both .r, .rmd, and .qmd files. The demo will walk you through some use cases of scoutR and show you the functions that it exports.
 
 ## Roadmap to ScoutR
