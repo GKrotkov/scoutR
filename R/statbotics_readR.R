@@ -87,6 +87,7 @@ year_sb <- function(yr){
 #' @param yr (optional) year of interest
 #' @param event (optional) event of interest
 #' @param match (optional) match of interest
+#' @export
 teams_sb <- function(..., yr = NULL, event = NULL, match = NULL){
     if (!is.null(yr)){
         req <- STATBOTICS_BASE |>
@@ -113,6 +114,7 @@ teams_sb <- function(..., yr = NULL, event = NULL, match = NULL){
 #'
 #' Returns a batch of statbotics event objects conforming to the given parameters
 #' @param ... Parameters to be passed to the statbotics /v3/{years}/ endpoint
+#' @export
 years_sb <- function(...){
     result <- STATBOTICS_BASE |>
         req_url_path_append("years") |>
@@ -126,6 +128,7 @@ years_sb <- function(...){
 #'
 #' Returns a batch of statbotics event objects conforming to the given parameters
 #' @param ... Parameters passed to the statbotics /v3/{events} endpoint
+#' @export
 events_sb <- function(...){
     result <- STATBOTICS_BASE |>
         req_url_path_append("events") |>
@@ -139,6 +142,7 @@ events_sb <- function(...){
 #'
 #' Returns a batch of statbotics match objects conforming to the given parameters
 #' @param ... Parameters passed to the statbotics /v3/{matches} endpoint
+#' @export
 matches_sb <- function(...){
     result <- STATBOTICS_BASE |>
         req_url_path_append("matches") |>
@@ -155,6 +159,7 @@ matches_sb <- function(...){
 #' @examples
 #' team_years_sb(year = 2025, district = "chs")
 #' team_years_sb(team = 449)
+#' @export
 team_years_sb <- function(...){
     result <- STATBOTICS_BASE |>
         req_url_path_append("team_years") |>
@@ -171,6 +176,7 @@ team_years_sb <- function(...){
 #' @examples
 #' team_events_sb(team = 4821, year = 2025)
 #' team_events_sb(event = "2025mdsev")
+#' @export
 team_events_sb <- function(...){
     result <- STATBOTICS_BASE |>
         req_url_path_append("team_events") |>
@@ -186,6 +192,7 @@ team_events_sb <- function(...){
 #' @param ... Parameters passed to the statbotics /v3/team_matches endpoint
 #' @examples
 #' team_matches_sb(team = 449, year = 2025)
+#' @export
 team_matches_sb <- function(...){
     result <- STATBOTICS_BASE |>
         req_url_path_append("team_matches") |>
