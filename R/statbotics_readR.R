@@ -147,3 +147,50 @@ matches_sb <- function(...){
         resp_body_json()
     return(result)
 }
+
+#' Team-Years (Statbotics)
+#'
+#' Returns a batch of statbotics team-year objects based on the given parameters.
+#' @param ... Parameters passed to the statbotics /v3/team_years endpoint
+#' @examples
+#' team_years_sb(year = 2025, district = "chs")
+#' team_years_sb(team = 449)
+team_years_sb <- function(...){
+    result <- STATBOTICS_BASE |>
+        req_url_path_append("team_years") |>
+        req_url_query(...) |>
+        req_perform() |>
+        resp_body_json()
+    return(result)
+}
+
+#' Team-Events (Statbotics)
+#'
+#' Returns a batch of statbotics team-event objects based on the given parameters.
+#' @param ... Parameters passed to the statbotics /v3/team_events endpoint
+#' @examples
+#' team_events_sb(team = 4821, year = 2025)
+#' team_events_sb(event = "2025mdsev")
+team_events_sb <- function(...){
+    result <- STATBOTICS_BASE |>
+        req_url_path_append("team_events") |>
+        req_url_query(...) |>
+        req_perform() |>
+        resp_body_json()
+    return(result)
+}
+
+#' Team-Matches (Statbotics)
+#'
+#' Returns a batch of statbotics team-match objects based on the given parameters.
+#' @param ... Parameters passed to the statbotics /v3/team_matches endpoint
+#' @examples
+#' team_matches_sb(team = 449, year = 2025)
+team_matches_sb <- function(...){
+    result <- STATBOTICS_BASE |>
+        req_url_path_append("team_matches") |>
+        req_url_query(...) |>
+        req_perform() |>
+        resp_body_json()
+    return(result)
+}
