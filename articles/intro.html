@@ -194,7 +194,7 @@ return or official-only events</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chargedup_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/events.html">events</a></span><span class="op">(</span><span class="fl">2023</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">chargedup_events</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 30</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
 <span><span class="co">##   address    city  country district division_keys end_date event_code event_type</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> 700 Monro… Hunt… USA     <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-04… alhu                0</span></span>
@@ -203,16 +203,17 @@ return or official-only events</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> 1529 E Pa… Sear… USA     <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-09… aroz               99</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">5</span> 44 Waterl… Macq… Austra… <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-05… audd               99</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">6</span> Corner Cr… Woll… Austra… <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-03… ausc                0</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 22 more variables: event_type_string &lt;chr&gt;, first_event_code &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 23 more variables: event_type_string &lt;chr&gt;, first_event_code &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   first_event_id &lt;chr&gt;, gmaps_place_id &lt;chr&gt;, gmaps_url &lt;chr&gt;, key &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   lat &lt;dbl&gt;, lng &lt;dbl&gt;, location_name &lt;chr&gt;, name &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   parent_event_key &lt;chr&gt;, playoff_type &lt;int&gt;, playoff_type_string &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   postal_code &lt;chr&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;">#   postal_code &lt;chr&gt;, remap_teams &lt;list&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   state_prov &lt;chr&gt;, timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   week &lt;int&gt;, year &lt;int&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chargedup_official_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/events.html">events</a></span><span class="op">(</span><span class="fl">2023</span>, official <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">chargedup_official_events</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 30</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 31</span></span></span>
 <span><span class="co">##   address    city  country district division_keys end_date event_code event_type</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">1</span> 700 Monro… Hunt… USA     <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-04… alhu                0</span></span>
@@ -221,12 +222,13 @@ return or official-only events</p>
 <span><span class="co">## <span style="color: #BCBCBC;">4</span> Corner Cr… Woll… Austra… <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-03… ausc                0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">5</span> 6330 W Gr… Glen… USA     <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-03… azgl                0</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">6</span> 6935 E Go… Scot… USA     <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2023-03… azva                0</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 22 more variables: event_type_string &lt;chr&gt;, first_event_code &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 23 more variables: event_type_string &lt;chr&gt;, first_event_code &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   first_event_id &lt;chr&gt;, gmaps_place_id &lt;chr&gt;, gmaps_url &lt;chr&gt;, key &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   lat &lt;dbl&gt;, lng &lt;dbl&gt;, location_name &lt;chr&gt;, name &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   parent_event_key &lt;chr&gt;, playoff_type &lt;int&gt;, playoff_type_string &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   postal_code &lt;chr&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;">#   postal_code &lt;chr&gt;, remap_teams &lt;list&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   state_prov &lt;chr&gt;, timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   week &lt;int&gt;, year &lt;int&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crescendo_keys</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/events.html">events</a></span><span class="op">(</span><span class="fl">2024</span>, keys <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">crescendo_keys</span><span class="op">)</span></span></code></pre></div>

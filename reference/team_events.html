@@ -81,7 +81,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">team_events</span><span class="op">(</span><span class="fl">1712</span>, year <span class="op">=</span> <span class="fl">2017</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 30</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 31</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   address           city  country district     division_keys end_date event_code</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 124 Goodman Dr S… <span style="color: #949494;">"</span>Bet… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2017-04… mrcmp     </span>
@@ -89,28 +89,28 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 110 Carranza Rd,… <span style="color: #949494;">"</span>Tab… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2017-03… njtab     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 521 Houston Rd, … <span style="color: #949494;">"</span>Amb… USA     <span style="color: #949494;">&lt;NULL&gt;</span>       <span style="color: #BB0000;">NA</span>            2017-11… parr      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 975 Westtown Rd,… <span style="color: #949494;">"</span>Wes… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2017-03… pawch     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   first_event_code &lt;chr&gt;, first_event_id &lt;chr&gt;, gmaps_place_id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gmaps_url &lt;chr&gt;, key &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, location_name &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   name &lt;chr&gt;, parent_event_key &lt;lgl&gt;, playoff_type &lt;lgl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, short_name &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;, webcasts &lt;list&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, remap_teams &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span>
 <span class="r-in"><span><span class="fu">team_events</span><span class="op">(</span><span class="st">"1712"</span>, year <span class="op">=</span> <span class="fl">2018</span>, official <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 30</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 31</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   address           city  country district     division_keys end_date event_code</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 124 Goodman Dr S… Beth… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2018-04… mrcmp     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 110 Carranza Rd,… Tabe… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2018-03… njtab     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 975 Westtown Rd,… West… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2018-03… pawch     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 1 Washington Blv… Detr… USA     <span style="color: #949494;">&lt;NULL&gt;</span>       <span style="color: #BB0000;">NA</span>            2018-04… tes       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   first_event_code &lt;chr&gt;, first_event_id &lt;chr&gt;, gmaps_place_id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gmaps_url &lt;chr&gt;, key &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, location_name &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   name &lt;chr&gt;, parent_event_key &lt;chr&gt;, playoff_type &lt;lgl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, short_name &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;, webcasts &lt;list&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, remap_teams &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span>
 <span class="r-in"><span><span class="fu">team_events</span><span class="op">(</span><span class="st">"frc1712"</span>, keys <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "2006pa"    "2007gal"   "2007pa"    "2008mm"    "2008pa"    "2009arc"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "2009dc"    "2010cmp"   "2010dc"    "2010pa"    "2011pa"    "2012njt"  </span>
@@ -122,7 +122,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [43] "2019pawch" "2020pahat" "2020paphi" "202121fma" "2021fmaaw" "2021gamas"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [49] "2021gamce" "2021irhal" "2021irhce" "2021parr"  "2022paben" "2022paphi"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [55] "2022parr"  "2023mrcmp" "2023njdd"  "2023njtab" "2023paphi" "2024njtab"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "2024paben" "2025mrcmp" "2025njtab" "2025paben"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [61] "2024paben" "2025mrcmp" "2025njtab" "2025paben" "2026paben"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

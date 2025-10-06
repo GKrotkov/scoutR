@@ -77,7 +77,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">events</span><span class="op">(</span><span class="fl">2019</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 303 × 30</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 303 × 31</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    address   city  country district division_keys end_date event_code event_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 7555 Fal… Calg… Canada  <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2019-04… abca                0</span>
@@ -91,14 +91,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1701 S S… Flag… USA     <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2019-03… azfl                0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 3300 W C… Phoe… USA     <span style="color: #949494;">&lt;NULL&gt;</span>   <span style="color: #949494;">&lt;NULL&gt;</span>        2019-04… azpx                0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 293 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 22 more variables: event_type_string &lt;chr&gt;, first_event_code &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: event_type_string &lt;chr&gt;, first_event_code &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   first_event_id &lt;chr&gt;, gmaps_place_id &lt;chr&gt;, gmaps_url &lt;chr&gt;, key &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lat &lt;dbl&gt;, lng &lt;dbl&gt;, location_name &lt;chr&gt;, name &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   parent_event_key &lt;chr&gt;, playoff_type &lt;int&gt;, playoff_type_string &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   postal_code &lt;chr&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   postal_code &lt;chr&gt;, remap_teams &lt;list&gt;, short_name &lt;chr&gt;, start_date &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   state_prov &lt;chr&gt;, timezone &lt;chr&gt;, webcasts &lt;list&gt;, website &lt;chr&gt;, …</span></span>
 <span class="r-in"><span><span class="fu">events</span><span class="op">(</span><span class="fl">2010</span>, official <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 56 × 30</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 56 × 31</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    address          city  country district     division_keys end_date event_code</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1 Georgia Dome … Atla… USA     <span style="color: #949494;">&lt;NULL&gt;</span>       <span style="color: #949494;">&lt;NULL&gt;</span>        2010-04… arc       </span>
@@ -112,12 +112,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 801 Mt Vernon P… Wash… USA     <span style="color: #949494;">&lt;NULL&gt;</span>       <span style="color: #949494;">&lt;NULL&gt;</span>        2010-03… dc        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 42 W Warren Ave… Detr… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;NULL&gt;</span>        2010-03… dt        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 46 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   first_event_code &lt;chr&gt;, first_event_id &lt;chr&gt;, gmaps_place_id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gmaps_url &lt;chr&gt;, key &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, location_name &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   name &lt;chr&gt;, parent_event_key &lt;chr&gt;, playoff_type &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, short_name &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;, webcasts &lt;lgl&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, remap_teams &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;, …</span></span>
 <span class="r-in"><span><span class="fu">events</span><span class="op">(</span><span class="fl">2012</span>, simple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 82 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    city   country district end_date event_code event_type key   name  start_date</span>

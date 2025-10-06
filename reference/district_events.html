@@ -69,7 +69,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">district_events</span><span class="op">(</span><span class="st">"2016mar"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 30</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 31</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   address           city  country district     division_keys end_date event_code</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 124 Goodman Dr S… Beth… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2016-04… mrcmp     </span>
@@ -80,13 +80,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 899 Horsham Rd, … Hors… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2016-03… pahat     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 500 W Willow Gro… Phil… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2016-03… paphi     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 975 Westtown Rd,… West… USA     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #BB0000;">NA</span>            2016-04… pawch     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: event_type &lt;int&gt;, event_type_string &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   first_event_code &lt;chr&gt;, first_event_id &lt;chr&gt;, gmaps_place_id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gmaps_url &lt;chr&gt;, key &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, location_name &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   name &lt;chr&gt;, parent_event_key &lt;lgl&gt;, playoff_type &lt;lgl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, short_name &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;, webcasts &lt;list&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   playoff_type_string &lt;lgl&gt;, postal_code &lt;chr&gt;, remap_teams &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   short_name &lt;chr&gt;, start_date &lt;chr&gt;, state_prov &lt;chr&gt;, timezone &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   webcasts &lt;list&gt;, website &lt;chr&gt;, week &lt;int&gt;, year &lt;int&gt;</span></span>
 <span class="r-in"><span><span class="fu">district_events</span><span class="op">(</span><span class="st">"2018fma"</span>, keys <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 </code></pre></div>
