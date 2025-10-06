@@ -13,7 +13,7 @@
 initialize_scoutR <- function(auth_key){
     home <- Sys.getenv("HOME")
     if (is.null(auth_key)){
-        warning("No auth key supplied. We assume HOME/.scoutR_auth exists.")
+        warning("No auth key supplied. We assume ~/.scoutR_auth.txt exists.")
     }
     else{
         with_dir(home,{
