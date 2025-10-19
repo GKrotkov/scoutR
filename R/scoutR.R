@@ -374,7 +374,7 @@ event_opr_progression <- function(
     result <- data.frame(result)
     result$match_num <- lo:hi
     # matches per team
-    result$mpt <- result$match_num / n_teams
+    result$mpt <- (result$match_num * 6) / n_teams
     return(result)
 }
 
