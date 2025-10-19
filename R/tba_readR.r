@@ -32,16 +32,22 @@ YEAR <- format(Sys.time(), "%Y")
 #'
 #' Function to retrieve the user's TBA key. First, looks for the auth key
 #' as an environment variable, and if that fails it will retrieve it from
-#' the user's HOME directory in the hidden auth text file. Looking for the
-#' environment variable first is required for the pkgdown site build.
+#' the user's HOME directory in the hidden auth text file.
+#' @details
+#' We check the environment variables first so the function doesn't attempt to
+#' access the file system in a constrained environment (like GitHub Actions)
+#' and crash.
 #' @noRd
 tba_key <- function(){
-    if (Sys.getenv("TBA_AUTH") != "") return(Sys.getenv("TBA_AUTH"))
+    # covers the Github Actions environment case, where we can't access HOME
+    if (!Sys.getenv("TBA_AUTH") %in% c("", "NA")) return(Sys.getenv("TBA_AUTH"))
+
+    # for human users, look for the auth key in ~/.scoutR_auth.txt
     path <- file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")
     if(file.exists(path)){
         return(readr::read_file(path))
     } else{
-        return(NA)
+        stop("tba_key not in either environment vars or ~/.scoutR_auth.txt")
     }
 }
 

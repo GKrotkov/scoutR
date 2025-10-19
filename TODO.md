@@ -5,6 +5,7 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 ## Periodic
 - renv::snapshot() to update libraries
 - devtools::document() to call roxygen documentation handlers
+- The pkgdown site is set up to automatically build whenever you push to the repo.
 
 # Package Management
 - `testthat` validation of key fxns
