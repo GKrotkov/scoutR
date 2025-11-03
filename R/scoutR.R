@@ -378,6 +378,48 @@ event_opr_progression <- function(
     return(result)
 }
 
+# mean_diff is the mean difference in standardized OPR coefficients, *after*
+# the corresponding match
+#' Year OPR Perturbations
+#'
+#' Compute a dataframe summarizing the perturbation of OPR coefficients as
+#' matches progress over all matches that year.
+#' @param year (int) year of interest
+#' @details
+#' "mean_diff" in the output data.frame represents the mean change in
+#' standardized OPR coefficients (mean across all competing teams) after the
+#' corresponding match.
+#' @export
+#'
+year_opr_perturbs <- function(year){
+    event_keys <- events(year, official = TRUE) |>
+        dplyr::filter(event_type %in% c(0, 1)) |>
+        dplyr::pull(key)
+
+    result <- data.frame()
+
+    for (i in seq_along(event_keys)){
+        progression <- event_opr_progression(event_keys[i], standardize = TRUE)
+        if(is.null(progression)) next()
+        mean_diff <- progression |>
+            dplyr::select(-c(match_num, mpt)) |>
+            sapply(diff) |>
+            rowMeans()
+
+        result <- rbind(result, data.frame(
+            # abs() bc we care about the magnitude, not the direction
+            mean_diff = abs(mean_diff),
+            # -1 accounts for the diff() trim
+            match_num = progression$match_num[-1],
+            mpt = progression$mpt[-1],
+            event = event_keys[i]
+        ))
+    }
+
+    return(result)
+}
+
+
 #############
 #### WLS ####
 #############
