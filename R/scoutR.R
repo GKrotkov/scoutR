@@ -390,7 +390,6 @@ event_opr_progression <- function(
 #' standardized OPR coefficients (mean across all competing teams) after the
 #' corresponding match.
 #' @export
-#'
 year_opr_perturbs <- function(year){
     event_keys <- events(year, official = TRUE) |>
         dplyr::filter(event_type %in% c(0, 1)) |>
@@ -412,7 +411,8 @@ year_opr_perturbs <- function(year){
             # -1 accounts for the diff() trim
             match_num = progression$match_num[-1],
             mpt = progression$mpt[-1],
-            event = event_keys[i]
+            event = event_keys[i],
+            year = year
         ))
     }
 
