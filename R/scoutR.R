@@ -357,6 +357,9 @@ event_opr_progression <- function(
     # rows are the progression, cols are teams
     result <- matrix(NA, nrow = length(lo:hi), ncol = n_teams)
 
+    # handle high # of teams, low # of matches cases, ex. 2007ga
+    if (hi <= lo) return(NULL)
+
     # loop through valid subsets, fit a linear regression, and store coeffs
     for (i in lo:hi){
         matches_subset <- matches[1:i, ]

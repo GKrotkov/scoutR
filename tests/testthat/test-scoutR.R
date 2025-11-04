@@ -27,3 +27,21 @@ test_that("event_tangibles", {
     expect_equal(event_tangibles("2018pawch"), test3)
     expect_equal(event_tangibles("2025new", qual_only = F, pct = F), test4)
 })
+
+test_that("event_opr_progression", {
+    load("data/event_opr_progression.rda")
+
+    expect_null(event_opr_progression("2007ga"))
+    expect_equal(
+        event_opr_progression("2025mdsev"),
+        test1
+    )
+    expect_equal(
+        event_opr_progression("2023txfor", standardize = TRUE),
+        test2
+    )
+    expect_equal(
+        event_opr_progression("2025chcmp", response_name = "autoPoints"),
+        test3
+    )
+})
