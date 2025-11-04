@@ -4,10 +4,8 @@
 rm(list = ls())
 devtools::load_all()
 
-# skip COVID years
-years <- setdiff(2012:2025, 2020:2021)
-
-years <- c(2018, 2019, 2022, 2023, 2024, 2025)
+# skip COVID years, but otherwise can theoretically go back to 2005 (3 team alliances)
+years <- setdiff(2005:2025, 2020:2021)
 
 perturbs <- data.frame()
 
