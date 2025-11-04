@@ -34,3 +34,10 @@
 #'
 #' Indicates each team-year competed (as of 2024)
 "teams_yearly"
+
+#' Yearly OPR perturbation data (2005 - 2025)
+#'
+#' "mean_diff" represents the mean change in standardized OPR coefficients
+#' (mean across all teams at the event) after the corresponding match
+#' @source thebluealliance.com
+"perturbs"
