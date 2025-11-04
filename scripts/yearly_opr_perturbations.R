@@ -4,8 +4,9 @@
 rm(list = ls())
 devtools::load_all()
 
-# skip COVID years, but otherwise can theoretically go back to 2005 (3 team alliances)
-years <- setdiff(2005:2025, 2020:2021)
+# skip COVID years and 2007 because the matchmaking algorithm made for very
+# weird linear dependence that year
+years <- setdiff(2005:2025, c(2007, 2020:2021))
 
 perturbs <- data.frame()
 

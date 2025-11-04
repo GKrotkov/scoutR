@@ -399,7 +399,6 @@ year_opr_perturbs <- function(year){
         dplyr::pull(key)
 
     result <- data.frame()
-
     for (i in seq_along(event_keys)){
         progression <- event_opr_progression(event_keys[i], standardize = TRUE)
         if(is.null(progression)) next()
@@ -407,7 +406,7 @@ year_opr_perturbs <- function(year){
         mean_diff <- progression |>
             dplyr::select(-c(match_num, mpt)) |>
             sapply(diff) |>
-            rowMeans()
+            rowMeans(na.rm = TRUE)
 
         result <- rbind(result, data.frame(
             # abs() bc we care about the magnitude, not the direction
@@ -419,7 +418,6 @@ year_opr_perturbs <- function(year){
             year = year
         ))
     }
-
     return(result)
 }
 
