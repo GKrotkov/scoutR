@@ -400,6 +400,7 @@ year_opr_perturbs <- function(year){
     for (i in seq_along(event_keys)){
         progression <- event_opr_progression(event_keys[i], standardize = TRUE)
         if(is.null(progression)) next()
+        if(nrow(progression) < 3) next() # exclude extreme low-qual (ex. 2010is)
         mean_diff <- progression |>
             dplyr::select(-c(match_num, mpt)) |>
             sapply(diff) |>
