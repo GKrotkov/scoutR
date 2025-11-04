@@ -31,7 +31,9 @@ test_that("event_tangibles", {
 test_that("event_opr_progression", {
     load("data/event_opr_progression.rda")
 
-    expect_null(event_opr_progression("2007ga"))
+    expect_warning(result <- event_opr_progression("2007ga"))
+    expect_null(result)
+
     expect_equal(
         event_opr_progression("2025mdsev"),
         test1
