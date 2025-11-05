@@ -8,12 +8,12 @@ devtools::load_all()
 # weird linear dependence that year
 years <- setdiff(2005:2025, c(2007, 2020:2021))
 
-perturbs <- data.frame()
+swings <- data.frame()
 
 for (i in seq_along(years)){
-    perturbs <- rbind(perturbs, year_opr_perturbs(years[i]))
+    swings <- rbind(swings, year_opr_swings(years[i]))
 }
 
-perturbs <- perturbs[complete.cases(perturbs), ]
+swings <- swings[complete.cases(swings), ]
 
-save(perturbs, file = "data/perturbs.rda")
+save(swings, file = "data/swings.rda")

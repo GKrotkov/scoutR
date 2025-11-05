@@ -322,7 +322,7 @@ fit_event_lr <- function(
 #' Returns a dataframe tracking the progression of OPR over the course of an
 #' event. The rows scale with the number of matches played, and the columns are
 #' the team IDs, with additional columns for tracking the match number and
-#' matches per team.
+#' plays per team.
 #' @param event_code TBA-legal event code
 #' @param response_name (chr) string for the column name suffix of the response
 #' variable. For raw OPR, this is "score" (accessing "red_score" and
@@ -377,13 +377,11 @@ event_opr_progression <- function(
     result <- data.frame(result)
     result$match_num <- lo:hi
     # matches per team
-    result$mpt <- (result$match_num * 6) / n_teams
+    result$ppt <- (result$match_num * 6) / n_teams
     return(result)
 }
 
-# mean_diff is the mean difference in standardized OPR coefficients, *after*
-# the corresponding match
-#' Year OPR Perturbations
+#' OPR Swings as events progress
 #'
 #' Compute a dataframe summarizing the perturbation of OPR coefficients as
 #' matches progress over all matches that year.
@@ -393,7 +391,7 @@ event_opr_progression <- function(
 #' standardized OPR coefficients (mean across all competing teams) after the
 #' corresponding match.
 #' @export
-year_opr_perturbs <- function(year){
+year_opr_swings <- function(year){
     event_keys <- events(year, official = TRUE) |>
         dplyr::filter(event_type %in% c(0, 1)) |>
         dplyr::pull(key)
@@ -404,7 +402,7 @@ year_opr_perturbs <- function(year){
         if(is.null(progression)) next()
         if(nrow(progression) < 3) next() # exclude extreme low-qual (ex. 2010is)
         mean_diff <- progression |>
-            dplyr::select(-c(match_num, mpt)) |>
+            dplyr::select(-c(match_num, ppt)) |>
             sapply(diff) |>
             rowMeans(na.rm = TRUE)
 
@@ -413,7 +411,7 @@ year_opr_perturbs <- function(year){
             mean_diff = abs(mean_diff),
             # -1 accounts for the diff() trim
             match_num = progression$match_num[-1],
-            mpt = progression$mpt[-1],
+            ppt = progression$ppt[-1],
             event = event_keys[i],
             year = year
         ))
