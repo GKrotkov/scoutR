@@ -4,15 +4,12 @@
 \alias{district_rankings}
 \title{District Rankings}
 \usage{
-district_rankings(
-  district_key,
-  event_detail = c("none", "separate", "breakdown")
-)
+district_rankings(district_key, detail = c("none", "separate", "breakdown"))
 }
 \arguments{
 \item{district_key}{(character) TBA legal district key}
 
-\item{event_detail}{(character) How far should we break down the event
+\item{detail}{(character) How far should we break down the event
 district point scores?}
 }
 \value{
@@ -28,7 +25,7 @@ Reads district rankings
 points results.
 }
 \examples{
-district_rankings("2016mar", event_detail = "breakdown")
+district_rankings("2016mar", detail = "breakdown")
 district_rankings("2022fit")
 }
 \author{

@@ -504,7 +504,7 @@ district_teams <- function(district_key, simple = FALSE, keys = FALSE){
 #' Reads district rankings
 #' @author Gabriel Krotkov
 #' @param district_key (character) TBA legal district key
-#' @param event_detail (character) How far should we break down the event
+#' @param detail (character) How far should we break down the event
 #' district point scores?
 #' @return tidy tibble of event rankings
 #' @details
@@ -515,12 +515,12 @@ district_teams <- function(district_key, simple = FALSE, keys = FALSE){
 #'
 #' @export
 #' @examples
-#' district_rankings("2016mar", event_detail = "breakdown")
+#' district_rankings("2016mar", detail = "breakdown")
 #' district_rankings("2022fit")
 district_rankings <- function(
-    district_key, event_detail = c("none", "separate", "breakdown")
+    district_key, detail = c("none", "separate", "breakdown")
 ){
-    event_detail <- match.arg(event_detail)
+    detail <- match.arg(detail)
     data <- read_district_rankings(district_key)
-    return(tidy_district_rankings(data, event_detail = event_detail))
+    return(tidy_district_rankings(data, detail = detail))
 }

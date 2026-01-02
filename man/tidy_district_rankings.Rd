@@ -4,12 +4,12 @@
 \alias{tidy_district_rankings}
 \title{Tidy District Ranking}
 \usage{
-tidy_district_rankings(raw, event_detail = c("none", "separate", "breakdown"))
+tidy_district_rankings(raw, detail = c("none", "separate", "breakdown"))
 }
 \arguments{
 \item{raw}{JSON list output from tba_readR}
 
-\item{event_detail}{(chr) how much detail do we want to break the results down into?}
+\item{detail}{(chr) how much detail do we want to break the results down into?}
 }
 \description{
 Tidy District Ranking

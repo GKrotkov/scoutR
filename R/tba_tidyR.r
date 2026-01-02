@@ -421,7 +421,7 @@ tidy_districts <- function(raw){
 # takes a raw district rankings like as output from read_district_rankings
 #' Tidy District Ranking
 #' @param raw JSON list output from tba_readR
-#' @param event_detail (chr) how much detail do we want to break the results down into?
+#' @param detail (chr) how much detail do we want to break the results down into?
 #' @details
 #' If "none", will include the event results list in a column in the output
 #' If "separate" will separate the events but not break down the points
@@ -429,39 +429,28 @@ tidy_districts <- function(raw){
 #' granular level.
 #'
 tidy_district_rankings <- function(
-        raw, event_detail = c("none", "separate", "breakdown")
+        raw, detail = c("none", "separate", "breakdown")
 ) {
-    event_detail <- match.arg(event_detail)
+    detail <- match.arg(detail)
 
     raw <- tibble::tibble(ranks = raw)
-    rankings <- tidyr::unnest_wider(raw, ranks)
+    rankings <- tidyr::unnest_wider(raw, ranks) |>
+        # rename to make var names simpler later on
+        rename(event = event_points)
 
-    if (event_detail == "none") return(rankings)
+    if (detail == "none") return(rankings)
 
-    # separate events
-    rankings$event_points <- lapply(rankings$event_points, name_sublist,
-                                    label = "event")
-    names(rankings$event_points) <- paste0("event points rank #",
-                                           seq_len(nrow(rankings)))
-
+    # how many columns did the df used to have?
     mark <- ncol(rankings)
-    rankings <- tidyr::unnest_wider(rankings, event_points)
+    rankings <- tidyr::unnest_wider(rankings, event, names_sep = "_")
 
-    if (event_detail == "separate") return(rankings)
+    if (detail == "separate") return(rankings)
 
-    # breakdown events
-    N <- ncol(rankings) - mark + 1
-    for (i in seq_len(N)) {
-        ncol0 <- ncol(rankings)
-        rankings <- tidyr::unnest_wider(rankings, paste0("event", i))
-        added <- ncol(rankings) - ncol0 + 1
+    n_events <- ncol(rankings) - mark + 1
 
-        start_col <- (i - 1) * added + 1
-        end_col <- start_col + added - 1
-
-        colnames(rankings)[start_col:end_col] <-
-            paste0(colnames(rankings)[start_col:end_col], "_event_", i)
-    }
+    rankings <- rankings |>
+        unnest_wider(paste("event", seq_len(n_events), sep = "_"),
+                     names_sep = "_")
 
     return(rankings)
 }
