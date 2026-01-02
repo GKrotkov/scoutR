@@ -419,40 +419,53 @@ tidy_districts <- function(raw){
 }
 
 # takes a raw district rankings like as output from read_district_rankings
+#' Tidy District Ranking
+#' @param raw JSON list output from tba_readR
+#' @param event_detail (chr) how much detail do we want to break the results down into?
+#' @details
+#' If "none", will include the event results list in a column in the output
+#' If "separate" will separate the events but not break down the points
+#' If "breakdown" will break down points earning at each event to the most
+#' granular level.
+#'
 tidy_district_rankings <- function(
-    raw, separate_events = FALSE, event_breakdown = FALSE
-){
-    raw <- tibble(ranks = raw)
-    rankings <- unnest_wider(raw, ranks)
+        raw, event_detail = c("none", "separate", "breakdown")
+) {
+    event_detail <- match.arg(event_detail)
 
-    if (separate_events){
-        rankings$event_points <- lapply(rankings$event_points, name_sublist,
-                                        label = "event")
-        names(rankings$event_points) <- paste("event points rank #",
-                                              1:nrow(rankings), sep = "")
+    raw <- tibble::tibble(ranks = raw)
+    rankings <- tidyr::unnest_wider(raw, ranks)
 
-        mark <- ncol(rankings)
-        rankings <- unnest_wider(rankings, event_points)
+    if (event_detail == "none") return(rankings)
 
-        if(event_breakdown){
-            N <- ncol(rankings) - mark + 1 # number of event columns
-            # unpack each event, rename with tag
-            for (i in 1:N){
-                ncol0 <- ncol(rankings) #ncol before unnest_wider
-                rankings <- unnest_wider(rankings, paste("event", i, sep = ""))
-                mark <- ncol(rankings) - ncol0 + 1 # number of additional cols
-                start_col <- (i - 1) * mark + 1
-                end_col <- start_col + mark - 1
-                new_names <- paste(colnames(rankings[start_col:end_col]),
-                                   "event", as.character(i), sep = "_")
+    # separate events
+    rankings$event_points <- lapply(rankings$event_points, name_sublist,
+                                    label = "event")
+    names(rankings$event_points) <- paste0("event points rank #",
+                                           seq_len(nrow(rankings)))
 
-                colnames(rankings)[start_col:end_col] <- new_names
-            }
-        }
+    mark <- ncol(rankings)
+    rankings <- tidyr::unnest_wider(rankings, event_points)
+
+    if (event_detail == "separate") return(rankings)
+
+    # breakdown events
+    N <- ncol(rankings) - mark + 1
+    for (i in seq_len(N)) {
+        ncol0 <- ncol(rankings)
+        rankings <- tidyr::unnest_wider(rankings, paste0("event", i))
+        added <- ncol(rankings) - ncol0 + 1
+
+        start_col <- (i - 1) * added + 1
+        end_col <- start_col + added - 1
+
+        colnames(rankings)[start_col:end_col] <-
+            paste0(colnames(rankings)[start_col:end_col], "_event_", i)
     }
 
     return(rankings)
 }
+
 
 tidy_district_points <- function(raw, tiebreakers = FALSE){
     data <- tibble(dp = raw$points)

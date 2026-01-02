@@ -6,16 +6,14 @@
 \usage{
 district_rankings(
   district_key,
-  separate_events = FALSE,
-  event_breakdown = FALSE
+  event_detail = c("none", "separate", "breakdown")
 )
 }
 \arguments{
 \item{district_key}{(character) TBA legal district key}
 
-\item{separate_events}{(bool) split up team performance across each event?}
-
-\item{event_breakdown}{(bool) breakdown event performance?}
+\item{event_detail}{(character) How far should we break down the event
+district point scores?}
 }
 \value{
 tidy tibble of event rankings
@@ -23,8 +21,14 @@ tidy tibble of event rankings
 \description{
 Reads district rankings
 }
+\details{
+"none" - return the JSON data embedded as a list in a column
+"separate" - separate out the individual events, but no further
+"breakdown" - separate the individual events, and also break down their
+points results.
+}
 \examples{
-district_rankings("2016mar", separate_events = TRUE, event_breakdown = TRUE)
+district_rankings("2016mar", event_detail = "breakdown")
 district_rankings("2022fit")
 }
 \author{
