@@ -5,7 +5,7 @@ Tidy District Ranking
 ## Usage
 
 ``` r
-tidy_district_rankings(raw, event_detail = c("none", "separate", "breakdown"))
+tidy_district_rankings(raw, detail = c("none", "separate", "breakdown"))
 ```
 
 ## Arguments
@@ -14,7 +14,7 @@ tidy_district_rankings(raw, event_detail = c("none", "separate", "breakdown"))
 
   JSON list output from tba_readR
 
-- event_detail:
+- detail:
 
   (chr) how much detail do we want to break the results down into?
 
