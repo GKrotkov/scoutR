@@ -69,18 +69,14 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">event</span><span class="op">(</span><span class="st">"2022txirv"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                     address   city country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event 500 West Las Colinas Boulevard, Irving, TX 75039, USA Irving     USA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              address   city country</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event 500 West Las Colinas Boulevard Irving     USA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 district division_keys   end_date event_code</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> event fit, FIRST In Texas, 2022fit, 2022          NULL 2022-03-26      txirv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       event_type event_type_string first_event_code first_event_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> event          1          District            txirv           NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    gmaps_place_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event ChIJgS3ci5iCToYRuUZNGfcd4cc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                         gmaps_url</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event https://maps.google.com/?q=500+West+Las+Colinas+Boulevard,+Irving,+TX+75039,+USA&amp;ftid=0x864e82988bdc2d81:0xc7e11df7194d46b9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             key      lat       lng                  location_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event 2022txirv 32.87808 -96.94322 500 West Las Colinas Boulevard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       gmaps_place_id gmaps_url       key  lat  lng            location_name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event           NULL      NULL 2022txirv NULL NULL Irving Convention Center</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            name parent_event_key playoff_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> event FIT District Irving Event             NULL            0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       playoff_type_string postal_code remap_teams short_name start_date</span>
@@ -90,24 +86,22 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         website week year</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> event https://firstintexas.org/    3 2022</span>
 <span class="r-in"><span><span class="fu">event</span><span class="op">(</span><span class="st">"2016pahat"</span>, simple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                      address    city country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event 899 Horsham Rd, Horsham, PA 19044, USA Horsham     USA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     district division_keys   end_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event mar, FIRST Mid-Atlantic, 2016mar, 2016          NULL 2016-03-06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       event_code event_type event_type_string first_event_code first_event_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event      pahat          1          District            pahat          17425</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    gmaps_place_id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event ChIJOYzf8XilxokRpKeZ6pBxor8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                               gmaps_url       key      lat</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event https://maps.google.com/?cid=13808724274696529828 2016pahat 40.19774</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             lng                      location_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event -75.16352 Hatboro-Horsham Senior High School</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       name parent_event_key playoff_type</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event MAR District - Hatboro-Horsham Event             NULL         NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       playoff_type_string postal_code remap_teams      short_name start_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event                NULL       19044        NULL Hatboro-Horsham 2016-03-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       state_prov         timezone                                   webcasts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> event         PA America/New_York Osoi9RrsFVM, youtube, RFVj5E28Rao, youtube</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     address</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event Hatboro-Horsham High School\n899 Horsham Road\nHorsham, PA 19044\nUSA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          city country                               district division_keys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event Horsham     USA mar, FIRST Mid-Atlantic, 2016mar, 2016          NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         end_date event_code event_type event_type_string first_event_code</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event 2016-03-06      pahat          1          District            pahat</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       first_event_id gmaps_place_id gmaps_url       key  lat  lng</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event          17425           NULL      NULL 2016pahat NULL NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     location_name                                 name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event Hatboro-Horsham High School MAR District - Hatboro-Horsham Event</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       parent_event_key playoff_type playoff_type_string postal_code remap_teams</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event             NULL         NULL                NULL       19044        NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            short_name start_date state_prov         timezone</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event Hatboro-Horsham 2016-03-04         PA America/New_York</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                         webcasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> event Osoi9RrsFVM, youtube, RFVj5E28Rao, youtube</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   website week year</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> event http://www.midatlanticrobotics.com/    1 2016</span>
 </code></pre></div>
@@ -121,7 +115,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
