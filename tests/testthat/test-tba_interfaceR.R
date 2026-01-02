@@ -26,3 +26,20 @@ test_that("team_matches", {
     expect_equal(team_matches(6672, year = 2023), test2)
     expect_equal(team_matches(3504, year = 2024, keys = TRUE), test3)
 })
+
+test_that("district_rankings", {
+    # test only rankings since 2018, when the FIRST API format changed
+    load("data/district_rankings.rda")
+    expect_equal(district_rankings("2024fit", detail = "none"), test1)
+
+    expect_equal(district_rankings("2019tx", detail = "separate"), test2)
+
+    expect_equal(
+        district_rankings("2023fit", detail = "breakdown"),
+        test3
+    )
+
+    expect_equal(district_rankings("2025chs", detail = "breakdown"), test4)
+
+    expect_equal(district_rankings("2018chs", detail = "breakdown"), test5)
+})
