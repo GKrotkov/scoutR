@@ -40,6 +40,12 @@
 
 <p>Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.</p>
 <div class="section level2">
+<h2 id="maintenance-for-2026-season">Maintenance for 2026 season<a class="anchor" aria-label="anchor" href="#maintenance-for-2026-season"></a></h2>
+<ul><li>Prior ridge: incorporate new functions into scoutR after validating the improvement of prior ridge</li>
+<li>Consider a refactor: individual code files are getting long</li>
+<li>
+</li></ul></div>
+<div class="section level2">
 <h2 id="periodic">Periodic<a class="anchor" aria-label="anchor" href="#periodic"></a></h2>
 <ul><li>renv::snapshot() to update libraries</li>
 <li>devtools::document() to call roxygen documentation handlers</li>
@@ -57,18 +63,6 @@
 <ul><li><a href="https://youtu.be/xJYv7uxXMn0?t=5774" class="external-link uri">https://youtu.be/xJYv7uxXMn0?t=5774</a></li>
 </ul></li>
 <li>“Precision” of OPR</li>
-</ul></div>
-<div class="section level1">
-<h1 id="regularization">Regularization<a class="anchor" aria-label="anchor" href="#regularization"></a></h1>
-<ul><li>Should we regularize with ridge regression to stabilize OPR?
-<ul><li>Also: elasticnet regression, optimizing over both lambda (the penalty value) and alpha (the mixing parameter)</li>
-<li>Could we use a penalty term like lambda to stabilize OPR early, so you can use it effectively with less data?</li>
-</ul></li>
-<li>Could we compute the optimal lambda as a function of matches/team?</li>
-<li>Could we regularize, but instead of biasing towards 0 (like with Ridge) bias towards a good prior, like the average of their previous years’ performances?</li>
-<li>How can we combine the optimzation results from multiple different events? (both for lambda and alpha)</li>
-<li>Quang &amp; Ron’s code for RAPM: <a href="https://ryurko.github.io/cmu_score_preprints/basketball/nba-rapm.html" class="external-link uri">https://ryurko.github.io/cmu_score_preprints/basketball/nba-rapm.html</a>
-</li>
 </ul></div>
 <div class="section level1">
 <h1 id="data-science-projects">Data Science Projects<a class="anchor" aria-label="anchor" href="#data-science-projects"></a></h1>

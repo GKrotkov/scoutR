@@ -3,6 +3,13 @@
 Reminder: a package should do one thing, and do it well. Strive to keep
 additions to scoutR scoped, modular, and testable.
 
+## Maintenance for 2026 season
+
+- Prior ridge: incorporate new functions into scoutR after validating
+  the improvement of prior ridge
+- Consider a refactor: individual code files are getting long
+- 
+
 ## Periodic
 
 - renv::snapshot() to update libraries
@@ -19,22 +26,6 @@ additions to scoutR scoped, modular, and testable.
 - Find OPR’s stabilization point (whole stabilization function?)
   - <https://youtu.be/xJYv7uxXMn0?t=5774>
 - “Precision” of OPR
-
-# Regularization
-
-- Should we regularize with ridge regression to stabilize OPR?
-  - Also: elasticnet regression, optimizing over both lambda (the
-    penalty value) and alpha (the mixing parameter)
-  - Could we use a penalty term like lambda to stabilize OPR early, so
-    you can use it effectively with less data?
-- Could we compute the optimal lambda as a function of matches/team?
-- Could we regularize, but instead of biasing towards 0 (like with
-  Ridge) bias towards a good prior, like the average of their previous
-  years’ performances?
-- How can we combine the optimzation results from multiple different
-  events? (both for lambda and alpha)
-- Quang & Ron’s code for RAPM:
-  <https://ryurko.github.io/cmu_score_preprints/basketball/nba-rapm.html>
 
 # Data Science Projects
 

@@ -231,20 +231,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[1]]$district_rank
 #> [1] 16
 #> 
-#> [[1]]$competing
-#> [[1]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[1]]$competing$next_event_key
-#> NULL
-#> 
-#> [[1]]$competing$next_event_name
-#> NULL
-#> 
-#> [[1]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[2]]
 #> [[2]]$team
@@ -457,20 +443,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[2]]$district_rank
 #> [1] 18
-#> 
-#> [[2]]$competing
-#> [[2]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[2]]$competing$next_event_key
-#> NULL
-#> 
-#> [[2]]$competing$next_event_name
-#> NULL
-#> 
-#> [[2]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[3]]
@@ -685,20 +657,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[3]]$district_rank
 #> [1] 52
 #> 
-#> [[3]]$competing
-#> [[3]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[3]]$competing$next_event_key
-#> NULL
-#> 
-#> [[3]]$competing$next_event_name
-#> NULL
-#> 
-#> [[3]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[4]]
 #> [[4]]$team
@@ -911,20 +869,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[4]]$district_rank
 #> [1] 31
-#> 
-#> [[4]]$competing
-#> [[4]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[4]]$competing$next_event_key
-#> NULL
-#> 
-#> [[4]]$competing$next_event_name
-#> NULL
-#> 
-#> [[4]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[5]]
@@ -1139,20 +1083,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[5]]$district_rank
 #> [1] 21
 #> 
-#> [[5]]$competing
-#> [[5]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[5]]$competing$next_event_key
-#> NULL
-#> 
-#> [[5]]$competing$next_event_name
-#> NULL
-#> 
-#> [[5]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[6]]
 #> [[6]]$team
@@ -1365,20 +1295,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[6]]$district_rank
 #> [1] 69
-#> 
-#> [[6]]$competing
-#> [[6]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[6]]$competing$next_event_key
-#> NULL
-#> 
-#> [[6]]$competing$next_event_name
-#> NULL
-#> 
-#> [[6]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[7]]
@@ -1593,20 +1509,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[7]]$district_rank
 #> [1] 1
 #> 
-#> [[7]]$competing
-#> [[7]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[7]]$competing$next_event_key
-#> NULL
-#> 
-#> [[7]]$competing$next_event_name
-#> NULL
-#> 
-#> [[7]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[8]]
 #> [[8]]$team
@@ -1819,20 +1721,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[8]]$district_rank
 #> [1] 2
-#> 
-#> [[8]]$competing
-#> [[8]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[8]]$competing$next_event_key
-#> NULL
-#> 
-#> [[8]]$competing$next_event_name
-#> NULL
-#> 
-#> [[8]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[9]]
@@ -2047,20 +1935,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[9]]$district_rank
 #> [1] 38
 #> 
-#> [[9]]$competing
-#> [[9]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[9]]$competing$next_event_key
-#> NULL
-#> 
-#> [[9]]$competing$next_event_name
-#> NULL
-#> 
-#> [[9]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[10]]
 #> [[10]]$team
@@ -2273,20 +2147,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[10]]$district_rank
 #> [1] 29
-#> 
-#> [[10]]$competing
-#> [[10]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[10]]$competing$next_event_key
-#> NULL
-#> 
-#> [[10]]$competing$next_event_name
-#> NULL
-#> 
-#> [[10]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[11]]
@@ -2501,20 +2361,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[11]]$district_rank
 #> [1] 40
 #> 
-#> [[11]]$competing
-#> [[11]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[11]]$competing$next_event_key
-#> NULL
-#> 
-#> [[11]]$competing$next_event_name
-#> NULL
-#> 
-#> [[11]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[12]]
 #> [[12]]$team
@@ -2727,20 +2573,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[12]]$district_rank
 #> [1] 81
-#> 
-#> [[12]]$competing
-#> [[12]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[12]]$competing$next_event_key
-#> NULL
-#> 
-#> [[12]]$competing$next_event_name
-#> NULL
-#> 
-#> [[12]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[13]]
@@ -2955,20 +2787,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[13]]$district_rank
 #> [1] 36
 #> 
-#> [[13]]$competing
-#> [[13]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[13]]$competing$next_event_key
-#> NULL
-#> 
-#> [[13]]$competing$next_event_name
-#> NULL
-#> 
-#> [[13]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[14]]
 #> [[14]]$team
@@ -3181,20 +2999,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[14]]$district_rank
 #> [1] 110
-#> 
-#> [[14]]$competing
-#> [[14]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[14]]$competing$next_event_key
-#> NULL
-#> 
-#> [[14]]$competing$next_event_name
-#> NULL
-#> 
-#> [[14]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[15]]
@@ -3409,20 +3213,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[15]]$district_rank
 #> [1] 64
 #> 
-#> [[15]]$competing
-#> [[15]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[15]]$competing$next_event_key
-#> NULL
-#> 
-#> [[15]]$competing$next_event_name
-#> NULL
-#> 
-#> [[15]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[16]]
 #> [[16]]$team
@@ -3635,20 +3425,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[16]]$district_rank
 #> [1] 14
-#> 
-#> [[16]]$competing
-#> [[16]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[16]]$competing$next_event_key
-#> NULL
-#> 
-#> [[16]]$competing$next_event_name
-#> NULL
-#> 
-#> [[16]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[17]]
@@ -3863,20 +3639,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[17]]$district_rank
 #> [1] 91
 #> 
-#> [[17]]$competing
-#> [[17]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[17]]$competing$next_event_key
-#> NULL
-#> 
-#> [[17]]$competing$next_event_name
-#> NULL
-#> 
-#> [[17]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[18]]
 #> [[18]]$team
@@ -4089,20 +3851,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[18]]$district_rank
 #> [1] 13
-#> 
-#> [[18]]$competing
-#> [[18]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[18]]$competing$next_event_key
-#> NULL
-#> 
-#> [[18]]$competing$next_event_name
-#> NULL
-#> 
-#> [[18]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[19]]
@@ -4317,20 +4065,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[19]]$district_rank
 #> [1] 5
 #> 
-#> [[19]]$competing
-#> [[19]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[19]]$competing$next_event_key
-#> NULL
-#> 
-#> [[19]]$competing$next_event_name
-#> NULL
-#> 
-#> [[19]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[20]]
 #> [[20]]$team
@@ -4543,20 +4277,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[20]]$district_rank
 #> [1] 7
-#> 
-#> [[20]]$competing
-#> [[20]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[20]]$competing$next_event_key
-#> NULL
-#> 
-#> [[20]]$competing$next_event_name
-#> NULL
-#> 
-#> [[20]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[21]]
@@ -4771,20 +4491,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[21]]$district_rank
 #> [1] 33
 #> 
-#> [[21]]$competing
-#> [[21]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[21]]$competing$next_event_key
-#> NULL
-#> 
-#> [[21]]$competing$next_event_name
-#> NULL
-#> 
-#> [[21]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[22]]
 #> [[22]]$team
@@ -4997,20 +4703,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[22]]$district_rank
 #> [1] 19
-#> 
-#> [[22]]$competing
-#> [[22]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[22]]$competing$next_event_key
-#> NULL
-#> 
-#> [[22]]$competing$next_event_name
-#> NULL
-#> 
-#> [[22]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[23]]
@@ -5225,20 +4917,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[23]]$district_rank
 #> [1] 27
 #> 
-#> [[23]]$competing
-#> [[23]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[23]]$competing$next_event_key
-#> NULL
-#> 
-#> [[23]]$competing$next_event_name
-#> NULL
-#> 
-#> [[23]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[24]]
 #> [[24]]$team
@@ -5451,20 +5129,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[24]]$district_rank
 #> [1] 62
-#> 
-#> [[24]]$competing
-#> [[24]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[24]]$competing$next_event_key
-#> NULL
-#> 
-#> [[24]]$competing$next_event_name
-#> NULL
-#> 
-#> [[24]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[25]]
@@ -5679,20 +5343,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[25]]$district_rank
 #> [1] 58
 #> 
-#> [[25]]$competing
-#> [[25]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[25]]$competing$next_event_key
-#> NULL
-#> 
-#> [[25]]$competing$next_event_name
-#> NULL
-#> 
-#> [[25]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[26]]
 #> [[26]]$team
@@ -5905,20 +5555,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[26]]$district_rank
 #> [1] 44
-#> 
-#> [[26]]$competing
-#> [[26]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[26]]$competing$next_event_key
-#> NULL
-#> 
-#> [[26]]$competing$next_event_name
-#> NULL
-#> 
-#> [[26]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[27]]
@@ -6133,20 +5769,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[27]]$district_rank
 #> [1] 104
 #> 
-#> [[27]]$competing
-#> [[27]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[27]]$competing$next_event_key
-#> NULL
-#> 
-#> [[27]]$competing$next_event_name
-#> NULL
-#> 
-#> [[27]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[28]]
 #> [[28]]$team
@@ -6359,20 +5981,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[28]]$district_rank
 #> [1] 74
-#> 
-#> [[28]]$competing
-#> [[28]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[28]]$competing$next_event_key
-#> NULL
-#> 
-#> [[28]]$competing$next_event_name
-#> NULL
-#> 
-#> [[28]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[29]]
@@ -6587,20 +6195,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[29]]$district_rank
 #> [1] 55
 #> 
-#> [[29]]$competing
-#> [[29]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[29]]$competing$next_event_key
-#> NULL
-#> 
-#> [[29]]$competing$next_event_name
-#> NULL
-#> 
-#> [[29]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[30]]
 #> [[30]]$team
@@ -6813,20 +6407,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[30]]$district_rank
 #> [1] 4
-#> 
-#> [[30]]$competing
-#> [[30]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[30]]$competing$next_event_key
-#> NULL
-#> 
-#> [[30]]$competing$next_event_name
-#> NULL
-#> 
-#> [[30]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[31]]
@@ -7041,20 +6621,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[31]]$district_rank
 #> [1] 89
 #> 
-#> [[31]]$competing
-#> [[31]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[31]]$competing$next_event_key
-#> NULL
-#> 
-#> [[31]]$competing$next_event_name
-#> NULL
-#> 
-#> [[31]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[32]]
 #> [[32]]$team
@@ -7267,20 +6833,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[32]]$district_rank
 #> [1] 6
-#> 
-#> [[32]]$competing
-#> [[32]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[32]]$competing$next_event_key
-#> NULL
-#> 
-#> [[32]]$competing$next_event_name
-#> NULL
-#> 
-#> [[32]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[33]]
@@ -7495,20 +7047,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[33]]$district_rank
 #> [1] 11
 #> 
-#> [[33]]$competing
-#> [[33]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[33]]$competing$next_event_key
-#> NULL
-#> 
-#> [[33]]$competing$next_event_name
-#> NULL
-#> 
-#> [[33]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[34]]
 #> [[34]]$team
@@ -7721,20 +7259,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[34]]$district_rank
 #> [1] 99
-#> 
-#> [[34]]$competing
-#> [[34]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[34]]$competing$next_event_key
-#> NULL
-#> 
-#> [[34]]$competing$next_event_name
-#> NULL
-#> 
-#> [[34]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[35]]
@@ -7949,20 +7473,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[35]]$district_rank
 #> [1] 26
 #> 
-#> [[35]]$competing
-#> [[35]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[35]]$competing$next_event_key
-#> NULL
-#> 
-#> [[35]]$competing$next_event_name
-#> NULL
-#> 
-#> [[35]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[36]]
 #> [[36]]$team
@@ -8175,20 +7685,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[36]]$district_rank
 #> [1] 45
-#> 
-#> [[36]]$competing
-#> [[36]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[36]]$competing$next_event_key
-#> NULL
-#> 
-#> [[36]]$competing$next_event_name
-#> NULL
-#> 
-#> [[36]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[37]]
@@ -8403,20 +7899,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[37]]$district_rank
 #> [1] 17
 #> 
-#> [[37]]$competing
-#> [[37]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[37]]$competing$next_event_key
-#> NULL
-#> 
-#> [[37]]$competing$next_event_name
-#> NULL
-#> 
-#> [[37]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[38]]
 #> [[38]]$team
@@ -8629,20 +8111,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[38]]$district_rank
 #> [1] 87
-#> 
-#> [[38]]$competing
-#> [[38]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[38]]$competing$next_event_key
-#> NULL
-#> 
-#> [[38]]$competing$next_event_name
-#> NULL
-#> 
-#> [[38]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[39]]
@@ -8857,20 +8325,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[39]]$district_rank
 #> [1] 63
 #> 
-#> [[39]]$competing
-#> [[39]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[39]]$competing$next_event_key
-#> NULL
-#> 
-#> [[39]]$competing$next_event_name
-#> NULL
-#> 
-#> [[39]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[40]]
 #> [[40]]$team
@@ -9083,20 +8537,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[40]]$district_rank
 #> [1] 97
-#> 
-#> [[40]]$competing
-#> [[40]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[40]]$competing$next_event_key
-#> NULL
-#> 
-#> [[40]]$competing$next_event_name
-#> NULL
-#> 
-#> [[40]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[41]]
@@ -9311,20 +8751,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[41]]$district_rank
 #> [1] 8
 #> 
-#> [[41]]$competing
-#> [[41]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[41]]$competing$next_event_key
-#> NULL
-#> 
-#> [[41]]$competing$next_event_name
-#> NULL
-#> 
-#> [[41]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[42]]
 #> [[42]]$team
@@ -9537,20 +8963,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[42]]$district_rank
 #> [1] 46
-#> 
-#> [[42]]$competing
-#> [[42]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[42]]$competing$next_event_key
-#> NULL
-#> 
-#> [[42]]$competing$next_event_name
-#> NULL
-#> 
-#> [[42]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[43]]
@@ -9765,20 +9177,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[43]]$district_rank
 #> [1] 20
 #> 
-#> [[43]]$competing
-#> [[43]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[43]]$competing$next_event_key
-#> NULL
-#> 
-#> [[43]]$competing$next_event_name
-#> NULL
-#> 
-#> [[43]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[44]]
 #> [[44]]$team
@@ -9991,20 +9389,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[44]]$district_rank
 #> [1] 25
-#> 
-#> [[44]]$competing
-#> [[44]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[44]]$competing$next_event_key
-#> NULL
-#> 
-#> [[44]]$competing$next_event_name
-#> NULL
-#> 
-#> [[44]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[45]]
@@ -10219,20 +9603,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[45]]$district_rank
 #> [1] 78
 #> 
-#> [[45]]$competing
-#> [[45]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[45]]$competing$next_event_key
-#> NULL
-#> 
-#> [[45]]$competing$next_event_name
-#> NULL
-#> 
-#> [[45]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[46]]
 #> [[46]]$team
@@ -10445,20 +9815,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[46]]$district_rank
 #> [1] 96
-#> 
-#> [[46]]$competing
-#> [[46]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[46]]$competing$next_event_key
-#> NULL
-#> 
-#> [[46]]$competing$next_event_name
-#> NULL
-#> 
-#> [[46]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[47]]
@@ -10673,20 +10029,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[47]]$district_rank
 #> [1] 34
 #> 
-#> [[47]]$competing
-#> [[47]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[47]]$competing$next_event_key
-#> NULL
-#> 
-#> [[47]]$competing$next_event_name
-#> NULL
-#> 
-#> [[47]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[48]]
 #> [[48]]$team
@@ -10899,20 +10241,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[48]]$district_rank
 #> [1] 100
-#> 
-#> [[48]]$competing
-#> [[48]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[48]]$competing$next_event_key
-#> NULL
-#> 
-#> [[48]]$competing$next_event_name
-#> NULL
-#> 
-#> [[48]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[49]]
@@ -11127,20 +10455,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[49]]$district_rank
 #> [1] 108
 #> 
-#> [[49]]$competing
-#> [[49]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[49]]$competing$next_event_key
-#> NULL
-#> 
-#> [[49]]$competing$next_event_name
-#> NULL
-#> 
-#> [[49]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[50]]
 #> [[50]]$team
@@ -11353,20 +10667,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[50]]$district_rank
 #> [1] 53
-#> 
-#> [[50]]$competing
-#> [[50]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[50]]$competing$next_event_key
-#> NULL
-#> 
-#> [[50]]$competing$next_event_name
-#> NULL
-#> 
-#> [[50]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[51]]
@@ -11581,20 +10881,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[51]]$district_rank
 #> [1] 107
 #> 
-#> [[51]]$competing
-#> [[51]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[51]]$competing$next_event_key
-#> NULL
-#> 
-#> [[51]]$competing$next_event_name
-#> NULL
-#> 
-#> [[51]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[52]]
 #> [[52]]$team
@@ -11807,20 +11093,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[52]]$district_rank
 #> [1] 105
-#> 
-#> [[52]]$competing
-#> [[52]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[52]]$competing$next_event_key
-#> NULL
-#> 
-#> [[52]]$competing$next_event_name
-#> NULL
-#> 
-#> [[52]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[53]]
@@ -12035,20 +11307,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[53]]$district_rank
 #> [1] 88
 #> 
-#> [[53]]$competing
-#> [[53]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[53]]$competing$next_event_key
-#> NULL
-#> 
-#> [[53]]$competing$next_event_name
-#> NULL
-#> 
-#> [[53]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[54]]
 #> [[54]]$team
@@ -12261,20 +11519,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[54]]$district_rank
 #> [1] 109
-#> 
-#> [[54]]$competing
-#> [[54]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[54]]$competing$next_event_key
-#> NULL
-#> 
-#> [[54]]$competing$next_event_name
-#> NULL
-#> 
-#> [[54]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[55]]
@@ -12489,20 +11733,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[55]]$district_rank
 #> [1] 93
 #> 
-#> [[55]]$competing
-#> [[55]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[55]]$competing$next_event_key
-#> NULL
-#> 
-#> [[55]]$competing$next_event_name
-#> NULL
-#> 
-#> [[55]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[56]]
 #> [[56]]$team
@@ -12715,20 +11945,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[56]]$district_rank
 #> [1] 60
-#> 
-#> [[56]]$competing
-#> [[56]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[56]]$competing$next_event_key
-#> NULL
-#> 
-#> [[56]]$competing$next_event_name
-#> NULL
-#> 
-#> [[56]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[57]]
@@ -12943,20 +12159,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[57]]$district_rank
 #> [1] 22
 #> 
-#> [[57]]$competing
-#> [[57]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[57]]$competing$next_event_key
-#> NULL
-#> 
-#> [[57]]$competing$next_event_name
-#> NULL
-#> 
-#> [[57]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[58]]
 #> [[58]]$team
@@ -13169,20 +12371,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[58]]$district_rank
 #> [1] 98
-#> 
-#> [[58]]$competing
-#> [[58]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[58]]$competing$next_event_key
-#> NULL
-#> 
-#> [[58]]$competing$next_event_name
-#> NULL
-#> 
-#> [[58]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[59]]
@@ -13397,20 +12585,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[59]]$district_rank
 #> [1] 39
 #> 
-#> [[59]]$competing
-#> [[59]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[59]]$competing$next_event_key
-#> NULL
-#> 
-#> [[59]]$competing$next_event_name
-#> NULL
-#> 
-#> [[59]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[60]]
 #> [[60]]$team
@@ -13623,20 +12797,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[60]]$district_rank
 #> [1] 92
-#> 
-#> [[60]]$competing
-#> [[60]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[60]]$competing$next_event_key
-#> NULL
-#> 
-#> [[60]]$competing$next_event_name
-#> NULL
-#> 
-#> [[60]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[61]]
@@ -13851,20 +13011,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[61]]$district_rank
 #> [1] 42
 #> 
-#> [[61]]$competing
-#> [[61]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[61]]$competing$next_event_key
-#> NULL
-#> 
-#> [[61]]$competing$next_event_name
-#> NULL
-#> 
-#> [[61]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[62]]
 #> [[62]]$team
@@ -14077,20 +13223,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[62]]$district_rank
 #> [1] 102
-#> 
-#> [[62]]$competing
-#> [[62]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[62]]$competing$next_event_key
-#> NULL
-#> 
-#> [[62]]$competing$next_event_name
-#> NULL
-#> 
-#> [[62]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[63]]
@@ -14305,20 +13437,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[63]]$district_rank
 #> [1] 15
 #> 
-#> [[63]]$competing
-#> [[63]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[63]]$competing$next_event_key
-#> NULL
-#> 
-#> [[63]]$competing$next_event_name
-#> NULL
-#> 
-#> [[63]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[64]]
 #> [[64]]$team
@@ -14531,20 +13649,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[64]]$district_rank
 #> [1] 47
-#> 
-#> [[64]]$competing
-#> [[64]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[64]]$competing$next_event_key
-#> NULL
-#> 
-#> [[64]]$competing$next_event_name
-#> NULL
-#> 
-#> [[64]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[65]]
@@ -14759,20 +13863,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[65]]$district_rank
 #> [1] 73
 #> 
-#> [[65]]$competing
-#> [[65]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[65]]$competing$next_event_key
-#> NULL
-#> 
-#> [[65]]$competing$next_event_name
-#> NULL
-#> 
-#> [[65]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[66]]
 #> [[66]]$team
@@ -14985,20 +14075,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[66]]$district_rank
 #> [1] 59
-#> 
-#> [[66]]$competing
-#> [[66]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[66]]$competing$next_event_key
-#> NULL
-#> 
-#> [[66]]$competing$next_event_name
-#> NULL
-#> 
-#> [[66]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[67]]
@@ -15213,20 +14289,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[67]]$district_rank
 #> [1] 95
 #> 
-#> [[67]]$competing
-#> [[67]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[67]]$competing$next_event_key
-#> NULL
-#> 
-#> [[67]]$competing$next_event_name
-#> NULL
-#> 
-#> [[67]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[68]]
 #> [[68]]$team
@@ -15439,20 +14501,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[68]]$district_rank
 #> [1] 75
-#> 
-#> [[68]]$competing
-#> [[68]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[68]]$competing$next_event_key
-#> NULL
-#> 
-#> [[68]]$competing$next_event_name
-#> NULL
-#> 
-#> [[68]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[69]]
@@ -15667,20 +14715,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[69]]$district_rank
 #> [1] 106
 #> 
-#> [[69]]$competing
-#> [[69]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[69]]$competing$next_event_key
-#> NULL
-#> 
-#> [[69]]$competing$next_event_name
-#> NULL
-#> 
-#> [[69]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[70]]
 #> [[70]]$team
@@ -15893,20 +14927,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[70]]$district_rank
 #> [1] 70
-#> 
-#> [[70]]$competing
-#> [[70]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[70]]$competing$next_event_key
-#> NULL
-#> 
-#> [[70]]$competing$next_event_name
-#> NULL
-#> 
-#> [[70]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[71]]
@@ -16121,20 +15141,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[71]]$district_rank
 #> [1] 41
 #> 
-#> [[71]]$competing
-#> [[71]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[71]]$competing$next_event_key
-#> NULL
-#> 
-#> [[71]]$competing$next_event_name
-#> NULL
-#> 
-#> [[71]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[72]]
 #> [[72]]$team
@@ -16347,20 +15353,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[72]]$district_rank
 #> [1] 43
-#> 
-#> [[72]]$competing
-#> [[72]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[72]]$competing$next_event_key
-#> NULL
-#> 
-#> [[72]]$competing$next_event_name
-#> NULL
-#> 
-#> [[72]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[73]]
@@ -16575,20 +15567,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[73]]$district_rank
 #> [1] 35
 #> 
-#> [[73]]$competing
-#> [[73]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[73]]$competing$next_event_key
-#> NULL
-#> 
-#> [[73]]$competing$next_event_name
-#> NULL
-#> 
-#> [[73]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[74]]
 #> [[74]]$team
@@ -16801,20 +15779,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[74]]$district_rank
 #> [1] 24
-#> 
-#> [[74]]$competing
-#> [[74]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[74]]$competing$next_event_key
-#> NULL
-#> 
-#> [[74]]$competing$next_event_name
-#> NULL
-#> 
-#> [[74]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[75]]
@@ -17029,20 +15993,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[75]]$district_rank
 #> [1] 32
 #> 
-#> [[75]]$competing
-#> [[75]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[75]]$competing$next_event_key
-#> NULL
-#> 
-#> [[75]]$competing$next_event_name
-#> NULL
-#> 
-#> [[75]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[76]]
 #> [[76]]$team
@@ -17255,20 +16205,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[76]]$district_rank
 #> [1] 85
-#> 
-#> [[76]]$competing
-#> [[76]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[76]]$competing$next_event_key
-#> NULL
-#> 
-#> [[76]]$competing$next_event_name
-#> NULL
-#> 
-#> [[76]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[77]]
@@ -17483,20 +16419,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[77]]$district_rank
 #> [1] 28
 #> 
-#> [[77]]$competing
-#> [[77]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[77]]$competing$next_event_key
-#> NULL
-#> 
-#> [[77]]$competing$next_event_name
-#> NULL
-#> 
-#> [[77]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[78]]
 #> [[78]]$team
@@ -17709,20 +16631,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[78]]$district_rank
 #> [1] 90
-#> 
-#> [[78]]$competing
-#> [[78]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[78]]$competing$next_event_key
-#> NULL
-#> 
-#> [[78]]$competing$next_event_name
-#> NULL
-#> 
-#> [[78]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[79]]
@@ -17937,20 +16845,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[79]]$district_rank
 #> [1] 84
 #> 
-#> [[79]]$competing
-#> [[79]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[79]]$competing$next_event_key
-#> NULL
-#> 
-#> [[79]]$competing$next_event_name
-#> NULL
-#> 
-#> [[79]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[80]]
 #> [[80]]$team
@@ -18163,20 +17057,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[80]]$district_rank
 #> [1] 66
-#> 
-#> [[80]]$competing
-#> [[80]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[80]]$competing$next_event_key
-#> NULL
-#> 
-#> [[80]]$competing$next_event_name
-#> NULL
-#> 
-#> [[80]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[81]]
@@ -18391,20 +17271,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[81]]$district_rank
 #> [1] 12
 #> 
-#> [[81]]$competing
-#> [[81]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[81]]$competing$next_event_key
-#> NULL
-#> 
-#> [[81]]$competing$next_event_name
-#> NULL
-#> 
-#> [[81]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[82]]
 #> [[82]]$team
@@ -18617,20 +17483,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[82]]$district_rank
 #> [1] 76
-#> 
-#> [[82]]$competing
-#> [[82]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[82]]$competing$next_event_key
-#> NULL
-#> 
-#> [[82]]$competing$next_event_name
-#> NULL
-#> 
-#> [[82]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[83]]
@@ -18845,20 +17697,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[83]]$district_rank
 #> [1] 101
 #> 
-#> [[83]]$competing
-#> [[83]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[83]]$competing$next_event_key
-#> NULL
-#> 
-#> [[83]]$competing$next_event_name
-#> NULL
-#> 
-#> [[83]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[84]]
 #> [[84]]$team
@@ -19071,20 +17909,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[84]]$district_rank
 #> [1] 54
-#> 
-#> [[84]]$competing
-#> [[84]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[84]]$competing$next_event_key
-#> NULL
-#> 
-#> [[84]]$competing$next_event_name
-#> NULL
-#> 
-#> [[84]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[85]]
@@ -19299,20 +18123,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[85]]$district_rank
 #> [1] 82
 #> 
-#> [[85]]$competing
-#> [[85]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[85]]$competing$next_event_key
-#> NULL
-#> 
-#> [[85]]$competing$next_event_name
-#> NULL
-#> 
-#> [[85]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[86]]
 #> [[86]]$team
@@ -19525,20 +18335,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[86]]$district_rank
 #> [1] 51
-#> 
-#> [[86]]$competing
-#> [[86]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[86]]$competing$next_event_key
-#> NULL
-#> 
-#> [[86]]$competing$next_event_name
-#> NULL
-#> 
-#> [[86]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[87]]
@@ -19753,20 +18549,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[87]]$district_rank
 #> [1] 37
 #> 
-#> [[87]]$competing
-#> [[87]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[87]]$competing$next_event_key
-#> NULL
-#> 
-#> [[87]]$competing$next_event_name
-#> NULL
-#> 
-#> [[87]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[88]]
 #> [[88]]$team
@@ -19979,20 +18761,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[88]]$district_rank
 #> [1] 49
-#> 
-#> [[88]]$competing
-#> [[88]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[88]]$competing$next_event_key
-#> NULL
-#> 
-#> [[88]]$competing$next_event_name
-#> NULL
-#> 
-#> [[88]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[89]]
@@ -20207,20 +18975,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[89]]$district_rank
 #> [1] 94
 #> 
-#> [[89]]$competing
-#> [[89]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[89]]$competing$next_event_key
-#> NULL
-#> 
-#> [[89]]$competing$next_event_name
-#> NULL
-#> 
-#> [[89]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[90]]
 #> [[90]]$team
@@ -20433,20 +19187,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[90]]$district_rank
 #> [1] 61
-#> 
-#> [[90]]$competing
-#> [[90]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[90]]$competing$next_event_key
-#> NULL
-#> 
-#> [[90]]$competing$next_event_name
-#> NULL
-#> 
-#> [[90]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[91]]
@@ -20661,20 +19401,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[91]]$district_rank
 #> [1] 86
 #> 
-#> [[91]]$competing
-#> [[91]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[91]]$competing$next_event_key
-#> NULL
-#> 
-#> [[91]]$competing$next_event_name
-#> NULL
-#> 
-#> [[91]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[92]]
 #> [[92]]$team
@@ -20887,20 +19613,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[92]]$district_rank
 #> [1] 30
-#> 
-#> [[92]]$competing
-#> [[92]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[92]]$competing$next_event_key
-#> NULL
-#> 
-#> [[92]]$competing$next_event_name
-#> NULL
-#> 
-#> [[92]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[93]]
@@ -21115,20 +19827,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[93]]$district_rank
 #> [1] 67
 #> 
-#> [[93]]$competing
-#> [[93]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[93]]$competing$next_event_key
-#> NULL
-#> 
-#> [[93]]$competing$next_event_name
-#> NULL
-#> 
-#> [[93]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[94]]
 #> [[94]]$team
@@ -21341,20 +20039,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[94]]$district_rank
 #> [1] 9
-#> 
-#> [[94]]$competing
-#> [[94]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[94]]$competing$next_event_key
-#> NULL
-#> 
-#> [[94]]$competing$next_event_name
-#> NULL
-#> 
-#> [[94]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[95]]
@@ -21569,20 +20253,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[95]]$district_rank
 #> [1] 3
 #> 
-#> [[95]]$competing
-#> [[95]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[95]]$competing$next_event_key
-#> NULL
-#> 
-#> [[95]]$competing$next_event_name
-#> NULL
-#> 
-#> [[95]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[96]]
 #> [[96]]$team
@@ -21795,20 +20465,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[96]]$district_rank
 #> [1] 48
-#> 
-#> [[96]]$competing
-#> [[96]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[96]]$competing$next_event_key
-#> NULL
-#> 
-#> [[96]]$competing$next_event_name
-#> NULL
-#> 
-#> [[96]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[97]]
@@ -22023,20 +20679,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[97]]$district_rank
 #> [1] 50
 #> 
-#> [[97]]$competing
-#> [[97]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[97]]$competing$next_event_key
-#> NULL
-#> 
-#> [[97]]$competing$next_event_name
-#> NULL
-#> 
-#> [[97]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[98]]
 #> [[98]]$team
@@ -22249,20 +20891,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[98]]$district_rank
 #> [1] 56
-#> 
-#> [[98]]$competing
-#> [[98]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[98]]$competing$next_event_key
-#> NULL
-#> 
-#> [[98]]$competing$next_event_name
-#> NULL
-#> 
-#> [[98]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[99]]
@@ -22477,20 +21105,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[99]]$district_rank
 #> [1] 65
 #> 
-#> [[99]]$competing
-#> [[99]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[99]]$competing$next_event_key
-#> NULL
-#> 
-#> [[99]]$competing$next_event_name
-#> NULL
-#> 
-#> [[99]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[100]]
 #> [[100]]$team
@@ -22703,20 +21317,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[100]]$district_rank
 #> [1] 10
-#> 
-#> [[100]]$competing
-#> [[100]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[100]]$competing$next_event_key
-#> NULL
-#> 
-#> [[100]]$competing$next_event_name
-#> NULL
-#> 
-#> [[100]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[101]]
@@ -22931,20 +21531,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[101]]$district_rank
 #> [1] 57
 #> 
-#> [[101]]$competing
-#> [[101]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[101]]$competing$next_event_key
-#> NULL
-#> 
-#> [[101]]$competing$next_event_name
-#> NULL
-#> 
-#> [[101]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[102]]
 #> [[102]]$team
@@ -23157,20 +21743,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[102]]$district_rank
 #> [1] 72
-#> 
-#> [[102]]$competing
-#> [[102]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[102]]$competing$next_event_key
-#> NULL
-#> 
-#> [[102]]$competing$next_event_name
-#> NULL
-#> 
-#> [[102]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[103]]
@@ -23385,20 +21957,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[103]]$district_rank
 #> [1] 111
 #> 
-#> [[103]]$competing
-#> [[103]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[103]]$competing$next_event_key
-#> NULL
-#> 
-#> [[103]]$competing$next_event_name
-#> NULL
-#> 
-#> [[103]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[104]]
 #> [[104]]$team
@@ -23611,20 +22169,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[104]]$district_rank
 #> [1] 103
-#> 
-#> [[104]]$competing
-#> [[104]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[104]]$competing$next_event_key
-#> NULL
-#> 
-#> [[104]]$competing$next_event_name
-#> NULL
-#> 
-#> [[104]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[105]]
@@ -23839,20 +22383,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[105]]$district_rank
 #> [1] 83
 #> 
-#> [[105]]$competing
-#> [[105]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[105]]$competing$next_event_key
-#> NULL
-#> 
-#> [[105]]$competing$next_event_name
-#> NULL
-#> 
-#> [[105]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[106]]
 #> [[106]]$team
@@ -24065,20 +22595,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[106]]$district_rank
 #> [1] 23
-#> 
-#> [[106]]$competing
-#> [[106]]$competing$this_week
-#> [1] TRUE
-#> 
-#> [[106]]$competing$next_event_key
-#> NULL
-#> 
-#> [[106]]$competing$next_event_name
-#> NULL
-#> 
-#> [[106]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[107]]
@@ -24293,20 +22809,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[107]]$district_rank
 #> [1] 68
 #> 
-#> [[107]]$competing
-#> [[107]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[107]]$competing$next_event_key
-#> NULL
-#> 
-#> [[107]]$competing$next_event_name
-#> NULL
-#> 
-#> [[107]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[108]]
 #> [[108]]$team
@@ -24519,20 +23021,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[108]]$district_rank
 #> [1] 79
-#> 
-#> [[108]]$competing
-#> [[108]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[108]]$competing$next_event_key
-#> NULL
-#> 
-#> [[108]]$competing$next_event_name
-#> NULL
-#> 
-#> [[108]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 #> [[109]]
@@ -24747,20 +23235,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[109]]$district_rank
 #> [1] 77
 #> 
-#> [[109]]$competing
-#> [[109]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[109]]$competing$next_event_key
-#> NULL
-#> 
-#> [[109]]$competing$next_event_name
-#> NULL
-#> 
-#> [[109]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[110]]
 #> [[110]]$team
@@ -24974,20 +23448,6 @@ team_years_sb(year = 2025, district = "chs")
 #> [[110]]$district_rank
 #> [1] 80
 #> 
-#> [[110]]$competing
-#> [[110]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[110]]$competing$next_event_key
-#> NULL
-#> 
-#> [[110]]$competing$next_event_name
-#> NULL
-#> 
-#> [[110]]$competing$next_event_week
-#> NULL
-#> 
-#> 
 #> 
 #> [[111]]
 #> [[111]]$team
@@ -25200,20 +23660,6 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[111]]$district_rank
 #> [1] 71
-#> 
-#> [[111]]$competing
-#> [[111]]$competing$this_week
-#> [1] FALSE
-#> 
-#> [[111]]$competing$next_event_key
-#> NULL
-#> 
-#> [[111]]$competing$next_event_name
-#> NULL
-#> 
-#> [[111]]$competing$next_event_week
-#> NULL
-#> 
 #> 
 #> 
 team_years_sb(team = 449)
@@ -28666,18 +27112,171 @@ team_years_sb(team = 449)
 #> [[22]]$district_rank
 #> [1] 2
 #> 
-#> [[22]]$competing
-#> [[22]]$competing$this_week
+#> 
+#> [[23]]
+#> [[23]]$team
+#> [1] 449
+#> 
+#> [[23]]$year
+#> [1] 2026
+#> 
+#> [[23]]$name
+#> [1] "The Blair Robot Project"
+#> 
+#> [[23]]$country
+#> [1] "USA"
+#> 
+#> [[23]]$state
+#> [1] "MD"
+#> 
+#> [[23]]$district
+#> [1] "fch"
+#> 
+#> [[23]]$rookie_year
+#> [1] 2000
+#> 
+#> [[23]]$epa
+#> [[23]]$epa$total_points
+#> [[23]]$epa$total_points$mean
+#> [1] 14.86
+#> 
+#> [[23]]$epa$total_points$sd
+#> [1] 1.83
+#> 
+#> 
+#> [[23]]$epa$unitless
+#> [1] 1622
+#> 
+#> [[23]]$epa$norm
+#> [1] 1754
+#> 
+#> [[23]]$epa$conf
+#> [[23]]$epa$conf[[1]]
+#> [1] -1.96
+#> 
+#> [[23]]$epa$conf[[2]]
+#> [1] 1.96
+#> 
+#> 
+#> [[23]]$epa$breakdown
+#> [[23]]$epa$breakdown$total_points
+#> [1] 14.86
+#> 
+#> [[23]]$epa$breakdown$auto_points
+#> [1] 4.95
+#> 
+#> [[23]]$epa$breakdown$teleop_points
+#> [1] 4.95
+#> 
+#> [[23]]$epa$breakdown$endgame_points
+#> [1] 4.95
+#> 
+#> [[23]]$epa$breakdown$rp_1
+#> [1] 0.2477
+#> 
+#> [[23]]$epa$breakdown$rp_2
+#> [1] 0.2477
+#> 
+#> [[23]]$epa$breakdown$rp_3
+#> [1] 0.24765
+#> 
+#> [[23]]$epa$breakdown$tiebreaker_points
+#> [1] 0
+#> 
+#> 
+#> [[23]]$epa$stats
+#> [[23]]$epa$stats$start
+#> [1] 14.86
+#> 
+#> [[23]]$epa$stats$pre_champs
+#> [1] 14.86
+#> 
+#> [[23]]$epa$stats$max
+#> [1] 14.86
+#> 
+#> 
+#> [[23]]$epa$ranks
+#> [[23]]$epa$ranks$total
+#> [[23]]$epa$ranks$total$rank
+#> [1] 82
+#> 
+#> [[23]]$epa$ranks$total$percentile
+#> [1] 0.9783
+#> 
+#> [[23]]$epa$ranks$total$team_count
+#> [1] 3781
+#> 
+#> 
+#> [[23]]$epa$ranks$country
+#> [[23]]$epa$ranks$country$rank
+#> [1] 65
+#> 
+#> [[23]]$epa$ranks$country$percentile
+#> [1] 0.9767
+#> 
+#> [[23]]$epa$ranks$country$team_count
+#> [1] 2785
+#> 
+#> 
+#> [[23]]$epa$ranks$state
+#> [[23]]$epa$ranks$state$rank
+#> [1] 1
+#> 
+#> [[23]]$epa$ranks$state$percentile
+#> [1] 0.9706
+#> 
+#> [[23]]$epa$ranks$state$team_count
+#> [1] 34
+#> 
+#> 
+#> [[23]]$epa$ranks$district
+#> [[23]]$epa$ranks$district$rank
+#> [1] 2
+#> 
+#> [[23]]$epa$ranks$district$percentile
+#> [1] 0.9833
+#> 
+#> [[23]]$epa$ranks$district$team_count
+#> [1] 120
+#> 
+#> 
+#> 
+#> 
+#> [[23]]$record
+#> [[23]]$record$wins
+#> [1] 0
+#> 
+#> [[23]]$record$losses
+#> [1] 0
+#> 
+#> [[23]]$record$ties
+#> [1] 0
+#> 
+#> [[23]]$record$count
+#> [1] 0
+#> 
+#> [[23]]$record$winrate
+#> [1] 0
+#> 
+#> 
+#> [[23]]$district_points
+#> [1] 0
+#> 
+#> [[23]]$district_rank
+#> [1] 71
+#> 
+#> [[23]]$competing
+#> [[23]]$competing$this_week
 #> [1] TRUE
 #> 
-#> [[22]]$competing$next_event_key
-#> NULL
+#> [[23]]$competing$next_event_key
+#> [1] "2026vaale"
 #> 
-#> [[22]]$competing$next_event_name
-#> NULL
+#> [[23]]$competing$next_event_name
+#> [1] "FCH District Alexandria VA Event"
 #> 
-#> [[22]]$competing$next_event_week
-#> NULL
+#> [[23]]$competing$next_event_week
+#> [1] 1
 #> 
 #> 
 #> 
