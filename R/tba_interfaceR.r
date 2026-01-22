@@ -246,13 +246,14 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' event_matches("2015paphi", match_type = "playoff")
 #' event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
 event_matches <- function(
-    event_key, alliances = TRUE, breakdown = TRUE, match_type = "all",
+    event_key, alliances = TRUE, breakdown = TRUE,
+    match_type = c("all", "quals", "playoff"),
     unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
 ){
+    match_type = match.arg(match_type)
     if (simple & keys) warning(warns()$simkeys)
-    if (!(match_type %in% c("all", "qual", "playoff"))) warning(warns()$mtype)
 
-    if(match_type == "qual"){
+    if(match_type == "quals"){
         data <- read_event_qual_matches(event_key, simple, keys)
     } else if (match_type == "playoff"){
         data <- read_event_playoff_matches(event_key, simple, keys)
