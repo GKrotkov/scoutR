@@ -41,10 +41,13 @@
 <p>Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.</p>
 <div class="section level2">
 <h2 id="maintenance-for-2026-season">Maintenance for 2026 season<a class="anchor" aria-label="anchor" href="#maintenance-for-2026-season"></a></h2>
-<ul><li>Prior ridge: incorporate new functions into scoutR after validating the improvement of prior ridge</li>
+<ul><li>Prior ridge:
+<ul><li>Validate prior ridge improvement over standard OPR</li>
+<li>fit_event_pridge that takes only an event key</li>
+<li>Does the optimal lambda change meaningfully from year to year?</li>
+</ul></li>
 <li>Consider a refactor: individual code files are getting long</li>
-<li>
-</li></ul></div>
+</ul></div>
 <div class="section level2">
 <h2 id="periodic">Periodic<a class="anchor" aria-label="anchor" href="#periodic"></a></h2>
 <ul><li>renv::snapshot() to update libraries</li>
