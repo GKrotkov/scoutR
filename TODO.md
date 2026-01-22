@@ -3,9 +3,11 @@
 Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
 
 ## Maintenance for 2026 season
-- Prior ridge: incorporate new functions into scoutR after validating the improvement of prior ridge
+- Prior ridge:
+    - Validate prior ridge improvement over standard OPR
+    - fit_event_pridge that takes only an event key
+    - Does the optimal lambda change meaningfully from year to year?
 - Consider a refactor: individual code files are getting long
-- 
 
 ## Periodic
 - renv::snapshot() to update libraries
