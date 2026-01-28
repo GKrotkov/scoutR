@@ -43,3 +43,76 @@ pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE){
     if(mse) return(mean(errors ^ 2))
     return(errors)
 }
+
+#' Prior Ridge Lambda Cross Validation
+#'
+#' Runs leave-one-out cross validation across a grid of lambda and returns the MSEs across the whole grid.
+#' @param design (matrix) 1-hot encoded team lineups, matches on the rows, teams on the columns
+#' @param response (vector) response vector corresponding to `design`; typically alliance scores
+#' @param priors (vector) length equal to ncol(design) representing a best guess at the coefficient without match data. Typically pre-event EPA.
+#' @param grid (vector) all lambda values (regularization parameter) to consider
+#' @param plot_mses (boolean) if TRUE, output a plot showing the CV results
+#' @param n_cores (int) the number of cores to parallelize over; or NULL to use the max minus 1.
+#' @export
+pridge_lambda_cv <- function(
+        design, response, priors, grid, plot_mses = TRUE, n_cores = NULL
+){
+    design <- as.matrix(design)
+
+    # Leave one core free by default
+    if (is.null(n_cores)) {
+        n_cores <- max(1, detectCores() - 1)
+    }
+
+    cl <- makeCluster(n_cores)
+    clusterExport(cl, c("design", "response", "priors", "pridge_loocv"),
+                  envir = environment())
+    clusterEvalQ(cl, {library(scoutR)})
+
+    # TryCatch always stops the cluster, even if an error occurs, which
+    # prevents resource leaks
+    mses <- tryCatch({
+        parSapply(cl, grid, function(lambda) {
+            pridge_loocv(design, response, lambda, priors)
+        })
+    }, finally = {
+        stopCluster(cl)
+    })
+
+    names(mses) <- grid
+    min_ind <- which(mses == min(mses))
+
+    if (plot_mses){
+        plot(x = grid, y = mses, xlab = "Lambda", ylab = "LOOCV MSE",
+             main = "Prior Ridge Lambda Cross Validation",
+             sub = paste("LOOCV MSE-min lambda:", round(grid[min_ind], 3)))
+        abline(v = grid[min_ind], col = "red", lty = 2)
+    }
+
+    return(mses)
+}
+
+#' Fit Event Prior Ridge
+#'
+#' Given an event key, selects an optimal lambda using LOOCV and fits the prior
+#' ridge model using pre-event EPA from statbotics as the prior.
+#' @param event_key (char) TBA-legal event key (ex. "2025mdsev")
+#' @param n_cores (int) number of cores to parallelize over. If NULL, will select (max - 1) cores
+#' @export
+fit_event_pridge <- function(event_key, n_cores = NULL){
+    matches <- event_matches(event_key, match_type = "qual")
+
+    design <- as.matrix(lineup_design_matrix(matches))
+    response <- c(matches$blue_score, matches$red_score)
+
+    sb_data <- team_events_sb(event = event_key)
+    epas <- sapply(sb_data, function(te){te$epa$stats$start})
+    names(epas) <- sapply(sb_data, function(te){te$team})
+
+    grid <- seq(0, 20, length.out = 1000)
+
+    mses <- pridge_lambda_cv(design, response, epas, grid, n_cores = n_cores)
+    lambda_opt <- grid[which.min(mses)]
+
+    return(prior_ridge(design, response, lambda_opt, epas))
+}
