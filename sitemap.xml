@@ -42,6 +42,7 @@
 <url><loc>https://gkrotkov.github.io/scoutR/reference/events.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/events_sb.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/fit_event_lr.html</loc></url>
+<url><loc>https://gkrotkov.github.io/scoutR/reference/fit_event_pridge.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/fit_lineup_lm.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/get_content.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/get_multifield_df.html</loc></url>
@@ -66,6 +67,9 @@
 <url><loc>https://gkrotkov.github.io/scoutR/reference/normalize_weights.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/opr_swings.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/prescout.html</loc></url>
+<url><loc>https://gkrotkov.github.io/scoutR/reference/pridge_lambda_cv.html</loc></url>
+<url><loc>https://gkrotkov.github.io/scoutR/reference/pridge_loocv.html</loc></url>
+<url><loc>https://gkrotkov.github.io/scoutR/reference/prior_ridge.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/qual_schedule.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/read_district_events.html</loc></url>
 <url><loc>https://gkrotkov.github.io/scoutR/reference/read_district_rankings.html</loc></url>

@@ -74,6 +74,8 @@
   : Events (Statbotics)
 - [`fit_event_lr()`](https://gkrotkov.github.io/scoutR/reference/fit_event_lr.md)
   : Fit Event Linear Regression
+- [`fit_event_pridge()`](https://gkrotkov.github.io/scoutR/reference/fit_event_pridge.md)
+  : Fit Event Prior Ridge
 - [`fit_lineup_lm()`](https://gkrotkov.github.io/scoutR/reference/fit_lineup_lm.md)
   : Fit Lineup Linear Model
 - [`get_content()`](https://gkrotkov.github.io/scoutR/reference/get_content.md)
@@ -120,6 +122,12 @@
   : OPR Swing data (2005 - 2025)
 - [`prescout()`](https://gkrotkov.github.io/scoutR/reference/prescout.md)
   : Prescout
+- [`pridge_lambda_cv()`](https://gkrotkov.github.io/scoutR/reference/pridge_lambda_cv.md)
+  : Prior Ridge Lambda Cross Validation (foreach version)
+- [`pridge_loocv()`](https://gkrotkov.github.io/scoutR/reference/pridge_loocv.md)
+  : Prior Ridge leave-one-out cross validation
+- [`prior_ridge()`](https://gkrotkov.github.io/scoutR/reference/prior_ridge.md)
+  : Prior Ridge
 - [`qual_schedule()`](https://gkrotkov.github.io/scoutR/reference/qual_schedule.md)
   : Event Schedule
 - [`read_district_events()`](https://gkrotkov.github.io/scoutR/reference/read_district_events.md)
