@@ -4,10 +4,16 @@
 \alias{fit_event_pridge}
 \title{Fit Event Prior Ridge}
 \usage{
-fit_event_pridge(event_key, n_cores = NULL)
+fit_event_pridge(
+  event_key,
+  grid = seq(0, 20, length.out = 1000),
+  n_cores = NULL
+)
 }
 \arguments{
 \item{event_key}{(char) TBA-legal event key (ex. "2025mdsev")}
+
+\item{grid}{(vector) all possible lambda values to consider}
 
 \item{n_cores}{(int) number of cores to parallelize over. If NULL, will select (max - 1) cores}
 }

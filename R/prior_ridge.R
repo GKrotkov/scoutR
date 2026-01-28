@@ -108,6 +108,7 @@ pridge_lambda_cv <- function(
 #' Given an event key, selects an optimal lambda using LOOCV and fits the prior
 #' ridge model using pre-event EPA from statbotics as the prior.
 #' @param event_key (char) TBA-legal event key (ex. "2025mdsev")
+#' @param grid (vector) all possible lambda values to consider
 #' @param n_cores (int) number of cores to parallelize over. If NULL, will select (max - 1) cores
 #' @details
 #' Relies on statbotics API to establish priors
@@ -116,7 +117,9 @@ pridge_lambda_cv <- function(
 #' @examples
 #' fit_event_pridge("2025mdsev")
 #' fit_event_pridge("2023new", n_cores = 3)
-fit_event_pridge <- function(event_key, n_cores = NULL){
+fit_event_pridge <- function(
+        event_key, grid = seq(0, 20, length.out = 1000), n_cores = NULL
+){
     matches <- event_matches(event_key, match_type = "qual")
 
     design <- as.matrix(lineup_design_matrix(matches))
@@ -125,8 +128,6 @@ fit_event_pridge <- function(event_key, n_cores = NULL){
     sb_data <- team_events_sb(event = event_key)
     epas <- sapply(sb_data, function(te){te$epa$stats$start})
     names(epas) <- sapply(sb_data, function(te){te$team})
-
-    grid <- seq(0, 20, length.out = 1000)
 
     mses <- pridge_lambda_cv(design, response, epas, grid, n_cores = n_cores)
     lambda_opt <- grid[which.min(mses)]
