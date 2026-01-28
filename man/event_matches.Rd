@@ -8,7 +8,7 @@ event_matches(
   event_key,
   alliances = TRUE,
   breakdown = TRUE,
-  match_type = "all",
+  match_type = c("all", "quals", "playoff"),
   unplayed = FALSE,
   sort = TRUE,
   simple = FALSE,

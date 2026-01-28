@@ -44,15 +44,25 @@ pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE){
     return(errors)
 }
 
-#' Prior Ridge Lambda Cross Validation
+#' Prior Ridge Lambda Cross Validation (foreach version)
 #'
-#' Runs leave-one-out cross validation across a grid of lambda and returns the MSEs across the whole grid.
-#' @param design (matrix) 1-hot encoded team lineups, matches on the rows, teams on the columns
-#' @param response (vector) response vector corresponding to `design`; typically alliance scores
-#' @param priors (vector) length equal to ncol(design) representing a best guess at the coefficient without match data. Typically pre-event EPA.
+#' Runs leave-one-out cross validation across a grid of lambda and returns the
+#' MSEs across the whole grid. This version uses the 'foreach' package for
+#' cleaner parallel execution.
+#'
+#' @importFrom foreach %dopar%
+#'
+#' @param design (matrix, or coercable to matrix) 1-hot encoded team lineups,
+#'   matches on the rows, teams on the columns
+#' @param response (vector) response vector corresponding to `design`;
+#'   typically alliance scores
+#' @param priors (vector) length equal to ncol(design) representing a best
+#'   guess at the coefficient without match data. Typically pre-event EPA.
 #' @param grid (vector) all lambda values (regularization parameter) to consider
 #' @param plot_mses (boolean) if TRUE, output a plot showing the CV results
-#' @param n_cores (int) the number of cores to parallelize over; or NULL to use the max minus 1.
+#' @param n_cores (int) the number of cores to parallelize over; or NULL to use
+#'   the max minus 1.
+#'
 #' @export
 pridge_lambda_cv <- function(
         design, response, priors, grid, plot_mses = TRUE, n_cores = NULL
@@ -61,26 +71,26 @@ pridge_lambda_cv <- function(
 
     # Leave one core free by default
     if (is.null(n_cores)) {
-        n_cores <- max(1, detectCores() - 1)
+        n_cores <- max(1, parallel::detectCores() - 1)
     }
 
-    cl <- makeCluster(n_cores)
-    clusterExport(cl, c("design", "response", "priors", "pridge_loocv"),
-                  envir = environment())
-    clusterEvalQ(cl, {library(scoutR)})
+    # Set up the parallel backend
+    cl <- parallel::makeCluster(n_cores)
+    doParallel::registerDoParallel(cl)
 
-    # TryCatch always stops the cluster, even if an error occurs, which
-    # prevents resource leaks
     mses <- tryCatch({
-        parSapply(cl, grid, function(lambda) {
+        foreach::foreach(
+            lambda = grid, .combine = 'c', .packages = 'scoutR'
+        ) %dopar% {
             pridge_loocv(design, response, lambda, priors)
-        })
+        }
     }, finally = {
-        stopCluster(cl)
+        # Always stop the cluster to free up resources
+        parallel::stopCluster(cl)
     })
 
     names(mses) <- grid
-    min_ind <- which(mses == min(mses))
+    min_ind <- which.min(mses)
 
     if (plot_mses){
         plot(x = grid, y = mses, xlab = "Lambda", ylab = "LOOCV MSE",
@@ -92,13 +102,20 @@ pridge_lambda_cv <- function(
     return(mses)
 }
 
+
 #' Fit Event Prior Ridge
 #'
 #' Given an event key, selects an optimal lambda using LOOCV and fits the prior
 #' ridge model using pre-event EPA from statbotics as the prior.
 #' @param event_key (char) TBA-legal event key (ex. "2025mdsev")
 #' @param n_cores (int) number of cores to parallelize over. If NULL, will select (max - 1) cores
+#' @details
+#' Relies on statbotics API to establish priors
+#'
 #' @export
+#' @examples
+#' fit_event_pridge("2025mdsev")
+#' fit_event_pridge("2023new", n_cores = 3)
 fit_event_pridge <- function(event_key, n_cores = NULL){
     matches <- event_matches(event_key, match_type = "qual")
 
