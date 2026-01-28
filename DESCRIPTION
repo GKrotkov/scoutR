@@ -26,4 +26,6 @@ Imports:
     sys,
     tibble,
     tidyr,
-    withr
+    withr, 
+    doParallel, 
+    foreach
