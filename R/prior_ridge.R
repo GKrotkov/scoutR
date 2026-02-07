@@ -15,7 +15,7 @@ prior_ridge <- function(X, y, lambda, beta_0) {
                   {length(beta_0) == ncol(X)})
     p <- ncol(X)
     lambda <- diag(lambda, p)
-    solve(crossprod(X) + lambda, crossprod(X, y) + lambda %*% beta_0)
+    solve(crossprod(X) + lambda, crossprod(X, y) + lambda %*% beta_0)[, 1]
 }
 
 #' Prior Ridge leave-one-out cross validation
