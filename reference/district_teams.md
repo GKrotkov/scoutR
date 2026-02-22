@@ -62,7 +62,7 @@ district_teams("2014mar", simple = TRUE)
 #>    city          country key     name            nickname state_prov team_number
 #>    <chr>         <chr>   <chr>   <chr>           <chr>    <chr>            <int>
 #>  1 Somerville    USA     frc102  Johnson & John… The Gea… New Jersey         102
-#>  2 Kintnersville USA     frc103  MAR VAN Indust… Cyberso… Pennsylva…         103
+#>  2 Kintnersville USA     frc103  Rev Robotics/M… Cyberso… Pennsylva…         103
 #>  3 Hightstown    USA     frc1089 Bristol Myers-… Team Me… New Jersey        1089
 #>  4 Flanders      USA     frc11   National Defen… MORT     New Jersey          11
 #>  5 Clarks Summit USA     frc1143 Lockheed Marti… Cruzin'… Pennsylva…        1143
