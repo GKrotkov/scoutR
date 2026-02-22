@@ -78,7 +78,7 @@ pridge_opr_pct_improvement <- function(event_key, k = 4){
 #### Driver ####
 ################
 
-YEAR <- 2016
+YEAR <- 2025
 
 qualifier_events <- events(YEAR, official = TRUE) |>
     dplyr::filter(event_type %in% c(0, 1))
@@ -119,4 +119,4 @@ result <- data.frame(
 result <- merge(result, qualifier_events, by = "key")
 
 save(result, execution_time,
-     file = paste0("pridge_vs_opr/", "pct_improvement_", YEAR, ".rda"))
+     file = paste0("data/pridge_vs_opr/", "pct_improvement_", YEAR, ".rda"))
