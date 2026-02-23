@@ -1,7 +1,8 @@
 # Computing Prior Ridge percent improvement over OPR in terms of nested CV MSE
-
 rm(list = ls())
-library(scoutR) # devtools::install_github("gkrotkov/scoutR")
+library(scoutR)
+library(foreach)
+library(doParallel)
 
 # given a numeric vector of coefficients, compute the mse on the test set
 coefs_mse <- function(design, response, coefs){
@@ -74,13 +75,9 @@ pridge_opr_pct_improvement <- function(event_key, k = 4){
     return(result)
 }
 
-
 ################
 #### Driver ####
 ################
-
-library(foreach)
-library(doParallel)
 
 YEAR <- 2023
 
