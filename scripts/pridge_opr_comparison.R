@@ -31,7 +31,7 @@ cv_fold <- function(fold, fold_ids, matches, priors){
     # select lambda via LOOCV on the training fold
     pridge_cv <- scoutR::pridge_lambda_cv(
         design_train, response_train, priors,
-        grid = seq(0, 20, length.out = 1000)
+        grid = seq(0, 20, length.out = 1000), plot_mses = FALSE
     )
     lambda_opt <- as.numeric(names(which.min(pridge_cv)))
 
@@ -79,7 +79,7 @@ pridge_opr_pct_improvement <- function(event_key, k = 4){
 #### Driver ####
 ################
 
-YEAR <- 2023
+YEAR <- 2017
 
 qualifier_events <- events(YEAR, official = TRUE) |>
     dplyr::filter(event_type %in% c(0, 1))
