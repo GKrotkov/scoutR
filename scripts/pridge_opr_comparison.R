@@ -74,11 +74,15 @@ pridge_opr_pct_improvement <- function(event_key, k = 4){
     return(result)
 }
 
+
 ################
 #### Driver ####
 ################
 
-YEAR <- 2025
+library(foreach)
+library(doParallel)
+
+YEAR <- 2023
 
 qualifier_events <- events(YEAR, official = TRUE) |>
     dplyr::filter(event_type %in% c(0, 1))
@@ -86,25 +90,31 @@ qualifier_events <- events(YEAR, official = TRUE) |>
 event_keys <- qualifier_events |>
     dplyr::pull(key)
 
-pct_imp <- rep(NA, length(event_keys))
-lambda_opts <- rep(NA, length(event_keys))
+n_cores <- parallel::detectCores() - 1
+cl <- makeCluster(n_cores)
+registerDoParallel(cl)
 
 start <- Sys.time()
 
-for (i in seq_along(event_keys)){
-    tmp <- tryCatch(
-        {pridge_opr_pct_improvement(event_keys[i])},
+results_list <- foreach(
+    key = event_keys,
+    .packages = c("scoutR"),
+    .errorhandling = "pass"
+) %dopar% {
+    tryCatch(
+        {pridge_opr_pct_improvement(key)},
         error = function(e){NA}
     )
-    if (is.na(tmp)) next
-    pct_imp[i] <- tmp
-    lambda_opts[i] <- as.numeric(names(tmp))
 }
 
-finish <- Sys.time()
+stopCluster(cl)
 
+finish <- Sys.time()
 execution_time <- finish - start
 
+# Unpack results (same structure as before)
+pct_imp    <- sapply(results_list, function(x) if (length(x) == 1 && is.na(x)) NA else as.numeric(x))
+lambda_opts <- sapply(results_list, function(x) if (length(x) == 1 && is.na(x)) NA else as.numeric(names(x)))
 names(pct_imp) <- event_keys
 names(lambda_opts) <- event_keys
 
