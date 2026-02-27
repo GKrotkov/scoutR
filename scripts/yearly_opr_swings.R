@@ -2,7 +2,7 @@
 # 11/3/2025
 
 rm(list = ls())
-devtools::load_all()
+library(scoutR)
 
 # skip COVID years and 2007 because the matchmaking algorithm made for very
 # weird linear dependence that year

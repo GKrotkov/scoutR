@@ -79,7 +79,7 @@ pridge_opr_pct_improvement <- function(event_key, k = 4){
 #### Driver ####
 ################
 
-YEAR <- 2017
+YEAR <- 2024
 
 qualifier_events <- events(YEAR, official = TRUE) |>
     dplyr::filter(event_type %in% c(0, 1))

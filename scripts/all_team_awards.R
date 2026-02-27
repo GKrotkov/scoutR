@@ -1,6 +1,6 @@
 # this script is very time intensive - set aside time to let it run.
 library(devtools)
-load_all()
+library(scoutR)
 
 all_team_awards <- list()
 all_teams <- c()
