@@ -35,8 +35,9 @@ get_priors <- function(epa_progression, team_list) {
     return(priors)
 }
 
+# using a relatively short grid for computational considerations
 get_pridge_coefs <- function(design, response, priors){
-    grid <- seq(0, 20, length.out = 1000)
+    grid <- seq(0, 20, length.out = 100)
     mses <- pridge_lambda_cv(design, response, priors, grid)
     lambda_star <- grid[which.min(mses)]
     pridge_coefs <- scoutR:::prior_ridge(design, response,
@@ -118,7 +119,7 @@ qualifier_events <- events(YEAR, official = TRUE) |>
 event_keys <- qualifier_events |>
     dplyr::pull(key)
 
-n_cores <- parallel::detectCores() - 1
+n_cores <- parallel::detectCores() %/% 2
 cl <- makeCluster(n_cores)
 registerDoParallel(cl)
 
