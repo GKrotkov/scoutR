@@ -24908,10 +24908,10 @@ team_years_sb(team = 449)
 #> [1] 65
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.9766
+#> [1] 0.9781
 #> 
 #> [[23]]$epa$ranks$country$team_count
-#> [1] 2780
+#> [1] 2973
 #> 
 #> 
 #> [[23]]$epa$ranks$state
@@ -24919,10 +24919,10 @@ team_years_sb(team = 449)
 #> [1] 1
 #> 
 #> [[23]]$epa$ranks$state$percentile
-#> [1] 0.9706
+#> [1] 0.9722
 #> 
 #> [[23]]$epa$ranks$state$team_count
-#> [1] 34
+#> [1] 36
 #> 
 #> 
 #> [[23]]$epa$ranks$district
