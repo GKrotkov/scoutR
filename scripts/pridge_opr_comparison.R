@@ -75,11 +75,11 @@ pridge_opr_pct_improvement <- function(event_key, k = 4){
     return(result)
 }
 
-################
-#### Driver ####
-################
+##############
+#### Data ####
+##############
 
-YEAR <- 2023
+YEAR <- 2017
 
 qualifier_events <- events(YEAR, official = TRUE) |>
     dplyr::filter(event_type %in% c(0, 1))
@@ -87,7 +87,11 @@ qualifier_events <- events(YEAR, official = TRUE) |>
 event_keys <- qualifier_events |>
     dplyr::pull(key)
 
-n_cores <- parallel::detectCores() - 1
+######################
+#### Parallelized ####
+######################
+
+n_cores <- parallel::detectCores() %/% 2
 cl <- makeCluster(n_cores)
 registerDoParallel(cl)
 
