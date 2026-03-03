@@ -1,26 +1,30 @@
-# TODO
+# Package Management
 
 Reminder: a package should do one thing, and do it well. Strive to keep additions to scoutR scoped, modular, and testable.
 
-## Maintenance for 2026 season
-- Prior ridge:
-    - Validate prior ridge improvement over standard OPR
-    - fit_event_pridge that takes only an event key
-    - Does the optimal lambda change meaningfully from year to year?
-- Consider a refactor: individual code files are getting long
+## Dependency management checklist
+1) Manually add dependencies to R/dependencies.R
+    - It is preferred to add only the functions called, not whole libraries.
+2) devtools::document()
+    - This calls roxygen documentation handlers to create .md files from roxygen tags
+    - It also automatically updates NAMESPACE
+3) attachment::att_amend_desc()
+    - This updates the DESCRIPTION, cleaning up unnecessary dependencies and adding necessary ones.
+4) Test to make sure the package works as intended
+    - devtools::install() to install scoutR locally
+    - devtools::test() to run all testing fxns (you can run a subset for speed)
+    - As you write functions, write `testthat` validation for them as best you can.
+5) devtools::check() to check building the package
+6) renv::snapshot() to record library versions
 
-## Periodic
-- renv::snapshot() to update libraries
-- devtools::document() to call roxygen documentation handlers
-- The pkgdown site is set up to automatically build whenever you push to the repo.
+## pkgdown site
+- The pkgdown site is set to automatically build whenever you push to the repo.
+- https://gkrotkov.github.io/scoutR/
 
-# Package Management
-- `testthat` validation of key fxns
+## httr decisions
+- Statbotics API functions will use httr2, while the TBA API functions will use httr. This avoids me needing to revamp all of the TBA readR. (This is some tech debt, but...)
 
-# OPR Stabilization
-- Find OPR's stabilization point (whole stabilization function?)
-    - https://youtu.be/xJYv7uxXMn0?t=5774
-- "Precision" of OPR
+# TODO list
 
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
@@ -28,9 +32,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 - How many matches are needed to get a good seeding? (https://www.chiefdelphi.com/t/how-many-matches-are-needed-to-get-good-seeding/462857)
 - Principled model to predict district points cutoff
 
-## Long term
+# Long term
 - Generic, automated data validation; `validatoR`
 - Local EPA calculation
-
-## httr decisions
-- Statbotics API functions will use httr2, while the TBA API functions will use httr. This avoids me needing to revamp all of the TBA readR.
