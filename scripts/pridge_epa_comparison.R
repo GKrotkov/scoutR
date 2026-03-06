@@ -61,7 +61,6 @@ get_epa_coefs <- function(epa_progression, event_key, i, design_colnames) {
 }
 
 pridge_epa_pct_imp <- function(event_key){
-    event_key <- "2023txcmp1"
     team_list <- scoutR:::id2int(event_teams(event_key, keys = TRUE))
     matches <- event_matches(event_key, match_type = "quals")
 
