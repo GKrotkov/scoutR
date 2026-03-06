@@ -24795,17 +24795,17 @@ team_years_sb(team = 449)
 #> [[23]]$epa
 #> [[23]]$epa$total_points
 #> [[23]]$epa$total_points$mean
-#> [1] 64.92
+#> [1] 68.29
 #> 
 #> [[23]]$epa$total_points$sd
-#> [1] 4.45
+#> [1] 4.8
 #> 
 #> 
 #> [[23]]$epa$unitless
-#> [1] 1613
+#> [1] 1616
 #> 
 #> [[23]]$epa$norm
-#> [1] 1754
+#> [1] 1746
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
@@ -24817,64 +24817,64 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$epa$breakdown
 #> [[23]]$epa$breakdown$total_points
-#> [1] 64.92
+#> [1] 68.29
 #> 
 #> [[23]]$epa$breakdown$auto_points
-#> [1] 12.33
+#> [1] 13.61
 #> 
 #> [[23]]$epa$breakdown$teleop_points
-#> [1] 36.66
+#> [1] 39.36
 #> 
 #> [[23]]$epa$breakdown$endgame_points
-#> [1] 15.93
+#> [1] 15.32
 #> 
 #> [[23]]$epa$breakdown$energized_rp
-#> [1] 0.0883
+#> [1] 0.2215
 #> 
 #> [[23]]$epa$breakdown$supercharged_rp
-#> [1] -0.3333
+#> [1] -0.0625
 #> 
 #> [[23]]$epa$breakdown$traversal_rp
 #> [1] -0.33333
 #> 
 #> [[23]]$epa$breakdown$tiebreaker_points
-#> [1] 64.92
+#> [1] 68.29
 #> 
 #> [[23]]$epa$breakdown$auto_fuel
-#> [1] 12.19
+#> [1] 13.61
 #> 
 #> [[23]]$epa$breakdown$auto_tower
-#> [1] 0.14
+#> [1] 0
 #> 
 #> [[23]]$epa$breakdown$transition_fuel
-#> [1] 2.39
+#> [1] 2.48
 #> 
 #> [[23]]$epa$breakdown$first_shift_fuel
-#> [1] 17.37
+#> [1] 20.36
 #> 
 #> [[23]]$epa$breakdown$second_shift_fuel
-#> [1] 16.9
+#> [1] 16.52
 #> 
 #> [[23]]$epa$breakdown$teleop_fuel
-#> [1] 36.66
+#> [1] 39.36
 #> 
 #> [[23]]$epa$breakdown$endgame_fuel
-#> [1] 15.06
+#> [1] 14.56
 #> 
 #> [[23]]$epa$breakdown$endgame_tower
-#> [1] 0.87
+#> [1] 0.77
 #> 
 #> [[23]]$epa$breakdown$total_fuel
-#> [1] 63.91
+#> [1] 67.52
 #> 
 #> [[23]]$epa$breakdown$total_tower
-#> [1] 1.01
+#> [1] 0.77
 #> 
 #> [[23]]$epa$breakdown$rp_1
-#> [1] 0.0883
+#> [1] 0.2215
 #> 
 #> [[23]]$epa$breakdown$rp_2
-#> [1] -0.3333
+#> [1] -0.0625
 #> 
 #> [[23]]$epa$breakdown$rp_3
 #> [1] -0.33333
@@ -24882,22 +24882,22 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$epa$stats
 #> [[23]]$epa$stats$start
-#> [1] 64.92
+#> [1] 68.29
 #> 
 #> [[23]]$epa$stats$pre_champs
-#> [1] 64.92
+#> [1] 68.29
 #> 
 #> [[23]]$epa$stats$max
-#> [1] 64.92
+#> [1] 68.29
 #> 
 #> 
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 82
+#> [1] 84
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9782
+#> [1] 0.9777
 #> 
 #> [[23]]$epa$ranks$total$team_count
 #> [1] 3768
