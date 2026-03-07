@@ -31,5 +31,6 @@ Checks for match duplication, which will stop execution if TRUE.
 
 ``` r
 gpr24 <- prescout("2024paca")
+#> Error in req_perform(req): HTTP 500 Internal Server Error.
 newton25 <- prescout("2025newton", manual_teams = c(1712, 6672, 3504))
 ```
