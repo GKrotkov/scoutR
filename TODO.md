@@ -26,6 +26,10 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 # TODO list
 
+# Prior Ridge
+- EPA CV procedure debugging
+- Write up whitepaper
+
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
     - Dropout: subtract out teams that no-showed the match or played exactly 0 offense
