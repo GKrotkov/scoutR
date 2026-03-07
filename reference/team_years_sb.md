@@ -17274,19 +17274,19 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[82]]
 #> [[82]]$team
-#> [1] 6802
+#> [1] 6863
 #> 
 #> [[82]]$year
 #> [1] 2025
 #> 
 #> [[82]]$name
-#> [1] "Mean Caimans"
+#> [1] "Squirrels"
 #> 
 #> [[82]]$country
 #> [1] "USA"
 #> 
 #> [[82]]$state
-#> [1] "VA"
+#> [1] "MD"
 #> 
 #> [[82]]$district
 #> [1] "chs"
@@ -17297,130 +17297,130 @@ team_years_sb(year = 2025, district = "chs")
 #> [[82]]$epa
 #> [[82]]$epa$total_points
 #> [[82]]$epa$total_points$mean
-#> [1] 42.27
+#> [1] 29.16
 #> 
 #> [[82]]$epa$total_points$sd
-#> [1] 7.57
+#> [1] 5.92
 #> 
 #> 
 #> [[82]]$epa$unitless
-#> [1] 1599
+#> [1] 1510
 #> 
 #> [[82]]$epa$norm
-#> [1] 1568
+#> [1] 1512
 #> 
 #> [[82]]$epa$conf
 #> [[82]]$epa$conf[[1]]
-#> [1] -0.79
+#> [1] -0.86
 #> 
 #> [[82]]$epa$conf[[2]]
-#> [1] 0.97
+#> [1] 0.89
 #> 
 #> 
 #> [[82]]$epa$breakdown
 #> [[82]]$epa$breakdown$total_points
-#> [1] 42.27
+#> [1] 29.16
 #> 
 #> [[82]]$epa$breakdown$auto_points
-#> [1] 10.73
+#> [1] 7.33
 #> 
 #> [[82]]$epa$breakdown$teleop_points
-#> [1] 25.15
+#> [1] 21.95
 #> 
 #> [[82]]$epa$breakdown$endgame_points
-#> [1] 6.4
+#> [1] -0.11
 #> 
 #> [[82]]$epa$breakdown$auto_rp
-#> [1] 0.2128
+#> [1] 0.2983
 #> 
 #> [[82]]$epa$breakdown$coral_rp
-#> [1] -0.0051
+#> [1] -0.0438
 #> 
 #> [[82]]$epa$breakdown$barge_rp
-#> [1] 0.33306
+#> [1] -0.04746
 #> 
 #> [[82]]$epa$breakdown$tiebreaker_points
-#> [1] -0.01
+#> [1] 0.16
 #> 
 #> [[82]]$epa$breakdown$auto_leave_points
-#> [1] 2.73
+#> [1] 2.92
 #> 
 #> [[82]]$epa$breakdown$auto_coral
-#> [1] 1.19
+#> [1] 0.88
 #> 
 #> [[82]]$epa$breakdown$auto_coral_points
-#> [1] 8
+#> [1] 4.41
 #> 
 #> [[82]]$epa$breakdown$teleop_coral
-#> [1] 6.34
+#> [1] 5.12
 #> 
 #> [[82]]$epa$breakdown$teleop_coral_points
-#> [1] 22.76
+#> [1] 17.58
 #> 
 #> [[82]]$epa$breakdown$coral_l1
-#> [1] 0.14
+#> [1] 0.2
 #> 
 #> [[82]]$epa$breakdown$coral_l2
-#> [1] -0.06
+#> [1] 1.23
 #> 
 #> [[82]]$epa$breakdown$coral_l3
-#> [1] 2.44
+#> [1] 2.64
 #> 
 #> [[82]]$epa$breakdown$coral_l4
-#> [1] 3.72
+#> [1] 1.21
 #> 
 #> [[82]]$epa$breakdown$total_coral_points
-#> [1] 30.75
+#> [1] 21.99
 #> 
 #> [[82]]$epa$breakdown$processor_algae
-#> [1] -0.05
+#> [1] 1.18
 #> 
 #> [[82]]$epa$breakdown$processor_algae_points
-#> [1] -0.15
+#> [1] 3.54
 #> 
 #> [[82]]$epa$breakdown$net_algae
-#> [1] 0.64
+#> [1] 0.21
 #> 
 #> [[82]]$epa$breakdown$net_algae_points
-#> [1] 2.54
+#> [1] 0.83
 #> 
 #> [[82]]$epa$breakdown$total_algae_points
-#> [1] 2.39
+#> [1] 4.37
 #> 
 #> [[82]]$epa$breakdown$total_game_pieces
-#> [1] 6.82
+#> [1] 6.67
 #> 
 #> [[82]]$epa$breakdown$barge_points
-#> [1] 6.4
+#> [1] -0.11
 #> 
 #> [[82]]$epa$breakdown$rp_1
-#> [1] 0.2128
+#> [1] 0.2983
 #> 
 #> [[82]]$epa$breakdown$rp_2
-#> [1] -0.0051
+#> [1] -0.0438
 #> 
 #> [[82]]$epa$breakdown$rp_3
-#> [1] 0.33306
+#> [1] -0.04746
 #> 
 #> 
 #> [[82]]$epa$stats
 #> [[82]]$epa$stats$start
-#> [1] 31.48
+#> [1] 22.15
 #> 
 #> [[82]]$epa$stats$pre_champs
-#> [1] 42.27
+#> [1] 29.16
 #> 
 #> [[82]]$epa$stats$max
-#> [1] 42.63
+#> [1] 30.61
 #> 
 #> 
 #> [[82]]$epa$ranks
 #> [[82]]$epa$ranks$total
 #> [[82]]$epa$ranks$total$rank
-#> [1] 825
+#> [1] 1532
 #> 
 #> [[82]]$epa$ranks$total$percentile
-#> [1] 0.7771
+#> [1] 0.5862
 #> 
 #> [[82]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -17428,10 +17428,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[82]]$epa$ranks$country
 #> [[82]]$epa$ranks$country$rank
-#> [1] 700
+#> [1] 1285
 #> 
 #> [[82]]$epa$ranks$country$percentile
-#> [1] 0.7611
+#> [1] 0.5614
 #> 
 #> [[82]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -17439,21 +17439,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[82]]$epa$ranks$state
 #> [[82]]$epa$ranks$state$rank
-#> [1] 20
+#> [1] 17
 #> 
 #> [[82]]$epa$ranks$state$percentile
-#> [1] 0.697
+#> [1] 0.5278
 #> 
 #> [[82]]$epa$ranks$state$team_count
-#> [1] 66
+#> [1] 36
 #> 
 #> 
 #> [[82]]$epa$ranks$district
 #> [[82]]$epa$ranks$district$rank
-#> [1] 30
+#> [1] 52
 #> 
 #> [[82]]$epa$ranks$district$percentile
-#> [1] 0.7297
+#> [1] 0.5315
 #> 
 #> [[82]]$epa$ranks$district$team_count
 #> [1] 111
@@ -17463,43 +17463,43 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[82]]$record
 #> [[82]]$record$wins
-#> [1] 19
+#> [1] 17
 #> 
 #> [[82]]$record$losses
-#> [1] 22
+#> [1] 27
 #> 
 #> [[82]]$record$ties
-#> [1] 2
+#> [1] 0
 #> 
 #> [[82]]$record$count
-#> [1] 43
+#> [1] 44
 #> 
 #> [[82]]$record$winrate
-#> [1] 0.4651
+#> [1] 0.3864
 #> 
 #> 
 #> [[82]]$district_points
-#> [1] 103
+#> [1] 82
 #> 
 #> [[82]]$district_rank
-#> [1] 37
+#> [1] 49
 #> 
 #> 
 #> [[83]]
 #> [[83]]$team
-#> [1] 6863
+#> [1] 6882
 #> 
 #> [[83]]$year
 #> [1] 2025
 #> 
 #> [[83]]$name
-#> [1] "Squirrels"
+#> [1] "Fahrenheit Robotics"
 #> 
 #> [[83]]$country
 #> [1] "USA"
 #> 
 #> [[83]]$state
-#> [1] "MD"
+#> [1] "VA"
 #> 
 #> [[83]]$district
 #> [1] "chs"
@@ -17510,130 +17510,130 @@ team_years_sb(year = 2025, district = "chs")
 #> [[83]]$epa
 #> [[83]]$epa$total_points
 #> [[83]]$epa$total_points$mean
-#> [1] 29.16
+#> [1] 12.42
 #> 
 #> [[83]]$epa$total_points$sd
-#> [1] 5.92
+#> [1] 5.15
 #> 
 #> 
 #> [[83]]$epa$unitless
-#> [1] 1510
+#> [1] 1397
 #> 
 #> [[83]]$epa$norm
-#> [1] 1512
+#> [1] 1411
 #> 
 #> [[83]]$epa$conf
 #> [[83]]$epa$conf[[1]]
-#> [1] -0.86
+#> [1] -0.99
 #> 
 #> [[83]]$epa$conf[[2]]
-#> [1] 0.89
+#> [1] 0.78
 #> 
 #> 
 #> [[83]]$epa$breakdown
 #> [[83]]$epa$breakdown$total_points
-#> [1] 29.16
+#> [1] 12.42
 #> 
 #> [[83]]$epa$breakdown$auto_points
-#> [1] 7.33
+#> [1] 2.2
 #> 
 #> [[83]]$epa$breakdown$teleop_points
-#> [1] 21.95
+#> [1] 8.55
 #> 
 #> [[83]]$epa$breakdown$endgame_points
-#> [1] -0.11
+#> [1] 1.66
 #> 
 #> [[83]]$epa$breakdown$auto_rp
-#> [1] 0.2983
+#> [1] -0.0337
 #> 
 #> [[83]]$epa$breakdown$coral_rp
-#> [1] -0.0438
+#> [1] -0.1591
 #> 
 #> [[83]]$epa$breakdown$barge_rp
-#> [1] -0.04746
+#> [1] 0.00509
 #> 
 #> [[83]]$epa$breakdown$tiebreaker_points
-#> [1] 0.16
+#> [1] 0.04
 #> 
 #> [[83]]$epa$breakdown$auto_leave_points
-#> [1] 2.92
+#> [1] 2.32
 #> 
 #> [[83]]$epa$breakdown$auto_coral
-#> [1] 0.88
+#> [1] -0.06
 #> 
 #> [[83]]$epa$breakdown$auto_coral_points
-#> [1] 4.41
+#> [1] -0.12
 #> 
 #> [[83]]$epa$breakdown$teleop_coral
-#> [1] 5.12
+#> [1] 1.77
 #> 
 #> [[83]]$epa$breakdown$teleop_coral_points
-#> [1] 17.58
+#> [1] 7.54
 #> 
 #> [[83]]$epa$breakdown$coral_l1
-#> [1] 0.2
+#> [1] 0.06
 #> 
 #> [[83]]$epa$breakdown$coral_l2
-#> [1] 1.23
+#> [1] 0.38
 #> 
 #> [[83]]$epa$breakdown$coral_l3
-#> [1] 2.64
+#> [1] 0.15
 #> 
 #> [[83]]$epa$breakdown$coral_l4
-#> [1] 1.21
+#> [1] 1.12
 #> 
 #> [[83]]$epa$breakdown$total_coral_points
-#> [1] 21.99
+#> [1] 7.42
 #> 
 #> [[83]]$epa$breakdown$processor_algae
-#> [1] 1.18
+#> [1] -0.19
 #> 
 #> [[83]]$epa$breakdown$processor_algae_points
-#> [1] 3.54
+#> [1] -0.58
 #> 
 #> [[83]]$epa$breakdown$net_algae
-#> [1] 0.21
+#> [1] 0.4
 #> 
 #> [[83]]$epa$breakdown$net_algae_points
-#> [1] 0.83
+#> [1] 1.59
 #> 
 #> [[83]]$epa$breakdown$total_algae_points
-#> [1] 4.37
+#> [1] 1.01
 #> 
 #> [[83]]$epa$breakdown$total_game_pieces
-#> [1] 6.67
+#> [1] 1.92
 #> 
 #> [[83]]$epa$breakdown$barge_points
-#> [1] -0.11
+#> [1] 1.66
 #> 
 #> [[83]]$epa$breakdown$rp_1
-#> [1] 0.2983
+#> [1] -0.0337
 #> 
 #> [[83]]$epa$breakdown$rp_2
-#> [1] -0.0438
+#> [1] -0.1591
 #> 
 #> [[83]]$epa$breakdown$rp_3
-#> [1] -0.04746
+#> [1] 0.00509
 #> 
 #> 
 #> [[83]]$epa$stats
 #> [[83]]$epa$stats$start
-#> [1] 22.15
+#> [1] 15.05
 #> 
 #> [[83]]$epa$stats$pre_champs
-#> [1] 29.16
+#> [1] 12.42
 #> 
 #> [[83]]$epa$stats$max
-#> [1] 30.61
+#> [1] 16.64
 #> 
 #> 
 #> [[83]]$epa$ranks
 #> [[83]]$epa$ranks$total
 #> [[83]]$epa$ranks$total$rank
-#> [1] 1532
+#> [1] 3222
 #> 
 #> [[83]]$epa$ranks$total$percentile
-#> [1] 0.5862
+#> [1] 0.1297
 #> 
 #> [[83]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -17641,10 +17641,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[83]]$epa$ranks$country
 #> [[83]]$epa$ranks$country$rank
-#> [1] 1285
+#> [1] 2613
 #> 
 #> [[83]]$epa$ranks$country$percentile
-#> [1] 0.5614
+#> [1] 0.1082
 #> 
 #> [[83]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -17652,21 +17652,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[83]]$epa$ranks$state
 #> [[83]]$epa$ranks$state$rank
-#> [1] 17
+#> [1] 57
 #> 
 #> [[83]]$epa$ranks$state$percentile
-#> [1] 0.5278
+#> [1] 0.1364
 #> 
 #> [[83]]$epa$ranks$state$team_count
-#> [1] 36
+#> [1] 66
 #> 
 #> 
 #> [[83]]$epa$ranks$district
 #> [[83]]$epa$ranks$district$rank
-#> [1] 52
+#> [1] 96
 #> 
 #> [[83]]$epa$ranks$district$percentile
-#> [1] 0.5315
+#> [1] 0.1351
 #> 
 #> [[83]]$epa$ranks$district$team_count
 #> [1] 111
@@ -17676,177 +17676,177 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[83]]$record
 #> [[83]]$record$wins
-#> [1] 17
+#> [1] 11
 #> 
 #> [[83]]$record$losses
-#> [1] 27
+#> [1] 13
 #> 
 #> [[83]]$record$ties
-#> [1] 0
+#> [1] 1
 #> 
 #> [[83]]$record$count
-#> [1] 44
+#> [1] 25
 #> 
 #> [[83]]$record$winrate
-#> [1] 0.3864
+#> [1] 0.46
 #> 
 #> 
 #> [[83]]$district_points
-#> [1] 82
+#> [1] 26
 #> 
 #> [[83]]$district_rank
-#> [1] 49
+#> [1] 94
 #> 
 #> 
 #> [[84]]
 #> [[84]]$team
-#> [1] 6882
+#> [1] 7770
 #> 
 #> [[84]]$year
 #> [1] 2025
 #> 
 #> [[84]]$name
-#> [1] "Fahrenheit Robotics"
+#> [1] "Infinite Voltage"
 #> 
 #> [[84]]$country
 #> [1] "USA"
 #> 
 #> [[84]]$state
-#> [1] "VA"
+#> [1] "MD"
 #> 
 #> [[84]]$district
 #> [1] "chs"
 #> 
 #> [[84]]$rookie_year
-#> [1] 2018
+#> [1] 2019
 #> 
 #> [[84]]$epa
 #> [[84]]$epa$total_points
 #> [[84]]$epa$total_points$mean
-#> [1] 12.42
+#> [1] 21.99
 #> 
 #> [[84]]$epa$total_points$sd
-#> [1] 5.15
+#> [1] 7.23
 #> 
 #> 
 #> [[84]]$epa$unitless
-#> [1] 1397
+#> [1] 1462
 #> 
 #> [[84]]$epa$norm
-#> [1] 1411
+#> [1] 1477
 #> 
 #> [[84]]$epa$conf
 #> [[84]]$epa$conf[[1]]
-#> [1] -0.99
+#> [1] -0.77
 #> 
 #> [[84]]$epa$conf[[2]]
-#> [1] 0.78
+#> [1] 0.99
 #> 
 #> 
 #> [[84]]$epa$breakdown
 #> [[84]]$epa$breakdown$total_points
-#> [1] 12.42
+#> [1] 21.99
 #> 
 #> [[84]]$epa$breakdown$auto_points
-#> [1] 2.2
+#> [1] 4.73
 #> 
 #> [[84]]$epa$breakdown$teleop_points
-#> [1] 8.55
+#> [1] 16.18
 #> 
 #> [[84]]$epa$breakdown$endgame_points
-#> [1] 1.66
+#> [1] 1.08
 #> 
 #> [[84]]$epa$breakdown$auto_rp
-#> [1] -0.0337
+#> [1] 0.3694
 #> 
 #> [[84]]$epa$breakdown$coral_rp
-#> [1] -0.1591
+#> [1] -0.167
 #> 
 #> [[84]]$epa$breakdown$barge_rp
-#> [1] 0.00509
+#> [1] -0.08174
 #> 
 #> [[84]]$epa$breakdown$tiebreaker_points
-#> [1] 0.04
+#> [1] 0.07
 #> 
 #> [[84]]$epa$breakdown$auto_leave_points
-#> [1] 2.32
+#> [1] 3.05
 #> 
 #> [[84]]$epa$breakdown$auto_coral
-#> [1] -0.06
+#> [1] 0.36
 #> 
 #> [[84]]$epa$breakdown$auto_coral_points
-#> [1] -0.12
+#> [1] 1.67
 #> 
 #> [[84]]$epa$breakdown$teleop_coral
-#> [1] 1.77
+#> [1] 3.67
 #> 
 #> [[84]]$epa$breakdown$teleop_coral_points
-#> [1] 7.54
+#> [1] 13.87
 #> 
 #> [[84]]$epa$breakdown$coral_l1
-#> [1] 0.06
+#> [1] 1.11
 #> 
 #> [[84]]$epa$breakdown$coral_l2
-#> [1] 0.38
+#> [1] 0.66
 #> 
 #> [[84]]$epa$breakdown$coral_l3
-#> [1] 0.15
+#> [1] 0.43
 #> 
 #> [[84]]$epa$breakdown$coral_l4
-#> [1] 1.12
+#> [1] 1.83
 #> 
 #> [[84]]$epa$breakdown$total_coral_points
-#> [1] 7.42
+#> [1] 15.55
 #> 
 #> [[84]]$epa$breakdown$processor_algae
-#> [1] -0.19
+#> [1] 0.5
 #> 
 #> [[84]]$epa$breakdown$processor_algae_points
-#> [1] -0.58
+#> [1] 1.5
 #> 
 #> [[84]]$epa$breakdown$net_algae
-#> [1] 0.4
+#> [1] 0.2
 #> 
 #> [[84]]$epa$breakdown$net_algae_points
-#> [1] 1.59
+#> [1] 0.81
 #> 
 #> [[84]]$epa$breakdown$total_algae_points
-#> [1] 1.01
+#> [1] 2.31
 #> 
 #> [[84]]$epa$breakdown$total_game_pieces
-#> [1] 1.92
+#> [1] 4.74
 #> 
 #> [[84]]$epa$breakdown$barge_points
-#> [1] 1.66
+#> [1] 1.08
 #> 
 #> [[84]]$epa$breakdown$rp_1
-#> [1] -0.0337
+#> [1] 0.3694
 #> 
 #> [[84]]$epa$breakdown$rp_2
-#> [1] -0.1591
+#> [1] -0.167
 #> 
 #> [[84]]$epa$breakdown$rp_3
-#> [1] 0.00509
+#> [1] -0.08174
 #> 
 #> 
 #> [[84]]$epa$stats
 #> [[84]]$epa$stats$start
-#> [1] 15.05
+#> [1] 18.3
 #> 
 #> [[84]]$epa$stats$pre_champs
-#> [1] 12.42
+#> [1] 21.99
 #> 
 #> [[84]]$epa$stats$max
-#> [1] 16.64
+#> [1] 23.18
 #> 
 #> 
 #> [[84]]$epa$ranks
 #> [[84]]$epa$ranks$total
 #> [[84]]$epa$ranks$total$rank
-#> [1] 3222
+#> [1] 2099
 #> 
 #> [[84]]$epa$ranks$total$percentile
-#> [1] 0.1297
+#> [1] 0.433
 #> 
 #> [[84]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -17854,10 +17854,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[84]]$epa$ranks$country
 #> [[84]]$epa$ranks$country$rank
-#> [1] 2613
+#> [1] 1752
 #> 
 #> [[84]]$epa$ranks$country$percentile
-#> [1] 0.1082
+#> [1] 0.402
 #> 
 #> [[84]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -17865,21 +17865,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[84]]$epa$ranks$state
 #> [[84]]$epa$ranks$state$rank
-#> [1] 57
+#> [1] 24
 #> 
 #> [[84]]$epa$ranks$state$percentile
-#> [1] 0.1364
+#> [1] 0.3333
 #> 
 #> [[84]]$epa$ranks$state$team_count
-#> [1] 66
+#> [1] 36
 #> 
 #> 
 #> [[84]]$epa$ranks$district
 #> [[84]]$epa$ranks$district$rank
-#> [1] 96
+#> [1] 68
 #> 
 #> [[84]]$epa$ranks$district$percentile
-#> [1] 0.1351
+#> [1] 0.3874
 #> 
 #> [[84]]$epa$ranks$district$team_count
 #> [1] 111
@@ -17889,37 +17889,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[84]]$record
 #> [[84]]$record$wins
-#> [1] 11
-#> 
-#> [[84]]$record$losses
 #> [1] 13
 #> 
+#> [[84]]$record$losses
+#> [1] 15
+#> 
 #> [[84]]$record$ties
-#> [1] 1
+#> [1] 0
 #> 
 #> [[84]]$record$count
-#> [1] 25
+#> [1] 28
 #> 
 #> [[84]]$record$winrate
-#> [1] 0.46
+#> [1] 0.4643
 #> 
 #> 
 #> [[84]]$district_points
-#> [1] 26
+#> [1] 51
 #> 
 #> [[84]]$district_rank
-#> [1] 94
+#> [1] 61
 #> 
 #> 
 #> [[85]]
 #> [[85]]$team
-#> [1] 7770
+#> [1] 7886
 #> 
 #> [[85]]$year
 #> [1] 2025
 #> 
 #> [[85]]$name
-#> [1] "Infinite Voltage"
+#> [1] "Cadet Robotics"
 #> 
 #> [[85]]$country
 #> [1] "USA"
@@ -17936,130 +17936,130 @@ team_years_sb(year = 2025, district = "chs")
 #> [[85]]$epa
 #> [[85]]$epa$total_points
 #> [[85]]$epa$total_points$mean
-#> [1] 21.99
+#> [1] 15.08
 #> 
 #> [[85]]$epa$total_points$sd
-#> [1] 7.23
+#> [1] 5.38
 #> 
 #> 
 #> [[85]]$epa$unitless
-#> [1] 1462
+#> [1] 1415
 #> 
 #> [[85]]$epa$norm
-#> [1] 1477
+#> [1] 1433
 #> 
 #> [[85]]$epa$conf
 #> [[85]]$epa$conf[[1]]
-#> [1] -0.77
+#> [1] -0.86
 #> 
 #> [[85]]$epa$conf[[2]]
-#> [1] 0.99
+#> [1] 0.91
 #> 
 #> 
 #> [[85]]$epa$breakdown
 #> [[85]]$epa$breakdown$total_points
-#> [1] 21.99
+#> [1] 15.08
 #> 
 #> [[85]]$epa$breakdown$auto_points
-#> [1] 4.73
+#> [1] 3.61
 #> 
 #> [[85]]$epa$breakdown$teleop_points
-#> [1] 16.18
+#> [1] 9.88
 #> 
 #> [[85]]$epa$breakdown$endgame_points
-#> [1] 1.08
+#> [1] 1.59
 #> 
 #> [[85]]$epa$breakdown$auto_rp
-#> [1] 0.3694
+#> [1] 0.0075
 #> 
 #> [[85]]$epa$breakdown$coral_rp
-#> [1] -0.167
+#> [1] -0.1064
 #> 
 #> [[85]]$epa$breakdown$barge_rp
-#> [1] -0.08174
+#> [1] -0.02682
 #> 
 #> [[85]]$epa$breakdown$tiebreaker_points
-#> [1] 0.07
+#> [1] -0.02
 #> 
 #> [[85]]$epa$breakdown$auto_leave_points
-#> [1] 3.05
+#> [1] 2.28
 #> 
 #> [[85]]$epa$breakdown$auto_coral
-#> [1] 0.36
+#> [1] 0.31
 #> 
 #> [[85]]$epa$breakdown$auto_coral_points
-#> [1] 1.67
+#> [1] 1.33
 #> 
 #> [[85]]$epa$breakdown$teleop_coral
-#> [1] 3.67
+#> [1] 2.57
 #> 
 #> [[85]]$epa$breakdown$teleop_coral_points
-#> [1] 13.87
+#> [1] 8.88
 #> 
 #> [[85]]$epa$breakdown$coral_l1
-#> [1] 1.11
+#> [1] 0.82
 #> 
 #> [[85]]$epa$breakdown$coral_l2
-#> [1] 0.66
+#> [1] 0.49
 #> 
 #> [[85]]$epa$breakdown$coral_l3
-#> [1] 0.43
+#> [1] 1.1
 #> 
 #> [[85]]$epa$breakdown$coral_l4
-#> [1] 1.83
+#> [1] 0.46
 #> 
 #> [[85]]$epa$breakdown$total_coral_points
-#> [1] 15.55
+#> [1] 10.21
 #> 
 #> [[85]]$epa$breakdown$processor_algae
-#> [1] 0.5
+#> [1] 0.51
 #> 
 #> [[85]]$epa$breakdown$processor_algae_points
-#> [1] 1.5
+#> [1] 1.52
 #> 
 #> [[85]]$epa$breakdown$net_algae
-#> [1] 0.2
+#> [1] -0.13
 #> 
 #> [[85]]$epa$breakdown$net_algae_points
-#> [1] 0.81
+#> [1] -0.52
 #> 
 #> [[85]]$epa$breakdown$total_algae_points
-#> [1] 2.31
+#> [1] 1
 #> 
 #> [[85]]$epa$breakdown$total_game_pieces
-#> [1] 4.74
+#> [1] 3.26
 #> 
 #> [[85]]$epa$breakdown$barge_points
-#> [1] 1.08
+#> [1] 1.59
 #> 
 #> [[85]]$epa$breakdown$rp_1
-#> [1] 0.3694
+#> [1] 0.0075
 #> 
 #> [[85]]$epa$breakdown$rp_2
-#> [1] -0.167
+#> [1] -0.1064
 #> 
 #> [[85]]$epa$breakdown$rp_3
-#> [1] -0.08174
+#> [1] -0.02682
 #> 
 #> 
 #> [[85]]$epa$stats
 #> [[85]]$epa$stats$start
-#> [1] 18.3
+#> [1] 10.81
 #> 
 #> [[85]]$epa$stats$pre_champs
-#> [1] 21.99
+#> [1] 15.08
 #> 
 #> [[85]]$epa$stats$max
-#> [1] 23.18
+#> [1] 16.86
 #> 
 #> 
 #> [[85]]$epa$ranks
 #> [[85]]$epa$ranks$total
 #> [[85]]$epa$ranks$total$rank
-#> [1] 2099
+#> [1] 2933
 #> 
 #> [[85]]$epa$ranks$total$percentile
-#> [1] 0.433
+#> [1] 0.2077
 #> 
 #> [[85]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -18067,10 +18067,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[85]]$epa$ranks$country
 #> [[85]]$epa$ranks$country$rank
-#> [1] 1752
+#> [1] 2401
 #> 
 #> [[85]]$epa$ranks$country$percentile
-#> [1] 0.402
+#> [1] 0.1805
 #> 
 #> [[85]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -18078,10 +18078,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[85]]$epa$ranks$state
 #> [[85]]$epa$ranks$state$rank
-#> [1] 24
+#> [1] 30
 #> 
 #> [[85]]$epa$ranks$state$percentile
-#> [1] 0.3333
+#> [1] 0.1667
 #> 
 #> [[85]]$epa$ranks$state$team_count
 #> [1] 36
@@ -18089,10 +18089,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[85]]$epa$ranks$district
 #> [[85]]$epa$ranks$district$rank
-#> [1] 68
+#> [1] 90
 #> 
 #> [[85]]$epa$ranks$district$percentile
-#> [1] 0.3874
+#> [1] 0.1892
 #> 
 #> [[85]]$epa$ranks$district$team_count
 #> [1] 111
@@ -18102,177 +18102,177 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[85]]$record
 #> [[85]]$record$wins
-#> [1] 13
+#> [1] 12
 #> 
 #> [[85]]$record$losses
-#> [1] 15
+#> [1] 14
 #> 
 #> [[85]]$record$ties
 #> [1] 0
 #> 
 #> [[85]]$record$count
-#> [1] 28
+#> [1] 26
 #> 
 #> [[85]]$record$winrate
-#> [1] 0.4643
+#> [1] 0.4615
 #> 
 #> 
 #> [[85]]$district_points
-#> [1] 51
+#> [1] 34
 #> 
 #> [[85]]$district_rank
-#> [1] 61
+#> [1] 86
 #> 
 #> 
 #> [[86]]
 #> [[86]]$team
-#> [1] 7886
+#> [1] 8230
 #> 
 #> [[86]]$year
 #> [1] 2025
 #> 
 #> [[86]]$name
-#> [1] "Cadet Robotics"
+#> [1] "KoiBots"
 #> 
 #> [[86]]$country
 #> [1] "USA"
 #> 
 #> [[86]]$state
-#> [1] "MD"
+#> [1] "VA"
 #> 
 #> [[86]]$district
 #> [1] "chs"
 #> 
 #> [[86]]$rookie_year
-#> [1] 2019
+#> [1] 2020
 #> 
 #> [[86]]$epa
 #> [[86]]$epa$total_points
 #> [[86]]$epa$total_points$mean
-#> [1] 15.08
+#> [1] 27.09
 #> 
 #> [[86]]$epa$total_points$sd
-#> [1] 5.38
+#> [1] 5.27
 #> 
 #> 
 #> [[86]]$epa$unitless
-#> [1] 1415
+#> [1] 1496
 #> 
 #> [[86]]$epa$norm
-#> [1] 1433
+#> [1] 1503
 #> 
 #> [[86]]$epa$conf
 #> [[86]]$epa$conf[[1]]
-#> [1] -0.86
+#> [1] -0.8
 #> 
 #> [[86]]$epa$conf[[2]]
-#> [1] 0.91
+#> [1] 0.95
 #> 
 #> 
 #> [[86]]$epa$breakdown
 #> [[86]]$epa$breakdown$total_points
-#> [1] 15.08
+#> [1] 27.09
 #> 
 #> [[86]]$epa$breakdown$auto_points
-#> [1] 3.61
+#> [1] 4.4
 #> 
 #> [[86]]$epa$breakdown$teleop_points
-#> [1] 9.88
+#> [1] 14.77
 #> 
 #> [[86]]$epa$breakdown$endgame_points
-#> [1] 1.59
+#> [1] 7.92
 #> 
 #> [[86]]$epa$breakdown$auto_rp
-#> [1] 0.0075
+#> [1] 0.1109
 #> 
 #> [[86]]$epa$breakdown$coral_rp
-#> [1] -0.1064
+#> [1] 0.0052
 #> 
 #> [[86]]$epa$breakdown$barge_rp
-#> [1] -0.02682
+#> [1] 0.35507
 #> 
 #> [[86]]$epa$breakdown$tiebreaker_points
-#> [1] -0.02
+#> [1] 0.12
 #> 
 #> [[86]]$epa$breakdown$auto_leave_points
-#> [1] 2.28
+#> [1] 2.45
 #> 
 #> [[86]]$epa$breakdown$auto_coral
-#> [1] 0.31
+#> [1] 0.32
 #> 
 #> [[86]]$epa$breakdown$auto_coral_points
-#> [1] 1.33
+#> [1] 1.95
 #> 
 #> [[86]]$epa$breakdown$teleop_coral
-#> [1] 2.57
+#> [1] 3.99
 #> 
 #> [[86]]$epa$breakdown$teleop_coral_points
-#> [1] 8.88
+#> [1] 14.71
 #> 
 #> [[86]]$epa$breakdown$coral_l1
-#> [1] 0.82
+#> [1] 0.85
 #> 
 #> [[86]]$epa$breakdown$coral_l2
-#> [1] 0.49
+#> [1] 0.28
 #> 
 #> [[86]]$epa$breakdown$coral_l3
-#> [1] 1.1
+#> [1] 0.97
 #> 
 #> [[86]]$epa$breakdown$coral_l4
-#> [1] 0.46
+#> [1] 1.93
 #> 
 #> [[86]]$epa$breakdown$total_coral_points
-#> [1] 10.21
+#> [1] 16.66
 #> 
 #> [[86]]$epa$breakdown$processor_algae
-#> [1] 0.51
+#> [1] 0.03
 #> 
 #> [[86]]$epa$breakdown$processor_algae_points
-#> [1] 1.52
+#> [1] 0.09
 #> 
 #> [[86]]$epa$breakdown$net_algae
-#> [1] -0.13
+#> [1] -0.01
 #> 
 #> [[86]]$epa$breakdown$net_algae_points
-#> [1] -0.52
+#> [1] -0.03
 #> 
 #> [[86]]$epa$breakdown$total_algae_points
-#> [1] 1
+#> [1] 0.06
 #> 
 #> [[86]]$epa$breakdown$total_game_pieces
-#> [1] 3.26
+#> [1] 4.05
 #> 
 #> [[86]]$epa$breakdown$barge_points
-#> [1] 1.59
+#> [1] 7.92
 #> 
 #> [[86]]$epa$breakdown$rp_1
-#> [1] 0.0075
+#> [1] 0.1109
 #> 
 #> [[86]]$epa$breakdown$rp_2
-#> [1] -0.1064
+#> [1] 0.0052
 #> 
 #> [[86]]$epa$breakdown$rp_3
-#> [1] -0.02682
+#> [1] 0.35507
 #> 
 #> 
 #> [[86]]$epa$stats
 #> [[86]]$epa$stats$start
-#> [1] 10.81
+#> [1] 21.24
 #> 
 #> [[86]]$epa$stats$pre_champs
-#> [1] 15.08
+#> [1] 27.09
 #> 
 #> [[86]]$epa$stats$max
-#> [1] 16.86
+#> [1] 28.28
 #> 
 #> 
 #> [[86]]$epa$ranks
 #> [[86]]$epa$ranks$total
 #> [[86]]$epa$ranks$total$rank
-#> [1] 2933
+#> [1] 1675
 #> 
 #> [[86]]$epa$ranks$total$percentile
-#> [1] 0.2077
+#> [1] 0.5475
 #> 
 #> [[86]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -18280,10 +18280,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[86]]$epa$ranks$country
 #> [[86]]$epa$ranks$country$rank
-#> [1] 2401
+#> [1] 1412
 #> 
 #> [[86]]$epa$ranks$country$percentile
-#> [1] 0.1805
+#> [1] 0.5181
 #> 
 #> [[86]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -18291,21 +18291,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[86]]$epa$ranks$state
 #> [[86]]$epa$ranks$state$rank
-#> [1] 30
+#> [1] 37
 #> 
 #> [[86]]$epa$ranks$state$percentile
-#> [1] 0.1667
+#> [1] 0.4394
 #> 
 #> [[86]]$epa$ranks$state$team_count
-#> [1] 36
+#> [1] 66
 #> 
 #> 
 #> [[86]]$epa$ranks$district
 #> [[86]]$epa$ranks$district$rank
-#> [1] 90
+#> [1] 58
 #> 
 #> [[86]]$epa$ranks$district$percentile
-#> [1] 0.1892
+#> [1] 0.4775
 #> 
 #> [[86]]$epa$ranks$district$team_count
 #> [1] 111
@@ -18315,37 +18315,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[86]]$record
 #> [[86]]$record$wins
-#> [1] 12
+#> [1] 21
 #> 
 #> [[86]]$record$losses
-#> [1] 14
+#> [1] 23
 #> 
 #> [[86]]$record$ties
-#> [1] 0
+#> [1] 1
 #> 
 #> [[86]]$record$count
-#> [1] 26
+#> [1] 45
 #> 
 #> [[86]]$record$winrate
-#> [1] 0.4615
+#> [1] 0.4778
 #> 
 #> 
 #> [[86]]$district_points
-#> [1] 34
+#> [1] 123
 #> 
 #> [[86]]$district_rank
-#> [1] 86
+#> [1] 30
 #> 
 #> 
 #> [[87]]
 #> [[87]]$team
-#> [1] 8230
+#> [1] 8590
 #> 
 #> [[87]]$year
 #> [1] 2025
 #> 
 #> [[87]]$name
-#> [1] "KoiBots"
+#> [1] "Cavbotics"
 #> 
 #> [[87]]$country
 #> [1] "USA"
@@ -18357,135 +18357,135 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] "chs"
 #> 
 #> [[87]]$rookie_year
-#> [1] 2020
+#> [1] 2021
 #> 
 #> [[87]]$epa
 #> [[87]]$epa$total_points
 #> [[87]]$epa$total_points$mean
-#> [1] 27.09
+#> [1] 50.5
 #> 
 #> [[87]]$epa$total_points$sd
-#> [1] 5.27
+#> [1] 11.17
 #> 
 #> 
 #> [[87]]$epa$unitless
-#> [1] 1496
+#> [1] 1655
 #> 
 #> [[87]]$epa$norm
-#> [1] 1503
+#> [1] 1601
 #> 
 #> [[87]]$epa$conf
 #> [[87]]$epa$conf[[1]]
 #> [1] -0.8
 #> 
 #> [[87]]$epa$conf[[2]]
-#> [1] 0.95
+#> [1] 0.96
 #> 
 #> 
 #> [[87]]$epa$breakdown
 #> [[87]]$epa$breakdown$total_points
-#> [1] 27.09
+#> [1] 50.5
 #> 
 #> [[87]]$epa$breakdown$auto_points
-#> [1] 4.4
+#> [1] 9.17
 #> 
 #> [[87]]$epa$breakdown$teleop_points
-#> [1] 14.77
+#> [1] 37.47
 #> 
 #> [[87]]$epa$breakdown$endgame_points
-#> [1] 7.92
+#> [1] 3.86
 #> 
 #> [[87]]$epa$breakdown$auto_rp
-#> [1] 0.1109
+#> [1] 0.4652
 #> 
 #> [[87]]$epa$breakdown$coral_rp
-#> [1] 0.0052
+#> [1] -0.0095
 #> 
 #> [[87]]$epa$breakdown$barge_rp
-#> [1] 0.35507
+#> [1] 0.14863
 #> 
 #> [[87]]$epa$breakdown$tiebreaker_points
-#> [1] 0.12
+#> [1] 0.21
 #> 
 #> [[87]]$epa$breakdown$auto_leave_points
-#> [1] 2.45
+#> [1] 3
 #> 
 #> [[87]]$epa$breakdown$auto_coral
-#> [1] 0.32
+#> [1] 1.22
 #> 
 #> [[87]]$epa$breakdown$auto_coral_points
-#> [1] 1.95
+#> [1] 6.17
 #> 
 #> [[87]]$epa$breakdown$teleop_coral
-#> [1] 3.99
+#> [1] 10.82
 #> 
 #> [[87]]$epa$breakdown$teleop_coral_points
-#> [1] 14.71
+#> [1] 34.52
 #> 
 #> [[87]]$epa$breakdown$coral_l1
-#> [1] 0.85
+#> [1] 1.31
 #> 
 #> [[87]]$epa$breakdown$coral_l2
-#> [1] 0.28
+#> [1] 3.15
 #> 
 #> [[87]]$epa$breakdown$coral_l3
-#> [1] 0.97
+#> [1] 4.78
 #> 
 #> [[87]]$epa$breakdown$coral_l4
-#> [1] 1.93
+#> [1] 1.51
 #> 
 #> [[87]]$epa$breakdown$total_coral_points
-#> [1] 16.66
+#> [1] 40.69
 #> 
 #> [[87]]$epa$breakdown$processor_algae
-#> [1] 0.03
+#> [1] 0.66
 #> 
 #> [[87]]$epa$breakdown$processor_algae_points
-#> [1] 0.09
+#> [1] 1.99
 #> 
 #> [[87]]$epa$breakdown$net_algae
-#> [1] -0.01
+#> [1] 0.24
 #> 
 #> [[87]]$epa$breakdown$net_algae_points
-#> [1] -0.03
+#> [1] 0.95
 #> 
 #> [[87]]$epa$breakdown$total_algae_points
-#> [1] 0.06
+#> [1] 2.95
 #> 
 #> [[87]]$epa$breakdown$total_game_pieces
-#> [1] 4.05
+#> [1] 11.66
 #> 
 #> [[87]]$epa$breakdown$barge_points
-#> [1] 7.92
+#> [1] 3.86
 #> 
 #> [[87]]$epa$breakdown$rp_1
-#> [1] 0.1109
+#> [1] 0.4652
 #> 
 #> [[87]]$epa$breakdown$rp_2
-#> [1] 0.0052
+#> [1] -0.0095
 #> 
 #> [[87]]$epa$breakdown$rp_3
-#> [1] 0.35507
+#> [1] 0.14863
 #> 
 #> 
 #> [[87]]$epa$stats
 #> [[87]]$epa$stats$start
-#> [1] 21.24
+#> [1] 19.86
 #> 
 #> [[87]]$epa$stats$pre_champs
-#> [1] 27.09
+#> [1] 46.4
 #> 
 #> [[87]]$epa$stats$max
-#> [1] 28.28
+#> [1] 51.07
 #> 
 #> 
 #> [[87]]$epa$ranks
 #> [[87]]$epa$ranks$total
 #> [[87]]$epa$ranks$total$rank
-#> [1] 1675
+#> [1] 543
 #> 
 #> [[87]]$epa$ranks$total$percentile
-#> [1] 0.5475
+#> [1] 0.8533
 #> 
 #> [[87]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -18493,10 +18493,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[87]]$epa$ranks$country
 #> [[87]]$epa$ranks$country$rank
-#> [1] 1412
+#> [1] 459
 #> 
 #> [[87]]$epa$ranks$country$percentile
-#> [1] 0.5181
+#> [1] 0.8433
 #> 
 #> [[87]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -18504,10 +18504,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[87]]$epa$ranks$state
 #> [[87]]$epa$ranks$state$rank
-#> [1] 37
+#> [1] 10
 #> 
 #> [[87]]$epa$ranks$state$percentile
-#> [1] 0.4394
+#> [1] 0.8485
 #> 
 #> [[87]]$epa$ranks$state$team_count
 #> [1] 66
@@ -18515,10 +18515,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[87]]$epa$ranks$district
 #> [[87]]$epa$ranks$district$rank
-#> [1] 58
+#> [1] 18
 #> 
 #> [[87]]$epa$ranks$district$percentile
-#> [1] 0.4775
+#> [1] 0.8378
 #> 
 #> [[87]]$epa$ranks$district$team_count
 #> [1] 111
@@ -18528,7 +18528,7 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[87]]$record
 #> [[87]]$record$wins
-#> [1] 21
+#> [1] 37
 #> 
 #> [[87]]$record$losses
 #> [1] 23
@@ -18537,34 +18537,34 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] 1
 #> 
 #> [[87]]$record$count
-#> [1] 45
+#> [1] 61
 #> 
 #> [[87]]$record$winrate
-#> [1] 0.4778
+#> [1] 0.6148
 #> 
 #> 
 #> [[87]]$district_points
-#> [1] 123
+#> [1] 219
 #> 
 #> [[87]]$district_rank
-#> [1] 30
+#> [1] 9
 #> 
 #> 
 #> [[88]]
 #> [[88]]$team
-#> [1] 8590
+#> [1] 8622
 #> 
 #> [[88]]$year
 #> [1] 2025
 #> 
 #> [[88]]$name
-#> [1] "Cavbotics"
+#> [1] "The CyBirds"
 #> 
 #> [[88]]$country
 #> [1] "USA"
 #> 
 #> [[88]]$state
-#> [1] "VA"
+#> [1] "MD"
 #> 
 #> [[88]]$district
 #> [1] "chs"
@@ -18575,130 +18575,130 @@ team_years_sb(year = 2025, district = "chs")
 #> [[88]]$epa
 #> [[88]]$epa$total_points
 #> [[88]]$epa$total_points$mean
-#> [1] 50.5
+#> [1] 24.28
 #> 
 #> [[88]]$epa$total_points$sd
-#> [1] 11.17
+#> [1] 9.82
 #> 
 #> 
 #> [[88]]$epa$unitless
-#> [1] 1655
+#> [1] 1477
 #> 
 #> [[88]]$epa$norm
-#> [1] 1601
+#> [1] 1489
 #> 
 #> [[88]]$epa$conf
 #> [[88]]$epa$conf[[1]]
-#> [1] -0.8
+#> [1] -0.75
 #> 
 #> [[88]]$epa$conf[[2]]
-#> [1] 0.96
+#> [1] 1
 #> 
 #> 
 #> [[88]]$epa$breakdown
 #> [[88]]$epa$breakdown$total_points
-#> [1] 50.5
+#> [1] 24.28
 #> 
 #> [[88]]$epa$breakdown$auto_points
-#> [1] 9.17
+#> [1] 4.74
 #> 
 #> [[88]]$epa$breakdown$teleop_points
-#> [1] 37.47
+#> [1] 18.22
 #> 
 #> [[88]]$epa$breakdown$endgame_points
-#> [1] 3.86
+#> [1] 1.33
 #> 
 #> [[88]]$epa$breakdown$auto_rp
-#> [1] 0.4652
+#> [1] 0.1472
 #> 
 #> [[88]]$epa$breakdown$coral_rp
-#> [1] -0.0095
+#> [1] 0.1016
 #> 
 #> [[88]]$epa$breakdown$barge_rp
-#> [1] 0.14863
+#> [1] -0.03729
 #> 
 #> [[88]]$epa$breakdown$tiebreaker_points
-#> [1] 0.21
+#> [1] 0.06
 #> 
 #> [[88]]$epa$breakdown$auto_leave_points
-#> [1] 3
+#> [1] 2.5
 #> 
 #> [[88]]$epa$breakdown$auto_coral
-#> [1] 1.22
+#> [1] 0.34
 #> 
 #> [[88]]$epa$breakdown$auto_coral_points
-#> [1] 6.17
+#> [1] 2.24
 #> 
 #> [[88]]$epa$breakdown$teleop_coral
-#> [1] 10.82
+#> [1] 6.09
 #> 
 #> [[88]]$epa$breakdown$teleop_coral_points
-#> [1] 34.52
+#> [1] 18.47
 #> 
 #> [[88]]$epa$breakdown$coral_l1
-#> [1] 1.31
+#> [1] 1.43
 #> 
 #> [[88]]$epa$breakdown$coral_l2
-#> [1] 3.15
+#> [1] 2.01
 #> 
 #> [[88]]$epa$breakdown$coral_l3
-#> [1] 4.78
+#> [1] 1.38
 #> 
 #> [[88]]$epa$breakdown$coral_l4
-#> [1] 1.51
+#> [1] 1.13
 #> 
 #> [[88]]$epa$breakdown$total_coral_points
-#> [1] 40.69
+#> [1] 20.71
 #> 
 #> [[88]]$epa$breakdown$processor_algae
-#> [1] 0.66
+#> [1] -0.14
 #> 
 #> [[88]]$epa$breakdown$processor_algae_points
-#> [1] 1.99
+#> [1] -0.42
 #> 
 #> [[88]]$epa$breakdown$net_algae
-#> [1] 0.24
+#> [1] 0.04
 #> 
 #> [[88]]$epa$breakdown$net_algae_points
-#> [1] 0.95
+#> [1] 0.18
 #> 
 #> [[88]]$epa$breakdown$total_algae_points
-#> [1] 2.95
+#> [1] -0.25
 #> 
 #> [[88]]$epa$breakdown$total_game_pieces
-#> [1] 11.66
+#> [1] 5.86
 #> 
 #> [[88]]$epa$breakdown$barge_points
-#> [1] 3.86
+#> [1] 1.33
 #> 
 #> [[88]]$epa$breakdown$rp_1
-#> [1] 0.4652
+#> [1] 0.1472
 #> 
 #> [[88]]$epa$breakdown$rp_2
-#> [1] -0.0095
+#> [1] 0.1016
 #> 
 #> [[88]]$epa$breakdown$rp_3
-#> [1] 0.14863
+#> [1] -0.03729
 #> 
 #> 
 #> [[88]]$epa$stats
 #> [[88]]$epa$stats$start
-#> [1] 19.86
+#> [1] 17.14
 #> 
 #> [[88]]$epa$stats$pre_champs
-#> [1] 46.4
+#> [1] 24.28
 #> 
 #> [[88]]$epa$stats$max
-#> [1] 51.07
+#> [1] 24.52
 #> 
 #> 
 #> [[88]]$epa$ranks
 #> [[88]]$epa$ranks$total
 #> [[88]]$epa$ranks$total$rank
-#> [1] 543
+#> [1] 1890
 #> 
 #> [[88]]$epa$ranks$total$percentile
-#> [1] 0.8533
+#> [1] 0.4895
 #> 
 #> [[88]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -18706,10 +18706,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[88]]$epa$ranks$country
 #> [[88]]$epa$ranks$country$rank
-#> [1] 459
+#> [1] 1589
 #> 
 #> [[88]]$epa$ranks$country$percentile
-#> [1] 0.8433
+#> [1] 0.4577
 #> 
 #> [[88]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -18717,21 +18717,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[88]]$epa$ranks$state
 #> [[88]]$epa$ranks$state$rank
-#> [1] 10
+#> [1] 22
 #> 
 #> [[88]]$epa$ranks$state$percentile
-#> [1] 0.8485
+#> [1] 0.3889
 #> 
 #> [[88]]$epa$ranks$state$team_count
-#> [1] 66
+#> [1] 36
 #> 
 #> 
 #> [[88]]$epa$ranks$district
 #> [[88]]$epa$ranks$district$rank
-#> [1] 18
+#> [1] 64
 #> 
 #> [[88]]$epa$ranks$district$percentile
-#> [1] 0.8378
+#> [1] 0.4234
 #> 
 #> [[88]]$epa$ranks$district$team_count
 #> [1] 111
@@ -18741,37 +18741,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[88]]$record
 #> [[88]]$record$wins
-#> [1] 37
+#> [1] 20
 #> 
 #> [[88]]$record$losses
-#> [1] 23
+#> [1] 22
 #> 
 #> [[88]]$record$ties
 #> [1] 1
 #> 
 #> [[88]]$record$count
-#> [1] 61
+#> [1] 43
 #> 
 #> [[88]]$record$winrate
-#> [1] 0.6148
+#> [1] 0.4767
 #> 
 #> 
 #> [[88]]$district_points
-#> [1] 219
+#> [1] 86
 #> 
 #> [[88]]$district_rank
-#> [1] 9
+#> [1] 48
 #> 
 #> 
 #> [[89]]
 #> [[89]]$team
-#> [1] 8622
+#> [1] 8726
 #> 
 #> [[89]]$year
 #> [1] 2025
 #> 
 #> [[89]]$name
-#> [1] "The CyBirds"
+#> [1] "CryptoHawks"
 #> 
 #> [[89]]$country
 #> [1] "USA"
@@ -18783,26 +18783,26 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] "chs"
 #> 
 #> [[89]]$rookie_year
-#> [1] 2021
+#> [1] 2022
 #> 
 #> [[89]]$epa
 #> [[89]]$epa$total_points
 #> [[89]]$epa$total_points$mean
-#> [1] 24.28
+#> [1] 30.39
 #> 
 #> [[89]]$epa$total_points$sd
-#> [1] 9.82
+#> [1] 5.31
 #> 
 #> 
 #> [[89]]$epa$unitless
-#> [1] 1477
+#> [1] 1519
 #> 
 #> [[89]]$epa$norm
-#> [1] 1489
+#> [1] 1518
 #> 
 #> [[89]]$epa$conf
 #> [[89]]$epa$conf[[1]]
-#> [1] -0.75
+#> [1] -0.74
 #> 
 #> [[89]]$epa$conf[[2]]
 #> [1] 1
@@ -18810,108 +18810,108 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[89]]$epa$breakdown
 #> [[89]]$epa$breakdown$total_points
-#> [1] 24.28
+#> [1] 30.39
 #> 
 #> [[89]]$epa$breakdown$auto_points
-#> [1] 4.74
+#> [1] 8.45
 #> 
 #> [[89]]$epa$breakdown$teleop_points
-#> [1] 18.22
+#> [1] 20.9
 #> 
 #> [[89]]$epa$breakdown$endgame_points
-#> [1] 1.33
+#> [1] 1.05
 #> 
 #> [[89]]$epa$breakdown$auto_rp
-#> [1] 0.1472
+#> [1] 0.4525
 #> 
 #> [[89]]$epa$breakdown$coral_rp
-#> [1] 0.1016
+#> [1] -0.0836
 #> 
 #> [[89]]$epa$breakdown$barge_rp
-#> [1] -0.03729
+#> [1] -0.06538
 #> 
 #> [[89]]$epa$breakdown$tiebreaker_points
-#> [1] 0.06
+#> [1] 0.01
 #> 
 #> [[89]]$epa$breakdown$auto_leave_points
-#> [1] 2.5
+#> [1] 2.89
 #> 
 #> [[89]]$epa$breakdown$auto_coral
-#> [1] 0.34
+#> [1] 1.08
 #> 
 #> [[89]]$epa$breakdown$auto_coral_points
-#> [1] 2.24
+#> [1] 5.55
 #> 
 #> [[89]]$epa$breakdown$teleop_coral
-#> [1] 6.09
+#> [1] 6.03
 #> 
 #> [[89]]$epa$breakdown$teleop_coral_points
-#> [1] 18.47
+#> [1] 20.09
 #> 
 #> [[89]]$epa$breakdown$coral_l1
-#> [1] 1.43
+#> [1] 0.6
 #> 
 #> [[89]]$epa$breakdown$coral_l2
-#> [1] 2.01
+#> [1] 0.96
 #> 
 #> [[89]]$epa$breakdown$coral_l3
-#> [1] 1.38
+#> [1] 3.03
 #> 
 #> [[89]]$epa$breakdown$coral_l4
-#> [1] 1.13
+#> [1] 1.58
 #> 
 #> [[89]]$epa$breakdown$total_coral_points
-#> [1] 20.71
+#> [1] 25.64
 #> 
 #> [[89]]$epa$breakdown$processor_algae
-#> [1] -0.14
+#> [1] 0.23
 #> 
 #> [[89]]$epa$breakdown$processor_algae_points
-#> [1] -0.42
+#> [1] 0.68
 #> 
 #> [[89]]$epa$breakdown$net_algae
-#> [1] 0.04
+#> [1] 0.03
 #> 
 #> [[89]]$epa$breakdown$net_algae_points
-#> [1] 0.18
+#> [1] 0.13
 #> 
 #> [[89]]$epa$breakdown$total_algae_points
-#> [1] -0.25
+#> [1] 0.81
 #> 
 #> [[89]]$epa$breakdown$total_game_pieces
-#> [1] 5.86
+#> [1] 6.43
 #> 
 #> [[89]]$epa$breakdown$barge_points
-#> [1] 1.33
+#> [1] 1.05
 #> 
 #> [[89]]$epa$breakdown$rp_1
-#> [1] 0.1472
+#> [1] 0.4525
 #> 
 #> [[89]]$epa$breakdown$rp_2
-#> [1] 0.1016
+#> [1] -0.0836
 #> 
 #> [[89]]$epa$breakdown$rp_3
-#> [1] -0.03729
+#> [1] -0.06538
 #> 
 #> 
 #> [[89]]$epa$stats
 #> [[89]]$epa$stats$start
-#> [1] 17.14
+#> [1] 25.16
 #> 
 #> [[89]]$epa$stats$pre_champs
-#> [1] 24.28
+#> [1] 30.39
 #> 
 #> [[89]]$epa$stats$max
-#> [1] 24.52
+#> [1] 30.49
 #> 
 #> 
 #> [[89]]$epa$ranks
 #> [[89]]$epa$ranks$total
 #> [[89]]$epa$ranks$total$rank
-#> [1] 1890
+#> [1] 1446
 #> 
 #> [[89]]$epa$ranks$total$percentile
-#> [1] 0.4895
+#> [1] 0.6094
 #> 
 #> [[89]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -18919,10 +18919,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[89]]$epa$ranks$country
 #> [[89]]$epa$ranks$country$rank
-#> [1] 1589
+#> [1] 1215
 #> 
 #> [[89]]$epa$ranks$country$percentile
-#> [1] 0.4577
+#> [1] 0.5853
 #> 
 #> [[89]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -18930,10 +18930,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[89]]$epa$ranks$state
 #> [[89]]$epa$ranks$state$rank
-#> [1] 22
+#> [1] 16
 #> 
 #> [[89]]$epa$ranks$state$percentile
-#> [1] 0.3889
+#> [1] 0.5556
 #> 
 #> [[89]]$epa$ranks$state$team_count
 #> [1] 36
@@ -18941,10 +18941,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[89]]$epa$ranks$district
 #> [[89]]$epa$ranks$district$rank
-#> [1] 64
+#> [1] 50
 #> 
 #> [[89]]$epa$ranks$district$percentile
-#> [1] 0.4234
+#> [1] 0.5495
 #> 
 #> [[89]]$epa$ranks$district$team_count
 #> [1] 111
@@ -18957,174 +18957,174 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] 20
 #> 
 #> [[89]]$record$losses
-#> [1] 22
+#> [1] 23
 #> 
 #> [[89]]$record$ties
-#> [1] 1
+#> [1] 0
 #> 
 #> [[89]]$record$count
 #> [1] 43
 #> 
 #> [[89]]$record$winrate
-#> [1] 0.4767
+#> [1] 0.4651
 #> 
 #> 
 #> [[89]]$district_points
-#> [1] 86
+#> [1] 82
 #> 
 #> [[89]]$district_rank
-#> [1] 48
+#> [1] 50
 #> 
 #> 
 #> [[90]]
 #> [[90]]$team
-#> [1] 8726
+#> [1] 9003
 #> 
 #> [[90]]$year
 #> [1] 2025
 #> 
 #> [[90]]$name
-#> [1] "CryptoHawks"
+#> [1] "TuTu Turtles"
 #> 
 #> [[90]]$country
 #> [1] "USA"
 #> 
 #> [[90]]$state
-#> [1] "MD"
+#> [1] "VA"
 #> 
 #> [[90]]$district
 #> [1] "chs"
 #> 
 #> [[90]]$rookie_year
-#> [1] 2022
+#> [1] 2023
 #> 
 #> [[90]]$epa
 #> [[90]]$epa$total_points
 #> [[90]]$epa$total_points$mean
-#> [1] 30.39
+#> [1] 32.05
 #> 
 #> [[90]]$epa$total_points$sd
-#> [1] 5.31
+#> [1] 4.3
 #> 
 #> 
 #> [[90]]$epa$unitless
-#> [1] 1519
+#> [1] 1530
 #> 
 #> [[90]]$epa$norm
-#> [1] 1518
+#> [1] 1525
 #> 
 #> [[90]]$epa$conf
 #> [[90]]$epa$conf[[1]]
-#> [1] -0.74
+#> [1] -0.82
 #> 
 #> [[90]]$epa$conf[[2]]
-#> [1] 1
+#> [1] 0.95
 #> 
 #> 
 #> [[90]]$epa$breakdown
 #> [[90]]$epa$breakdown$total_points
-#> [1] 30.39
+#> [1] 32.05
 #> 
 #> [[90]]$epa$breakdown$auto_points
-#> [1] 8.45
+#> [1] 4.79
 #> 
 #> [[90]]$epa$breakdown$teleop_points
-#> [1] 20.9
+#> [1] 25.87
 #> 
 #> [[90]]$epa$breakdown$endgame_points
-#> [1] 1.05
+#> [1] 1.39
 #> 
 #> [[90]]$epa$breakdown$auto_rp
-#> [1] 0.4525
+#> [1] 0.1711
 #> 
 #> [[90]]$epa$breakdown$coral_rp
-#> [1] -0.0836
+#> [1] 0.0168
 #> 
 #> [[90]]$epa$breakdown$barge_rp
-#> [1] -0.06538
+#> [1] 0.03507
 #> 
 #> [[90]]$epa$breakdown$tiebreaker_points
-#> [1] 0.01
+#> [1] 0.08
 #> 
 #> [[90]]$epa$breakdown$auto_leave_points
-#> [1] 2.89
+#> [1] 2.84
 #> 
 #> [[90]]$epa$breakdown$auto_coral
-#> [1] 1.08
+#> [1] 0.36
 #> 
 #> [[90]]$epa$breakdown$auto_coral_points
-#> [1] 5.55
+#> [1] 1.94
 #> 
 #> [[90]]$epa$breakdown$teleop_coral
 #> [1] 6.03
 #> 
 #> [[90]]$epa$breakdown$teleop_coral_points
-#> [1] 20.09
+#> [1] 21.66
 #> 
 #> [[90]]$epa$breakdown$coral_l1
-#> [1] 0.6
+#> [1] 1.27
 #> 
 #> [[90]]$epa$breakdown$coral_l2
-#> [1] 0.96
+#> [1] 1.47
 #> 
 #> [[90]]$epa$breakdown$coral_l3
-#> [1] 3.03
+#> [1] 2.17
 #> 
 #> [[90]]$epa$breakdown$coral_l4
-#> [1] 1.58
+#> [1] 1.47
 #> 
 #> [[90]]$epa$breakdown$total_coral_points
-#> [1] 25.64
+#> [1] 23.6
 #> 
 #> [[90]]$epa$breakdown$processor_algae
-#> [1] 0.23
+#> [1] 0.58
 #> 
 #> [[90]]$epa$breakdown$processor_algae_points
-#> [1] 0.68
+#> [1] 1.74
 #> 
 #> [[90]]$epa$breakdown$net_algae
-#> [1] 0.03
+#> [1] 0.62
 #> 
 #> [[90]]$epa$breakdown$net_algae_points
-#> [1] 0.13
+#> [1] 2.48
 #> 
 #> [[90]]$epa$breakdown$total_algae_points
-#> [1] 0.81
+#> [1] 4.21
 #> 
 #> [[90]]$epa$breakdown$total_game_pieces
-#> [1] 6.43
+#> [1] 7.59
 #> 
 #> [[90]]$epa$breakdown$barge_points
-#> [1] 1.05
+#> [1] 1.39
 #> 
 #> [[90]]$epa$breakdown$rp_1
-#> [1] 0.4525
+#> [1] 0.1711
 #> 
 #> [[90]]$epa$breakdown$rp_2
-#> [1] -0.0836
+#> [1] 0.0168
 #> 
 #> [[90]]$epa$breakdown$rp_3
-#> [1] -0.06538
+#> [1] 0.03507
 #> 
 #> 
 #> [[90]]$epa$stats
 #> [[90]]$epa$stats$start
-#> [1] 25.16
+#> [1] 21.81
 #> 
 #> [[90]]$epa$stats$pre_champs
-#> [1] 30.39
+#> [1] 32.05
 #> 
 #> [[90]]$epa$stats$max
-#> [1] 30.49
+#> [1] 33.11
 #> 
 #> 
 #> [[90]]$epa$ranks
 #> [[90]]$epa$ranks$total
 #> [[90]]$epa$ranks$total$rank
-#> [1] 1446
+#> [1] 1323
 #> 
 #> [[90]]$epa$ranks$total$percentile
-#> [1] 0.6094
+#> [1] 0.6426
 #> 
 #> [[90]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -19132,10 +19132,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[90]]$epa$ranks$country
 #> [[90]]$epa$ranks$country$rank
-#> [1] 1215
+#> [1] 1112
 #> 
 #> [[90]]$epa$ranks$country$percentile
-#> [1] 0.5853
+#> [1] 0.6205
 #> 
 #> [[90]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -19143,21 +19143,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[90]]$epa$ranks$state
 #> [[90]]$epa$ranks$state$rank
-#> [1] 16
+#> [1] 30
 #> 
 #> [[90]]$epa$ranks$state$percentile
-#> [1] 0.5556
+#> [1] 0.5455
 #> 
 #> [[90]]$epa$ranks$state$team_count
-#> [1] 36
+#> [1] 66
 #> 
 #> 
 #> [[90]]$epa$ranks$district
 #> [[90]]$epa$ranks$district$rank
-#> [1] 50
+#> [1] 46
 #> 
 #> [[90]]$epa$ranks$district$percentile
-#> [1] 0.5495
+#> [1] 0.5856
 #> 
 #> [[90]]$epa$ranks$district$team_count
 #> [1] 111
@@ -19167,37 +19167,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[90]]$record
 #> [[90]]$record$wins
-#> [1] 20
+#> [1] 16
 #> 
 #> [[90]]$record$losses
-#> [1] 23
+#> [1] 14
 #> 
 #> [[90]]$record$ties
 #> [1] 0
 #> 
 #> [[90]]$record$count
-#> [1] 43
+#> [1] 30
 #> 
 #> [[90]]$record$winrate
-#> [1] 0.4651
+#> [1] 0.5333
 #> 
 #> 
 #> [[90]]$district_points
-#> [1] 82
+#> [1] 55
 #> 
 #> [[90]]$district_rank
-#> [1] 50
+#> [1] 56
 #> 
 #> 
 #> [[91]]
 #> [[91]]$team
-#> [1] 9003
+#> [1] 9033
 #> 
 #> [[91]]$year
 #> [1] 2025
 #> 
 #> [[91]]$name
-#> [1] "TuTu Turtles"
+#> [1] "Ocebots"
 #> 
 #> [[91]]$country
 #> [1] "USA"
@@ -19214,130 +19214,130 @@ team_years_sb(year = 2025, district = "chs")
 #> [[91]]$epa
 #> [[91]]$epa$total_points
 #> [[91]]$epa$total_points$mean
-#> [1] 32.05
+#> [1] 31.74
 #> 
 #> [[91]]$epa$total_points$sd
-#> [1] 4.3
+#> [1] 6.7
 #> 
 #> 
 #> [[91]]$epa$unitless
-#> [1] 1530
+#> [1] 1528
 #> 
 #> [[91]]$epa$norm
-#> [1] 1525
+#> [1] 1524
 #> 
 #> [[91]]$epa$conf
 #> [[91]]$epa$conf[[1]]
-#> [1] -0.82
+#> [1] -0.79
 #> 
 #> [[91]]$epa$conf[[2]]
-#> [1] 0.95
+#> [1] 0.98
 #> 
 #> 
 #> [[91]]$epa$breakdown
 #> [[91]]$epa$breakdown$total_points
-#> [1] 32.05
+#> [1] 31.74
 #> 
 #> [[91]]$epa$breakdown$auto_points
-#> [1] 4.79
+#> [1] 5.47
 #> 
 #> [[91]]$epa$breakdown$teleop_points
-#> [1] 25.87
+#> [1] 21.64
 #> 
 #> [[91]]$epa$breakdown$endgame_points
-#> [1] 1.39
+#> [1] 4.63
 #> 
 #> [[91]]$epa$breakdown$auto_rp
-#> [1] 0.1711
+#> [1] 0.3462
 #> 
 #> [[91]]$epa$breakdown$coral_rp
-#> [1] 0.0168
+#> [1] -0.1525
 #> 
 #> [[91]]$epa$breakdown$barge_rp
-#> [1] 0.03507
+#> [1] 0.22835
 #> 
 #> [[91]]$epa$breakdown$tiebreaker_points
-#> [1] 0.08
+#> [1] -0.05
 #> 
 #> [[91]]$epa$breakdown$auto_leave_points
-#> [1] 2.84
+#> [1] 3.24
 #> 
 #> [[91]]$epa$breakdown$auto_coral
-#> [1] 0.36
+#> [1] 0.26
 #> 
 #> [[91]]$epa$breakdown$auto_coral_points
-#> [1] 1.94
+#> [1] 2.23
 #> 
 #> [[91]]$epa$breakdown$teleop_coral
-#> [1] 6.03
+#> [1] 4.83
 #> 
 #> [[91]]$epa$breakdown$teleop_coral_points
-#> [1] 21.66
+#> [1] 20.63
 #> 
 #> [[91]]$epa$breakdown$coral_l1
-#> [1] 1.27
+#> [1] 0.06
 #> 
 #> [[91]]$epa$breakdown$coral_l2
-#> [1] 1.47
+#> [1] 1
 #> 
 #> [[91]]$epa$breakdown$coral_l3
-#> [1] 2.17
+#> [1] 1.05
 #> 
 #> [[91]]$epa$breakdown$coral_l4
-#> [1] 1.47
+#> [1] 2.98
 #> 
 #> [[91]]$epa$breakdown$total_coral_points
-#> [1] 23.6
+#> [1] 22.86
 #> 
 #> [[91]]$epa$breakdown$processor_algae
-#> [1] 0.58
+#> [1] 0.17
 #> 
 #> [[91]]$epa$breakdown$processor_algae_points
-#> [1] 1.74
+#> [1] 0.5
 #> 
 #> [[91]]$epa$breakdown$net_algae
-#> [1] 0.62
+#> [1] 0.13
 #> 
 #> [[91]]$epa$breakdown$net_algae_points
-#> [1] 2.48
+#> [1] 0.51
 #> 
 #> [[91]]$epa$breakdown$total_algae_points
-#> [1] 4.21
+#> [1] 1.01
 #> 
 #> [[91]]$epa$breakdown$total_game_pieces
-#> [1] 7.59
+#> [1] 5.39
 #> 
 #> [[91]]$epa$breakdown$barge_points
-#> [1] 1.39
+#> [1] 4.63
 #> 
 #> [[91]]$epa$breakdown$rp_1
-#> [1] 0.1711
+#> [1] 0.3462
 #> 
 #> [[91]]$epa$breakdown$rp_2
-#> [1] 0.0168
+#> [1] -0.1525
 #> 
 #> [[91]]$epa$breakdown$rp_3
-#> [1] 0.03507
+#> [1] 0.22835
 #> 
 #> 
 #> [[91]]$epa$stats
 #> [[91]]$epa$stats$start
-#> [1] 21.81
+#> [1] 20.4
 #> 
 #> [[91]]$epa$stats$pre_champs
-#> [1] 32.05
+#> [1] 31.74
 #> 
 #> [[91]]$epa$stats$max
-#> [1] 33.11
+#> [1] 32.14
 #> 
 #> 
 #> [[91]]$epa$ranks
 #> [[91]]$epa$ranks$total
 #> [[91]]$epa$ranks$total$rank
-#> [1] 1323
+#> [1] 1356
 #> 
 #> [[91]]$epa$ranks$total$percentile
-#> [1] 0.6426
+#> [1] 0.6337
 #> 
 #> [[91]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -19345,10 +19345,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[91]]$epa$ranks$country
 #> [[91]]$epa$ranks$country$rank
-#> [1] 1112
+#> [1] 1142
 #> 
 #> [[91]]$epa$ranks$country$percentile
-#> [1] 0.6205
+#> [1] 0.6102
 #> 
 #> [[91]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -19356,10 +19356,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[91]]$epa$ranks$state
 #> [[91]]$epa$ranks$state$rank
-#> [1] 30
+#> [1] 31
 #> 
 #> [[91]]$epa$ranks$state$percentile
-#> [1] 0.5455
+#> [1] 0.5303
 #> 
 #> [[91]]$epa$ranks$state$team_count
 #> [1] 66
@@ -19367,10 +19367,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[91]]$epa$ranks$district
 #> [[91]]$epa$ranks$district$rank
-#> [1] 46
+#> [1] 47
 #> 
 #> [[91]]$epa$ranks$district$percentile
-#> [1] 0.5856
+#> [1] 0.5766
 #> 
 #> [[91]]$epa$ranks$district$team_count
 #> [1] 111
@@ -19380,43 +19380,43 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[91]]$record
 #> [[91]]$record$wins
-#> [1] 16
+#> [1] 15
 #> 
 #> [[91]]$record$losses
-#> [1] 14
+#> [1] 15
 #> 
 #> [[91]]$record$ties
-#> [1] 0
+#> [1] 1
 #> 
 #> [[91]]$record$count
-#> [1] 30
+#> [1] 31
 #> 
 #> [[91]]$record$winrate
-#> [1] 0.5333
+#> [1] 0.5
 #> 
 #> 
 #> [[91]]$district_points
-#> [1] 55
+#> [1] 50
 #> 
 #> [[91]]$district_rank
-#> [1] 56
+#> [1] 65
 #> 
 #> 
 #> [[92]]
 #> [[92]]$team
-#> [1] 9033
+#> [1] 9072
 #> 
 #> [[92]]$year
 #> [1] 2025
 #> 
 #> [[92]]$name
-#> [1] "Ocebots"
+#> [1] "TigerBots"
 #> 
 #> [[92]]$country
 #> [1] "USA"
 #> 
 #> [[92]]$state
-#> [1] "VA"
+#> [1] "MD"
 #> 
 #> [[92]]$district
 #> [1] "chs"
@@ -19427,130 +19427,130 @@ team_years_sb(year = 2025, district = "chs")
 #> [[92]]$epa
 #> [[92]]$epa$total_points
 #> [[92]]$epa$total_points$mean
-#> [1] 31.74
+#> [1] 70.29
 #> 
 #> [[92]]$epa$total_points$sd
-#> [1] 6.7
+#> [1] 9.54
 #> 
 #> 
 #> [[92]]$epa$unitless
-#> [1] 1528
+#> [1] 1789
 #> 
 #> [[92]]$epa$norm
-#> [1] 1524
+#> [1] 1699
 #> 
 #> [[92]]$epa$conf
 #> [[92]]$epa$conf[[1]]
-#> [1] -0.79
+#> [1] -0.67
 #> 
 #> [[92]]$epa$conf[[2]]
-#> [1] 0.98
+#> [1] 1.04
 #> 
 #> 
 #> [[92]]$epa$breakdown
 #> [[92]]$epa$breakdown$total_points
-#> [1] 31.74
+#> [1] 70.29
 #> 
 #> [[92]]$epa$breakdown$auto_points
-#> [1] 5.47
+#> [1] 12.08
 #> 
 #> [[92]]$epa$breakdown$teleop_points
-#> [1] 21.64
+#> [1] 53.94
 #> 
 #> [[92]]$epa$breakdown$endgame_points
-#> [1] 4.63
+#> [1] 4.26
 #> 
 #> [[92]]$epa$breakdown$auto_rp
-#> [1] 0.3462
+#> [1] 0.5288
 #> 
 #> [[92]]$epa$breakdown$coral_rp
-#> [1] -0.1525
+#> [1] 0.2741
 #> 
 #> [[92]]$epa$breakdown$barge_rp
-#> [1] 0.22835
+#> [1] 0.22131
 #> 
 #> [[92]]$epa$breakdown$tiebreaker_points
-#> [1] -0.05
+#> [1] 0.14
 #> 
 #> [[92]]$epa$breakdown$auto_leave_points
-#> [1] 3.24
+#> [1] 3.16
 #> 
 #> [[92]]$epa$breakdown$auto_coral
-#> [1] 0.26
+#> [1] 1.35
 #> 
 #> [[92]]$epa$breakdown$auto_coral_points
-#> [1] 2.23
+#> [1] 8.92
 #> 
 #> [[92]]$epa$breakdown$teleop_coral
-#> [1] 4.83
+#> [1] 13.67
 #> 
 #> [[92]]$epa$breakdown$teleop_coral_points
-#> [1] 20.63
+#> [1] 45.78
 #> 
 #> [[92]]$epa$breakdown$coral_l1
-#> [1] 0.06
+#> [1] 1.52
 #> 
 #> [[92]]$epa$breakdown$coral_l2
-#> [1] 1
+#> [1] 3.3
 #> 
 #> [[92]]$epa$breakdown$coral_l3
-#> [1] 1.05
+#> [1] 4.05
 #> 
 #> [[92]]$epa$breakdown$coral_l4
-#> [1] 2.98
+#> [1] 4.6
 #> 
 #> [[92]]$epa$breakdown$total_coral_points
-#> [1] 22.86
+#> [1] 54.7
 #> 
 #> [[92]]$epa$breakdown$processor_algae
-#> [1] 0.17
+#> [1] 0.4
 #> 
 #> [[92]]$epa$breakdown$processor_algae_points
-#> [1] 0.5
+#> [1] 1.2
 #> 
 #> [[92]]$epa$breakdown$net_algae
-#> [1] 0.13
+#> [1] 1.74
 #> 
 #> [[92]]$epa$breakdown$net_algae_points
-#> [1] 0.51
+#> [1] 6.96
 #> 
 #> [[92]]$epa$breakdown$total_algae_points
-#> [1] 1.01
+#> [1] 8.16
 #> 
 #> [[92]]$epa$breakdown$total_game_pieces
-#> [1] 5.39
+#> [1] 15.61
 #> 
 #> [[92]]$epa$breakdown$barge_points
-#> [1] 4.63
+#> [1] 4.26
 #> 
 #> [[92]]$epa$breakdown$rp_1
-#> [1] 0.3462
+#> [1] 0.5288
 #> 
 #> [[92]]$epa$breakdown$rp_2
-#> [1] -0.1525
+#> [1] 0.2741
 #> 
 #> [[92]]$epa$breakdown$rp_3
-#> [1] 0.22835
+#> [1] 0.22131
 #> 
 #> 
 #> [[92]]$epa$stats
 #> [[92]]$epa$stats$start
-#> [1] 20.4
+#> [1] 32.42
 #> 
 #> [[92]]$epa$stats$pre_champs
-#> [1] 31.74
+#> [1] 56.76
 #> 
 #> [[92]]$epa$stats$max
-#> [1] 32.14
+#> [1] 70.31
 #> 
 #> 
 #> [[92]]$epa$ranks
 #> [[92]]$epa$ranks$total
 #> [[92]]$epa$ranks$total$rank
-#> [1] 1356
+#> [1] 166
 #> 
 #> [[92]]$epa$ranks$total$percentile
-#> [1] 0.6337
+#> [1] 0.9552
 #> 
 #> [[92]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -19558,10 +19558,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[92]]$epa$ranks$country
 #> [[92]]$epa$ranks$country$rank
-#> [1] 1142
+#> [1] 134
 #> 
 #> [[92]]$epa$ranks$country$percentile
-#> [1] 0.6102
+#> [1] 0.9543
 #> 
 #> [[92]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -19569,21 +19569,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[92]]$epa$ranks$state
 #> [[92]]$epa$ranks$state$rank
-#> [1] 31
+#> [1] 3
 #> 
 #> [[92]]$epa$ranks$state$percentile
-#> [1] 0.5303
+#> [1] 0.9167
 #> 
 #> [[92]]$epa$ranks$state$team_count
-#> [1] 66
+#> [1] 36
 #> 
 #> 
 #> [[92]]$epa$ranks$district
 #> [[92]]$epa$ranks$district$rank
-#> [1] 47
+#> [1] 4
 #> 
 #> [[92]]$epa$ranks$district$percentile
-#> [1] 0.5766
+#> [1] 0.964
 #> 
 #> [[92]]$epa$ranks$district$team_count
 #> [1] 111
@@ -19593,177 +19593,177 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[92]]$record
 #> [[92]]$record$wins
-#> [1] 15
+#> [1] 45
 #> 
 #> [[92]]$record$losses
-#> [1] 15
+#> [1] 17
 #> 
 #> [[92]]$record$ties
-#> [1] 1
+#> [1] 0
 #> 
 #> [[92]]$record$count
-#> [1] 31
+#> [1] 62
 #> 
 #> [[92]]$record$winrate
-#> [1] 0.5
+#> [1] 0.7258
 #> 
 #> 
 #> [[92]]$district_points
-#> [1] 50
+#> [1] 219
 #> 
 #> [[92]]$district_rank
-#> [1] 65
+#> [1] 10
 #> 
 #> 
 #> [[93]]
 #> [[93]]$team
-#> [1] 9072
+#> [1] 9403
 #> 
 #> [[93]]$year
 #> [1] 2025
 #> 
 #> [[93]]$name
-#> [1] "TigerBots"
+#> [1] "Starstuff"
 #> 
 #> [[93]]$country
 #> [1] "USA"
 #> 
 #> [[93]]$state
-#> [1] "MD"
+#> [1] "VA"
 #> 
 #> [[93]]$district
 #> [1] "chs"
 #> 
 #> [[93]]$rookie_year
-#> [1] 2023
+#> [1] 2024
 #> 
 #> [[93]]$epa
 #> [[93]]$epa$total_points
 #> [[93]]$epa$total_points$mean
-#> [1] 70.29
+#> [1] 19.97
 #> 
 #> [[93]]$epa$total_points$sd
-#> [1] 9.54
+#> [1] 6.63
 #> 
 #> 
 #> [[93]]$epa$unitless
-#> [1] 1789
+#> [1] 1448
 #> 
 #> [[93]]$epa$norm
-#> [1] 1699
+#> [1] 1466
 #> 
 #> [[93]]$epa$conf
 #> [[93]]$epa$conf[[1]]
-#> [1] -0.67
+#> [1] -0.89
 #> 
 #> [[93]]$epa$conf[[2]]
-#> [1] 1.04
+#> [1] 0.87
 #> 
 #> 
 #> [[93]]$epa$breakdown
 #> [[93]]$epa$breakdown$total_points
-#> [1] 70.29
+#> [1] 19.97
 #> 
 #> [[93]]$epa$breakdown$auto_points
-#> [1] 12.08
+#> [1] 4.33
 #> 
 #> [[93]]$epa$breakdown$teleop_points
-#> [1] 53.94
+#> [1] 13.63
 #> 
 #> [[93]]$epa$breakdown$endgame_points
-#> [1] 4.26
+#> [1] 2
 #> 
 #> [[93]]$epa$breakdown$auto_rp
-#> [1] 0.5288
+#> [1] 0.28
 #> 
 #> [[93]]$epa$breakdown$coral_rp
-#> [1] 0.2741
+#> [1] -0.1677
 #> 
 #> [[93]]$epa$breakdown$barge_rp
-#> [1] 0.22131
+#> [1] 0.04953
 #> 
 #> [[93]]$epa$breakdown$tiebreaker_points
-#> [1] 0.14
+#> [1] -0.01
 #> 
 #> [[93]]$epa$breakdown$auto_leave_points
-#> [1] 3.16
+#> [1] 3.17
 #> 
 #> [[93]]$epa$breakdown$auto_coral
-#> [1] 1.35
+#> [1] 0.27
 #> 
 #> [[93]]$epa$breakdown$auto_coral_points
-#> [1] 8.92
+#> [1] 1.16
 #> 
 #> [[93]]$epa$breakdown$teleop_coral
-#> [1] 13.67
+#> [1] 4.27
 #> 
 #> [[93]]$epa$breakdown$teleop_coral_points
-#> [1] 45.78
+#> [1] 14.71
 #> 
 #> [[93]]$epa$breakdown$coral_l1
-#> [1] 1.52
+#> [1] 1.49
 #> 
 #> [[93]]$epa$breakdown$coral_l2
-#> [1] 3.3
+#> [1] 0.31
 #> 
 #> [[93]]$epa$breakdown$coral_l3
-#> [1] 4.05
+#> [1] 2.05
 #> 
 #> [[93]]$epa$breakdown$coral_l4
-#> [1] 4.6
+#> [1] 0.69
 #> 
 #> [[93]]$epa$breakdown$total_coral_points
-#> [1] 54.7
+#> [1] 15.87
 #> 
 #> [[93]]$epa$breakdown$processor_algae
-#> [1] 0.4
+#> [1] -0.29
 #> 
 #> [[93]]$epa$breakdown$processor_algae_points
-#> [1] 1.2
+#> [1] -0.86
 #> 
 #> [[93]]$epa$breakdown$net_algae
-#> [1] 1.74
+#> [1] -0.05
 #> 
 #> [[93]]$epa$breakdown$net_algae_points
-#> [1] 6.96
+#> [1] -0.21
 #> 
 #> [[93]]$epa$breakdown$total_algae_points
-#> [1] 8.16
+#> [1] -1.08
 #> 
 #> [[93]]$epa$breakdown$total_game_pieces
-#> [1] 15.61
+#> [1] 4.2
 #> 
 #> [[93]]$epa$breakdown$barge_points
-#> [1] 4.26
+#> [1] 2
 #> 
 #> [[93]]$epa$breakdown$rp_1
-#> [1] 0.5288
+#> [1] 0.28
 #> 
 #> [[93]]$epa$breakdown$rp_2
-#> [1] 0.2741
+#> [1] -0.1677
 #> 
 #> [[93]]$epa$breakdown$rp_3
-#> [1] 0.22131
+#> [1] 0.04953
 #> 
 #> 
 #> [[93]]$epa$stats
 #> [[93]]$epa$stats$start
-#> [1] 32.42
+#> [1] 21.5
 #> 
 #> [[93]]$epa$stats$pre_champs
-#> [1] 56.76
+#> [1] 19.97
 #> 
 #> [[93]]$epa$stats$max
-#> [1] 70.31
+#> [1] 25.21
 #> 
 #> 
 #> [[93]]$epa$ranks
 #> [[93]]$epa$ranks$total
 #> [[93]]$epa$ranks$total$rank
-#> [1] 166
+#> [1] 2312
 #> 
 #> [[93]]$epa$ranks$total$percentile
-#> [1] 0.9552
+#> [1] 0.3755
 #> 
 #> [[93]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -19771,10 +19771,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[93]]$epa$ranks$country
 #> [[93]]$epa$ranks$country$rank
-#> [1] 134
+#> [1] 1928
 #> 
 #> [[93]]$epa$ranks$country$percentile
-#> [1] 0.9543
+#> [1] 0.342
 #> 
 #> [[93]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -19782,21 +19782,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[93]]$epa$ranks$state
 #> [[93]]$epa$ranks$state$rank
-#> [1] 3
+#> [1] 47
 #> 
 #> [[93]]$epa$ranks$state$percentile
-#> [1] 0.9167
+#> [1] 0.2879
 #> 
 #> [[93]]$epa$ranks$state$team_count
-#> [1] 36
+#> [1] 66
 #> 
 #> 
 #> [[93]]$epa$ranks$district
 #> [[93]]$epa$ranks$district$rank
-#> [1] 4
+#> [1] 76
 #> 
 #> [[93]]$epa$ranks$district$percentile
-#> [1] 0.964
+#> [1] 0.3153
 #> 
 #> [[93]]$epa$ranks$district$team_count
 #> [1] 111
@@ -19806,37 +19806,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[93]]$record
 #> [[93]]$record$wins
-#> [1] 45
+#> [1] 13
 #> 
 #> [[93]]$record$losses
-#> [1] 17
+#> [1] 14
 #> 
 #> [[93]]$record$ties
-#> [1] 0
+#> [1] 1
 #> 
 #> [[93]]$record$count
-#> [1] 62
+#> [1] 28
 #> 
 #> [[93]]$record$winrate
-#> [1] 0.7258
+#> [1] 0.4821
 #> 
 #> 
 #> [[93]]$district_points
-#> [1] 219
+#> [1] 45
 #> 
 #> [[93]]$district_rank
-#> [1] 10
+#> [1] 72
 #> 
 #> 
 #> [[94]]
 #> [[94]]$team
-#> [1] 9403
+#> [1] 9709
 #> 
 #> [[94]]$year
 #> [1] 2025
 #> 
 #> [[94]]$name
-#> [1] "Starstuff"
+#> [1] "Isotope Robotics"
 #> 
 #> [[94]]$country
 #> [1] "USA"
@@ -19853,130 +19853,130 @@ team_years_sb(year = 2025, district = "chs")
 #> [[94]]$epa
 #> [[94]]$epa$total_points
 #> [[94]]$epa$total_points$mean
-#> [1] 19.97
+#> [1] 12.18
 #> 
 #> [[94]]$epa$total_points$sd
-#> [1] 6.63
+#> [1] 4.32
 #> 
 #> 
 #> [[94]]$epa$unitless
-#> [1] 1448
+#> [1] 1395
 #> 
 #> [[94]]$epa$norm
-#> [1] 1466
+#> [1] 1409
 #> 
 #> [[94]]$epa$conf
 #> [[94]]$epa$conf[[1]]
-#> [1] -0.89
+#> [1] -0.98
 #> 
 #> [[94]]$epa$conf[[2]]
-#> [1] 0.87
+#> [1] 0.79
 #> 
 #> 
 #> [[94]]$epa$breakdown
 #> [[94]]$epa$breakdown$total_points
-#> [1] 19.97
+#> [1] 12.18
 #> 
 #> [[94]]$epa$breakdown$auto_points
-#> [1] 4.33
+#> [1] 2.35
 #> 
 #> [[94]]$epa$breakdown$teleop_points
-#> [1] 13.63
+#> [1] 8.13
 #> 
 #> [[94]]$epa$breakdown$endgame_points
-#> [1] 2
+#> [1] 1.7
 #> 
 #> [[94]]$epa$breakdown$auto_rp
-#> [1] 0.28
+#> [1] -0.0202
 #> 
 #> [[94]]$epa$breakdown$coral_rp
-#> [1] -0.1677
+#> [1] -0.1708
 #> 
 #> [[94]]$epa$breakdown$barge_rp
-#> [1] 0.04953
+#> [1] 0.00163
 #> 
 #> [[94]]$epa$breakdown$tiebreaker_points
-#> [1] -0.01
-#> 
-#> [[94]]$epa$breakdown$auto_leave_points
-#> [1] 3.17
-#> 
-#> [[94]]$epa$breakdown$auto_coral
-#> [1] 0.27
-#> 
-#> [[94]]$epa$breakdown$auto_coral_points
-#> [1] 1.16
-#> 
-#> [[94]]$epa$breakdown$teleop_coral
-#> [1] 4.27
-#> 
-#> [[94]]$epa$breakdown$teleop_coral_points
-#> [1] 14.71
-#> 
-#> [[94]]$epa$breakdown$coral_l1
-#> [1] 1.49
-#> 
-#> [[94]]$epa$breakdown$coral_l2
-#> [1] 0.31
-#> 
-#> [[94]]$epa$breakdown$coral_l3
-#> [1] 2.05
-#> 
-#> [[94]]$epa$breakdown$coral_l4
-#> [1] 0.69
-#> 
-#> [[94]]$epa$breakdown$total_coral_points
-#> [1] 15.87
-#> 
-#> [[94]]$epa$breakdown$processor_algae
-#> [1] -0.29
-#> 
-#> [[94]]$epa$breakdown$processor_algae_points
-#> [1] -0.86
-#> 
-#> [[94]]$epa$breakdown$net_algae
 #> [1] -0.05
 #> 
+#> [[94]]$epa$breakdown$auto_leave_points
+#> [1] 2.28
+#> 
+#> [[94]]$epa$breakdown$auto_coral
+#> [1] 0
+#> 
+#> [[94]]$epa$breakdown$auto_coral_points
+#> [1] 0.07
+#> 
+#> [[94]]$epa$breakdown$teleop_coral
+#> [1] 2.73
+#> 
+#> [[94]]$epa$breakdown$teleop_coral_points
+#> [1] 9.46
+#> 
+#> [[94]]$epa$breakdown$coral_l1
+#> [1] 1.06
+#> 
+#> [[94]]$epa$breakdown$coral_l2
+#> [1] 0.25
+#> 
+#> [[94]]$epa$breakdown$coral_l3
+#> [1] 0.48
+#> 
+#> [[94]]$epa$breakdown$coral_l4
+#> [1] 0.95
+#> 
+#> [[94]]$epa$breakdown$total_coral_points
+#> [1] 9.54
+#> 
+#> [[94]]$epa$breakdown$processor_algae
+#> [1] 0.18
+#> 
+#> [[94]]$epa$breakdown$processor_algae_points
+#> [1] 0.54
+#> 
+#> [[94]]$epa$breakdown$net_algae
+#> [1] -0.47
+#> 
 #> [[94]]$epa$breakdown$net_algae_points
-#> [1] -0.21
+#> [1] -1.88
 #> 
 #> [[94]]$epa$breakdown$total_algae_points
-#> [1] -1.08
+#> [1] -1.34
 #> 
 #> [[94]]$epa$breakdown$total_game_pieces
-#> [1] 4.2
+#> [1] 2.46
 #> 
 #> [[94]]$epa$breakdown$barge_points
-#> [1] 2
+#> [1] 1.7
 #> 
 #> [[94]]$epa$breakdown$rp_1
-#> [1] 0.28
+#> [1] -0.0202
 #> 
 #> [[94]]$epa$breakdown$rp_2
-#> [1] -0.1677
+#> [1] -0.1708
 #> 
 #> [[94]]$epa$breakdown$rp_3
-#> [1] 0.04953
+#> [1] 0.00163
 #> 
 #> 
 #> [[94]]$epa$stats
 #> [[94]]$epa$stats$start
-#> [1] 21.5
+#> [1] 24.1
 #> 
 #> [[94]]$epa$stats$pre_champs
-#> [1] 19.97
+#> [1] 12.18
 #> 
 #> [[94]]$epa$stats$max
-#> [1] 25.21
+#> [1] 16.32
 #> 
 #> 
 #> [[94]]$epa$ranks
 #> [[94]]$epa$ranks$total
 #> [[94]]$epa$ranks$total$rank
-#> [1] 2312
+#> [1] 3248
 #> 
 #> [[94]]$epa$ranks$total$percentile
-#> [1] 0.3755
+#> [1] 0.1226
 #> 
 #> [[94]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -19984,10 +19984,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[94]]$epa$ranks$country
 #> [[94]]$epa$ranks$country$rank
-#> [1] 1928
+#> [1] 2634
 #> 
 #> [[94]]$epa$ranks$country$percentile
-#> [1] 0.342
+#> [1] 0.101
 #> 
 #> [[94]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -19995,10 +19995,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[94]]$epa$ranks$state
 #> [[94]]$epa$ranks$state$rank
-#> [1] 47
+#> [1] 59
 #> 
 #> [[94]]$epa$ranks$state$percentile
-#> [1] 0.2879
+#> [1] 0.1061
 #> 
 #> [[94]]$epa$ranks$state$team_count
 #> [1] 66
@@ -20006,10 +20006,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[94]]$epa$ranks$district
 #> [[94]]$epa$ranks$district$rank
-#> [1] 76
+#> [1] 98
 #> 
 #> [[94]]$epa$ranks$district$percentile
-#> [1] 0.3153
+#> [1] 0.1171
 #> 
 #> [[94]]$epa$ranks$district$team_count
 #> [1] 111
@@ -20019,37 +20019,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[94]]$record
 #> [[94]]$record$wins
-#> [1] 13
+#> [1] 8
 #> 
 #> [[94]]$record$losses
-#> [1] 14
+#> [1] 16
 #> 
 #> [[94]]$record$ties
-#> [1] 1
+#> [1] 0
 #> 
 #> [[94]]$record$count
-#> [1] 28
+#> [1] 24
 #> 
 #> [[94]]$record$winrate
-#> [1] 0.4821
+#> [1] 0.3333
 #> 
 #> 
 #> [[94]]$district_points
-#> [1] 45
+#> [1] 20
 #> 
 #> [[94]]$district_rank
-#> [1] 72
+#> [1] 103
 #> 
 #> 
 #> [[95]]
 #> [[95]]$team
-#> [1] 9709
+#> [1] 10004
 #> 
 #> [[95]]$year
 #> [1] 2025
 #> 
 #> [[95]]$name
-#> [1] "Isotope Robotics"
+#> [1] "SCAROB (Star City Area Robotics)"
 #> 
 #> [[95]]$country
 #> [1] "USA"
@@ -20061,135 +20061,135 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] "chs"
 #> 
 #> [[95]]$rookie_year
-#> [1] 2024
+#> [1] 2025
 #> 
 #> [[95]]$epa
 #> [[95]]$epa$total_points
 #> [[95]]$epa$total_points$mean
-#> [1] 12.18
+#> [1] 9.96
 #> 
 #> [[95]]$epa$total_points$sd
-#> [1] 4.32
+#> [1] 10.73
 #> 
 #> 
 #> [[95]]$epa$unitless
-#> [1] 1395
+#> [1] 1380
 #> 
 #> [[95]]$epa$norm
-#> [1] 1409
+#> [1] 1389
 #> 
 #> [[95]]$epa$conf
 #> [[95]]$epa$conf[[1]]
-#> [1] -0.98
+#> [1] -1.07
 #> 
 #> [[95]]$epa$conf[[2]]
-#> [1] 0.79
+#> [1] 0.63
 #> 
 #> 
 #> [[95]]$epa$breakdown
 #> [[95]]$epa$breakdown$total_points
-#> [1] 12.18
+#> [1] 9.96
 #> 
 #> [[95]]$epa$breakdown$auto_points
-#> [1] 2.35
+#> [1] 4.69
 #> 
 #> [[95]]$epa$breakdown$teleop_points
-#> [1] 8.13
+#> [1] 3.65
 #> 
 #> [[95]]$epa$breakdown$endgame_points
-#> [1] 1.7
+#> [1] 1.62
 #> 
 #> [[95]]$epa$breakdown$auto_rp
-#> [1] -0.0202
+#> [1] 0.1706
 #> 
 #> [[95]]$epa$breakdown$coral_rp
-#> [1] -0.1708
+#> [1] -0.1208
 #> 
 #> [[95]]$epa$breakdown$barge_rp
-#> [1] 0.00163
+#> [1] 0.1111
 #> 
 #> [[95]]$epa$breakdown$tiebreaker_points
-#> [1] -0.05
-#> 
-#> [[95]]$epa$breakdown$auto_leave_points
-#> [1] 2.28
-#> 
-#> [[95]]$epa$breakdown$auto_coral
 #> [1] 0
 #> 
+#> [[95]]$epa$breakdown$auto_leave_points
+#> [1] 2.64
+#> 
+#> [[95]]$epa$breakdown$auto_coral
+#> [1] 0.31
+#> 
 #> [[95]]$epa$breakdown$auto_coral_points
-#> [1] 0.07
+#> [1] 2.05
 #> 
 #> [[95]]$epa$breakdown$teleop_coral
-#> [1] 2.73
+#> [1] 0.13
 #> 
 #> [[95]]$epa$breakdown$teleop_coral_points
-#> [1] 9.46
+#> [1] 2.78
 #> 
 #> [[95]]$epa$breakdown$coral_l1
-#> [1] 1.06
+#> [1] -0.32
 #> 
 #> [[95]]$epa$breakdown$coral_l2
-#> [1] 0.25
+#> [1] -0.5
 #> 
 #> [[95]]$epa$breakdown$coral_l3
-#> [1] 0.48
+#> [1] -0.04
 #> 
 #> [[95]]$epa$breakdown$coral_l4
-#> [1] 0.95
+#> [1] 1.32
 #> 
 #> [[95]]$epa$breakdown$total_coral_points
-#> [1] 9.54
+#> [1] 4.84
 #> 
 #> [[95]]$epa$breakdown$processor_algae
-#> [1] 0.18
+#> [1] 0.25
 #> 
 #> [[95]]$epa$breakdown$processor_algae_points
-#> [1] 0.54
+#> [1] 0.75
 #> 
 #> [[95]]$epa$breakdown$net_algae
-#> [1] -0.47
+#> [1] 0.03
 #> 
 #> [[95]]$epa$breakdown$net_algae_points
-#> [1] -1.88
+#> [1] 0.11
 #> 
 #> [[95]]$epa$breakdown$total_algae_points
-#> [1] -1.34
+#> [1] 0.86
 #> 
 #> [[95]]$epa$breakdown$total_game_pieces
-#> [1] 2.46
+#> [1] 0.73
 #> 
 #> [[95]]$epa$breakdown$barge_points
-#> [1] 1.7
+#> [1] 1.62
 #> 
 #> [[95]]$epa$breakdown$rp_1
-#> [1] -0.0202
+#> [1] 0.1706
 #> 
 #> [[95]]$epa$breakdown$rp_2
-#> [1] -0.1708
+#> [1] -0.1208
 #> 
 #> [[95]]$epa$breakdown$rp_3
-#> [1] 0.00163
+#> [1] 0.1111
 #> 
 #> 
 #> [[95]]$epa$stats
 #> [[95]]$epa$stats$start
-#> [1] 24.1
+#> [1] 18.04
 #> 
 #> [[95]]$epa$stats$pre_champs
-#> [1] 12.18
+#> [1] 9.96
 #> 
 #> [[95]]$epa$stats$max
-#> [1] 16.32
+#> [1] 19.11
 #> 
 #> 
 #> [[95]]$epa$ranks
 #> [[95]]$epa$ranks$total
 #> [[95]]$epa$ranks$total$rank
-#> [1] 3248
+#> [1] 3467
 #> 
 #> [[95]]$epa$ranks$total$percentile
-#> [1] 0.1226
+#> [1] 0.0635
 #> 
 #> [[95]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -20197,10 +20197,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[95]]$epa$ranks$country
 #> [[95]]$epa$ranks$country$rank
-#> [1] 2634
+#> [1] 2780
 #> 
 #> [[95]]$epa$ranks$country$percentile
-#> [1] 0.101
+#> [1] 0.0512
 #> 
 #> [[95]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -20208,10 +20208,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[95]]$epa$ranks$state
 #> [[95]]$epa$ranks$state$rank
-#> [1] 59
+#> [1] 65
 #> 
 #> [[95]]$epa$ranks$state$percentile
-#> [1] 0.1061
+#> [1] 0.0152
 #> 
 #> [[95]]$epa$ranks$state$team_count
 #> [1] 66
@@ -20219,10 +20219,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[95]]$epa$ranks$district
 #> [[95]]$epa$ranks$district$rank
-#> [1] 98
+#> [1] 109
 #> 
 #> [[95]]$epa$ranks$district$percentile
-#> [1] 0.1171
+#> [1] 0.018
 #> 
 #> [[95]]$epa$ranks$district$team_count
 #> [1] 111
@@ -20232,37 +20232,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[95]]$record
 #> [[95]]$record$wins
-#> [1] 8
+#> [1] 7
 #> 
 #> [[95]]$record$losses
-#> [1] 16
+#> [1] 18
 #> 
 #> [[95]]$record$ties
-#> [1] 0
+#> [1] 1
 #> 
 #> [[95]]$record$count
-#> [1] 24
+#> [1] 26
 #> 
 #> [[95]]$record$winrate
-#> [1] 0.3333
+#> [1] 0.2885
 #> 
 #> 
 #> [[95]]$district_points
-#> [1] 20
+#> [1] 36
 #> 
 #> [[95]]$district_rank
-#> [1] 103
+#> [1] 83
 #> 
 #> 
 #> [[96]]
 #> [[96]]$team
-#> [1] 10004
+#> [1] 10224
 #> 
 #> [[96]]$year
 #> [1] 2025
 #> 
 #> [[96]]$name
-#> [1] "SCAROB (Star City Area Robotics)"
+#> [1] "MAV MECHANICS (NASA)"
 #> 
 #> [[96]]$country
 #> [1] "USA"
@@ -20279,110 +20279,110 @@ team_years_sb(year = 2025, district = "chs")
 #> [[96]]$epa
 #> [[96]]$epa$total_points
 #> [[96]]$epa$total_points$mean
-#> [1] 9.96
+#> [1] 42.52
 #> 
 #> [[96]]$epa$total_points$sd
-#> [1] 10.73
+#> [1] 3.99
 #> 
 #> 
 #> [[96]]$epa$unitless
-#> [1] 1380
+#> [1] 1601
 #> 
 #> [[96]]$epa$norm
-#> [1] 1389
+#> [1] 1569
 #> 
 #> [[96]]$epa$conf
 #> [[96]]$epa$conf[[1]]
-#> [1] -1.07
+#> [1] -0.9
 #> 
 #> [[96]]$epa$conf[[2]]
-#> [1] 0.63
+#> [1] 0.85
 #> 
 #> 
 #> [[96]]$epa$breakdown
 #> [[96]]$epa$breakdown$total_points
-#> [1] 9.96
+#> [1] 42.52
 #> 
 #> [[96]]$epa$breakdown$auto_points
-#> [1] 4.69
+#> [1] 7.38
 #> 
 #> [[96]]$epa$breakdown$teleop_points
-#> [1] 3.65
+#> [1] 30.8
 #> 
 #> [[96]]$epa$breakdown$endgame_points
-#> [1] 1.62
+#> [1] 4.34
 #> 
 #> [[96]]$epa$breakdown$auto_rp
-#> [1] 0.1706
+#> [1] 0.4461
 #> 
 #> [[96]]$epa$breakdown$coral_rp
-#> [1] -0.1208
+#> [1] 0.1103
 #> 
 #> [[96]]$epa$breakdown$barge_rp
-#> [1] 0.1111
+#> [1] 0.16616
 #> 
 #> [[96]]$epa$breakdown$tiebreaker_points
-#> [1] 0
+#> [1] 0.24
 #> 
 #> [[96]]$epa$breakdown$auto_leave_points
-#> [1] 2.64
+#> [1] 2.91
 #> 
 #> [[96]]$epa$breakdown$auto_coral
-#> [1] 0.31
+#> [1] 0.63
 #> 
 #> [[96]]$epa$breakdown$auto_coral_points
-#> [1] 2.05
+#> [1] 4.47
 #> 
 #> [[96]]$epa$breakdown$teleop_coral
-#> [1] 0.13
+#> [1] 7.24
 #> 
 #> [[96]]$epa$breakdown$teleop_coral_points
-#> [1] 2.78
+#> [1] 26.97
 #> 
 #> [[96]]$epa$breakdown$coral_l1
-#> [1] -0.32
+#> [1] -0.21
 #> 
 #> [[96]]$epa$breakdown$coral_l2
-#> [1] -0.5
+#> [1] 1.09
 #> 
 #> [[96]]$epa$breakdown$coral_l3
-#> [1] -0.04
+#> [1] 2.53
 #> 
 #> [[96]]$epa$breakdown$coral_l4
-#> [1] 1.32
+#> [1] 3.45
 #> 
 #> [[96]]$epa$breakdown$total_coral_points
-#> [1] 4.84
+#> [1] 31.45
 #> 
 #> [[96]]$epa$breakdown$processor_algae
-#> [1] 0.25
+#> [1] 0.54
 #> 
 #> [[96]]$epa$breakdown$processor_algae_points
-#> [1] 0.75
+#> [1] 1.63
 #> 
 #> [[96]]$epa$breakdown$net_algae
-#> [1] 0.03
+#> [1] 0.55
 #> 
 #> [[96]]$epa$breakdown$net_algae_points
-#> [1] 0.11
+#> [1] 2.2
 #> 
 #> [[96]]$epa$breakdown$total_algae_points
-#> [1] 0.86
+#> [1] 3.83
 #> 
 #> [[96]]$epa$breakdown$total_game_pieces
-#> [1] 0.73
+#> [1] 7.95
 #> 
 #> [[96]]$epa$breakdown$barge_points
-#> [1] 1.62
+#> [1] 4.34
 #> 
 #> [[96]]$epa$breakdown$rp_1
-#> [1] 0.1706
+#> [1] 0.4461
 #> 
 #> [[96]]$epa$breakdown$rp_2
-#> [1] -0.1208
+#> [1] 0.1103
 #> 
 #> [[96]]$epa$breakdown$rp_3
-#> [1] 0.1111
+#> [1] 0.16616
 #> 
 #> 
 #> [[96]]$epa$stats
@@ -20390,19 +20390,19 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] 18.04
 #> 
 #> [[96]]$epa$stats$pre_champs
-#> [1] 9.96
+#> [1] 41.21
 #> 
 #> [[96]]$epa$stats$max
-#> [1] 19.11
+#> [1] 44.71
 #> 
 #> 
 #> [[96]]$epa$ranks
 #> [[96]]$epa$ranks$total
 #> [[96]]$epa$ranks$total$rank
-#> [1] 3467
+#> [1] 816
 #> 
 #> [[96]]$epa$ranks$total$percentile
-#> [1] 0.0635
+#> [1] 0.7796
 #> 
 #> [[96]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -20410,10 +20410,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[96]]$epa$ranks$country
 #> [[96]]$epa$ranks$country$rank
-#> [1] 2780
+#> [1] 693
 #> 
 #> [[96]]$epa$ranks$country$percentile
-#> [1] 0.0512
+#> [1] 0.7635
 #> 
 #> [[96]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -20421,10 +20421,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[96]]$epa$ranks$state
 #> [[96]]$epa$ranks$state$rank
-#> [1] 65
+#> [1] 19
 #> 
 #> [[96]]$epa$ranks$state$percentile
-#> [1] 0.0152
+#> [1] 0.7121
 #> 
 #> [[96]]$epa$ranks$state$team_count
 #> [1] 66
@@ -20432,10 +20432,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[96]]$epa$ranks$district
 #> [[96]]$epa$ranks$district$rank
-#> [1] 109
+#> [1] 29
 #> 
 #> [[96]]$epa$ranks$district$percentile
-#> [1] 0.018
+#> [1] 0.7387
 #> 
 #> [[96]]$epa$ranks$district$team_count
 #> [1] 111
@@ -20445,37 +20445,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[96]]$record
 #> [[96]]$record$wins
-#> [1] 7
+#> [1] 26
 #> 
 #> [[96]]$record$losses
-#> [1] 18
+#> [1] 25
 #> 
 #> [[96]]$record$ties
 #> [1] 1
 #> 
 #> [[96]]$record$count
-#> [1] 26
+#> [1] 52
 #> 
 #> [[96]]$record$winrate
-#> [1] 0.2885
+#> [1] 0.5096
 #> 
 #> 
 #> [[96]]$district_points
-#> [1] 36
+#> [1] 155
 #> 
 #> [[96]]$district_rank
-#> [1] 83
+#> [1] 23
 #> 
 #> 
 #> [[97]]
 #> [[97]]$team
-#> [1] 10224
+#> [1] 10257
 #> 
 #> [[97]]$year
 #> [1] 2025
 #> 
 #> [[97]]$name
-#> [1] "MAV MECHANICS (NASA)"
+#> [1] "Vector Space"
 #> 
 #> [[97]]$country
 #> [1] "USA"
@@ -20492,110 +20492,110 @@ team_years_sb(year = 2025, district = "chs")
 #> [[97]]$epa
 #> [[97]]$epa$total_points
 #> [[97]]$epa$total_points$mean
-#> [1] 42.52
+#> [1] 18.25
 #> 
 #> [[97]]$epa$total_points$sd
-#> [1] 3.99
+#> [1] 5.78
 #> 
 #> 
 #> [[97]]$epa$unitless
-#> [1] 1601
+#> [1] 1436
 #> 
 #> [[97]]$epa$norm
-#> [1] 1569
+#> [1] 1455
 #> 
 #> [[97]]$epa$conf
 #> [[97]]$epa$conf[[1]]
-#> [1] -0.9
+#> [1] -0.7
 #> 
 #> [[97]]$epa$conf[[2]]
-#> [1] 0.85
+#> [1] 1.04
 #> 
 #> 
 #> [[97]]$epa$breakdown
 #> [[97]]$epa$breakdown$total_points
-#> [1] 42.52
+#> [1] 18.25
 #> 
 #> [[97]]$epa$breakdown$auto_points
-#> [1] 7.38
+#> [1] 5.06
 #> 
 #> [[97]]$epa$breakdown$teleop_points
-#> [1] 30.8
+#> [1] 11.08
 #> 
 #> [[97]]$epa$breakdown$endgame_points
-#> [1] 4.34
+#> [1] 2.12
 #> 
 #> [[97]]$epa$breakdown$auto_rp
-#> [1] 0.4461
+#> [1] 0.239
 #> 
 #> [[97]]$epa$breakdown$coral_rp
-#> [1] 0.1103
+#> [1] -0.0365
 #> 
 #> [[97]]$epa$breakdown$barge_rp
-#> [1] 0.16616
+#> [1] 0.07599
 #> 
 #> [[97]]$epa$breakdown$tiebreaker_points
-#> [1] 0.24
+#> [1] 0.05
 #> 
 #> [[97]]$epa$breakdown$auto_leave_points
-#> [1] 2.91
+#> [1] 3.15
 #> 
 #> [[97]]$epa$breakdown$auto_coral
-#> [1] 0.63
+#> [1] 0.53
 #> 
 #> [[97]]$epa$breakdown$auto_coral_points
-#> [1] 4.47
+#> [1] 1.9
 #> 
 #> [[97]]$epa$breakdown$teleop_coral
-#> [1] 7.24
+#> [1] 0.79
 #> 
 #> [[97]]$epa$breakdown$teleop_coral_points
-#> [1] 26.97
+#> [1] 5.88
 #> 
 #> [[97]]$epa$breakdown$coral_l1
-#> [1] -0.21
+#> [1] 0.13
 #> 
 #> [[97]]$epa$breakdown$coral_l2
-#> [1] 1.09
+#> [1] -0.64
 #> 
 #> [[97]]$epa$breakdown$coral_l3
-#> [1] 2.53
+#> [1] 0.31
 #> 
 #> [[97]]$epa$breakdown$coral_l4
-#> [1] 3.45
+#> [1] 1.49
 #> 
 #> [[97]]$epa$breakdown$total_coral_points
-#> [1] 31.45
+#> [1] 7.79
 #> 
 #> [[97]]$epa$breakdown$processor_algae
-#> [1] 0.54
+#> [1] -0.02
 #> 
 #> [[97]]$epa$breakdown$processor_algae_points
-#> [1] 1.63
+#> [1] -0.06
 #> 
 #> [[97]]$epa$breakdown$net_algae
-#> [1] 0.55
+#> [1] 1.31
 #> 
 #> [[97]]$epa$breakdown$net_algae_points
-#> [1] 2.2
+#> [1] 5.26
 #> 
 #> [[97]]$epa$breakdown$total_algae_points
-#> [1] 3.83
+#> [1] 5.2
 #> 
 #> [[97]]$epa$breakdown$total_game_pieces
-#> [1] 7.95
+#> [1] 2.58
 #> 
 #> [[97]]$epa$breakdown$barge_points
-#> [1] 4.34
+#> [1] 2.12
 #> 
 #> [[97]]$epa$breakdown$rp_1
-#> [1] 0.4461
+#> [1] 0.239
 #> 
 #> [[97]]$epa$breakdown$rp_2
-#> [1] 0.1103
+#> [1] -0.0365
 #> 
 #> [[97]]$epa$breakdown$rp_3
-#> [1] 0.16616
+#> [1] 0.07599
 #> 
 #> 
 #> [[97]]$epa$stats
@@ -20603,19 +20603,19 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] 18.04
 #> 
 #> [[97]]$epa$stats$pre_champs
-#> [1] 41.21
+#> [1] 18.25
 #> 
 #> [[97]]$epa$stats$max
-#> [1] 44.71
+#> [1] 18.25
 #> 
 #> 
 #> [[97]]$epa$ranks
 #> [[97]]$epa$ranks$total
 #> [[97]]$epa$ranks$total$rank
-#> [1] 816
+#> [1] 2524
 #> 
 #> [[97]]$epa$ranks$total$percentile
-#> [1] 0.7796
+#> [1] 0.3182
 #> 
 #> [[97]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -20623,10 +20623,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[97]]$epa$ranks$country
 #> [[97]]$epa$ranks$country$rank
-#> [1] 693
+#> [1] 2098
 #> 
 #> [[97]]$epa$ranks$country$percentile
-#> [1] 0.7635
+#> [1] 0.284
 #> 
 #> [[97]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -20634,10 +20634,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[97]]$epa$ranks$state
 #> [[97]]$epa$ranks$state$rank
-#> [1] 19
+#> [1] 51
 #> 
 #> [[97]]$epa$ranks$state$percentile
-#> [1] 0.7121
+#> [1] 0.2273
 #> 
 #> [[97]]$epa$ranks$state$team_count
 #> [1] 66
@@ -20645,10 +20645,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[97]]$epa$ranks$district
 #> [[97]]$epa$ranks$district$rank
-#> [1] 29
+#> [1] 83
 #> 
 #> [[97]]$epa$ranks$district$percentile
-#> [1] 0.7387
+#> [1] 0.2523
 #> 
 #> [[97]]$epa$ranks$district$team_count
 #> [1] 111
@@ -20658,37 +20658,37 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[97]]$record
 #> [[97]]$record$wins
-#> [1] 26
+#> [1] 13
 #> 
 #> [[97]]$record$losses
-#> [1] 25
+#> [1] 13
 #> 
 #> [[97]]$record$ties
 #> [1] 1
 #> 
 #> [[97]]$record$count
-#> [1] 52
+#> [1] 27
 #> 
 #> [[97]]$record$winrate
-#> [1] 0.5096
+#> [1] 0.5
 #> 
 #> 
 #> [[97]]$district_points
-#> [1] 155
+#> [1] 48
 #> 
 #> [[97]]$district_rank
-#> [1] 23
+#> [1] 68
 #> 
 #> 
 #> [[98]]
 #> [[98]]$team
-#> [1] 10257
+#> [1] 10370
 #> 
 #> [[98]]$year
 #> [1] 2025
 #> 
 #> [[98]]$name
-#> [1] "Vector Space"
+#> [1] "Squatch Watch"
 #> 
 #> [[98]]$country
 #> [1] "USA"
@@ -20705,110 +20705,110 @@ team_years_sb(year = 2025, district = "chs")
 #> [[98]]$epa
 #> [[98]]$epa$total_points
 #> [[98]]$epa$total_points$mean
-#> [1] 18.25
+#> [1] 20.14
 #> 
 #> [[98]]$epa$total_points$sd
-#> [1] 5.78
+#> [1] 5.84
 #> 
 #> 
 #> [[98]]$epa$unitless
-#> [1] 1436
+#> [1] 1449
 #> 
 #> [[98]]$epa$norm
-#> [1] 1455
+#> [1] 1467
 #> 
 #> [[98]]$epa$conf
 #> [[98]]$epa$conf[[1]]
-#> [1] -0.7
+#> [1] -0.83
 #> 
 #> [[98]]$epa$conf[[2]]
-#> [1] 1.04
+#> [1] 0.94
 #> 
 #> 
 #> [[98]]$epa$breakdown
 #> [[98]]$epa$breakdown$total_points
-#> [1] 18.25
+#> [1] 20.14
 #> 
 #> [[98]]$epa$breakdown$auto_points
-#> [1] 5.06
+#> [1] 2.57
 #> 
 #> [[98]]$epa$breakdown$teleop_points
-#> [1] 11.08
+#> [1] 15.47
 #> 
 #> [[98]]$epa$breakdown$endgame_points
-#> [1] 2.12
+#> [1] 2.1
 #> 
 #> [[98]]$epa$breakdown$auto_rp
-#> [1] 0.239
+#> [1] 0.1095
 #> 
 #> [[98]]$epa$breakdown$coral_rp
-#> [1] -0.0365
+#> [1] -0.0606
 #> 
 #> [[98]]$epa$breakdown$barge_rp
-#> [1] 0.07599
+#> [1] 0.01468
 #> 
 #> [[98]]$epa$breakdown$tiebreaker_points
-#> [1] 0.05
+#> [1] 0.02
 #> 
 #> [[98]]$epa$breakdown$auto_leave_points
-#> [1] 3.15
+#> [1] 2.83
 #> 
 #> [[98]]$epa$breakdown$auto_coral
-#> [1] 0.53
+#> [1] 0.12
 #> 
 #> [[98]]$epa$breakdown$auto_coral_points
-#> [1] 1.9
+#> [1] -0.27
 #> 
 #> [[98]]$epa$breakdown$teleop_coral
-#> [1] 0.79
+#> [1] 5.67
 #> 
 #> [[98]]$epa$breakdown$teleop_coral_points
-#> [1] 5.88
+#> [1] 15.07
 #> 
 #> [[98]]$epa$breakdown$coral_l1
-#> [1] 0.13
+#> [1] 4.1
 #> 
 #> [[98]]$epa$breakdown$coral_l2
-#> [1] -0.64
+#> [1] 0.77
 #> 
 #> [[98]]$epa$breakdown$coral_l3
-#> [1] 0.31
+#> [1] 0.3
 #> 
 #> [[98]]$epa$breakdown$coral_l4
-#> [1] 1.49
+#> [1] 0.62
 #> 
 #> [[98]]$epa$breakdown$total_coral_points
-#> [1] 7.79
+#> [1] 14.81
 #> 
 #> [[98]]$epa$breakdown$processor_algae
-#> [1] -0.02
+#> [1] 0.46
 #> 
 #> [[98]]$epa$breakdown$processor_algae_points
-#> [1] -0.06
+#> [1] 1.39
 #> 
 #> [[98]]$epa$breakdown$net_algae
-#> [1] 1.31
+#> [1] -0.25
 #> 
 #> [[98]]$epa$breakdown$net_algae_points
-#> [1] 5.26
+#> [1] -1
 #> 
 #> [[98]]$epa$breakdown$total_algae_points
-#> [1] 5.2
+#> [1] 0.39
 #> 
 #> [[98]]$epa$breakdown$total_game_pieces
-#> [1] 2.58
+#> [1] 6.01
 #> 
 #> [[98]]$epa$breakdown$barge_points
-#> [1] 2.12
+#> [1] 2.1
 #> 
 #> [[98]]$epa$breakdown$rp_1
-#> [1] 0.239
+#> [1] 0.1095
 #> 
 #> [[98]]$epa$breakdown$rp_2
-#> [1] -0.0365
+#> [1] -0.0606
 #> 
 #> [[98]]$epa$breakdown$rp_3
-#> [1] 0.07599
+#> [1] 0.01468
 #> 
 #> 
 #> [[98]]$epa$stats
@@ -20816,19 +20816,19 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] 18.04
 #> 
 #> [[98]]$epa$stats$pre_champs
-#> [1] 18.25
+#> [1] 20.14
 #> 
 #> [[98]]$epa$stats$max
-#> [1] 18.25
+#> [1] 20.14
 #> 
 #> 
 #> [[98]]$epa$ranks
 #> [[98]]$epa$ranks$total
 #> [[98]]$epa$ranks$total$rank
-#> [1] 2524
+#> [1] 2291
 #> 
 #> [[98]]$epa$ranks$total$percentile
-#> [1] 0.3182
+#> [1] 0.3811
 #> 
 #> [[98]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -20836,10 +20836,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[98]]$epa$ranks$country
 #> [[98]]$epa$ranks$country$rank
-#> [1] 2098
+#> [1] 1910
 #> 
 #> [[98]]$epa$ranks$country$percentile
-#> [1] 0.284
+#> [1] 0.3481
 #> 
 #> [[98]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -20847,10 +20847,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[98]]$epa$ranks$state
 #> [[98]]$epa$ranks$state$rank
-#> [1] 51
+#> [1] 46
 #> 
 #> [[98]]$epa$ranks$state$percentile
-#> [1] 0.2273
+#> [1] 0.303
 #> 
 #> [[98]]$epa$ranks$state$team_count
 #> [1] 66
@@ -20858,10 +20858,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[98]]$epa$ranks$district
 #> [[98]]$epa$ranks$district$rank
-#> [1] 83
+#> [1] 75
 #> 
 #> [[98]]$epa$ranks$district$percentile
-#> [1] 0.2523
+#> [1] 0.3243
 #> 
 #> [[98]]$epa$ranks$district$team_count
 #> [1] 111
@@ -20871,43 +20871,43 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[98]]$record
 #> [[98]]$record$wins
-#> [1] 13
+#> [1] 11
 #> 
 #> [[98]]$record$losses
-#> [1] 13
+#> [1] 14
 #> 
 #> [[98]]$record$ties
-#> [1] 1
+#> [1] 0
 #> 
 #> [[98]]$record$count
-#> [1] 27
+#> [1] 25
 #> 
 #> [[98]]$record$winrate
-#> [1] 0.5
+#> [1] 0.44
 #> 
 #> 
 #> [[98]]$district_points
-#> [1] 48
+#> [1] 39
 #> 
 #> [[98]]$district_rank
-#> [1] 68
+#> [1] 79
 #> 
 #> 
 #> [[99]]
 #> [[99]]$team
-#> [1] 10370
+#> [1] 10449
 #> 
 #> [[99]]$year
 #> [1] 2025
 #> 
 #> [[99]]$name
-#> [1] "Squatch Watch"
+#> [1] "Robo Crusaders 1"
 #> 
 #> [[99]]$country
 #> [1] "USA"
 #> 
 #> [[99]]$state
-#> [1] "VA"
+#> [1] "MD"
 #> 
 #> [[99]]$district
 #> [1] "chs"
@@ -20918,110 +20918,110 @@ team_years_sb(year = 2025, district = "chs")
 #> [[99]]$epa
 #> [[99]]$epa$total_points
 #> [[99]]$epa$total_points$mean
-#> [1] 20.14
+#> [1] 11.21
 #> 
 #> [[99]]$epa$total_points$sd
-#> [1] 5.84
+#> [1] 6.89
 #> 
 #> 
 #> [[99]]$epa$unitless
-#> [1] 1449
+#> [1] 1388
 #> 
 #> [[99]]$epa$norm
-#> [1] 1467
+#> [1] 1401
 #> 
 #> [[99]]$epa$conf
 #> [[99]]$epa$conf[[1]]
-#> [1] -0.83
+#> [1] -0.94
 #> 
 #> [[99]]$epa$conf[[2]]
-#> [1] 0.94
+#> [1] 0.83
 #> 
 #> 
 #> [[99]]$epa$breakdown
 #> [[99]]$epa$breakdown$total_points
-#> [1] 20.14
+#> [1] 11.21
 #> 
 #> [[99]]$epa$breakdown$auto_points
-#> [1] 2.57
+#> [1] 5.25
 #> 
 #> [[99]]$epa$breakdown$teleop_points
-#> [1] 15.47
+#> [1] 5.15
 #> 
 #> [[99]]$epa$breakdown$endgame_points
-#> [1] 2.1
+#> [1] 0.81
 #> 
 #> [[99]]$epa$breakdown$auto_rp
-#> [1] 0.1095
+#> [1] 0.4221
 #> 
 #> [[99]]$epa$breakdown$coral_rp
-#> [1] -0.0606
+#> [1] -0.0119
 #> 
 #> [[99]]$epa$breakdown$barge_rp
-#> [1] 0.01468
+#> [1] -0.06355
 #> 
 #> [[99]]$epa$breakdown$tiebreaker_points
-#> [1] 0.02
+#> [1] 0.03
 #> 
 #> [[99]]$epa$breakdown$auto_leave_points
-#> [1] 2.83
+#> [1] 2.87
 #> 
 #> [[99]]$epa$breakdown$auto_coral
-#> [1] 0.12
+#> [1] 0.63
 #> 
 #> [[99]]$epa$breakdown$auto_coral_points
-#> [1] -0.27
+#> [1] 2.39
 #> 
 #> [[99]]$epa$breakdown$teleop_coral
-#> [1] 5.67
+#> [1] 2.65
 #> 
 #> [[99]]$epa$breakdown$teleop_coral_points
-#> [1] 15.07
+#> [1] 3.87
 #> 
 #> [[99]]$epa$breakdown$coral_l1
-#> [1] 4.1
+#> [1] 3.59
 #> 
 #> [[99]]$epa$breakdown$coral_l2
-#> [1] 0.77
+#> [1] 0.1
 #> 
 #> [[99]]$epa$breakdown$coral_l3
-#> [1] 0.3
+#> [1] -0.11
 #> 
 #> [[99]]$epa$breakdown$coral_l4
-#> [1] 0.62
+#> [1] -0.31
 #> 
 #> [[99]]$epa$breakdown$total_coral_points
-#> [1] 14.81
+#> [1] 6.26
 #> 
 #> [[99]]$epa$breakdown$processor_algae
-#> [1] 0.46
+#> [1] 0.29
 #> 
 #> [[99]]$epa$breakdown$processor_algae_points
-#> [1] 1.39
+#> [1] 0.86
 #> 
 #> [[99]]$epa$breakdown$net_algae
-#> [1] -0.25
+#> [1] 0.1
 #> 
 #> [[99]]$epa$breakdown$net_algae_points
-#> [1] -1
+#> [1] 0.41
 #> 
 #> [[99]]$epa$breakdown$total_algae_points
-#> [1] 0.39
+#> [1] 1.27
 #> 
 #> [[99]]$epa$breakdown$total_game_pieces
-#> [1] 6.01
+#> [1] 3.66
 #> 
 #> [[99]]$epa$breakdown$barge_points
-#> [1] 2.1
+#> [1] 0.81
 #> 
 #> [[99]]$epa$breakdown$rp_1
-#> [1] 0.1095
+#> [1] 0.4221
 #> 
 #> [[99]]$epa$breakdown$rp_2
-#> [1] -0.0606
+#> [1] -0.0119
 #> 
 #> [[99]]$epa$breakdown$rp_3
-#> [1] 0.01468
+#> [1] -0.06355
 #> 
 #> 
 #> [[99]]$epa$stats
@@ -21029,19 +21029,19 @@ team_years_sb(year = 2025, district = "chs")
 #> [1] 18.04
 #> 
 #> [[99]]$epa$stats$pre_champs
-#> [1] 20.14
+#> [1] 11.21
 #> 
 #> [[99]]$epa$stats$max
-#> [1] 20.14
+#> [1] 13.76
 #> 
 #> 
 #> [[99]]$epa$ranks
 #> [[99]]$epa$ranks$total
 #> [[99]]$epa$ranks$total$rank
-#> [1] 2291
+#> [1] 3333
 #> 
 #> [[99]]$epa$ranks$total$percentile
-#> [1] 0.3811
+#> [1] 0.0997
 #> 
 #> [[99]]$epa$ranks$total$team_count
 #> [1] 3702
@@ -21049,10 +21049,10 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[99]]$epa$ranks$country
 #> [[99]]$epa$ranks$country$rank
-#> [1] 1910
+#> [1] 2690
 #> 
 #> [[99]]$epa$ranks$country$percentile
-#> [1] 0.3481
+#> [1] 0.0819
 #> 
 #> [[99]]$epa$ranks$country$team_count
 #> [1] 2930
@@ -21060,21 +21060,21 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[99]]$epa$ranks$state
 #> [[99]]$epa$ranks$state$rank
-#> [1] 46
+#> [1] 32
 #> 
 #> [[99]]$epa$ranks$state$percentile
-#> [1] 0.303
+#> [1] 0.1111
 #> 
 #> [[99]]$epa$ranks$state$team_count
-#> [1] 66
+#> [1] 36
 #> 
 #> 
 #> [[99]]$epa$ranks$district
 #> [[99]]$epa$ranks$district$rank
-#> [1] 75
+#> [1] 102
 #> 
 #> [[99]]$epa$ranks$district$percentile
-#> [1] 0.3243
+#> [1] 0.0811
 #> 
 #> [[99]]$epa$ranks$district$team_count
 #> [1] 111
@@ -21084,238 +21084,25 @@ team_years_sb(year = 2025, district = "chs")
 #> 
 #> [[99]]$record
 #> [[99]]$record$wins
-#> [1] 11
+#> [1] 9
 #> 
 #> [[99]]$record$losses
-#> [1] 14
+#> [1] 15
 #> 
 #> [[99]]$record$ties
 #> [1] 0
 #> 
 #> [[99]]$record$count
-#> [1] 25
-#> 
-#> [[99]]$record$winrate
-#> [1] 0.44
-#> 
-#> 
-#> [[99]]$district_points
-#> [1] 39
-#> 
-#> [[99]]$district_rank
-#> [1] 79
-#> 
-#> 
-#> [[100]]
-#> [[100]]$team
-#> [1] 10449
-#> 
-#> [[100]]$year
-#> [1] 2025
-#> 
-#> [[100]]$name
-#> [1] "Robo Crusaders 1"
-#> 
-#> [[100]]$country
-#> [1] "USA"
-#> 
-#> [[100]]$state
-#> [1] "MD"
-#> 
-#> [[100]]$district
-#> [1] "chs"
-#> 
-#> [[100]]$rookie_year
-#> [1] 2025
-#> 
-#> [[100]]$epa
-#> [[100]]$epa$total_points
-#> [[100]]$epa$total_points$mean
-#> [1] 11.21
-#> 
-#> [[100]]$epa$total_points$sd
-#> [1] 6.89
-#> 
-#> 
-#> [[100]]$epa$unitless
-#> [1] 1388
-#> 
-#> [[100]]$epa$norm
-#> [1] 1401
-#> 
-#> [[100]]$epa$conf
-#> [[100]]$epa$conf[[1]]
-#> [1] -0.94
-#> 
-#> [[100]]$epa$conf[[2]]
-#> [1] 0.83
-#> 
-#> 
-#> [[100]]$epa$breakdown
-#> [[100]]$epa$breakdown$total_points
-#> [1] 11.21
-#> 
-#> [[100]]$epa$breakdown$auto_points
-#> [1] 5.25
-#> 
-#> [[100]]$epa$breakdown$teleop_points
-#> [1] 5.15
-#> 
-#> [[100]]$epa$breakdown$endgame_points
-#> [1] 0.81
-#> 
-#> [[100]]$epa$breakdown$auto_rp
-#> [1] 0.4221
-#> 
-#> [[100]]$epa$breakdown$coral_rp
-#> [1] -0.0119
-#> 
-#> [[100]]$epa$breakdown$barge_rp
-#> [1] -0.06355
-#> 
-#> [[100]]$epa$breakdown$tiebreaker_points
-#> [1] 0.03
-#> 
-#> [[100]]$epa$breakdown$auto_leave_points
-#> [1] 2.87
-#> 
-#> [[100]]$epa$breakdown$auto_coral
-#> [1] 0.63
-#> 
-#> [[100]]$epa$breakdown$auto_coral_points
-#> [1] 2.39
-#> 
-#> [[100]]$epa$breakdown$teleop_coral
-#> [1] 2.65
-#> 
-#> [[100]]$epa$breakdown$teleop_coral_points
-#> [1] 3.87
-#> 
-#> [[100]]$epa$breakdown$coral_l1
-#> [1] 3.59
-#> 
-#> [[100]]$epa$breakdown$coral_l2
-#> [1] 0.1
-#> 
-#> [[100]]$epa$breakdown$coral_l3
-#> [1] -0.11
-#> 
-#> [[100]]$epa$breakdown$coral_l4
-#> [1] -0.31
-#> 
-#> [[100]]$epa$breakdown$total_coral_points
-#> [1] 6.26
-#> 
-#> [[100]]$epa$breakdown$processor_algae
-#> [1] 0.29
-#> 
-#> [[100]]$epa$breakdown$processor_algae_points
-#> [1] 0.86
-#> 
-#> [[100]]$epa$breakdown$net_algae
-#> [1] 0.1
-#> 
-#> [[100]]$epa$breakdown$net_algae_points
-#> [1] 0.41
-#> 
-#> [[100]]$epa$breakdown$total_algae_points
-#> [1] 1.27
-#> 
-#> [[100]]$epa$breakdown$total_game_pieces
-#> [1] 3.66
-#> 
-#> [[100]]$epa$breakdown$barge_points
-#> [1] 0.81
-#> 
-#> [[100]]$epa$breakdown$rp_1
-#> [1] 0.4221
-#> 
-#> [[100]]$epa$breakdown$rp_2
-#> [1] -0.0119
-#> 
-#> [[100]]$epa$breakdown$rp_3
-#> [1] -0.06355
-#> 
-#> 
-#> [[100]]$epa$stats
-#> [[100]]$epa$stats$start
-#> [1] 18.04
-#> 
-#> [[100]]$epa$stats$pre_champs
-#> [1] 11.21
-#> 
-#> [[100]]$epa$stats$max
-#> [1] 13.76
-#> 
-#> 
-#> [[100]]$epa$ranks
-#> [[100]]$epa$ranks$total
-#> [[100]]$epa$ranks$total$rank
-#> [1] 3333
-#> 
-#> [[100]]$epa$ranks$total$percentile
-#> [1] 0.0997
-#> 
-#> [[100]]$epa$ranks$total$team_count
-#> [1] 3702
-#> 
-#> 
-#> [[100]]$epa$ranks$country
-#> [[100]]$epa$ranks$country$rank
-#> [1] 2690
-#> 
-#> [[100]]$epa$ranks$country$percentile
-#> [1] 0.0819
-#> 
-#> [[100]]$epa$ranks$country$team_count
-#> [1] 2930
-#> 
-#> 
-#> [[100]]$epa$ranks$state
-#> [[100]]$epa$ranks$state$rank
-#> [1] 32
-#> 
-#> [[100]]$epa$ranks$state$percentile
-#> [1] 0.1111
-#> 
-#> [[100]]$epa$ranks$state$team_count
-#> [1] 36
-#> 
-#> 
-#> [[100]]$epa$ranks$district
-#> [[100]]$epa$ranks$district$rank
-#> [1] 102
-#> 
-#> [[100]]$epa$ranks$district$percentile
-#> [1] 0.0811
-#> 
-#> [[100]]$epa$ranks$district$team_count
-#> [1] 111
-#> 
-#> 
-#> 
-#> 
-#> [[100]]$record
-#> [[100]]$record$wins
-#> [1] 9
-#> 
-#> [[100]]$record$losses
-#> [1] 15
-#> 
-#> [[100]]$record$ties
-#> [1] 0
-#> 
-#> [[100]]$record$count
 #> [1] 24
 #> 
-#> [[100]]$record$winrate
+#> [[99]]$record$winrate
 #> [1] 0.375
 #> 
 #> 
-#> [[100]]$district_points
+#> [[99]]$district_points
 #> [1] 41
 #> 
-#> [[100]]$district_rank
+#> [[99]]$district_rank
 #> [1] 77
 #> 
 #> 
@@ -24805,7 +24592,7 @@ team_years_sb(team = 449)
 #> [1] 1616
 #> 
 #> [[23]]$epa$norm
-#> [1] 1746
+#> [1] 1702
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
@@ -24894,24 +24681,24 @@ team_years_sb(team = 449)
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 84
+#> [1] 133
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9777
+#> [1] 0.9647
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3768
+#> [1] 3764
 #> 
 #> 
 #> [[23]]$epa$ranks$country
 #> [[23]]$epa$ranks$country$rank
-#> [1] 65
+#> [1] 106
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.9781
+#> [1] 0.9643
 #> 
 #> [[23]]$epa$ranks$country$team_count
-#> [1] 2973
+#> [1] 2971
 #> 
 #> 
 #> [[23]]$epa$ranks$state
