@@ -70,29 +70,32 @@ pridge_lambda_cv <- function(
     design <- as.matrix(design)
 
     # Leave one core free by default
-    if (is.null(n_cores)) {
-        n_cores <- max(1, parallel::detectCores() - 1)
+    if (is.null(n_cores)) n_cores <- max(1, parallel::detectCores() - 1)
+
+    if (n_cores == 1) { # if n_cores is 1, nonparallel execution avoids overhead
+        mses <- sapply(grid, pridge_loocv, X = design, y = response,
+                       beta_0 = priors)
+    }
+    else { # parallelized path
+        cl <- parallel::makeCluster(n_cores)
+        doParallel::registerDoParallel(cl)
+
+        mses <- tryCatch({
+            foreach::foreach(
+                lambda = grid, .combine = 'c', .packages = 'scoutR'
+            ) %dopar% {
+                pridge_loocv(design, response, lambda, priors)
+            }
+        }, finally = {
+            # Always stop the cluster to free up resources
+            parallel::stopCluster(cl)
+        })
     }
 
-    # Set up the parallel backend
-    cl <- parallel::makeCluster(n_cores)
-    doParallel::registerDoParallel(cl)
-
-    mses <- tryCatch({
-        foreach::foreach(
-            lambda = grid, .combine = 'c', .packages = 'scoutR'
-        ) %dopar% {
-            pridge_loocv(design, response, lambda, priors)
-        }
-    }, finally = {
-        # Always stop the cluster to free up resources
-        parallel::stopCluster(cl)
-    })
-
     names(mses) <- grid
-    min_ind <- which.min(mses)
 
     if (plot_mses){
+        min_ind <- which.min(mses)
         plot(x = grid, y = mses, xlab = "Lambda", ylab = "LOOCV MSE",
              main = "Prior Ridge Lambda Cross Validation",
              sub = paste("LOOCV MSE-min lambda:", round(grid[min_ind], 3)))
