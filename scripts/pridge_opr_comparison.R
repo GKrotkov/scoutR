@@ -92,7 +92,7 @@ event_keys <- qualifier_events |>
 #### Parallelized ####
 ######################
 
-n_cores <- parallel::detectCores() %/% 2
+n_cores <- parallel::detectCores() - 1
 cl <- makeCluster(n_cores)
 registerDoParallel(cl)
 
