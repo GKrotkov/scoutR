@@ -38,6 +38,11 @@ additions to scoutR scoped, modular, and testable.
 
 # TODO list
 
+# Prior Ridge
+
+- EPA CV procedure debugging
+- Write up whitepaper
+
 # Data Science Projects
 
 - “OPR Dropout”; adjustments to the design matrix based on scouted data
