@@ -29,9 +29,10 @@ cv_fold <- function(fold, fold_ids, matches, priors){
     design_test <- design[fold_ids == fold, ]
 
     # select lambda via LOOCV on the training fold
+    # use n_cores = 1 to avoid nested parallelization
     pridge_cv <- scoutR::pridge_lambda_cv(
         design_train, response_train, priors,
-        grid = seq(0, 20, length.out = 1000), plot_mses = FALSE
+        grid = seq(0, 20, length.out = 100), plot_mses = FALSE, n_cores = 1
     )
     lambda_opt <- as.numeric(names(which.min(pridge_cv)))
 
