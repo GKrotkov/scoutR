@@ -46,8 +46,9 @@ get_pridge_coefs <- function(design, response, priors, n_cores = 1){
         design, response, priors, grid, plot_mses = FALSE, n_cores = n_cores
     )
     lambda_star <- grid[which.min(mses)]
-    pridge_coefs <- scoutR:::prior_ridge(design, response,
-                                         lambda_star, priors)
+    pridge_coefs <- scoutR:::prior_ridge(
+        X = design, y = response, lambda = lambda_star, beta_0 = priors
+    )
     pridge_coefs <- round(pridge_coefs, 2)
     return(pridge_coefs)
 }
