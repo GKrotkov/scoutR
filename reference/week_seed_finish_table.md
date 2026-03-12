@@ -29,8 +29,8 @@ week_seed_finish_table(wk, year = YEAR, finish = "Winner", size = NULL)
 ``` r
 week_seed_finish_table(1)
 #> 
-#> 1 
-#> 1 
+#>  1  2  3 
+#> 26  2  1 
 week_seed_finish_table(4, 2023)
 #> 
 #>  1  2  3  4  5 
