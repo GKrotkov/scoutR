@@ -30,11 +30,11 @@ get_priors <- function(epa_progression, team_list) {
     priors <- epa_progression |>
         group_by(team) |>
         arrange(time) |>
-        summarize(initial_epas = first(pre_epa)) |>
-        pull(initial_epas)
+        summarize(team = first(team), initial_epas = first(pre_epa))
 
-    names(priors) <- sort(team_list)
-    return(priors)
+    result <- priors$initial_epas
+    names(result) <- priors$team
+    return(result)
 }
 
 # using a relatively short grid for computational considerations
@@ -124,7 +124,7 @@ qualifier_events <- events(YEAR, official = TRUE) |>
 event_keys <- qualifier_events |>
     dplyr::pull(key)
 
-n_cores <- parallel::detectCores() - 1
+n_cores <- parallel::detectCores() %/% 2
 cl <- makeCluster(n_cores)
 registerDoParallel(cl)
 
