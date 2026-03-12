@@ -84,7 +84,8 @@ pridge_lambda_cv <- function(
             foreach::foreach(
                 lambda = grid, .combine = 'c', .packages = 'scoutR'
             ) %dopar% {
-                pridge_loocv(design, response, lambda, priors)
+                pridge_loocv(X = design, y = response,
+                             lambda = lambda, beta_0 = priors)
             }
         }, finally = {
             # Always stop the cluster to free up resources
