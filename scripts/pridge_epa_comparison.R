@@ -2,6 +2,8 @@
 rm(list = ls()) # clear namespace (mostly for debugging)
 library(scoutR) # devtools::install_github("gkrotkov/scoutR")
 library(tidyverse)
+library(parallel)
+library(doParallel)
 
 # Given a vector of coefs and a response, compute the prediction error
 coef_error <- function(coefs, design_row, response){
@@ -121,9 +123,6 @@ qualifier_events <- events(YEAR, official = TRUE) |>
 
 event_keys <- qualifier_events |>
     dplyr::pull(key)
-
-# FLAG: testing code, remove
-event_keys <- sample(event_keys, size = 10)
 
 n_cores <- parallel::detectCores() - 1
 cl <- makeCluster(n_cores)
