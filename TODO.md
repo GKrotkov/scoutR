@@ -27,6 +27,9 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 # TODO list
 
 # Prior Ridge
+- Bug: `fit_event_pridge` with "2026casnv"
+    - 2 teams are reported as being at the event that don't play a match
+    - Causes column mismatch
 - EPA CV procedure debugging
 - Write up whitepaper
 
