@@ -32,10 +32,10 @@ Gabriel Krotkov
 event("2022txirv")
 #>                              address   city country
 #> event 500 West Las Colinas Boulevard Irving     USA
-#>                                 district division_keys   end_date event_code
-#> event fit, FIRST In Texas, 2022fit, 2022          NULL 2022-03-26      txirv
-#>       event_type event_type_string first_event_code first_event_id
-#> event          1          District            txirv           NULL
+#>                                         district division_keys   end_date
+#> event fit, FIRST In Texas, 2022fit, 23, 80, 2022          NULL 2022-03-26
+#>       event_code event_type event_type_string first_event_code first_event_id
+#> event      txirv          1          District            txirv           NULL
 #>       gmaps_place_id gmaps_url       key  lat  lng            location_name
 #> event           NULL      NULL 2022txirv NULL NULL Irving Convention Center
 #>                            name parent_event_key playoff_type
@@ -49,14 +49,14 @@ event("2022txirv")
 event("2016pahat", simple = TRUE)
 #>                                                                     address
 #> event Hatboro-Horsham High School\n899 Horsham Road\nHorsham, PA 19044\nUSA
-#>          city country                               district division_keys
-#> event Horsham     USA mar, FIRST Mid-Atlantic, 2016mar, 2016          NULL
-#>         end_date event_code event_type event_type_string first_event_code
-#> event 2016-03-06      pahat          1          District            pahat
-#>       first_event_id gmaps_place_id gmaps_url       key  lat  lng
-#> event          17425           NULL      NULL 2016pahat NULL NULL
-#>                     location_name                                 name
-#> event Hatboro-Horsham High School MAR District - Hatboro-Horsham Event
+#>          city country                                       district
+#> event Horsham     USA mar, FIRST Mid-Atlantic, 2016mar, 22, 60, 2016
+#>       division_keys   end_date event_code event_type event_type_string
+#> event          NULL 2016-03-06      pahat          1          District
+#>       first_event_code first_event_id gmaps_place_id gmaps_url       key  lat
+#> event            pahat          17425           NULL      NULL 2016pahat NULL
+#>        lng               location_name                                 name
+#> event NULL Hatboro-Horsham High School MAR District - Hatboro-Horsham Event
 #>       parent_event_key playoff_type playoff_type_string postal_code remap_teams
 #> event             NULL         NULL                NULL       19044        NULL
 #>            short_name start_date state_prov         timezone

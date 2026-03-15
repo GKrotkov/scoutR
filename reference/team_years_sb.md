@@ -24592,7 +24592,7 @@ team_years_sb(team = 449)
 #> [1] 1611
 #> 
 #> [[23]]$epa$norm
-#> [1] 1682
+#> [1] 1659
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
@@ -24681,32 +24681,32 @@ team_years_sb(team = 449)
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 179
+#> [1] 258
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9525
+#> [1] 0.9314
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3765
+#> [1] 3763
 #> 
 #> 
 #> [[23]]$epa$ranks$country
 #> [[23]]$epa$ranks$country$rank
-#> [1] 140
+#> [1] 197
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.9529
+#> [1] 0.9338
 #> 
 #> [[23]]$epa$ranks$country$team_count
-#> [1] 2974
+#> [1] 2975
 #> 
 #> 
 #> [[23]]$epa$ranks$state
 #> [[23]]$epa$ranks$state$rank
-#> [1] 2
+#> [1] 3
 #> 
 #> [[23]]$epa$ranks$state$percentile
-#> [1] 0.9444
+#> [1] 0.9167
 #> 
 #> [[23]]$epa$ranks$state$team_count
 #> [1] 36
@@ -24714,10 +24714,10 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$epa$ranks$district
 #> [[23]]$epa$ranks$district$rank
-#> [1] 5
+#> [1] 7
 #> 
 #> [[23]]$epa$ranks$district$percentile
-#> [1] 0.9576
+#> [1] 0.9407
 #> 
 #> [[23]]$epa$ranks$district$team_count
 #> [1] 118
@@ -24750,7 +24750,7 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$competing
 #> [[23]]$competing$this_week
-#> [1] TRUE
+#> [1] FALSE
 #> 
 #> [[23]]$competing$next_event_key
 #> [1] "2026mdbet"
