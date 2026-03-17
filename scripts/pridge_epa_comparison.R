@@ -118,7 +118,7 @@ pridge_epa_pct_imp <- function(event_key){
     return(pct_imp)
 }
 
-YEAR <- 2023
+YEAR <- 2016
 
 qualifier_events <- events(YEAR, official = TRUE) |>
     dplyr::filter(event_type %in% c(0, 1))
@@ -147,3 +147,11 @@ stopCluster(cl)
 
 finish <- Sys.time()
 execution_time <- finish - start
+
+# coerce results to numeric intentionally to replace strings with NA
+result <- qualifier_events |>
+    mutate(pct_imp = as.numeric(unlist(results_list))) |>
+    select(key, pct_imp, year, week, everything())
+
+save(result, execution_time,
+     file = paste0("data/pridge_vs_epa/", "pct_improvement_", YEAR, ".rda"))
