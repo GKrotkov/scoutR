@@ -80,8 +80,8 @@ pridge_epa_pct_imp <- function(event_key){
 
     # OPR is first calculable once we have one row per col (team)
     lo <- floor(length(team_list) / 2) + 1
-    # start one match later so we have enough data to fit pridge and predict
-    lo <- lo + 1
+    # start two matches later so we have enough data to fit pridge and predict
+    lo <- lo + 2
     hi <- nrow(matches)
 
     result <- matrix(NA, nrow = length(lo:hi), ncol = 3)
