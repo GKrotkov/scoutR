@@ -44,11 +44,11 @@ pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE){
     return(errors)
 }
 
-#' Prior Ridge Lambda Cross Validation (foreach version)
+#' Prior Ridge Lambda Cross Validation
 #'
 #' Runs leave-one-out cross validation across a grid of lambda and returns the
-#' MSEs across the whole grid. This version uses the 'foreach' package for
-#' cleaner parallel execution.
+#' MSEs across the whole grid. This uses the 'foreach' package for parallel
+#' execution.
 #'
 #' @importFrom foreach %dopar%
 #'
@@ -112,7 +112,9 @@ pridge_lambda_cv <- function(
 #' Given an event key, selects an optimal lambda using LOOCV and fits the prior
 #' ridge model using pre-event EPA from statbotics as the prior.
 #' @param event_key (char) TBA-legal event key (ex. "2025mdsev")
-#' @param grid (vector) all possible lambda values to consider
+#' @param grid (vector) all possible lambda values to consider. Defaults to
+#' starting at just above zero to reduce matrix singularity in fits (guarantees
+#' that X^tX + (lambda)I is positive definite.)
 #' @param n_cores (int) number of cores to parallelize over. If NULL, will select (max - 1) cores
 #' @details
 #' Relies on statbotics API to establish priors
@@ -122,7 +124,8 @@ pridge_lambda_cv <- function(
 #' fit_event_pridge("2025mdsev")
 #' fit_event_pridge("2023new", n_cores = 3)
 fit_event_pridge <- function(
-        event_key, grid = seq(0, 20, length.out = 1000), n_cores = NULL
+        event_key, grid = exp(seq(log(0.01), log(20), length.out = 100)),
+        n_cores = NULL
 ){
     matches <- event_matches(event_key, match_type = "qual")
 
