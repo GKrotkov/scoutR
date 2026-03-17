@@ -31,11 +31,5 @@ Checks for match duplication, which will stop execution if TRUE.
 
 ``` r
 gpr24 <- prescout("2024paca")
-#> No encoding supplied: defaulting to UTF-8.
-#> Error in unnest_wider(., matches): ℹ In column: `matches`.
-#> ℹ In row: 1.
-#> Caused by error:
-#> ! Can't unnest elements with missing names.
-#> ℹ Supply `names_sep` to generate automatic names.
 newton25 <- prescout("2025newton", manual_teams = c(1712, 6672, 3504))
 ```
