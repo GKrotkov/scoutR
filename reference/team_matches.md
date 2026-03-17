@@ -364,5 +364,8 @@ team_matches(1712, event = "2015paphi")
 #> #   blue_container_count_level2 <int>, blue_container_count_level3 <int>,
 #> #   blue_container_count_level4 <int>, blue_container_count_level5 <int>, …
 team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
-#> Error in if (!is_event_key_official(event_keys[i])) (next)(): argument is of length zero
+#> Warning: Unknown or uninitialised column: `red_score`.
+#> Warning: Unknown or uninitialised column: `blue_score`.
+#> Error in matches[!id_unplayed(matches), ]: Can't subset rows with `!id_unplayed(matches)`.
+#> ✖ Logical subscript `!id_unplayed(matches)` must be size 1 or 643, not 0.
 ```

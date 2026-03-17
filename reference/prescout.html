@@ -70,6 +70,12 @@ variables? If FALSE, will only return topline values.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gpr24</span> <span class="op">&lt;-</span> <span class="fu">prescout</span><span class="op">(</span><span class="st">"2024paca"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No encoding supplied: defaulting to UTF-8.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in unnest_wider(., matches):</span> <span style="color: #00BBBB;">ℹ</span> In column: `matches`.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In row: 1.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error:</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Can't unnest elements with missing names.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Supply `names_sep` to generate automatic names.</span>
 <span class="r-in"><span><span class="va">newton25</span> <span class="op">&lt;-</span> <span class="fu">prescout</span><span class="op">(</span><span class="st">"2025newton"</span>, manual_teams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1712</span>, <span class="fl">6672</span>, <span class="fl">3504</span><span class="op">)</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
