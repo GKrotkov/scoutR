@@ -40,7 +40,8 @@ get_priors <- function(epa_progression, team_list) {
 # using a relatively short grid for computational considerations
 # default to n_cores = 1 to avoid nested parallelization
 get_pridge_coefs <- function(design, response, priors, n_cores = 1){
-    grid <- seq(0, 20, length.out = 100)
+    # avoid having exactly 0 to reduce matrix singularity
+    grid <- exp(seq(log(0.01), log(20), length.out = 100))
 
     mses <- pridge_lambda_cv(
         design, response, priors, grid, plot_mses = FALSE, n_cores = n_cores
@@ -81,7 +82,7 @@ pridge_epa_pct_imp <- function(event_key){
     # OPR is first calculable once we have one row per col (team)
     lo <- floor(length(team_list) / 2) + 1
     # start two matches later so we have enough data to fit pridge and predict
-    lo <- lo + 2
+    lo <- lo + 1
     hi <- nrow(matches)
 
     result <- matrix(NA, nrow = length(lo:hi), ncol = 3)
