@@ -73,8 +73,10 @@ pridge_lambda_cv <- function(
     if (is.null(n_cores)) n_cores <- max(1, parallel::detectCores() - 1)
 
     if (n_cores == 1) { # if n_cores is 1, nonparallel execution avoids overhead
-        mses <- sapply(grid, pridge_loocv, X = design, y = response,
-                       beta_0 = priors)
+        mses <- sapply(grid, function(lambda){
+            pridge_loocv(X = design, y = response,
+                         lambda = lambda, beta_0 = priors)
+        })
     }
     else { # parallelized path
         cl <- parallel::makeCluster(n_cores)
@@ -105,7 +107,6 @@ pridge_lambda_cv <- function(
 
     return(mses)
 }
-
 
 #' Fit Event Prior Ridge
 #'
