@@ -137,6 +137,9 @@ fit_event_pridge <- function(
     epas <- sapply(sb_data, function(te){te$epa$stats$start})
     names(epas) <- sapply(sb_data, function(te){te$team})
 
+    # trim EPAs that don't appear in design to mitigate mismatches
+    epas <- epas[as.character(scoutR:::id2int(colnames(design)))]
+
     mses <- pridge_lambda_cv(design, response, epas, grid, n_cores = n_cores)
     lambda_opt <- grid[which.min(mses)]
 
