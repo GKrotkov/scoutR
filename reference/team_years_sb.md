@@ -24582,89 +24582,89 @@ team_years_sb(team = 449)
 #> [[23]]$epa
 #> [[23]]$epa$total_points
 #> [[23]]$epa$total_points$mean
-#> [1] 85.68
+#> [1] 120.83
 #> 
 #> [[23]]$epa$total_points$sd
-#> [1] 19.29
+#> [1] 29.68
 #> 
 #> 
 #> [[23]]$epa$unitless
-#> [1] 1611
+#> [1] 1705
 #> 
 #> [[23]]$epa$norm
-#> [1] 1657
+#> [1] 1700
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
-#> [1] -0.78
+#> [1] -0.61
 #> 
 #> [[23]]$epa$conf[[2]]
-#> [1] 1.14
+#> [1] 1.08
 #> 
 #> 
 #> [[23]]$epa$breakdown
 #> [[23]]$epa$breakdown$total_points
-#> [1] 85.68
+#> [1] 120.83
 #> 
 #> [[23]]$epa$breakdown$auto_points
-#> [1] 11.09
+#> [1] 22.12
 #> 
 #> [[23]]$epa$breakdown$teleop_points
-#> [1] 54.26
+#> [1] 72.39
 #> 
 #> [[23]]$epa$breakdown$endgame_points
-#> [1] 20.32
+#> [1] 26.32
 #> 
 #> [[23]]$epa$breakdown$energized_rp
-#> [1] 0.4229
+#> [1] 0.5391
 #> 
 #> [[23]]$epa$breakdown$supercharged_rp
-#> [1] -0.2243
+#> [1] -0.1628
 #> 
 #> [[23]]$epa$breakdown$traversal_rp
-#> [1] -0.33631
+#> [1] -0.33773
 #> 
 #> [[23]]$epa$breakdown$tiebreaker_points
-#> [1] 85.68
+#> [1] 120.83
 #> 
 #> [[23]]$epa$breakdown$auto_fuel
-#> [1] 10.38
+#> [1] 21.99
 #> 
 #> [[23]]$epa$breakdown$auto_tower
-#> [1] 0.72
+#> [1] 0.13
 #> 
 #> [[23]]$epa$breakdown$transition_fuel
-#> [1] 2.34
+#> [1] 8.63
 #> 
 #> [[23]]$epa$breakdown$first_shift_fuel
-#> [1] 30.01
+#> [1] 35.63
 #> 
 #> [[23]]$epa$breakdown$second_shift_fuel
-#> [1] 21.92
+#> [1] 28.13
 #> 
 #> [[23]]$epa$breakdown$teleop_fuel
-#> [1] 54.26
+#> [1] 72.39
 #> 
 #> [[23]]$epa$breakdown$endgame_fuel
-#> [1] 18.85
+#> [1] 25.18
 #> 
 #> [[23]]$epa$breakdown$endgame_tower
-#> [1] 1.47
+#> [1] 1.14
 #> 
 #> [[23]]$epa$breakdown$total_fuel
-#> [1] 83.49
+#> [1] 119.56
 #> 
 #> [[23]]$epa$breakdown$total_tower
-#> [1] 2.19
+#> [1] 1.27
 #> 
 #> [[23]]$epa$breakdown$rp_1
-#> [1] 0.4229
+#> [1] 0.5391
 #> 
 #> [[23]]$epa$breakdown$rp_2
-#> [1] -0.2243
+#> [1] -0.1628
 #> 
 #> [[23]]$epa$breakdown$rp_3
-#> [1] -0.33631
+#> [1] -0.33773
 #> 
 #> 
 #> [[23]]$epa$stats
@@ -24672,33 +24672,33 @@ team_years_sb(team = 449)
 #> [1] 88.07
 #> 
 #> [[23]]$epa$stats$pre_champs
-#> [1] 85.68
+#> [1] 120.83
 #> 
 #> [[23]]$epa$stats$max
-#> [1] 85.68
+#> [1] 120.83
 #> 
 #> 
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 265
+#> [1] 150
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9296
+#> [1] 0.96
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3762
+#> [1] 3753
 #> 
 #> 
 #> [[23]]$epa$ranks$country
 #> [[23]]$epa$ranks$country$rank
-#> [1] 203
+#> [1] 115
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.9318
+#> [1] 0.9612
 #> 
 #> [[23]]$epa$ranks$country$team_count
-#> [1] 2975
+#> [1] 2967
 #> 
 #> 
 #> [[23]]$epa$ranks$state
@@ -24714,43 +24714,43 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$epa$ranks$district
 #> [[23]]$epa$ranks$district$rank
-#> [1] 7
+#> [1] 2
 #> 
 #> [[23]]$epa$ranks$district$percentile
-#> [1] 0.9407
+#> [1] 0.9829
 #> 
 #> [[23]]$epa$ranks$district$team_count
-#> [1] 118
+#> [1] 117
 #> 
 #> 
 #> 
 #> 
 #> [[23]]$record
 #> [[23]]$record$wins
-#> [1] 11
+#> [1] 16
 #> 
 #> [[23]]$record$losses
-#> [1] 5
+#> [1] 9
 #> 
 #> [[23]]$record$ties
 #> [1] 0
 #> 
 #> [[23]]$record$count
-#> [1] 16
+#> [1] 25
 #> 
 #> [[23]]$record$winrate
-#> [1] 0.6875
+#> [1] 0.64
 #> 
 #> 
 #> [[23]]$district_points
-#> [1] 38
+#> [1] 54
 #> 
 #> [[23]]$district_rank
-#> [1] 26
+#> [1] 19
 #> 
 #> [[23]]$competing
 #> [[23]]$competing$this_week
-#> [1] FALSE
+#> [1] TRUE
 #> 
 #> [[23]]$competing$next_event_key
 #> [1] "2026mdbet"
