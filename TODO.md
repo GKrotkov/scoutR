@@ -40,9 +40,6 @@ additions to scoutR scoped, modular, and testable.
 
 # Prior Ridge
 
-- Bug: `fit_event_pridge` with “2026casnv”
-  - 2 teams are reported as being at the event that don’t play a match
-  - Causes column mismatch
 - pRidge using different response values
 - EPA CV procedure debugging
 - Write up whitepaper
