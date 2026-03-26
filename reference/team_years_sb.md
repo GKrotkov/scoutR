@@ -24582,89 +24582,89 @@ team_years_sb(team = 449)
 #> [[23]]$epa
 #> [[23]]$epa$total_points
 #> [[23]]$epa$total_points$mean
-#> [1] 120.83
+#> [1] 128.93
 #> 
 #> [[23]]$epa$total_points$sd
-#> [1] 29.68
+#> [1] 28.54
 #> 
 #> 
 #> [[23]]$epa$unitless
-#> [1] 1705
+#> [1] 1726
 #> 
 #> [[23]]$epa$norm
-#> [1] 1700
+#> [1] 1711
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
-#> [1] -0.61
+#> [1] -0.83
 #> 
 #> [[23]]$epa$conf[[2]]
-#> [1] 1.08
+#> [1] 0.93
 #> 
 #> 
 #> [[23]]$epa$breakdown
 #> [[23]]$epa$breakdown$total_points
-#> [1] 120.83
+#> [1] 128.93
 #> 
 #> [[23]]$epa$breakdown$auto_points
-#> [1] 22.12
+#> [1] 23.6
 #> 
 #> [[23]]$epa$breakdown$teleop_points
-#> [1] 72.39
+#> [1] 75.16
 #> 
 #> [[23]]$epa$breakdown$endgame_points
-#> [1] 26.32
+#> [1] 30.16
 #> 
 #> [[23]]$epa$breakdown$energized_rp
-#> [1] 0.5391
+#> [1] 0.5864
 #> 
 #> [[23]]$epa$breakdown$supercharged_rp
-#> [1] -0.1628
+#> [1] -0.0997
 #> 
 #> [[23]]$epa$breakdown$traversal_rp
-#> [1] -0.33773
+#> [1] -0.3382
 #> 
 #> [[23]]$epa$breakdown$tiebreaker_points
-#> [1] 120.83
+#> [1] 128.93
 #> 
 #> [[23]]$epa$breakdown$auto_fuel
-#> [1] 21.99
+#> [1] 23.59
 #> 
 #> [[23]]$epa$breakdown$auto_tower
-#> [1] 0.13
+#> [1] 0.01
 #> 
 #> [[23]]$epa$breakdown$transition_fuel
-#> [1] 8.63
+#> [1] 7.23
 #> 
 #> [[23]]$epa$breakdown$first_shift_fuel
-#> [1] 35.63
+#> [1] 38.14
 #> 
 #> [[23]]$epa$breakdown$second_shift_fuel
-#> [1] 28.13
+#> [1] 29.79
 #> 
 #> [[23]]$epa$breakdown$teleop_fuel
-#> [1] 72.39
+#> [1] 75.16
 #> 
 #> [[23]]$epa$breakdown$endgame_fuel
-#> [1] 25.18
+#> [1] 29.36
 #> 
 #> [[23]]$epa$breakdown$endgame_tower
-#> [1] 1.14
+#> [1] 0.8
 #> 
 #> [[23]]$epa$breakdown$total_fuel
-#> [1] 119.56
+#> [1] 128.12
 #> 
 #> [[23]]$epa$breakdown$total_tower
-#> [1] 1.27
+#> [1] 0.81
 #> 
 #> [[23]]$epa$breakdown$rp_1
-#> [1] 0.5391
+#> [1] 0.5864
 #> 
 #> [[23]]$epa$breakdown$rp_2
-#> [1] -0.1628
+#> [1] -0.0997
 #> 
 #> [[23]]$epa$breakdown$rp_3
-#> [1] -0.33773
+#> [1] -0.3382
 #> 
 #> 
 #> [[23]]$epa$stats
@@ -24672,33 +24672,33 @@ team_years_sb(team = 449)
 #> [1] 88.07
 #> 
 #> [[23]]$epa$stats$pre_champs
-#> [1] 120.83
+#> [1] 128.93
 #> 
 #> [[23]]$epa$stats$max
-#> [1] 120.83
+#> [1] 134.37
 #> 
 #> 
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 150
+#> [1] 127
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.96
+#> [1] 0.9662
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3753
+#> [1] 3752
 #> 
 #> 
 #> [[23]]$epa$ranks$country
 #> [[23]]$epa$ranks$country$rank
-#> [1] 115
+#> [1] 96
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.9612
+#> [1] 0.9676
 #> 
 #> [[23]]$epa$ranks$country$team_count
-#> [1] 2967
+#> [1] 2966
 #> 
 #> 
 #> [[23]]$epa$ranks$state
@@ -24714,10 +24714,10 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$epa$ranks$district
 #> [[23]]$epa$ranks$district$rank
-#> [1] 2
+#> [1] 3
 #> 
 #> [[23]]$epa$ranks$district$percentile
-#> [1] 0.9829
+#> [1] 0.9744
 #> 
 #> [[23]]$epa$ranks$district$team_count
 #> [1] 117
@@ -24727,39 +24727,39 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$record
 #> [[23]]$record$wins
-#> [1] 16
+#> [1] 21
 #> 
 #> [[23]]$record$losses
-#> [1] 9
+#> [1] 11
 #> 
 #> [[23]]$record$ties
 #> [1] 0
 #> 
 #> [[23]]$record$count
-#> [1] 25
+#> [1] 32
 #> 
 #> [[23]]$record$winrate
-#> [1] 0.64
+#> [1] 0.6563
 #> 
 #> 
 #> [[23]]$district_points
-#> [1] 54
+#> [1] 92
 #> 
 #> [[23]]$district_rank
-#> [1] 19
+#> [1] 8
 #> 
 #> [[23]]$competing
 #> [[23]]$competing$this_week
 #> [1] TRUE
 #> 
 #> [[23]]$competing$next_event_key
-#> [1] "2026mdbet"
+#> NULL
 #> 
 #> [[23]]$competing$next_event_name
-#> [1] "FCH District Bethesda MD Event presented by Bechtel"
+#> NULL
 #> 
 #> [[23]]$competing$next_event_week
-#> [1] 3
+#> NULL
 #> 
 #> 
 #> 

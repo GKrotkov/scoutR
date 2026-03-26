@@ -41,7 +41,6 @@ additions to scoutR scoped, modular, and testable.
 # Prior Ridge
 
 - pRidge using different response values
-- EPA CV procedure debugging
 - Write up whitepaper
 
 # Data Science Projects
