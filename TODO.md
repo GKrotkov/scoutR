@@ -28,7 +28,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 # Prior Ridge
 - pRidge using different response values
-- EPA CV procedure debugging
 - Write up whitepaper
 
 # Data Science Projects
