@@ -14,6 +14,8 @@ test_that("Testing tf()", {
     expect_equal(tf(1712), "frc1712")
     expect_equal(tf(708), "frc708")
     expect_equal(tf("frc1712"), "frc1712")
+    expect_equal(tf(c(449, 614, "1712", "frc4821")),
+                 c("frc449", "frc614", "frc1712", "frc4821"))
 })
 
 test_that("Testing simkeys()", {

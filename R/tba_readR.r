@@ -78,15 +78,16 @@ auth <- function(req){
 #' tf(1712)
 #' tf("frc1712")
 #' tf("1712")
-tf <- function(n){
-    if(is.na(n)){
-        warning("NA input as a team id")
-        return(NA)
-    }
-    if(is.numeric(n) | numbers_only(n)){
-        return(paste("frc", n, sep = ""))
-    }
-    return(n)
+#' tf(c(614, "frc449", "1712"))
+tf <- function(n) {
+    na_mask <- is.na(n)
+    if (any(na_mask)) warning("NA input as a team id")
+
+    numeric_mask <- !na_mask & (is.numeric(n) | numbers_only(n))
+
+    result <- ifelse(numeric_mask, paste0("frc", n), as.character(n))
+    result[na_mask] <- NA
+    return(result)
 }
 
 #' Attach Optional Parameters
