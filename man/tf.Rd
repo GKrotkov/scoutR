@@ -19,6 +19,7 @@ Coerces team identifiers into TBA-legal format
 tf(1712)
 tf("frc1712")
 tf("1712")
+tf(c(614, "frc449", "1712"))
 }
 \author{
 Gabriel Krotkov

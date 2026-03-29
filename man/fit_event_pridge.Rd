@@ -6,12 +6,15 @@
 \usage{
 fit_event_pridge(
   event_key,
+  response_name = "score",
   grid = exp(seq(log(0.01), log(20), length.out = 100)),
   n_cores = NULL
 )
 }
 \arguments{
 \item{event_key}{(char) TBA-legal event key (ex. "2025mdsev")}
+
+\item{response_name}{name of the desired response vector (typically "score")}
 
 \item{grid}{(vector) all possible lambda values to consider. Defaults to
 starting at just above zero to reduce matrix singularity in fits (guarantees
@@ -29,4 +32,5 @@ Relies on statbotics API to establish priors
 \examples{
 fit_event_pridge("2025mdsev")
 fit_event_pridge("2023new", n_cores = 3)
+fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
 }
