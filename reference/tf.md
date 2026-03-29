@@ -31,4 +31,6 @@ tf("frc1712")
 #> Error in tf("frc1712"): could not find function "tf"
 tf("1712")
 #> Error in tf("1712"): could not find function "tf"
+tf(c(614, "frc449", "1712"))
+#> Error in tf(c(614, "frc449", "1712")): could not find function "tf"
 ```

@@ -59,5 +59,4 @@ sb_data <- team_events_sb(event = event_key)
 epas <- sapply(sb_data, function(te){te$epa$stats$start})
 names(epas) <- sapply(sb_data, function(te){te$team})
 mdsev_pridge <- fit_pridge(matches, epas)
-#> Error in prior_ridge(design, response, lambda_opt, priors): lambda must be a single value
 ```

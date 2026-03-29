@@ -47,6 +47,7 @@ ridge model using pre-event EPA from statbotics as the prior.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_event_pridge</span><span class="op">(</span></span>
 <span>  <span class="va">event_key</span>,</span>
+<span>  response_name <span class="op">=</span> <span class="st">"score"</span>,</span>
 <span>  grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.01</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -58,6 +59,10 @@ ridge model using pre-event EPA from statbotics as the prior.</p>
 
 <dl><dt id="arg-event-key">event_key<a class="anchor" aria-label="anchor" href="#arg-event-key"></a></dt>
 <dd><p>(char) TBA-legal event key (ex. "2025mdsev")</p></dd>
+
+
+<dt id="arg-response-name">response_name<a class="anchor" aria-label="anchor" href="#arg-response-name"></a></dt>
+<dd><p>name of the desired response vector (typically "score")</p></dd>
 
 
 <dt id="arg-grid">grid<a class="anchor" aria-label="anchor" href="#arg-grid"></a></dt>
@@ -78,37 +83,42 @@ that X^tX + (lambda)I is positive definite.)</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">fit_event_pridge</span><span class="op">(</span><span class="st">"2025mdsev"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fit_event_pridge-1.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    frc339    frc404    frc449    frc623    frc888   frc1111   frc1727   frc1811 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19.284633 39.697320 60.885375 20.886995 44.638382 21.701895 45.046136 25.427273 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   frc1885   frc2106   frc2199   frc2377   frc2421   frc2537   frc3714   frc3748 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28.719661 54.237746 39.446432 12.071666 22.142069 19.099738 12.307539 35.900374 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   frc3793   frc4464   frc4541   frc5587   frc7770   frc7886   frc8622   frc9403 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20.325909  7.232768 25.341529 14.657265 24.846769 18.131645 13.798259 21.007689 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   frc9709  frc10224  frc10449  frc10679 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14.699695 34.010732 10.868855 21.933725 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   frc339   frc404   frc449   frc623   frc888  frc1111  frc1727  frc1811 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    19.28    39.70    60.89    20.89    44.64    21.70    45.05    25.43 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  frc1885  frc2106  frc2199  frc2377  frc2421  frc2537  frc3714  frc3748 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    28.72    54.24    39.45    12.07    22.14    19.10    12.31    35.90 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  frc3793  frc4464  frc4541  frc5587  frc7770  frc7886  frc8622  frc9403 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    20.33     7.23    25.34    14.66    24.85    18.13    13.80    21.01 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  frc9709 frc10224 frc10449 frc10679 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    14.70    34.01    10.87    21.93 </span>
 <span class="r-in"><span><span class="fu">fit_event_pridge</span><span class="op">(</span><span class="st">"2023new"</span>, n_cores <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="fit_event_pridge-2.png" alt="" width="700" height="433"></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    frc11   frc177   frc179   frc195   frc494   frc503   frc857   frc900 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52.51733 58.77274 56.75854 64.22211 59.66157 50.09296 53.16461 53.18525 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   frc955  frc1023  frc1123  frc1156  frc1466  frc1468  frc1501  frc1538 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52.39197 53.11818 51.92172 45.25586 47.95408 51.50870 53.89976 63.62444 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc1629  frc1746  frc1757  frc1816  frc1836  frc2642  frc2960  frc2992 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50.18540 57.02610 56.70148 43.76706 36.06409 52.72162 41.75229 55.51185 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc3003  frc3039  frc3161  frc3184  frc3218  frc3478  frc3538  frc3572 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41.37594 64.04123 45.78516 60.83962 60.15310 53.32546 72.73174 45.55801 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc3767  frc3932  frc3940  frc4069  frc4099  frc4112  frc4143  frc4145 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50.02785 44.00915 52.26938 49.71518 48.80114 30.59901 63.48189 49.94778 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc4329  frc4419  frc4522  frc4663  frc4905  frc4909  frc4944  frc5006 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51.51096 47.01420 68.31612 42.72954 39.73214 57.44389 45.78880 48.55417 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc5135  frc5172  frc5274  frc5338  frc5553  frc5665  frc5804  frc5990 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51.11450 35.33598 38.26436 40.44377 28.46841 39.79237 57.24455 53.94311 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc6431  frc6606  frc6657  frc6817  frc6909  frc7072  frc7285  frc7428 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  7.46206 19.86502 30.18666 18.81021 17.64623 37.33767 52.35304 27.86302 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc7617  frc8015  frc8016  frc8592  frc8717  frc8808  frc8847  frc9023 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52.80705 16.68925 29.91858 54.75940 26.42986 35.67426 38.92222 27.09047 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  frc9030  frc9062  frc9084  frc9126  frc9140 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23.29481 20.09700 50.86701 23.82482 46.36391 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   frc11  frc177  frc179  frc195  frc494  frc503  frc857  frc900  frc955 frc1023 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   52.52   58.77   56.76   64.22   59.66   50.09   53.16   53.19   52.39   53.12 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc1123 frc1156 frc1466 frc1468 frc1501 frc1538 frc1629 frc1746 frc1757 frc1816 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   51.92   45.26   47.95   51.51   53.90   63.62   50.19   57.03   56.70   43.77 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc1836 frc2642 frc2960 frc2992 frc3003 frc3039 frc3161 frc3184 frc3218 frc3478 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   36.06   52.72   41.75   55.51   41.38   64.04   45.79   60.84   60.15   53.33 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc3538 frc3572 frc3767 frc3932 frc3940 frc4069 frc4099 frc4112 frc4143 frc4145 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   72.73   45.56   50.03   44.01   52.27   49.72   48.80   30.60   63.48   49.95 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc4329 frc4419 frc4522 frc4663 frc4905 frc4909 frc4944 frc5006 frc5135 frc5172 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   51.51   47.01   68.32   42.73   39.73   57.44   45.79   48.55   51.11   35.34 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc5274 frc5338 frc5553 frc5665 frc5804 frc5990 frc6431 frc6606 frc6657 frc6817 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   38.26   40.44   28.47   39.79   57.24   53.94    7.46   19.87   30.19   18.81 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc6909 frc7072 frc7285 frc7428 frc7617 frc8015 frc8016 frc8592 frc8717 frc8808 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   17.65   37.34   52.35   27.86   52.81   16.69   29.92   54.76   26.43   35.67 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc8847 frc9023 frc9030 frc9062 frc9084 frc9126 frc9140 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   38.92   27.09   23.29   20.10   50.87   23.82   46.36 </span>
+<span class="r-in"><span><span class="fu">fit_event_pridge</span><span class="op">(</span><span class="st">"2026mdsev"</span>, response_name <span class="op">=</span> <span class="st">"totalAutoPoints"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   frc339   frc614   frc623   frc686   frc836  frc1111  frc1389  frc1418 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5.16    23.14    10.66    25.67    24.63     6.82     9.23     2.97 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  frc1446  frc1629  frc1719  frc1727  frc1915  frc2199  frc2377  frc2534 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4.66    28.23     5.95    15.02     3.36    33.34     8.37     3.30 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  frc2849  frc2912  frc2914  frc2963  frc3714  frc3748  frc4505  frc4541 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    -1.53     4.67     5.08     3.82     6.15    21.79     0.35    13.69 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  frc6863  frc7770  frc8592  frc8622  frc8726  frc9033 frc10449 frc10679 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     7.56     6.60    28.22    -0.16    10.49    14.21     3.07     1.82 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> frc11211 frc11318 frc11350 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4.12    12.56     3.67 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
