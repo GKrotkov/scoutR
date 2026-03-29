@@ -8,7 +8,7 @@ prior ridge model using pre-event EPA from statbotics as the prior.
 ``` r
 fit_event_pridge(
   event_key,
-  grid = seq(0, 20, length.out = 1000),
+  grid = exp(seq(log(0.01), log(20), length.out = 100)),
   n_cores = NULL
 )
 ```
@@ -21,7 +21,9 @@ fit_event_pridge(
 
 - grid:
 
-  (vector) all possible lambda values to consider
+  (vector) all possible lambda values to consider. Defaults to starting
+  at just above zero to reduce matrix singularity in fits (guarantees
+  that X^tX + (lambda)I is positive definite.)
 
 - n_cores:
 

@@ -1,8 +1,8 @@
-# Prior Ridge Lambda Cross Validation (foreach version)
+# Prior Ridge Lambda Cross Validation
 
 Runs leave-one-out cross validation across a grid of lambda and returns
-the MSEs across the whole grid. This version uses the 'foreach' package
-for cleaner parallel execution.
+the MSEs across the whole grid. This uses the 'foreach' package for
+parallel execution.
 
 ## Usage
 

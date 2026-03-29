@@ -123,7 +123,7 @@
 - [`prescout()`](https://gkrotkov.github.io/scoutR/reference/prescout.md)
   : Prescout
 - [`pridge_lambda_cv()`](https://gkrotkov.github.io/scoutR/reference/pridge_lambda_cv.md)
-  : Prior Ridge Lambda Cross Validation (foreach version)
+  : Prior Ridge Lambda Cross Validation
 - [`pridge_loocv()`](https://gkrotkov.github.io/scoutR/reference/pridge_loocv.md)
   : Prior Ridge leave-one-out cross validation
 - [`prior_ridge()`](https://gkrotkov.github.io/scoutR/reference/prior_ridge.md)

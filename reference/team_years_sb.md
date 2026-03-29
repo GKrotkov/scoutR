@@ -24592,7 +24592,7 @@ team_years_sb(team = 449)
 #> [1] 1726
 #> 
 #> [[23]]$epa$norm
-#> [1] 1711
+#> [1] 1702
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
@@ -24681,24 +24681,24 @@ team_years_sb(team = 449)
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 127
+#> [1] 142
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9662
+#> [1] 0.9621
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3752
+#> [1] 3748
 #> 
 #> 
 #> [[23]]$epa$ranks$country
 #> [[23]]$epa$ranks$country$rank
-#> [1] 96
+#> [1] 109
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.9676
+#> [1] 0.9632
 #> 
 #> [[23]]$epa$ranks$country$team_count
-#> [1] 2966
+#> [1] 2962
 #> 
 #> 
 #> [[23]]$epa$ranks$state
@@ -24750,7 +24750,7 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$competing
 #> [[23]]$competing$this_week
-#> [1] TRUE
+#> [1] FALSE
 #> 
 #> [[23]]$competing$next_event_key
 #> NULL
