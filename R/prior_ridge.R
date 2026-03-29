@@ -11,6 +11,7 @@
 #' @param beta_0 vector of priors to regularize towards
 #' @export
 prior_ridge <- function(X, y, lambda, beta_0) {
+    stopifnot("prior_ridge design matrix must be a matrix" = {is.matrix(X)})
     stopifnot("lambda must be a single value" = {length(lambda) == 1})
     stopifnot("coefficients in beta_0 must match ncol(X)" =
                   {length(beta_0) == ncol(X)})
