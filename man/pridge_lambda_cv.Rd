@@ -2,7 +2,7 @@
 % Please edit documentation in R/prior_ridge.R
 \name{pridge_lambda_cv}
 \alias{pridge_lambda_cv}
-\title{Prior Ridge Lambda Cross Validation (foreach version)}
+\title{Prior Ridge Lambda Cross Validation}
 \usage{
 pridge_lambda_cv(
   design,
@@ -32,6 +32,6 @@ the max minus 1.}
 }
 \description{
 Runs leave-one-out cross validation across a grid of lambda and returns the
-MSEs across the whole grid. This version uses the 'foreach' package for
-cleaner parallel execution.
+MSEs across the whole grid. This uses the 'foreach' package for parallel
+execution.
 }

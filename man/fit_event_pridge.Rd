@@ -6,14 +6,16 @@
 \usage{
 fit_event_pridge(
   event_key,
-  grid = seq(0, 20, length.out = 1000),
+  grid = exp(seq(log(0.01), log(20), length.out = 100)),
   n_cores = NULL
 )
 }
 \arguments{
 \item{event_key}{(char) TBA-legal event key (ex. "2025mdsev")}
 
-\item{grid}{(vector) all possible lambda values to consider}
+\item{grid}{(vector) all possible lambda values to consider. Defaults to
+starting at just above zero to reduce matrix singularity in fits (guarantees
+that X^tX + (lambda)I is positive definite.)}
 
 \item{n_cores}{(int) number of cores to parallelize over. If NULL, will select (max - 1) cores}
 }
