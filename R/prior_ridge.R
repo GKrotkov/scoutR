@@ -110,6 +110,54 @@ pridge_lambda_cv <- function(
     return(mses)
 }
 
+#' Fit Prior Ridge
+#'
+#' Given a data.frame of matches, fit the pRidge model
+#' @param matches (data.frame) dataframe of matches; assumed to have `red1`,
+#' `red2`, `red3`, `blue1`, etc. as team entries, and 2 columns representing
+#' the response named "(red/blue)_(responseName)"
+#' @param priors (numeric) vector of priors to regularize towards, named with
+#' tba-legal team identifiers (i.e. "frc449")
+#' @param response_name (character) name of the response vectors as they appear
+#' in `matches`
+#' @param grid (numeric) Grid of lambda values to consider for regularization
+#' @param n_cores the number of cores on your machine to reserve for
+#' calculation. If NULL, will default to the max - 1.
+#' @param digits (integer) number of digits to round the result to
+#' @details
+#' Selects lambda via LOOCV. Trims the priors to discard teams that don't
+#' appear in `matches`.
+#' @export
+#' @examples
+#' event_key <- "2026mdsev"
+#' matches <- event_matches(event_key, match_type = "qual")
+#' sb_data <- team_events_sb(event = event_key)
+#' epas <- sapply(sb_data, function(te){te$epa$stats$start})
+#' names(epas) <- sapply(sb_data, function(te){te$team})
+#' mdsev_pridge <- fit_pridge(matches, epas)
+#'
+fit_pridge <- function(
+        matches, priors, response_name = "score",
+        grid = exp(seq(log(0.01), log(20), length.out = 100)),
+        n_cores = NULL, digits = 2
+){
+    design <- as.matrix(lineup_design_matrix(matches))
+
+    # extract the response vector from matches
+    response <- c(unlist(matches[, paste0("blue_", response_name)]),
+                  unlist(matches[, paste0("red_", response_name)]))
+
+    # match priors order to the design matrix; also implicitly discards
+    # teams in `priors` that are not in `design`
+    priors <- priors[match(colnames(design), names(priors))]
+
+    mses <- pridge_lambda_cv(design, response, priors, grid,
+                             plot_mses = FALSE, n_cores = n_cores)
+    lambda_opt <- grid[which.min(mses)]
+    result <- prior_ridge(design, response, lambda_opt, priors)
+    return(round(result, digits = digits))
+}
+
 #' Fit Event Prior Ridge
 #'
 #' Given an event key, selects an optimal lambda using LOOCV and fits the prior
