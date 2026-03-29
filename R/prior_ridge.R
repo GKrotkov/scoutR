@@ -149,6 +149,7 @@ fit_pridge <- function(
 
     # match priors order to the design matrix; also implicitly discards
     # teams in `priors` that are not in `design`
+    names(priors) <- tf(names(priors))
     priors <- priors[match(colnames(design), names(priors))]
 
     mses <- pridge_lambda_cv(design, response, priors, grid,
@@ -163,6 +164,7 @@ fit_pridge <- function(
 #' Given an event key, selects an optimal lambda using LOOCV and fits the prior
 #' ridge model using pre-event EPA from statbotics as the prior.
 #' @param event_key (char) TBA-legal event key (ex. "2025mdsev")
+#' @param response_name name of the desired response vector (typically "score")
 #' @param grid (vector) all possible lambda values to consider. Defaults to
 #' starting at just above zero to reduce matrix singularity in fits (guarantees
 #' that X^tX + (lambda)I is positive definite.)
@@ -174,24 +176,16 @@ fit_pridge <- function(
 #' @examples
 #' fit_event_pridge("2025mdsev")
 #' fit_event_pridge("2023new", n_cores = 3)
+#' fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
 fit_event_pridge <- function(
-        event_key, grid = exp(seq(log(0.01), log(20), length.out = 100)),
-        n_cores = NULL
+        event_key, response_name = "score",
+        grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL
 ){
     matches <- event_matches(event_key, match_type = "qual")
-
-    design <- as.matrix(lineup_design_matrix(matches))
-    response <- c(matches$blue_score, matches$red_score)
 
     sb_data <- team_events_sb(event = event_key)
     epas <- sapply(sb_data, function(te){te$epa$stats$start})
     names(epas) <- sapply(sb_data, function(te){te$team})
 
-    # trim EPAs that don't appear in design to mitigate mismatches
-    epas <- epas[as.character(scoutR:::id2int(colnames(design)))]
-
-    mses <- pridge_lambda_cv(design, response, epas, grid, n_cores = n_cores)
-    lambda_opt <- grid[which.min(mses)]
-
-    return(prior_ridge(design, response, lambda_opt, epas))
+    return(fit_pridge(matches, epas, response_name = response_name))
 }
