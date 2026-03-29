@@ -24592,7 +24592,7 @@ team_years_sb(team = 449)
 #> [1] 1726
 #> 
 #> [[23]]$epa$norm
-#> [1] 1702
+#> [1] 1688
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
@@ -24681,21 +24681,21 @@ team_years_sb(team = 449)
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 142
+#> [1] 176
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9621
+#> [1] 0.953
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3748
+#> [1] 3746
 #> 
 #> 
 #> [[23]]$epa$ranks$country
 #> [[23]]$epa$ranks$country$rank
-#> [1] 109
+#> [1] 140
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.9632
+#> [1] 0.9527
 #> 
 #> [[23]]$epa$ranks$country$team_count
 #> [1] 2962
@@ -24714,10 +24714,10 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$epa$ranks$district
 #> [[23]]$epa$ranks$district$rank
-#> [1] 3
+#> [1] 4
 #> 
 #> [[23]]$epa$ranks$district$percentile
-#> [1] 0.9744
+#> [1] 0.9658
 #> 
 #> [[23]]$epa$ranks$district$team_count
 #> [1] 117
@@ -24746,7 +24746,7 @@ team_years_sb(team = 449)
 #> [1] 92
 #> 
 #> [[23]]$district_rank
-#> [1] 8
+#> [1] 10
 #> 
 #> [[23]]$competing
 #> [[23]]$competing$this_week

@@ -138,6 +138,8 @@ resolve package issues by references the renv lockfile.
   : Fit Event Prior Ridge
 - [`fit_lineup_lm()`](https://gkrotkov.github.io/scoutR/reference/fit_lineup_lm.md)
   : Fit Lineup Linear Model
+- [`fit_pridge()`](https://gkrotkov.github.io/scoutR/reference/fit_pridge.md)
+  : Fit Prior Ridge
 - [`get_content()`](https://gkrotkov.github.io/scoutR/reference/get_content.md)
   : Get Content
 - [`get_multifield_df()`](https://gkrotkov.github.io/scoutR/reference/get_multifield_df.md)
