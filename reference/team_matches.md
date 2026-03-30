@@ -316,6 +316,7 @@ team_matches(1712, keys = TRUE)
 #> [733] "2026paben_qm3"    "2026paben_qm30"   "2026paben_qm36"  
 #> [736] "2026paben_qm42"   "2026paben_qm47"   "2026paben_qm56"  
 #> [739] "2026paben_qm59"   "2026paben_qm63"   "2026paben_qm7"   
+#> [742] "2026paben_sf10m1" "2026paben_sf2m1"  "2026paben_sf5m1" 
 team_matches(1712, year = 2016)
 #> # A tibble: 60 × 101
 #>    actual_time blue_dq_team_keys blue_score blue_surrogate_team_keys blue1 blue2
@@ -371,5 +372,5 @@ team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
 #> Warning: Unknown or uninitialised column: `red_score`.
 #> Warning: Unknown or uninitialised column: `blue_score`.
 #> Error in matches[!id_unplayed(matches), ]: Can't subset rows with `!id_unplayed(matches)`.
-#> ✖ Logical subscript `!id_unplayed(matches)` must be size 1 or 655, not 0.
+#> ✖ Logical subscript `!id_unplayed(matches)` must be size 1 or 658, not 0.
 ```
