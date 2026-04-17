@@ -157,6 +157,8 @@ event_finish_seed <- function(key, finish = "Winner", size = NULL){
     if (is.null(alliances) || nrow(alliances) == 0) return(NA)
     if (!is.null(size) && nrow(alliances) != size) return(NA)
     result <- which(alliances$finish == finish)
+    # special case for failed unpacking (ex. 2025ausc)
+    if (length(result) == 0) return(NA)
     return(result)
 }
 
