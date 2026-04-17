@@ -4097,7 +4097,7 @@ team_events_sb(event = "2025mdsev")
 #> [1] 1741910400
 #> 
 #> [[15]]$team_name
-#> [1] "Flowers S.O.A.R."
+#> [1] "CHF S.O.A.R."
 #> 
 #> [[15]]$event_name
 #> [1] "CHS District Severn MD Event presented by Ball Corp"

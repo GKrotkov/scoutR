@@ -307,16 +307,28 @@ team_matches(1712, keys = TRUE)
 #> [706] "2025paben_qm39"   "2025paben_qm45"   "2025paben_qm50"  
 #> [709] "2025paben_qm57"   "2025paben_qm61"   "2025paben_qm7"   
 #> [712] "2025paben_sf11m1" "2025paben_sf13m1" "2025paben_sf3m1" 
-#> [715] "2025paben_sf8m1"  "2026njtab_qm13"   "2026njtab_qm17"  
-#> [718] "2026njtab_qm2"    "2026njtab_qm24"   "2026njtab_qm27"  
-#> [721] "2026njtab_qm36"   "2026njtab_qm39"   "2026njtab_qm44"  
-#> [724] "2026njtab_qm49"   "2026njtab_qm57"   "2026njtab_qm6"   
-#> [727] "2026njtab_qm61"   "2026njtab_sf3m1"  "2026njtab_sf6m1" 
-#> [730] "2026paben_qm13"   "2026paben_qm20"   "2026paben_qm24"  
-#> [733] "2026paben_qm3"    "2026paben_qm30"   "2026paben_qm36"  
-#> [736] "2026paben_qm42"   "2026paben_qm47"   "2026paben_qm56"  
-#> [739] "2026paben_qm59"   "2026paben_qm63"   "2026paben_qm7"   
-#> [742] "2026paben_sf10m1" "2026paben_sf2m1"  "2026paben_sf5m1" 
+#> [715] "2025paben_sf8m1"  "2025pahor_f1m1"   "2025pahor_f1m2"  
+#> [718] "2025pahor_qm10"   "2025pahor_qm13"   "2025pahor_qm17"  
+#> [721] "2025pahor_qm24"   "2025pahor_qm5"    "2025pahor_sf11m1"
+#> [724] "2025pahor_sf4m1"  "2025pahor_sf8m1"  "2025parr_f1m1"   
+#> [727] "2025parr_f1m2"    "2025parr_f1m3"    "2025parr_qm11"   
+#> [730] "2025parr_qm17"    "2025parr_qm23"    "2025parr_qm27"   
+#> [733] "2025parr_qm4"     "2025parr_sf11m1"  "2025parr_sf13m1" 
+#> [736] "2025parr_sf4m1"   "2025parr_sf8m1"   "2026mrcmp_qm1"   
+#> [739] "2026mrcmp_qm100"  "2026mrcmp_qm120"  "2026mrcmp_qm129" 
+#> [742] "2026mrcmp_qm17"   "2026mrcmp_qm25"   "2026mrcmp_qm41"  
+#> [745] "2026mrcmp_qm48"   "2026mrcmp_qm63"   "2026mrcmp_qm71"  
+#> [748] "2026mrcmp_qm80"   "2026mrcmp_qm90"   "2026njtab_qm13"  
+#> [751] "2026njtab_qm17"   "2026njtab_qm2"    "2026njtab_qm24"  
+#> [754] "2026njtab_qm27"   "2026njtab_qm36"   "2026njtab_qm39"  
+#> [757] "2026njtab_qm44"   "2026njtab_qm49"   "2026njtab_qm57"  
+#> [760] "2026njtab_qm6"    "2026njtab_qm61"   "2026njtab_sf3m1" 
+#> [763] "2026njtab_sf6m1"  "2026paben_qm13"   "2026paben_qm20"  
+#> [766] "2026paben_qm24"   "2026paben_qm3"    "2026paben_qm30"  
+#> [769] "2026paben_qm36"   "2026paben_qm42"   "2026paben_qm47"  
+#> [772] "2026paben_qm56"   "2026paben_qm59"   "2026paben_qm63"  
+#> [775] "2026paben_qm7"    "2026paben_sf10m1" "2026paben_sf2m1" 
+#> [778] "2026paben_sf5m1" 
 team_matches(1712, year = 2016)
 #> # A tibble: 60 × 101
 #>    actual_time blue_dq_team_keys blue_score blue_surrogate_team_keys blue1 blue2
@@ -372,5 +384,5 @@ team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
 #> Warning: Unknown or uninitialised column: `red_score`.
 #> Warning: Unknown or uninitialised column: `blue_score`.
 #> Error in matches[!id_unplayed(matches), ]: Can't subset rows with `!id_unplayed(matches)`.
-#> ✖ Logical subscript `!id_unplayed(matches)` must be size 1 or 658, not 0.
+#> ✖ Logical subscript `!id_unplayed(matches)` must be size 1 or 670, not 0.
 ```

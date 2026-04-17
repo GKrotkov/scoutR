@@ -83,6 +83,6 @@ team_events("frc1712", keys = TRUE)
 #> [43] "2019pawch" "2020pahat" "2020paphi" "202121fma" "2021fmaaw" "2021gamas"
 #> [49] "2021gamce" "2021irhal" "2021irhce" "2021parr"  "2022paben" "2022paphi"
 #> [55] "2022parr"  "2023mrcmp" "2023njdd"  "2023njtab" "2023paphi" "2024njtab"
-#> [61] "2024paben" "2025mrcmp" "2025njtab" "2025paben" "2025pahor" "2026njtab"
-#> [67] "2026paben"
+#> [61] "2024paben" "2025mrcmp" "2025njtab" "2025paben" "2025pahor" "2025parr" 
+#> [67] "2026mrcmp" "2026njtab" "2026paben"
 ```
