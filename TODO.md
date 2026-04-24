@@ -38,6 +38,14 @@ additions to scoutR scoped, modular, and testable.
 
 # TODO list
 
+# Short term
+
+- Add pRidge functionality to
+  [`prescout()`](https://gkrotkov.github.io/scoutR/reference/prescout.md);
+  maybe calculating pRidge for lots of subscores would be too much
+  though. Certainly needs caching.
+- Allow `prior_ridge` to accept vector-lambda inputs
+
 # Data Science Projects
 
 - “OPR Dropout”; adjustments to the design matrix based on scouted data
@@ -50,4 +58,3 @@ additions to scoutR scoped, modular, and testable.
 # Long term
 
 - Generic, automated data validation; `validatoR`
-- Local EPA calculation

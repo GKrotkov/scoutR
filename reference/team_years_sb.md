@@ -24379,7 +24379,7 @@ team_years_sb(team = 449)
 #> [1] 1894
 #> 
 #> [[23]]$epa$norm
-#> [1] 1755
+#> [1] 1748
 #> 
 #> [[23]]$epa$conf
 #> [[23]]$epa$conf[[1]]
@@ -24468,10 +24468,10 @@ team_years_sb(team = 449)
 #> [[23]]$epa$ranks
 #> [[23]]$epa$ranks$total
 #> [[23]]$epa$ranks$total$rank
-#> [1] 73
+#> [1] 80
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9804
+#> [1] 0.9785
 #> 
 #> [[23]]$epa$ranks$total$team_count
 #> [1] 3724
@@ -24479,10 +24479,10 @@ team_years_sb(team = 449)
 #> 
 #> [[23]]$epa$ranks$country
 #> [[23]]$epa$ranks$country$rank
-#> [1] 59
+#> [1] 63
 #> 
 #> [[23]]$epa$ranks$country$percentile
-#> [1] 0.98
+#> [1] 0.9786
 #> 
 #> [[23]]$epa$ranks$country$team_count
 #> [1] 2944
@@ -24543,7 +24543,7 @@ team_years_sb(team = 449)
 #> [1] "2026cmptx"
 #> 
 #> [[23]]$competing$next_event_name
-#> [1] "FIRST Championship"
+#> [1] "FIRST Championship - FIRST Robotics Competition"
 #> 
 #> [[23]]$competing$next_event_week
 #> [1] 8
