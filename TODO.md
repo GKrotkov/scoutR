@@ -28,7 +28,6 @@ Reminder: a package should do one thing, and do it well. Strive to keep addition
 
 # Short term
 - Add pRidge functionality to `prescout()`; maybe calculating pRidge for lots of subscores would be too much though. Certainly needs caching.
-- Allow `prior_ridge` to accept vector-lambda inputs
 
 # Data Science Projects
 - "OPR Dropout"; adjustments to the design matrix based on scouted data
