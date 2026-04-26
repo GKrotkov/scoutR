@@ -12,7 +12,8 @@
 #' @export
 prior_ridge <- function(X, y, lambda, beta_0) {
     stopifnot("prior_ridge design matrix must be a matrix" = {is.matrix(X)})
-    stopifnot("lambda must be a single value" = {length(lambda) == 1})
+    stopifnot("lambda must be a single value, or equal to ncol(X)" =
+                  {length(lambda) %in% c(1, ncol(X))})
     stopifnot("coefficients in beta_0 must match ncol(X)" =
                   {length(beta_0) == ncol(X)})
     p <- ncol(X)
