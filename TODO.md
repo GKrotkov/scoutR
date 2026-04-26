@@ -44,7 +44,6 @@ additions to scoutR scoped, modular, and testable.
   [`prescout()`](https://gkrotkov.github.io/scoutR/reference/prescout.md);
   maybe calculating pRidge for lots of subscores would be too much
   though. Certainly needs caching.
-- Allow `prior_ridge` to accept vector-lambda inputs
 
 # Data Science Projects
 
