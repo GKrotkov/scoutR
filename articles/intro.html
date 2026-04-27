@@ -78,12 +78,12 @@ library for the R programming language designed to facilitate scouting
 <h3 id="r-and-rstudio">R and RStudio<a class="anchor" aria-label="anchor" href="#r-and-rstudio"></a>
 </h3>
 <p><code>scoutR</code> is a package for the R programming language, an
-open-source statistical programming language popular for its support for
-statistical programming, data science, and data visualization. The most
+open-source statistical programming language popular for its statistical
+programming, data science, and data visualization support. The most
 typical IDE used for R programming is RStudio, published by Posit. You
 can download and install the R programming language and RStudio <a href="https://posit.co/download/rstudio-desktop/" class="external-link">here</a>. You can use
-other IDEs (Visual Studio Code is a popular one, for example) to program
-in R, but RStudio is specifically designed to support R programming.</p>
+other IDEs (Visual Studio Code, for example) to program in R, but
+RStudio is specifically designed to support R programming.</p>
 </div>
 <div class="section level3">
 <h3 id="package-installation">Package Installation<a class="anchor" aria-label="anchor" href="#package-installation"></a>
@@ -300,237 +300,13 @@ to filter for year or event.</p>
 <div class="section level3">
 <h3 id="prescout">prescout()<a class="anchor" aria-label="anchor" href="#prescout"></a>
 </h3>
-<p>This function is useful mostly for prescouting - it retrieves all the
-tangibles results available in TBA, along with the team’s record and
-EPA. Future updates will include season max (c)OPRs and last week
-seen.</p>
+<p>This function is intended to pull prescouting data - it retrieves all
+the tangibles results available in TBA, max (c)OPRs, last week seen, the
+team’s record, and EPA. It’s quite a lot of data, so we won’t output it
+here.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">newton24_prescout</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prescout.html">prescout</a></span><span class="op">(</span><span class="st">"2024new"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">newton24_prescout</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    id                     name              city state_prov country autoLine_No</span></span>
-<span><span class="co">## 1  58            The Riot Crew    South Portland      Maine     USA           3</span></span>
-<span><span class="co">## 2  59                  RamTech             Miami    Florida     USA           2</span></span>
-<span><span class="co">## 3  85 B.O.B. (Built on Brains)           Zeeland   Michigan     USA           1</span></span>
-<span><span class="co">## 4 111                WildStang Arlington Heights   Illinois     USA           1</span></span>
-<span><span class="co">## 5 254         The Cheesy Poofs          San Jose California     USA           0</span></span>
-<span><span class="co">## 6 294    Beach Cities Robotics     Redondo Beach California     USA           2</span></span>
-<span><span class="co">##   autoLine_Yes endGame_Parked endGame_StageLeft endGame_StageRight endGame_None</span></span>
-<span><span class="co">## 1           58             19                13                 21            3</span></span>
-<span><span class="co">## 2           56             14                20                 14            6</span></span>
-<span><span class="co">## 3           58             18                15                 10           14</span></span>
-<span><span class="co">## 4           44             23                 0                  0           22</span></span>
-<span><span class="co">## 5           51              4                 2                  7            1</span></span>
-<span><span class="co">## 6           52             12                 7                 16            3</span></span>
-<span><span class="co">##   endGame_CenterStage n_matches_count wins losses ties winrate total_points_epa</span></span>
-<span><span class="co">## 1                   5              61   40     21    0  0.6557            27.08</span></span>
-<span><span class="co">## 2                   4              58   32     26    0  0.5517            35.79</span></span>
-<span><span class="co">## 3                   2              59   33     23    0  0.5893            32.61</span></span>
-<span><span class="co">## 4                   0              45   22     23    0  0.4889            38.28</span></span>
-<span><span class="co">## 5                  37              51   45      5    0  0.9000            51.44</span></span>
-<span><span class="co">## 6                  16              54   37     16    0  0.6981            25.36</span></span>
-<span><span class="co">##   auto_points_epa teleop_points_epa endgame_points_epa melody_rp_epa</span></span>
-<span><span class="co">## 1           11.35             13.45               2.28        0.1930</span></span>
-<span><span class="co">## 2            9.06             20.26               6.47        0.2856</span></span>
-<span><span class="co">## 3           11.29             19.55               1.77        0.4335</span></span>
-<span><span class="co">## 4           11.85             25.74               0.68        0.4251</span></span>
-<span><span class="co">## 5           15.63             29.47               6.34        0.6419</span></span>
-<span><span class="co">## 6            9.93             14.38               1.04        0.3343</span></span>
-<span><span class="co">##   ensemble_rp_epa tiebreaker_points_epa auto_leave_points_epa auto_notes_epa</span></span>
-<span><span class="co">## 1          0.1529                  0.33                  1.81           1.90</span></span>
-<span><span class="co">## 2          0.3808                  0.36                  2.10           1.41</span></span>
-<span><span class="co">## 3          0.1231                  0.40                  1.71           1.90</span></span>
-<span><span class="co">## 4         -0.0137                  0.34                  1.62           2.04</span></span>
-<span><span class="co">## 5          0.6226                  0.14                  1.99           2.75</span></span>
-<span><span class="co">## 6          0.0820                  0.11                  1.91           1.61</span></span>
-<span><span class="co">##   auto_note_points_epa teleop_notes_epa teleop_note_points_epa amp_notes_epa</span></span>
-<span><span class="co">## 1                 9.54             5.45                  13.45          2.01</span></span>
-<span><span class="co">## 2                 6.96             6.27                  20.26          3.11</span></span>
-<span><span class="co">## 3                 9.58             7.11                  19.55          2.63</span></span>
-<span><span class="co">## 4                10.23             8.57                  25.74          3.88</span></span>
-<span><span class="co">## 5                13.65             8.71                  29.47          3.59</span></span>
-<span><span class="co">## 6                 8.02             5.09                  14.38          1.85</span></span>
-<span><span class="co">##   amp_points_epa speaker_notes_epa speaker_points_epa amplified_notes_epa</span></span>
-<span><span class="co">## 1           2.00              5.35              20.99                1.52</span></span>
-<span><span class="co">## 2           3.14              4.57              24.09                3.60</span></span>
-<span><span class="co">## 3           2.61              6.38              26.52                2.66</span></span>
-<span><span class="co">## 4           3.88              6.74              32.10                4.16</span></span>
-<span><span class="co">## 5           3.63              7.87              39.48                5.20</span></span>
-<span><span class="co">## 6           1.86              4.84              20.54                2.02</span></span>
-<span><span class="co">##   total_notes_epa total_note_points_epa endgame_park_points_epa</span></span>
-<span><span class="co">## 1            7.36                 22.99                    0.14</span></span>
-<span><span class="co">## 2            7.68                 27.22                   -0.04</span></span>
-<span><span class="co">## 3            9.01                 29.12                    0.43</span></span>
-<span><span class="co">## 4           10.62                 35.98                    0.53</span></span>
-<span><span class="co">## 5           11.47                 43.11                    0.01</span></span>
-<span><span class="co">## 6            6.70                 22.40                    0.47</span></span>
-<span><span class="co">##   endgame_on_stage_points_epa endgame_harmony_points_epa</span></span>
-<span><span class="co">## 1                        2.09                       0.21</span></span>
-<span><span class="co">## 2                        3.11                       0.03</span></span>
-<span><span class="co">## 3                        1.02                       0.12</span></span>
-<span><span class="co">## 4                        0.00                      -0.06</span></span>
-<span><span class="co">## 5                        3.19                      -0.10</span></span>
-<span><span class="co">## 6                        1.46                       0.14</span></span>
-<span><span class="co">##   endgame_trap_points_epa endgame_spotlight_points_epa rp_1_epa rp_2_epa</span></span>
-<span><span class="co">## 1                   -0.32                         0.16   0.1930   0.1529</span></span>
-<span><span class="co">## 2                    3.13                         0.23   0.2856   0.3808</span></span>
-<span><span class="co">## 3                    0.19                         0.00   0.4335   0.1231</span></span>
-<span><span class="co">## 4                    0.26                        -0.04   0.4251  -0.0137</span></span>
-<span><span class="co">## 5                    3.14                         0.10   0.6419   0.6226</span></span>
-<span><span class="co">## 6                   -1.05                         0.04   0.3343   0.0820</span></span>
-<span><span class="co">##   Amplification Rate_opr_max Total Auto Game Pieces_opr_max Total Mic_opr_max</span></span>
-<span><span class="co">## 1                       0.20                           2.68              0.62</span></span>
-<span><span class="co">## 2                       0.45                           2.06              0.28</span></span>
-<span><span class="co">## 3                       0.27                           2.83              0.23</span></span>
-<span><span class="co">## 4                       0.36                           2.19              0.14</span></span>
-<span><span class="co">## 5                       0.38                           4.42              0.60</span></span>
-<span><span class="co">## 6                       0.28                           2.07              0.07</span></span>
-<span><span class="co">##   Total Overall Game Pieces_opr_max Total Teleop Game Pieces_opr_max</span></span>
-<span><span class="co">## 1                              9.22                             7.24</span></span>
-<span><span class="co">## 2                              8.73                             6.76</span></span>
-<span><span class="co">## 3                              9.74                             7.94</span></span>
-<span><span class="co">## 4                             12.66                            10.48</span></span>
-<span><span class="co">## 5                             14.39                            11.07</span></span>
-<span><span class="co">## 6                              9.66                             7.59</span></span>
-<span><span class="co">##   Total Trap_opr_max adjustPoints_opr_max autoAmpNoteCount_opr_max</span></span>
-<span><span class="co">## 1               0.04                    0                     0.03</span></span>
-<span><span class="co">## 2               0.75                    0                     0.06</span></span>
-<span><span class="co">## 3               0.12                    0                     0.00</span></span>
-<span><span class="co">## 4               0.09                    0                     0.01</span></span>
-<span><span class="co">## 5               0.90                    0                     0.14</span></span>
-<span><span class="co">## 6               0.08                    0                     0.00</span></span>
-<span><span class="co">##   autoAmpNotePoints_opr_max autoLeavePoints_opr_max autoPoints_opr_max</span></span>
-<span><span class="co">## 1                      0.05                    1.88              15.26</span></span>
-<span><span class="co">## 2                      0.11                    2.33              12.00</span></span>
-<span><span class="co">## 3                      0.00                    1.84              15.96</span></span>
-<span><span class="co">## 4                      0.02                    1.76              12.67</span></span>
-<span><span class="co">## 5                      0.28                    2.25              23.41</span></span>
-<span><span class="co">## 6                      0.00                    1.87              11.64</span></span>
-<span><span class="co">##   autoSpeakerNoteCount_opr_max autoSpeakerNotePoints_opr_max</span></span>
-<span><span class="co">## 1                         2.70                         13.52</span></span>
-<span><span class="co">## 2                         2.14                         10.69</span></span>
-<span><span class="co">## 3                         2.89                         14.46</span></span>
-<span><span class="co">## 4                         2.18                         10.89</span></span>
-<span><span class="co">## 5                         4.41                         22.04</span></span>
-<span><span class="co">## 6                         2.07                         10.37</span></span>
-<span><span class="co">##   autoTotalNotePoints_opr_max coopNotePlayed_opr_max</span></span>
-<span><span class="co">## 1                       13.48                   0.40</span></span>
-<span><span class="co">## 2                       10.53                   0.49</span></span>
-<span><span class="co">## 3                       14.34                   0.55</span></span>
-<span><span class="co">## 4                       10.91                   0.42</span></span>
-<span><span class="co">## 5                       22.06                   0.47</span></span>
-<span><span class="co">## 6                       10.37                   0.45</span></span>
-<span><span class="co">##   coopertitionBonusAchieved_opr_max coopertitionCriteriaMet_opr_max</span></span>
-<span><span class="co">## 1                              0.34                            0.40</span></span>
-<span><span class="co">## 2                              0.57                            0.49</span></span>
-<span><span class="co">## 3                              0.44                            0.55</span></span>
-<span><span class="co">## 4                              0.40                            0.42</span></span>
-<span><span class="co">## 5                              0.33                            0.47</span></span>
-<span><span class="co">## 6                              0.37                            0.45</span></span>
-<span><span class="co">##   endGameHarmonyPoints_opr_max endGameNoteInTrapPoints_opr_max</span></span>
-<span><span class="co">## 1                         0.42                            0.19</span></span>
-<span><span class="co">## 2                         0.04                            3.73</span></span>
-<span><span class="co">## 3                         0.48                            0.62</span></span>
-<span><span class="co">## 4                         0.30                            0.47</span></span>
-<span><span class="co">## 5                        -0.03                            4.52</span></span>
-<span><span class="co">## 6                         0.21                            0.42</span></span>
-<span><span class="co">##   endGameOnStagePoints_opr_max endGameParkPoints_opr_max</span></span>
-<span><span class="co">## 1                         2.58                      0.55</span></span>
-<span><span class="co">## 2                         3.97                      0.50</span></span>
-<span><span class="co">## 3                         1.83                      0.75</span></span>
-<span><span class="co">## 4                         0.64                      0.57</span></span>
-<span><span class="co">## 5                         3.62                      0.26</span></span>
-<span><span class="co">## 6                         2.57                      0.59</span></span>
-<span><span class="co">##   endGameSpotLightBonusPoints_opr_max endGameTotalStagePoints_opr_max</span></span>
-<span><span class="co">## 1                                0.44                            2.77</span></span>
-<span><span class="co">## 2                                0.39                            7.29</span></span>
-<span><span class="co">## 3                                0.23                            2.73</span></span>
-<span><span class="co">## 4                                0.06                            1.48</span></span>
-<span><span class="co">## 5                                0.46                            8.29</span></span>
-<span><span class="co">## 6                                0.09                            3.25</span></span>
-<span><span class="co">##   ensembleBonusAchieved_opr_max ensembleBonusOnStageRobotsThreshold_opr_max</span></span>
-<span><span class="co">## 1                          0.18                                        0.67</span></span>
-<span><span class="co">## 2                          0.55                                        0.67</span></span>
-<span><span class="co">## 3                          0.36                                        0.67</span></span>
-<span><span class="co">## 4                          0.09                                        0.67</span></span>
-<span><span class="co">## 5                          0.54                                        0.67</span></span>
-<span><span class="co">## 6                          0.45                                        0.67</span></span>
-<span><span class="co">##   ensembleBonusStagePointsThreshold_opr_max foulCount_opr_max</span></span>
-<span><span class="co">## 1                                      3.33              0.31</span></span>
-<span><span class="co">## 2                                      3.33              0.31</span></span>
-<span><span class="co">## 3                                      3.33              0.32</span></span>
-<span><span class="co">## 4                                      3.33              0.22</span></span>
-<span><span class="co">## 5                                      3.33              0.29</span></span>
-<span><span class="co">## 6                                      3.33              1.03</span></span>
-<span><span class="co">##   foulPoints_opr_max g206Penalty_opr_max g408Penalty_opr_max</span></span>
-<span><span class="co">## 1               5.86                   0                   0</span></span>
-<span><span class="co">## 2               4.75                   0                   0</span></span>
-<span><span class="co">## 3               4.85                   0                   0</span></span>
-<span><span class="co">## 4               0.72                   0                   0</span></span>
-<span><span class="co">## 5               3.87                   0                   0</span></span>
-<span><span class="co">## 6               3.13                   0                   0</span></span>
-<span><span class="co">##   g424Penalty_opr_max melodyBonusAchieved_opr_max melodyBonusThreshold_opr_max</span></span>
-<span><span class="co">## 1                0.21                        0.41                         7.08</span></span>
-<span><span class="co">## 2                0.12                        0.42                         6.62</span></span>
-<span><span class="co">## 3                0.11                        0.63                         7.44</span></span>
-<span><span class="co">## 4                0.05                        0.61                         6.71</span></span>
-<span><span class="co">## 5                0.12                        0.69                         7.45</span></span>
-<span><span class="co">## 6                0.11                        0.40                         7.43</span></span>
-<span><span class="co">##   melodyBonusThresholdCoop_opr_max melodyBonusThresholdNonCoop_opr_max</span></span>
-<span><span class="co">## 1                                7                                8.33</span></span>
-<span><span class="co">## 2                                7                                8.33</span></span>
-<span><span class="co">## 3                                7                                8.33</span></span>
-<span><span class="co">## 4                                7                                8.33</span></span>
-<span><span class="co">## 5                                7                                8.33</span></span>
-<span><span class="co">## 6                                7                                8.33</span></span>
-<span><span class="co">##   micCenterStage_opr_max micStageLeft_opr_max micStageRight_opr_max rp_opr_max</span></span>
-<span><span class="co">## 1                   0.12                 0.31                  0.23       2.05</span></span>
-<span><span class="co">## 2                   0.04                 0.21                  0.13       1.93</span></span>
-<span><span class="co">## 3                   0.08                 0.11                  0.04       1.98</span></span>
-<span><span class="co">## 4                   0.00                 0.08                  0.11       1.23</span></span>
-<span><span class="co">## 5                   0.21                 0.10                  0.29       2.22</span></span>
-<span><span class="co">## 6                   0.02                 0.05                  0.20       1.53</span></span>
-<span><span class="co">##   techFoulCount_opr_max teleopAmpNoteCount_opr_max teleopAmpNotePoints_opr_max</span></span>
-<span><span class="co">## 1                  0.48                       2.37                        2.37</span></span>
-<span><span class="co">## 2                  0.44                       3.88                        3.88</span></span>
-<span><span class="co">## 3                  0.27                       2.77                        2.77</span></span>
-<span><span class="co">## 4                  0.26                       4.24                        4.24</span></span>
-<span><span class="co">## 5                  0.60                       3.82                        3.82</span></span>
-<span><span class="co">## 6                  0.74                       2.79                        2.79</span></span>
-<span><span class="co">##   teleopPoints_opr_max teleopSpeakerNoteAmplifiedCount_opr_max</span></span>
-<span><span class="co">## 1                20.00                                    1.78</span></span>
-<span><span class="co">## 2                26.97                                    3.43</span></span>
-<span><span class="co">## 3                22.00                                    2.31</span></span>
-<span><span class="co">## 4                33.43                                    5.52</span></span>
-<span><span class="co">## 5                46.45                                    6.62</span></span>
-<span><span class="co">## 6                24.38                                    2.70</span></span>
-<span><span class="co">##   teleopSpeakerNoteAmplifiedPoints_opr_max teleopSpeakerNoteCount_opr_max</span></span>
-<span><span class="co">## 1                                     8.90                           4.35</span></span>
-<span><span class="co">## 2                                    17.15                           3.43</span></span>
-<span><span class="co">## 3                                    11.56                           5.14</span></span>
-<span><span class="co">## 4                                    27.59                           1.26</span></span>
-<span><span class="co">## 5                                    33.08                           3.13</span></span>
-<span><span class="co">## 6                                    13.50                           2.91</span></span>
-<span><span class="co">##   teleopSpeakerNotePoints_opr_max teleopTotalNotePoints_opr_max</span></span>
-<span><span class="co">## 1                            8.69                         17.23</span></span>
-<span><span class="co">## 2                            6.86                         19.93</span></span>
-<span><span class="co">## 3                           10.29                         19.53</span></span>
-<span><span class="co">## 4                            2.52                         33.27</span></span>
-<span><span class="co">## 5                            6.27                         38.17</span></span>
-<span><span class="co">## 6                            5.82                         21.30</span></span>
-<span><span class="co">##   totalPoints_opr_max trapCenterStage_opr_max trapStageLeft_opr_max</span></span>
-<span><span class="co">## 1               37.15                    0.00                  0.06</span></span>
-<span><span class="co">## 2               42.91                    0.00                  0.52</span></span>
-<span><span class="co">## 3               36.41                    0.02                  0.01</span></span>
-<span><span class="co">## 4               44.75                    0.02                  0.00</span></span>
-<span><span class="co">## 5               62.86                    0.79                  0.13</span></span>
-<span><span class="co">## 6               39.16                    0.00                  0.08</span></span>
-<span><span class="co">##   trapStageRight_opr_max last week seen</span></span>
-<span><span class="co">## 1                   0.02              6</span></span>
-<span><span class="co">## 2                   0.23              6</span></span>
-<span><span class="co">## 3                   0.16              6</span></span>
-<span><span class="co">## 4                   0.11              5</span></span>
-<span><span class="co">## 5                   0.07              6</span></span>
-<span><span class="co">## 6                   0.11              6</span></span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

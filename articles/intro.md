@@ -10,13 +10,13 @@ Robotics Competition.
 ### R and RStudio
 
 `scoutR` is a package for the R programming language, an open-source
-statistical programming language popular for its support for statistical
-programming, data science, and data visualization. The most typical IDE
-used for R programming is RStudio, published by Posit. You can download
-and install the R programming language and RStudio
+statistical programming language popular for its statistical
+programming, data science, and data visualization support. The most
+typical IDE used for R programming is RStudio, published by Posit. You
+can download and install the R programming language and RStudio
 [here](https://posit.co/download/rstudio-desktop/). You can use other
-IDEs (Visual Studio Code is a popular one, for example) to program in R,
-but RStudio is specifically designed to support R programming.
+IDEs (Visual Studio Code, for example) to program in R, but RStudio is
+specifically designed to support R programming.
 
 ### Package Installation
 
@@ -254,236 +254,12 @@ head(vagle25_coprs)
 
 ### prescout()
 
-This function is useful mostly for prescouting - it retrieves all the
-tangibles results available in TBA, along with the team’s record and
-EPA. Future updates will include season max (c)OPRs and last week seen.
+This function is intended to pull prescouting data - it retrieves all
+the tangibles results available in TBA, max (c)OPRs, last week seen, the
+team’s record, and EPA. It’s quite a lot of data, so we won’t output it
+here.
 
 ``` r
 newton24_prescout <- prescout("2024new")
 head(newton24_prescout)
 ```
-
-    ##    id                     name              city state_prov country autoLine_No
-    ## 1  58            The Riot Crew    South Portland      Maine     USA           3
-    ## 2  59                  RamTech             Miami    Florida     USA           2
-    ## 3  85 B.O.B. (Built on Brains)           Zeeland   Michigan     USA           1
-    ## 4 111                WildStang Arlington Heights   Illinois     USA           1
-    ## 5 254         The Cheesy Poofs          San Jose California     USA           0
-    ## 6 294    Beach Cities Robotics     Redondo Beach California     USA           2
-    ##   autoLine_Yes endGame_Parked endGame_StageLeft endGame_StageRight endGame_None
-    ## 1           58             19                13                 21            3
-    ## 2           56             14                20                 14            6
-    ## 3           58             18                15                 10           14
-    ## 4           44             23                 0                  0           22
-    ## 5           51              4                 2                  7            1
-    ## 6           52             12                 7                 16            3
-    ##   endGame_CenterStage n_matches_count wins losses ties winrate total_points_epa
-    ## 1                   5              61   40     21    0  0.6557            27.08
-    ## 2                   4              58   32     26    0  0.5517            35.79
-    ## 3                   2              59   33     23    0  0.5893            32.61
-    ## 4                   0              45   22     23    0  0.4889            38.28
-    ## 5                  37              51   45      5    0  0.9000            51.44
-    ## 6                  16              54   37     16    0  0.6981            25.36
-    ##   auto_points_epa teleop_points_epa endgame_points_epa melody_rp_epa
-    ## 1           11.35             13.45               2.28        0.1930
-    ## 2            9.06             20.26               6.47        0.2856
-    ## 3           11.29             19.55               1.77        0.4335
-    ## 4           11.85             25.74               0.68        0.4251
-    ## 5           15.63             29.47               6.34        0.6419
-    ## 6            9.93             14.38               1.04        0.3343
-    ##   ensemble_rp_epa tiebreaker_points_epa auto_leave_points_epa auto_notes_epa
-    ## 1          0.1529                  0.33                  1.81           1.90
-    ## 2          0.3808                  0.36                  2.10           1.41
-    ## 3          0.1231                  0.40                  1.71           1.90
-    ## 4         -0.0137                  0.34                  1.62           2.04
-    ## 5          0.6226                  0.14                  1.99           2.75
-    ## 6          0.0820                  0.11                  1.91           1.61
-    ##   auto_note_points_epa teleop_notes_epa teleop_note_points_epa amp_notes_epa
-    ## 1                 9.54             5.45                  13.45          2.01
-    ## 2                 6.96             6.27                  20.26          3.11
-    ## 3                 9.58             7.11                  19.55          2.63
-    ## 4                10.23             8.57                  25.74          3.88
-    ## 5                13.65             8.71                  29.47          3.59
-    ## 6                 8.02             5.09                  14.38          1.85
-    ##   amp_points_epa speaker_notes_epa speaker_points_epa amplified_notes_epa
-    ## 1           2.00              5.35              20.99                1.52
-    ## 2           3.14              4.57              24.09                3.60
-    ## 3           2.61              6.38              26.52                2.66
-    ## 4           3.88              6.74              32.10                4.16
-    ## 5           3.63              7.87              39.48                5.20
-    ## 6           1.86              4.84              20.54                2.02
-    ##   total_notes_epa total_note_points_epa endgame_park_points_epa
-    ## 1            7.36                 22.99                    0.14
-    ## 2            7.68                 27.22                   -0.04
-    ## 3            9.01                 29.12                    0.43
-    ## 4           10.62                 35.98                    0.53
-    ## 5           11.47                 43.11                    0.01
-    ## 6            6.70                 22.40                    0.47
-    ##   endgame_on_stage_points_epa endgame_harmony_points_epa
-    ## 1                        2.09                       0.21
-    ## 2                        3.11                       0.03
-    ## 3                        1.02                       0.12
-    ## 4                        0.00                      -0.06
-    ## 5                        3.19                      -0.10
-    ## 6                        1.46                       0.14
-    ##   endgame_trap_points_epa endgame_spotlight_points_epa rp_1_epa rp_2_epa
-    ## 1                   -0.32                         0.16   0.1930   0.1529
-    ## 2                    3.13                         0.23   0.2856   0.3808
-    ## 3                    0.19                         0.00   0.4335   0.1231
-    ## 4                    0.26                        -0.04   0.4251  -0.0137
-    ## 5                    3.14                         0.10   0.6419   0.6226
-    ## 6                   -1.05                         0.04   0.3343   0.0820
-    ##   Amplification Rate_opr_max Total Auto Game Pieces_opr_max Total Mic_opr_max
-    ## 1                       0.20                           2.68              0.62
-    ## 2                       0.45                           2.06              0.28
-    ## 3                       0.27                           2.83              0.23
-    ## 4                       0.36                           2.19              0.14
-    ## 5                       0.38                           4.42              0.60
-    ## 6                       0.28                           2.07              0.07
-    ##   Total Overall Game Pieces_opr_max Total Teleop Game Pieces_opr_max
-    ## 1                              9.22                             7.24
-    ## 2                              8.73                             6.76
-    ## 3                              9.74                             7.94
-    ## 4                             12.66                            10.48
-    ## 5                             14.39                            11.07
-    ## 6                              9.66                             7.59
-    ##   Total Trap_opr_max adjustPoints_opr_max autoAmpNoteCount_opr_max
-    ## 1               0.04                    0                     0.03
-    ## 2               0.75                    0                     0.06
-    ## 3               0.12                    0                     0.00
-    ## 4               0.09                    0                     0.01
-    ## 5               0.90                    0                     0.14
-    ## 6               0.08                    0                     0.00
-    ##   autoAmpNotePoints_opr_max autoLeavePoints_opr_max autoPoints_opr_max
-    ## 1                      0.05                    1.88              15.26
-    ## 2                      0.11                    2.33              12.00
-    ## 3                      0.00                    1.84              15.96
-    ## 4                      0.02                    1.76              12.67
-    ## 5                      0.28                    2.25              23.41
-    ## 6                      0.00                    1.87              11.64
-    ##   autoSpeakerNoteCount_opr_max autoSpeakerNotePoints_opr_max
-    ## 1                         2.70                         13.52
-    ## 2                         2.14                         10.69
-    ## 3                         2.89                         14.46
-    ## 4                         2.18                         10.89
-    ## 5                         4.41                         22.04
-    ## 6                         2.07                         10.37
-    ##   autoTotalNotePoints_opr_max coopNotePlayed_opr_max
-    ## 1                       13.48                   0.40
-    ## 2                       10.53                   0.49
-    ## 3                       14.34                   0.55
-    ## 4                       10.91                   0.42
-    ## 5                       22.06                   0.47
-    ## 6                       10.37                   0.45
-    ##   coopertitionBonusAchieved_opr_max coopertitionCriteriaMet_opr_max
-    ## 1                              0.34                            0.40
-    ## 2                              0.57                            0.49
-    ## 3                              0.44                            0.55
-    ## 4                              0.40                            0.42
-    ## 5                              0.33                            0.47
-    ## 6                              0.37                            0.45
-    ##   endGameHarmonyPoints_opr_max endGameNoteInTrapPoints_opr_max
-    ## 1                         0.42                            0.19
-    ## 2                         0.04                            3.73
-    ## 3                         0.48                            0.62
-    ## 4                         0.30                            0.47
-    ## 5                        -0.03                            4.52
-    ## 6                         0.21                            0.42
-    ##   endGameOnStagePoints_opr_max endGameParkPoints_opr_max
-    ## 1                         2.58                      0.55
-    ## 2                         3.97                      0.50
-    ## 3                         1.83                      0.75
-    ## 4                         0.64                      0.57
-    ## 5                         3.62                      0.26
-    ## 6                         2.57                      0.59
-    ##   endGameSpotLightBonusPoints_opr_max endGameTotalStagePoints_opr_max
-    ## 1                                0.44                            2.77
-    ## 2                                0.39                            7.29
-    ## 3                                0.23                            2.73
-    ## 4                                0.06                            1.48
-    ## 5                                0.46                            8.29
-    ## 6                                0.09                            3.25
-    ##   ensembleBonusAchieved_opr_max ensembleBonusOnStageRobotsThreshold_opr_max
-    ## 1                          0.18                                        0.67
-    ## 2                          0.55                                        0.67
-    ## 3                          0.36                                        0.67
-    ## 4                          0.09                                        0.67
-    ## 5                          0.54                                        0.67
-    ## 6                          0.45                                        0.67
-    ##   ensembleBonusStagePointsThreshold_opr_max foulCount_opr_max
-    ## 1                                      3.33              0.31
-    ## 2                                      3.33              0.31
-    ## 3                                      3.33              0.32
-    ## 4                                      3.33              0.22
-    ## 5                                      3.33              0.29
-    ## 6                                      3.33              1.03
-    ##   foulPoints_opr_max g206Penalty_opr_max g408Penalty_opr_max
-    ## 1               5.86                   0                   0
-    ## 2               4.75                   0                   0
-    ## 3               4.85                   0                   0
-    ## 4               0.72                   0                   0
-    ## 5               3.87                   0                   0
-    ## 6               3.13                   0                   0
-    ##   g424Penalty_opr_max melodyBonusAchieved_opr_max melodyBonusThreshold_opr_max
-    ## 1                0.21                        0.41                         7.08
-    ## 2                0.12                        0.42                         6.62
-    ## 3                0.11                        0.63                         7.44
-    ## 4                0.05                        0.61                         6.71
-    ## 5                0.12                        0.69                         7.45
-    ## 6                0.11                        0.40                         7.43
-    ##   melodyBonusThresholdCoop_opr_max melodyBonusThresholdNonCoop_opr_max
-    ## 1                                7                                8.33
-    ## 2                                7                                8.33
-    ## 3                                7                                8.33
-    ## 4                                7                                8.33
-    ## 5                                7                                8.33
-    ## 6                                7                                8.33
-    ##   micCenterStage_opr_max micStageLeft_opr_max micStageRight_opr_max rp_opr_max
-    ## 1                   0.12                 0.31                  0.23       2.05
-    ## 2                   0.04                 0.21                  0.13       1.93
-    ## 3                   0.08                 0.11                  0.04       1.98
-    ## 4                   0.00                 0.08                  0.11       1.23
-    ## 5                   0.21                 0.10                  0.29       2.22
-    ## 6                   0.02                 0.05                  0.20       1.53
-    ##   techFoulCount_opr_max teleopAmpNoteCount_opr_max teleopAmpNotePoints_opr_max
-    ## 1                  0.48                       2.37                        2.37
-    ## 2                  0.44                       3.88                        3.88
-    ## 3                  0.27                       2.77                        2.77
-    ## 4                  0.26                       4.24                        4.24
-    ## 5                  0.60                       3.82                        3.82
-    ## 6                  0.74                       2.79                        2.79
-    ##   teleopPoints_opr_max teleopSpeakerNoteAmplifiedCount_opr_max
-    ## 1                20.00                                    1.78
-    ## 2                26.97                                    3.43
-    ## 3                22.00                                    2.31
-    ## 4                33.43                                    5.52
-    ## 5                46.45                                    6.62
-    ## 6                24.38                                    2.70
-    ##   teleopSpeakerNoteAmplifiedPoints_opr_max teleopSpeakerNoteCount_opr_max
-    ## 1                                     8.90                           4.35
-    ## 2                                    17.15                           3.43
-    ## 3                                    11.56                           5.14
-    ## 4                                    27.59                           1.26
-    ## 5                                    33.08                           3.13
-    ## 6                                    13.50                           2.91
-    ##   teleopSpeakerNotePoints_opr_max teleopTotalNotePoints_opr_max
-    ## 1                            8.69                         17.23
-    ## 2                            6.86                         19.93
-    ## 3                           10.29                         19.53
-    ## 4                            2.52                         33.27
-    ## 5                            6.27                         38.17
-    ## 6                            5.82                         21.30
-    ##   totalPoints_opr_max trapCenterStage_opr_max trapStageLeft_opr_max
-    ## 1               37.15                    0.00                  0.06
-    ## 2               42.91                    0.00                  0.52
-    ## 3               36.41                    0.02                  0.01
-    ## 4               44.75                    0.02                  0.00
-    ## 5               62.86                    0.79                  0.13
-    ## 6               39.16                    0.00                  0.08
-    ##   trapStageRight_opr_max last week seen
-    ## 1                   0.02              6
-    ## 2                   0.23              6
-    ## 3                   0.16              6
-    ## 4                   0.11              5
-    ## 5                   0.07              6
-    ## 6                   0.11              6
