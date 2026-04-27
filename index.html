@@ -64,75 +64,9 @@
 <li><label><input type="checkbox">Install R and RStudio on your machine. You can find them both on Posit’s website here: <a href="https://posit.co/download/rstudio-desktop/" class="external-link uri">https://posit.co/download/rstudio-desktop/</a>. scoutR assumes that you have R 4.3.0 or later.</label></li>
 <li><label><input type="checkbox">Install devtools by running <code>install.packages("devtools")</code> in the R console</label></li>
 <li><label><input type="checkbox">Install scoutR by running <code>devtools::install_github("gkrotkov/scoutR")</code> in the R console.</label></li>
+<li><label><input type="checkbox">Introduce yourself to scoutR by running <code>scoutR::initialize_scoutR(auth_key)</code>, with your TBA auth key. You can get a TBA auth key at <a href="https://www.thebluealliance.com/account" class="external-link">this link</a>.</label></li>
 </ul>
 <p>Now <code>scoutR</code> is installed on your version of R! Check out <a href="https://gkrotkov.github.io/scoutR/articles/intro.html">intro to scoutR</a> for a walkthrough.</p>
-</div>
-<div class="section level2">
-<h2 id="roadmap-to-scoutr">Roadmap to ScoutR<a class="anchor" aria-label="anchor" href="#roadmap-to-scoutr"></a>
-</h2>
-<p>The below R files define functions that are the core engine of ScoutR</p>
-<table class="table">
-<colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-</colgroup>
-<thead><tr class="header">
-<th>Name</th>
-<th>Description</th>
-<th>Input</th>
-<th>Output</th>
-<th>Public Facing?</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><code>scoutR</code></td>
-<td>Analysis functions for at-event usage.</td>
-<td>Event codes or match data</td>
-<td>Tidy dataframes</td>
-<td>Yes</td>
-</tr>
-<tr class="even">
-<td><code>tba_interfaceR</code></td>
-<td>Provide a direct interface between the user and the TBA API</td>
-<td>TBA-legal keys</td>
-<td>Tidy dataframes</td>
-<td>Yes</td>
-</tr>
-<tr class="odd">
-<td><code>helpR</code></td>
-<td>“Under the hood” helper functions that make other functions easy to use.</td>
-<td>Varies, but mostly dataframes of match objects</td>
-<td>Varies</td>
-<td>Yes</td>
-</tr>
-<tr class="even">
-<td><code>tba_readR</code></td>
-<td>Read data from the TBA API, helper library for <code>tba_interfaceR</code>
-</td>
-<td>TBA-legal keys</td>
-<td>JSON</td>
-<td>No</td>
-</tr>
-<tr class="odd">
-<td><code>tba_tidyR</code></td>
-<td>Reformat JSON data from TBA to Tidy format, helper library for <code>interfaceR</code>
-</td>
-<td>JSON</td>
-<td>Tidy dataframes</td>
-<td>No</td>
-</tr>
-<tr class="even">
-<td><code>statbotics_readR</code></td>
-<td>Read JSON data from Statbotics to Tidy format</td>
-<td>Statbotics endpoints</td>
-<td>Tidy data frames</td>
-<td>Yes</td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="section level2">
 <h2 id="why-do-i-care-about-tidy-data-what-even-is-it">Why do I care about Tidy data? What even is it?<a class="anchor" aria-label="anchor" href="#why-do-i-care-about-tidy-data-what-even-is-it"></a>
@@ -147,9 +81,80 @@
 </div>
 </div>
 <div class="section level1">
-<h1 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+<h1 id="for-collaborators">For collaborators<a class="anchor" aria-label="anchor" href="#for-collaborators"></a>
 </h1>
+<div class="section level2">
+<h2 id="roadmap-to-scoutr">Roadmap to ScoutR<a class="anchor" aria-label="anchor" href="#roadmap-to-scoutr"></a>
+</h2>
+<p>The below R files define functions that are the core engine of scoutR. R files like <code>utils</code>, <code>data</code>, and <code>dependencies</code> just make the proverbial trains run on time.</p>
+<table class="table">
+<colgroup>
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+<col width="20%">
+</colgroup>
+<thead><tr class="header">
+<th>Name</th>
+<th>Description</th>
+<th>Input</th>
+<th>Output</th>
+<th>User Facing?</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>scoutR</code></td>
+<td>Analysis functions for at-event usage.</td>
+<td>Event codes or match data</td>
+<td>Tidy dataframes</td>
+<td><span class="emoji" data-emoji="white_check_mark">✅</span></td>
+</tr>
+<tr class="even">
+<td><code>tba_interfaceR</code></td>
+<td>Provide a direct interface between the user and the TBA API</td>
+<td>TBA-legal keys</td>
+<td>Tidy dataframes</td>
+<td><span class="emoji" data-emoji="white_check_mark">✅</span></td>
+</tr>
+<tr class="odd">
+<td><code>helpR</code></td>
+<td>“Under the hood” helper functions that make other functions easy to use.</td>
+<td>Varies, but mostly dataframes of match objects</td>
+<td>Varies</td>
+<td><span class="emoji" data-emoji="x">❌</span></td>
+</tr>
+<tr class="even">
+<td><code>tba_readR</code></td>
+<td>Read data from the TBA API, helper library for <code>tba_interfaceR</code>
+</td>
+<td>TBA-legal keys</td>
+<td>JSON</td>
+<td><span class="emoji" data-emoji="x">❌</span></td>
+</tr>
+<tr class="odd">
+<td><code>tba_tidyR</code></td>
+<td>Reformat JSON data from TBA to Tidy format, helper library for <code>interfaceR</code>
+</td>
+<td>JSON</td>
+<td>Tidy dataframes</td>
+<td><span class="emoji" data-emoji="x">❌</span></td>
+</tr>
+<tr class="even">
+<td><code>statbotics_readR</code></td>
+<td>Read JSON data from Statbotics to Tidy format</td>
+<td>Statbotics endpoints</td>
+<td>Tidy data frames</td>
+<td><span class="emoji" data-emoji="white_check_mark">✅</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
 <p><code>scoutR</code> manages dependencies with the <code>renv</code> package. This means we can resolve package issues by references the renv lockfile.</p>
+</div>
 </div>
 
   </main><aside class="col-md-3"><div class="links">

@@ -20,22 +20,14 @@ console
 Install scoutR by running `devtools::install_github("gkrotkov/scoutR")`
 in the R console.
 
+Introduce yourself to scoutR by running
+`scoutR::initialize_scoutR(auth_key)`, with your TBA auth key. You can
+get a TBA auth key at [this
+link](https://www.thebluealliance.com/account).
+
 Now `scoutR` is installed on your version of R! Check out [intro to
 scoutR](https://gkrotkov.github.io/scoutR/articles/intro.html) for a
 walkthrough.
-
-## Roadmap to ScoutR
-
-The below R files define functions that are the core engine of ScoutR
-
-| Name               | Description                                                                 | Input                                          | Output           | Public Facing? |
-|--------------------|-----------------------------------------------------------------------------|------------------------------------------------|------------------|----------------|
-| `scoutR`           | Analysis functions for at-event usage.                                      | Event codes or match data                      | Tidy dataframes  | Yes            |
-| `tba_interfaceR`   | Provide a direct interface between the user and the TBA API                 | TBA-legal keys                                 | Tidy dataframes  | Yes            |
-| `helpR`            | “Under the hood” helper functions that make other functions easy to use.    | Varies, but mostly dataframes of match objects | Varies           | Yes            |
-| `tba_readR`        | Read data from the TBA API, helper library for `tba_interfaceR`             | TBA-legal keys                                 | JSON             | No             |
-| `tba_tidyR`        | Reformat JSON data from TBA to Tidy format, helper library for `interfaceR` | JSON                                           | Tidy dataframes  | No             |
-| `statbotics_readR` | Read JSON data from Statbotics to Tidy format                               | Statbotics endpoints                           | Tidy data frames | Yes            |
 
 ## Why do I care about Tidy data? What even is it?
 
@@ -53,7 +45,24 @@ open source developer community to implement functions to do most of
 anything we want to do with the data. Luckily for us, scoutR makes
 getting tidy data straightforward.
 
-# Dependencies
+# For collaborators
+
+## Roadmap to ScoutR
+
+The below R files define functions that are the core engine of scoutR. R
+files like `utils`, `data`, and `dependencies` just make the proverbial
+trains run on time.
+
+| Name               | Description                                                                 | Input                                          | Output           | User Facing? |
+|--------------------|-----------------------------------------------------------------------------|------------------------------------------------|------------------|--------------|
+| `scoutR`           | Analysis functions for at-event usage.                                      | Event codes or match data                      | Tidy dataframes  | ✅           |
+| `tba_interfaceR`   | Provide a direct interface between the user and the TBA API                 | TBA-legal keys                                 | Tidy dataframes  | ✅           |
+| `helpR`            | “Under the hood” helper functions that make other functions easy to use.    | Varies, but mostly dataframes of match objects | Varies           | ❌           |
+| `tba_readR`        | Read data from the TBA API, helper library for `tba_interfaceR`             | TBA-legal keys                                 | JSON             | ❌           |
+| `tba_tidyR`        | Reformat JSON data from TBA to Tidy format, helper library for `interfaceR` | JSON                                           | Tidy dataframes  | ❌           |
+| `statbotics_readR` | Read JSON data from Statbotics to Tidy format                               | Statbotics endpoints                           | Tidy data frames | ✅           |
+
+## Dependencies
 
 `scoutR` manages dependencies with the `renv` package. This means we can
 resolve package issues by references the renv lockfile.
