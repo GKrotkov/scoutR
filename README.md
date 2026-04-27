@@ -4,7 +4,7 @@
 
 # scoutR
 
-scoutR is an R library to facilitate usage of data from the TBA and Statbotics API for FRC scouts, strategists, and data-driven observers. The objective is to provide functions that allow a newcomer to R to write one line of code and retrieve exactly the right dataframe in a tidy format rather than as a JSON that needs massaging to be useful.
+scoutR is an R package that makes [TheBlueAlliance](thebluealliance.com) (TBA) and [Statbotics](statbotics.io) data easier for R users to access. The objective is to provide functions that allow a newcomer to R to write one line of code and retrieve exactly the right dataframe in a tidy format rather than as a JSON that needs massaging to be useful. scoutR also provides a number of quality-of-life utility functions for FRC data.
 
 ## Setup - New User Checklist
 
