@@ -23,7 +23,7 @@ Hello! This is your introduction to using `scoutR`, assuming you might even be a
 
 ## R and RStudio
 
-`scoutR` is a package for the R programming language, an open-source statistical programming language popular for its support for statistical programming, data science, and data visualization. The most typical IDE used for R programming is RStudio, published by Posit. You can download and install the R programming language and RStudio [here](https://posit.co/download/rstudio-desktop/). You can use other IDEs (Visual Studio Code is a popular one, for example) to program in R, but RStudio is specifically designed to support R programming.
+`scoutR` is a package for the R programming language, an open-source statistical programming language popular for its statistical programming, data science, and data visualization support. The most typical IDE used for R programming is RStudio, published by Posit. You can download and install the R programming language and RStudio [here](https://posit.co/download/rstudio-desktop/). You can use other IDEs (Visual Studio Code, for example) to program in R, but RStudio is specifically designed to support R programming.
 
 ## Package Installation
 
@@ -124,9 +124,9 @@ head(vagle25_coprs)
 
 ## prescout()
 
-This function is useful mostly for prescouting - it retrieves all the tangibles results available in TBA, along with the team's record and EPA. Future updates will include season max (c)OPRs and last week seen.
+This function is intended to pull prescouting data  - it retrieves all the tangibles results available in TBA, max (c)OPRs, last week seen, the team's record, and EPA. It's quite a lot of data, so we won't output it here.
 
-```{r}
+```{r, eval = FALSE}
 newton24_prescout <- prescout("2024new")
 head(newton24_prescout)
 ```
