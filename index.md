@@ -2,11 +2,14 @@
 
 ![](reference/figures/transparent.png)
 
-scoutR is an R library to facilitate usage of data from the TBA and
-Statbotics API for FRC scouts, strategists, and data-driven observers.
-The objective is to provide functions that allow a newcomer to R to
-write one line of code and retrieve exactly the right dataframe in a
-tidy format rather than as a JSON that needs massaging to be useful.
+scoutR is an R package that makes
+[TheBlueAlliance](https://gkrotkov.github.io/scoutR/thebluealliance.com)
+(TBA) and [Statbotics](https://gkrotkov.github.io/scoutR/statbotics.io)
+data easier for R users to access. The objective is to provide functions
+that allow a newcomer to R to write one line of code and retrieve
+exactly the right dataframe in a tidy format rather than as a JSON that
+needs massaging to be useful. scoutR also provides a number of
+quality-of-life utility functions for FRC data.
 
 ## Setup - New User Checklist
 
@@ -37,13 +40,10 @@ Tidy data has 3 features.
 2.  Each observation forms a row.
 3.  Each type of observational unit forms a separate table.
 
-This is a pretty simple set of rules for data to follow, but keeping
-strictly to it enables powerful data manipulation libraries like the
-`tidyverse`. Once we have tidy data, visualization and analysis become
-streamlined. We can rely on R’s inbuilt functions as well as R’s robust
-open source developer community to implement functions to do most of
-anything we want to do with the data. Luckily for us, scoutR makes
-getting tidy data straightforward.
+This is a pretty simple set of rules for data to follow, but following
+it enables powerful data manipulation libraries like the `tidyverse`.
+Tidy data streamlines visualization and analysis - it lets students skip
+annoying API interactions and get right to data science questions.
 
 # For collaborators
 
