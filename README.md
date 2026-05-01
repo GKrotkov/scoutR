@@ -12,6 +12,7 @@ scoutR is an R package that makes [TheBlueAlliance](thebluealliance.com) (TBA) a
 - [ ] Install devtools by running `install.packages("devtools")` in the R console
 - [ ] Install scoutR by running `devtools::install_github("gkrotkov/scoutR")` in the R console.
 - [ ] Introduce yourself to scoutR by running `scoutR::initialize_scoutR(auth_key)`, with your TBA auth key. You can get a TBA auth key at [this link](https://www.thebluealliance.com/account).
+- [ ] To use scoutR functions in your R instance, call `library(scoutR)`. This loads the functions from scoutR into your environment.
 
 Now `scoutR` is installed on your version of R! Check out [intro to scoutR](https://gkrotkov.github.io/scoutR/articles/intro.html) for a walkthrough.
 
