@@ -24,6 +24,7 @@ If you do not already have `devtools` installed, you will need to
 install that first. To do that, run this line of code in your R console:
 
 ``` r
+
 # only run this code once!
 install.packages("devtools")
 ```
@@ -37,6 +38,7 @@ Once you have installed `devtools`, you can install `scoutR`. To install
 `scoutR`, run the following line of code in your R console.
 
 ``` r
+
 devtools::install_github("gkrotkov/scoutR")
 ```
 
@@ -49,6 +51,8 @@ string in this code with your auth key! (The auth key needs quotations
 around it)
 
 ``` r
+
+# to use functions from scoutR in your R instance, you first need to library(scoutR)
 library(scoutR)
 initialize_scoutR("<replace this with your auth key!>")
 ```
@@ -70,6 +74,7 @@ that event. A key parameter for this function is `match_type`, which can
 be “all”, “qual”, or “playoff”.
 
 ``` r
+
 mil23 <- event_matches("2023mil")
 # use match_type to subset down to only the matches you want
 mil23_quals <- event_matches("2023mil", match_type = "qual")
@@ -103,6 +108,7 @@ allows you to pull all the single-robot records from TBA in one line of
 code, based on the standard TBA naming schema since 2018.
 
 ``` r
+
 # defaults to only pulling data from qualification matches
 vagle25_tangibles <- event_tangibles("2025vagle")
 # but if you suppress the qual_only flag, you'll get playoffs as well
@@ -131,6 +137,7 @@ Retrieve all the events in a given year, with flags to get key-only
 return or official-only events
 
 ``` r
+
 chargedup_events <- events(2023)
 head(chargedup_events)
 ```
@@ -153,6 +160,7 @@ head(chargedup_events)
     ## #   week <int>, year <int>
 
 ``` r
+
 chargedup_official_events <- events(2023, official = TRUE)
 head(chargedup_official_events)
 ```
@@ -175,6 +183,7 @@ head(chargedup_official_events)
     ## #   week <int>, year <int>
 
 ``` r
+
 crescendo_keys <- events(2024, keys = TRUE)
 head(crescendo_keys)
 ```
@@ -188,6 +197,7 @@ to a CSV for use in whatever scouting application you’re using that
 depends on the schedule.
 
 ``` r
+
 mdpas <- qual_schedule("2025mdpas")
 head(mdpas)
 ```
@@ -203,6 +213,7 @@ head(mdpas)
     ## 6            6  4456  4541  7770  9072  8726  5549
 
 ``` r
+
 # write.csv(mdpas, file = "2025mdpas_schedule.csv")
 ```
 
@@ -212,6 +223,7 @@ Get all the awards won by a given team. Includes optional parameters to
 filter for year or event.
 
 ``` r
+
 gos_awards_history <- team_awards(3504)
 head(gos_awards_history)
 ```
@@ -231,6 +243,7 @@ head(gos_awards_history)
 Retrieve all component OPRs posted by TBA on the “Insights” page.
 
 ``` r
+
 vagle25_coprs <- event_coprs("2025vagle")
 head(vagle25_coprs)
 ```
@@ -260,6 +273,7 @@ team’s record, and EPA. It’s quite a lot of data, so we won’t output it
 here.
 
 ``` r
+
 newton24_prescout <- prescout("2024new")
 head(newton24_prescout)
 ```
