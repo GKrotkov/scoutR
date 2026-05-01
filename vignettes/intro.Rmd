@@ -47,6 +47,7 @@ devtools::install_github("gkrotkov/scoutR")
 Next, you will need to initialize scoutR with your TBA auth key. You can generate a TBA authorization key at www.thebluealliance.com/account under the "Read API Keys" header. Once you have an auth key, replace the string in this code with your auth key! (The auth key needs quotations around it)
 
 ```{r, eval = FALSE}
+# to use functions from scoutR in your R instance, you first need to library(scoutR)
 library(scoutR)
 initialize_scoutR("<replace this with your auth key!>")
 ```
