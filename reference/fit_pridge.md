@@ -56,7 +56,11 @@ appear in \`matches\`.
 event_key <- "2026mdsev"
 matches <- event_matches(event_key, match_type = "qual")
 sb_data <- team_events_sb(event = event_key)
+#> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_events"), ...)): HTTP 500 Internal Server Error.
 epas <- sapply(sb_data, function(te){te$epa$stats$start})
+#> Error: object 'sb_data' not found
 names(epas) <- sapply(sb_data, function(te){te$team})
+#> Error: object 'sb_data' not found
 mdsev_pridge <- fit_pridge(matches, epas)
+#> Error: object 'epas' not found
 ```
