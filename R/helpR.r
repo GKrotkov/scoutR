@@ -21,6 +21,7 @@ initialize_scoutR <- function(auth_key){
             write_file(auth_key, file = ".scoutR_auth.txt")
         })
     }
+    message("Auth key written successfully!")
 }
 
 #########################
