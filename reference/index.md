@@ -8,10 +8,6 @@
   : Alliance Finish
 - [`apply_indexer()`](https://gkrotkov.github.io/scoutR/reference/apply_indexer.md)
   : Apply Indexer
-- [`attach_opt_params()`](https://gkrotkov.github.io/scoutR/reference/attach_opt_params.md)
-  : Attach Optional Parameters
-- [`auth()`](https://gkrotkov.github.io/scoutR/reference/auth.md) : API
-  Authorization
 - [`awards24`](https://gkrotkov.github.io/scoutR/reference/awards24.md)
   : All Team Awards
 - [`bo3_alliance_finish()`](https://gkrotkov.github.io/scoutR/reference/bo3_alliance_finish.md)

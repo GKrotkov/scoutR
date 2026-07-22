@@ -19,7 +19,7 @@ team_years_sb(...)
 
 ``` r
 team_years_sb(year = 2025, district = "chs")
-#> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_years"), ...)): HTTP 500 Internal Server Error.
+#> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_years"), ...)): HTTP 503 Service Unavailable.
 team_years_sb(team = 449)
 #> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_years"), ...)): HTTP 500 Internal Server Error.
 ```

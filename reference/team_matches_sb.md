@@ -19,5 +19,5 @@ team_matches_sb(...)
 
 ``` r
 team_matches_sb(team = 449, year = 2025)
-#> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_matches"), ...)): HTTP 404 Not Found.
+#> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_matches"), ...)): HTTP 503 Service Unavailable.
 ```
