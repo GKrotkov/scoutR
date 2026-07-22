@@ -32,5 +32,5 @@ team_sb(tm, yr = NULL, event = NULL, match = NULL)
 dawgma <- team_sb(1712)
 #> Error in req_perform(req): HTTP 500 Internal Server Error.
 blair_at_severn <- team_sb(449, event = "2025mdsev")
-#> Error in req_perform(req): HTTP 503 Service Unavailable.
+#> Error in req_perform(req): HTTP 500 Internal Server Error.
 ```

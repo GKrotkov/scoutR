@@ -30,12 +30,6 @@ additions to scoutR scoped, modular, and testable.
   the repo.
 - <https://gkrotkov.github.io/scoutR/>
 
-## httr decisions
-
-- Statbotics API functions will use httr2, while the TBA API functions
-  will use httr. This avoids me needing to revamp all of the TBA readR.
-  (This is some tech debt, but…)
-
 # TODO list
 
 # Short term

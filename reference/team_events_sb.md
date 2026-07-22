@@ -21,5 +21,5 @@ team_events_sb(...)
 team_events_sb(team = 4821, year = 2025)
 #> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_events"), ...)): HTTP 500 Internal Server Error.
 team_events_sb(event = "2025mdsev")
-#> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_events"), ...)): HTTP 503 Service Unavailable.
+#> Error in req_perform(req_url_query(req_url_path_append(STATBOTICS_BASE,     "team_events"), ...)): HTTP 500 Internal Server Error.
 ```
