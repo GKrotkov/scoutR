@@ -53,21 +53,6 @@ tba_key <- function(){
 
 numbers_only <- function(x) !grepl("\\D", x)
 
-#' API Authorization
-#'
-#' Attaches the auth key to the end of a request string
-#' @param req Request string stub
-#' @author Gabriel Krotkov
-#' @return string request with TBA auth key
-#' @examples
-#' auth("")
-auth <- function(req){
-    stopifnot("Authentication key uninitialized.
-              To resolve, run: initialize_scoutR('your_tba_auth_key')." =
-                  !is.na(tba_key()))
-    return(paste(req, "?X-TBA-Auth-Key=", tba_key(), sep = ""))
-}
-
 #' Team Formatting
 #'
 #' Coerces team identifiers into TBA-legal format
@@ -90,21 +75,6 @@ tf <- function(n) {
     return(result)
 }
 
-#' Attach Optional Parameters
-#'
-#' Attaches optional parameters to an API request
-#' @param req Length-1 character vector representing an API request
-#' @param params named list of desired params, where the name is the parameter
-#' title and the value is the parameter value.
-#' @param marker the character used to separate the params in the url
-attach_opt_params <- function(req, params, marker = "?"){
-    stopifnot(length(req) == 1)
-    # paste/collapse the params into a single chr
-    params <- paste(names(params), params, sep = "=", collapse = "&")
-    req <- paste(req, params, sep = marker)
-    return(req)
-}
-
 #' Get Content
 #'
 #' Executes an API request given an endpoint and an API base
@@ -116,15 +86,24 @@ attach_opt_params <- function(req, params, marker = "?"){
 #' get_content("team/frc1712/awards")
 #' get_content("team/3504", base = STATBOTICS_BASE)
 get_content <- function(req, params = list(), base = TBA_BASE){
-    req <- paste(base, req, sep = "/")
-    # Add TBA Authorization to params
-    params <- append(params, list(`X-TBA-Auth-Key` = tba_key()))
-    # add auth param and *then* attach the params so we only introduce
-    # one "&" character
-    req <- req |>
-        attach_opt_params(params)
+    stopifnot("Authentication key uninitialized.
+              To resolve, run: initialize_scoutR('your_tba_auth_key')." =
+                  !is.na(tba_key()))
 
-    return(httr::content(httr::GET(req)))
+    params <- append(params, list(`X-TBA-Auth-Key` = tba_key()))
+
+    result <- tryCatch(
+        request(base) |>
+            req_url_path_append(req) |>
+            req_url_query(!!!params) |>
+            # uses lambda one-line-function syntax to always return false
+            req_error(is_error = \(resp) FALSE) |>
+            req_perform() |>
+            resp_body_json(),
+        error = function(e) NULL  # network-level failures return NULL
+    )
+
+    return(result)
 }
 
 #' Simkeys
