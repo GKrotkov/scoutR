@@ -11,7 +11,6 @@
 
 # Selective function
 #' @importFrom pracma Lcm
-#' @importFrom httr content GET
 #' @importFrom httr2 request req_url_path_append req_url_query req_perform resp_body_json
 #' @importFrom withr with_dir
 #' @importFrom rvest html_text
