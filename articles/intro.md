@@ -20,13 +20,13 @@ specifically designed to support R programming.
 
 ### Package Installation
 
-If you do not already have `devtools` installed, you will need to
-install that first. To do that, run this line of code in your R console:
+If you do not already have `pak` installed, you will need to install
+that first. To do that, run this line of code in your R console:
 
 ``` r
 
 # only run this code once!
-install.packages("devtools")
+install.packages("pak")
 ```
 
 Installation code should only be run once. Once you have run the
@@ -34,12 +34,12 @@ installation on your machine, I suggest deleting or commenting out
 installation code so you don’t accidentally rerun that code by running
 the entire file.
 
-Once you have installed `devtools`, you can install `scoutR`. To install
+Once you have installed `pak`, you can install `scoutR`. To install
 `scoutR`, run the following line of code in your R console.
 
 ``` r
 
-devtools::install_github("gkrotkov/scoutR")
+pak::pak("gkrotkov/scoutR")
 ```
 
 ### Initialization

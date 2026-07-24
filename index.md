@@ -17,11 +17,10 @@ Install R and RStudio on your machine. You can find them both on Posit’s
 website here: <https://posit.co/download/rstudio-desktop/>. scoutR
 assumes that you have R 4.3.0 or later.
 
-Install devtools by running `install.packages("devtools")` in the R
-console
+Install pak by running `install.packages("pak")` in the R console
 
-Install scoutR by running `devtools::install_github("gkrotkov/scoutR")`
-in the R console.
+Install scoutR by running `pak::pak("gkrotkov/scoutR")` in the R
+console.
 
 Introduce yourself to scoutR by running
 `scoutR::initialize_scoutR(auth_key)`, with your TBA auth key. You can

@@ -88,21 +88,21 @@ RStudio is specifically designed to support R programming.</p>
 <div class="section level3">
 <h3 id="package-installation">Package Installation<a class="anchor" aria-label="anchor" href="#package-installation"></a>
 </h3>
-<p>If you do not already have <code>devtools</code> installed, you will
-need to install that first. To do that, run this line of code in your R
+<p>If you do not already have <code>pak</code> installed, you will need
+to install that first. To do that, run this line of code in your R
 console:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># only run this code once!</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span></code></pre></div>
 <p>Installation code should only be run once. Once you have run the
 installation on your machine, I suggest deleting or commenting out
 installation code so you don’t accidentally rerun that code by running
 the entire file.</p>
-<p>Once you have installed <code>devtools</code>, you can install
+<p>Once you have installed <code>pak</code>, you can install
 <code>scoutR</code>. To install <code>scoutR</code>, run the following
 line of code in your R console.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gkrotkov/scoutR"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"gkrotkov/scoutR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="initialization">Initialization<a class="anchor" aria-label="anchor" href="#initialization"></a>
