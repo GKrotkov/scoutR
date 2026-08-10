@@ -16,6 +16,11 @@ scoutR is an R package that makes [TheBlueAlliance](thebluealliance.com) (TBA) a
 
 Now `scoutR` is installed on your version of R! Check out [intro to scoutR](https://gkrotkov.github.io/scoutR/articles/intro.html) for a walkthrough.
 
+# Function naming convention ("how do I guess what functions exist?")
+scoutR interface functions generally follow the naming convention that the first word is the input value and the second word is the return value. For example `event_teams()` takes an event key (ex. "2026chcmp") and returns team IDs, and `team_awards()` takes a team ID and returns awards. 
+
+The scoutR interface also exposes single-word functions that mirror the TBA API. For example `events()` takes a year, and `event()` takes an event ID.
+
 ## Why do I care about Tidy data? What even is it?
 
 Tidy data has 3 features.
