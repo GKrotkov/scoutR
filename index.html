@@ -69,6 +69,12 @@
 </ul>
 <p>Now <code>scoutR</code> is installed on your version of R! Check out <a href="https://gkrotkov.github.io/scoutR/articles/intro.html">intro to scoutR</a> for a walkthrough.</p>
 </div>
+</div>
+<div class="section level1">
+<h1 id="function-naming-convention-how-do-i-guess-what-functions-exist">Function naming convention (“how do I guess what functions exist?”)<a class="anchor" aria-label="anchor" href="#function-naming-convention-how-do-i-guess-what-functions-exist"></a>
+</h1>
+<p>scoutR interface functions generally follow the naming convention that the first word is the input value and the second word is the return value. For example <code><a href="reference/event_teams.html">event_teams()</a></code> takes an event key (ex. “2026chcmp”) and returns team IDs, and <code><a href="reference/team_awards.html">team_awards()</a></code> takes a team ID and returns awards.</p>
+<p>The scoutR interface also exposes single-word functions that mirror the TBA API. For example <code><a href="reference/events.html">events()</a></code> takes a year, and <code><a href="reference/event.html">event()</a></code> takes an event ID.</p>
 <div class="section level2">
 <h2 id="why-do-i-care-about-tidy-data-what-even-is-it">Why do I care about Tidy data? What even is it?<a class="anchor" aria-label="anchor" href="#why-do-i-care-about-tidy-data-what-even-is-it"></a>
 </h2>
