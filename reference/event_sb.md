@@ -18,5 +18,4 @@ event_sb(key)
 
 ``` r
 pasadena <- event_sb("2025mdpas")
-#> Error in req_perform(req_url_path_append(STATBOTICS_BASE, "event", key)): HTTP 500 Internal Server Error.
 ```
