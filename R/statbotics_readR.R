@@ -1,4 +1,33 @@
 STATBOTICS_BASE <- httr2::request("https://api.statbotics.io/v3")
+ITR_BASE <- httr2::request("https://api-statbotics.iterativerefinement.com/v3/")
+
+#' Internal: perform a Statbotics request, falling back to ITR_BASE on a 500
+#'
+#' Builds a request against STATBOTICS_BASE using the given path segments
+#' and (optional) query parameters, performs it, and returns the parsed
+#' JSON body. If STATBOTICS_BASE returns an HTTP 500, the same request is
+#' retried against ITR_BASE instead.
+#' @param path (chr) vector of path segments to append, in order
+#' @param query (list) optional named list of query parameters
+#' @noRd
+sb_perform <- function(path, query = NULL){
+    build <- function(base){
+        req <- do.call(httr2::req_url_path_append, c(list(base), as.list(path)))
+        if (!is.null(query) && length(query) > 0) {
+            req <- do.call(httr2::req_url_query, c(list(req), query))
+        }
+        req
+    }
+
+    resp <- tryCatch(
+        build(STATBOTICS_BASE) |> httr2::req_perform(),
+        httr2_http = function(cnd) {
+            stopifnot("HTTR error not 500 or higher" = cnd$status >= 500)
+            build(ITR_BASE) |> httr2::req_perform()
+        }
+    )
+    httr2::resp_body_json(resp)
+}
 
 #' Team (Statbotics)
 #'
@@ -15,24 +44,17 @@ team_sb <- function(tm, yr = NULL, event = NULL, match = NULL){
     stopifnot("tm should be of length 1" = {length(tm) == 1})
     # putting "event" first gives it preference, if multiple optionals are given
     if (!is.null(event)) {
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("team_event", tm, event)
+        path <- c("team_event", tm, event)
     } else if (!is.null(yr)) {
         stopifnot("yr should be of length 1" = {length(yr) == 1})
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("team_year", tm, yr)
+        path <- c("team_year", tm, yr)
     } else if (!is.null(match)){
         stopifnot("match should be of length 1" = {length(match) == 1})
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("team_match", tm, match)
+        path <- c("team_match", tm, match)
     } else {
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("team", tm)
+        path <- c("team", tm)
     }
-    result <- req |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform(path)
 }
 
 #' Event (Statbotics)
@@ -44,11 +66,7 @@ team_sb <- function(tm, yr = NULL, event = NULL, match = NULL){
 #' @export
 event_sb <- function(key){
     stopifnot("key should have length 1" = {length(key) == 1})
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("event", key) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform(c("event", key))
 }
 
 #' Match (Statbotics)
@@ -58,11 +76,7 @@ event_sb <- function(key){
 #' @export
 match_sb <- function(key){
     stopifnot("key should have length 1" = {length(key) == 1})
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("match", key) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform(c("match", key))
 }
 
 #' Year (Statbotics)
@@ -72,11 +86,7 @@ match_sb <- function(key){
 #' @export
 year_sb <- function(yr){
     stopifnot("yr should have length 1" = {length(yr) == 1})
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("year", yr) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform(c("year", yr))
 }
 
 #' Teams (Statbotics)
@@ -90,24 +100,15 @@ year_sb <- function(yr){
 #' @export
 teams_sb <- function(..., yr = NULL, event = NULL, match = NULL){
     if (!is.null(yr)){
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("team_years")
+        path <- "team_years"
     } else if (!is.null(event)){
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("team_events")
-
+        path <- "team_events"
     } else if (!is.null(match)){
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("team_matches")
+        path <- "team_matches"
     } else{
-        req <- STATBOTICS_BASE |>
-            req_url_path_append("teams")
+        path <- "teams"
     }
-    result <- req |>
-        req_url_query(...) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform(path, query = list(...))
 }
 
 #' Years (Statbotics)
@@ -116,12 +117,7 @@ teams_sb <- function(..., yr = NULL, event = NULL, match = NULL){
 #' @param ... Parameters to be passed to the statbotics /v3/{years}/ endpoint
 #' @export
 years_sb <- function(...){
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("years") |>
-        req_url_query(...) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform("years", query = list(...))
 }
 
 #' Events (Statbotics)
@@ -130,12 +126,7 @@ years_sb <- function(...){
 #' @param ... Parameters passed to the statbotics /v3/{events} endpoint
 #' @export
 events_sb <- function(...){
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("events") |>
-        req_url_query(...) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform("events", query = list(...))
 }
 
 #' Matches (Statbotics)
@@ -144,12 +135,7 @@ events_sb <- function(...){
 #' @param ... Parameters passed to the statbotics /v3/{matches} endpoint
 #' @export
 matches_sb <- function(...){
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("matches") |>
-        req_url_query(...) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform("matches", query = list(...))
 }
 
 #' Team-Years (Statbotics)
@@ -161,12 +147,7 @@ matches_sb <- function(...){
 #' team_years_sb(team = 449)
 #' @export
 team_years_sb <- function(...){
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("team_years") |>
-        req_url_query(...) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform("team_years", query = list(...))
 }
 
 #' Team-Events (Statbotics)
@@ -178,12 +159,7 @@ team_years_sb <- function(...){
 #' team_events_sb(event = "2025mdsev")
 #' @export
 team_events_sb <- function(...){
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("team_events") |>
-        req_url_query(...) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform("team_events", query = list(...))
 }
 
 #' Team-Matches (Statbotics)
@@ -194,10 +170,5 @@ team_events_sb <- function(...){
 #' team_matches_sb(team = 449, year = 2025)
 #' @export
 team_matches_sb <- function(...){
-    result <- STATBOTICS_BASE |>
-        req_url_path_append("team_matches") |>
-        req_url_query(...) |>
-        req_perform() |>
-        resp_body_json()
-    return(result)
+    sb_perform("team_matches", query = list(...))
 }
