@@ -1,6 +1,6 @@
 # Compare EPA to prior ridge using Statbotics API calls
 rm(list = ls()) # clear namespace (mostly for debugging)
-library(scoutR) # devtools::install_github("gkrotkov/scoutR")
+library(scoutR) # pak::pak("gkrotkov/scoutR")
 library(tidyverse)
 library(parallel)
 library(doParallel)
