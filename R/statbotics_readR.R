@@ -5,7 +5,7 @@ ITR_BASE <- httr2::request("https://api-statbotics.iterativerefinement.com/v3/")
 #'
 #' Builds a request against STATBOTICS_BASE using the given path segments
 #' and (optional) query parameters, performs it, and returns the parsed
-#' JSON body. If STATBOTICS_BASE returns an HTTP 500, the same request is
+#' JSON body. If STATBOTICS_BASE returns an HTTP 500+, the same request is
 #' retried against ITR_BASE instead.
 #' @param path (chr) vector of path segments to append, in order
 #' @param query (list) optional named list of query parameters
@@ -98,17 +98,24 @@ year_sb <- function(yr){
 #' @param event (optional) event of interest
 #' @param match (optional) match of interest
 #' @export
-teams_sb <- function(..., yr = NULL, event = NULL, match = NULL){
-    if (!is.null(yr)){
+teams_sb <- function (..., yr = NULL, event = NULL, match = NULL) {
+    if (!is.null(yr)) {
         path <- "team_years"
-    } else if (!is.null(event)){
-        path <- "team_events"
-    } else if (!is.null(match)){
-        path <- "team_matches"
-    } else{
-        path <- "teams"
+        query <- c(list(year = yr), list(...))
     }
-    sb_perform(path, query = list(...))
+    else if (!is.null(event)) {
+        path <- "team_events"
+        query <- c(list(event = event), list(...))
+    }
+    else if (!is.null(match)) {
+        path <- "team_matches"
+        query <- c(list(match = match), list(...))
+    }
+    else {
+        path <- "teams"
+        query <- list(...)
+    }
+    sb_perform(path, query = query)
 }
 
 #' Years (Statbotics)
