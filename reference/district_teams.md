@@ -59,35 +59,35 @@ district_teams("2022fit", keys = TRUE)
 #> [155] "frc8827" "frc8842" "frc8858" "frc8874" "frc8879"
 district_teams("2014mar", simple = TRUE)
 #> # A tibble: 110 × 7
-#>    city          country key     name            nickname state_prov team_number
-#>    <chr>         <chr>   <chr>   <chr>           <chr>    <chr>            <int>
-#>  1 Somerville    USA     frc102  Johnson & John… The Gea… New Jersey         102
-#>  2 Kintnersville USA     frc103  Rev Robotics/M… Cyberso… Pennsylva…         103
-#>  3 Hightstown    USA     frc1089 Bristol Myers-… Team Me… New Jersey        1089
-#>  4 Flanders      USA     frc11   National Defen… MORT     New Jersey          11
-#>  5 Clarks Summit USA     frc1143 Lockheed Marti… Cruzin'… Pennsylva…        1143
-#>  6 Malvern       USA     frc1168 CTDI/All Fill … Malvern… Pennsylva…        1168
-#>  7 Philadelphia  USA     frc1218 Metal Edge Int… SCH Rob… Pennsylva…        1218
-#>  8 Rahway        USA     frc1228 Astro Tool and… RoboTri… New Jersey        1228
-#>  9 Scotch Plains USA     frc1257 Picatinny Arse… Paralle… New Jersey        1257
-#> 10 Somerville    USA     frc1279 Johnson & John… Cold Fu… New Jersey        1279
+#>    key     team_number nickname          name           city  state_prov country
+#>    <chr>         <int> <chr>             <chr>          <chr> <chr>      <chr>  
+#>  1 frc102          102 The Gearheads     Johnson & Joh… Some… New Jersey USA    
+#>  2 frc103          103 Cybersonics       Rev Robotics/… Kint… Pennsylva… USA    
+#>  3 frc1089        1089 Team Mercury      Bristol Myers… High… New Jersey USA    
+#>  4 frc11            11 MORT              National Defe… Flan… New Jersey USA    
+#>  5 frc1143        1143 Cruzin' Comets    Lockheed Mart… Clar… Pennsylva… USA    
+#>  6 frc1168        1168 Malvern Robotics  CTDI/All Fill… Malv… Pennsylva… USA    
+#>  7 frc1218        1218 SCH Robotics      Metal Edge In… Phil… Pennsylva… USA    
+#>  8 frc1228        1228 RoboTribe         Astro Tool an… Rahw… New Jersey USA    
+#>  9 frc1257        1257 Parallel Universe Picatinny Ars… Scot… New Jersey USA    
+#> 10 frc1279        1279 Cold Fusion       Johnson & Joh… Some… New Jersey USA    
 #> # ℹ 100 more rows
 district_teams("2016mar")
 #> # A tibble: 121 × 18
-#>    address city          country gmaps_place_id gmaps_url key     lat   lng  
-#>    <lgl>   <chr>         <chr>   <lgl>          <lgl>     <chr>   <lgl> <lgl>
-#>  1 NA      Somerville    USA     NA             NA        frc102  NA    NA   
-#>  2 NA      Kintnersville USA     NA             NA        frc103  NA    NA   
-#>  3 NA      Hightstown    USA     NA             NA        frc1089 NA    NA   
-#>  4 NA      Flanders      USA     NA             NA        frc11   NA    NA   
-#>  5 NA      Clarks Summit USA     NA             NA        frc1143 NA    NA   
-#>  6 NA      Malvern       USA     NA             NA        frc1168 NA    NA   
-#>  7 NA      Philadelphia  USA     NA             NA        frc1218 NA    NA   
-#>  8 NA      Rahway        USA     NA             NA        frc1228 NA    NA   
-#>  9 NA      Scotch Plains USA     NA             NA        frc1257 NA    NA   
-#> 10 NA      Somerville    USA     NA             NA        frc1279 NA    NA   
+#>    key    team_number nickname name  website rookie_year motto school_name city 
+#>    <chr>        <int> <chr>    <chr> <chr>         <int> <lgl> <chr>       <chr>
+#>  1 frc102         102 The Gea… John… http:/…        1998 NA    Somerville… Some…
+#>  2 frc103         103 Cyberso… Rev … http:/…        1997 NA    Palisades … Kint…
+#>  3 frc10…        1089 Team Me… Bris… http:/…        2003 NA    Hightstown… High…
+#>  4 frc11           11 MORT     Nati… http:/…        1997 NA    Mt Olive H… Flan…
+#>  5 frc11…        1143 Cruzin'… Lock… http:/…        2003 NA    Abington H… Clar…
+#>  6 frc11…        1168 Malvern… CTDI… http:/…        2003 NA    Malvern Pr… Malv…
+#>  7 frc12…        1218 SCH Rob… Meta… http:/…        2003 NA    Springside… Phil…
+#>  8 frc12…        1228 RoboTri… Astr… http:/…        2003 NA    Rahway Hig… Rahw…
+#>  9 frc12…        1257 Paralle… Pica… http:/…        2004 NA    Union Co V… Scot…
+#> 10 frc12…        1279 Cold Fu… John… https:…        2004 NA    Immaculata… Some…
 #> # ℹ 111 more rows
-#> # ℹ 10 more variables: location_name <lgl>, motto <lgl>, name <chr>,
-#> #   nickname <chr>, postal_code <chr>, rookie_year <int>, school_name <chr>,
-#> #   state_prov <chr>, team_number <int>, website <chr>
+#> # ℹ 9 more variables: state_prov <chr>, country <chr>, postal_code <chr>,
+#> #   lat <lgl>, lng <lgl>, location_name <lgl>, address <lgl>,
+#> #   gmaps_place_id <lgl>, gmaps_url <lgl>
 ```

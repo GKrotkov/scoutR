@@ -69,142 +69,142 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">event_district_points</span><span class="op">(</span><span class="st">"2016mrcmp"</span>, tiebreakers <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    team_keys alliance_points award_points elim_points qual_points total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     frc102               0            0           0          48    48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    frc1089               9            0          60          45   114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      frc11               0            0           0          27    27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    frc1143              45            0           0          51    96</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    frc1218              24           24           0          45    93</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    frc1257               3            0          90          21   114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    frc1279               0            0           0          12    12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    frc1391              36            0           0          57    93</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    frc1403              21            0          30          33    84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   frc1626               0            0           0          42    42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   frc1640              39            0          30          24    93</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   frc1647               0            0           0          39    39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13   frc1676               0           24           0          21    45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14   frc1712              30           15          30          54   129</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15   frc1811               0            0           0          30    30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16   frc1923               0           30           0          42    72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17    frc193               0            0           0          48    48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18   frc1989              33            0           0          57    90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19   frc2016               0            0           0          33    33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20    frc222               0            0           0          30    30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21    frc223               0            0           0          18    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22    frc225              48           15          90          66   219</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     frc25              42            0          60          51   153</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24   frc2559               0            0           0          33    33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25   frc2590              27            0           0          51    78</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26   frc2607               0           15           0          39    54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27    frc272               0            0           0          42    42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28    frc303               0           15           0          36    51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29    frc321              18           30           0          48    96</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30   frc3314              42            0          60          60   162</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31    frc341              48           15          90          63   216</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32   frc3637               0           15           0          30    45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33    frc365              27           15           0          30    72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34     frc41              33            0           0          54    87</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35    frc423               0            0           0          18    18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36   frc4342               0            0           0          36    36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37   frc4454               0            0           0          15    15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38   frc4573               0            0           0          36    36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39   frc4575               0            0           0          27    27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40   frc4637               0            0           0           9     9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41   frc4653               0            0           0          33    33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42   frc4750               0            0           0          36    36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43    frc484               0            0           0          45    45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44   frc4954               0            0           0          27    27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45   frc5113               0           15           0          42    57</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46   frc5401              45           15           0          66   126</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47   frc5404              15            0           0          39    54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48   frc5407               0            0           0          33    33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49     frc56              12            0          30          48    90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50   frc5624               0            0           0          27    27</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51   frc5666               0           15           0          15    30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52   frc5684               0            0           0          42    42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53   frc5895              39            0          30          60   129</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54   frc5938               0           15           0          24    39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55   frc6016               0           24           0          39    63</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56   frc6203               0            0           0          21    21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57    frc708              30            0          30          45   105</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58     frc75               6            0           0          24    30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59    frc834               0            0           0          36    36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60    frc869              36           15           0          54   105</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    highest_match_scores qual_wins</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1         160, 137, 133         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         180, 174, 172         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3         150, 150, 118         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         172, 148, 129         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         192, 137, 130         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         200, 197, 177         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7         104, 101, 100         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         132, 129, 126         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9         155, 153, 150         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10        125, 122, 120         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11        190, 174, 170         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12        129, 129, 112         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13        126, 118, 109         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14        153, 150, 136         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15        131, 125, 124         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16        146, 126, 110         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17        132, 132, 129         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18        162, 147, 132         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19        112, 110, 109         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20        129, 126, 118         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21        139, 108, 108         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22        200, 197, 177         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23        180, 174, 172         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24        131, 110, 109         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25        192, 146, 141         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26        137, 121, 118         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27        124, 110, 108         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28        162, 132, 126         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29        165, 149, 118         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30        180, 174, 172         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31        200, 197, 177         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32        120, 115, 112         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33        192, 137, 130         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34        170, 155, 150         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35        121, 109, 104         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36        124, 118, 117         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37         128, 105, 97         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38        122, 121, 121         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39        121, 106, 103         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40        125, 106, 101         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41        117, 108, 106         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42         104, 100, 99         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43        118, 115, 113         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44        147, 132, 110         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45        125, 119, 115         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46        172, 150, 148         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47        130, 126, 125         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48        147, 114, 108         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49        190, 174, 170         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50        116, 112, 108         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51        118, 104, 101         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52        133, 124, 115         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53        190, 174, 170         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54        114, 111, 102         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55        132, 110, 106         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56        110, 109, 102         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57        153, 150, 136         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58        172, 148, 132         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59        127, 124, 122         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60        160, 141, 130         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    team_keys qual_points elim_points alliance_points award_points total</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     frc102          48           0               0            0    48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    frc1089          45          60               9            0   114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      frc11          27           0               0            0    27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    frc1143          51           0              45            0    96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    frc1218          45           0              24           24    93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    frc1257          21          90               3            0   114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    frc1279          12           0               0            0    12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    frc1391          57           0              36            0    93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    frc1403          33          30              21            0    84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   frc1626          42           0               0            0    42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11   frc1640          24          30              39            0    93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   frc1647          39           0               0            0    39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13   frc1676          21           0               0           24    45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14   frc1712          54          30              30           15   129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15   frc1811          30           0               0            0    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16   frc1923          42           0               0           30    72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17    frc193          48           0               0            0    48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18   frc1989          57           0              33            0    90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19   frc2016          33           0               0            0    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    frc222          30           0               0            0    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    frc223          18           0               0            0    18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22    frc225          66          90              48           15   219</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23     frc25          51          60              42            0   153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   frc2559          33           0               0            0    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25   frc2590          51           0              27            0    78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26   frc2607          39           0               0           15    54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27    frc272          42           0               0            0    42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28    frc303          36           0               0           15    51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29    frc321          48           0              18           30    96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30   frc3314          60          60              42            0   162</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31    frc341          63          90              48           15   216</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32   frc3637          30           0               0           15    45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33    frc365          30           0              27           15    72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34     frc41          54           0              33            0    87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35    frc423          18           0               0            0    18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36   frc4342          36           0               0            0    36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37   frc4454          15           0               0            0    15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38   frc4573          36           0               0            0    36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39   frc4575          27           0               0            0    27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40   frc4637           9           0               0            0     9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41   frc4653          33           0               0            0    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42   frc4750          36           0               0            0    36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43    frc484          45           0               0            0    45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44   frc4954          27           0               0            0    27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45   frc5113          42           0               0           15    57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46   frc5401          66           0              45           15   126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47   frc5404          39           0              15            0    54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48   frc5407          33           0               0            0    33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49     frc56          48          30              12            0    90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50   frc5624          27           0               0            0    27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51   frc5666          15           0               0           15    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52   frc5684          42           0               0            0    42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53   frc5895          60          30              39            0   129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54   frc5938          24           0               0           15    39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55   frc6016          39           0               0           24    63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56   frc6203          21           0               0            0    21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57    frc708          45          30              30            0   105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58     frc75          24           0               6            0    30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59    frc834          36           0               0            0    36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60    frc869          54           0              36           15   105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    qual_wins highest_match_scores</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          0        160, 137, 133</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2          0        180, 174, 172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3          0        150, 150, 118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4          0        172, 148, 129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5          0        192, 137, 130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          0        200, 197, 177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7          0        104, 101, 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8          0        132, 129, 126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9          0        155, 153, 150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         0        125, 122, 120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11         0        190, 174, 170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12         0        129, 129, 112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13         0        126, 118, 109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14         0        153, 150, 136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15         0        131, 125, 124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16         0        146, 126, 110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17         0        132, 132, 129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18         0        162, 147, 132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19         0        112, 110, 109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20         0        129, 126, 118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21         0        139, 108, 108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22         0        200, 197, 177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23         0        180, 174, 172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24         0        131, 110, 109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25         0        192, 146, 141</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26         0        137, 121, 118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27         0        124, 110, 108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28         0        162, 132, 126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29         0        165, 149, 118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30         0        180, 174, 172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31         0        200, 197, 177</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32         0        120, 115, 112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33         0        192, 137, 130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 34         0        170, 155, 150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 35         0        121, 109, 104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 36         0        124, 118, 117</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37         0         128, 105, 97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 38         0        122, 121, 121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 39         0        121, 106, 103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40         0        125, 106, 101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41         0        117, 108, 106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42         0         104, 100, 99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43         0        118, 115, 113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 44         0        147, 132, 110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45         0        125, 119, 115</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46         0        172, 150, 148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 47         0        130, 126, 125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48         0        147, 114, 108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 49         0        190, 174, 170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 50         0        116, 112, 108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 51         0        118, 104, 101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 52         0        133, 124, 115</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53         0        190, 174, 170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 54         0        114, 111, 102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55         0        132, 110, 106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 56         0        110, 109, 102</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57         0        153, 150, 136</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58         0        172, 148, 132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 59         0        127, 124, 122</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60         0        160, 141, 130</span>
 <span class="r-in"><span><span class="fu">event_district_points</span><span class="op">(</span><span class="st">"2015padre"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 35 × 6</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    alliance_points award_points elim_points qual_points total team_keys</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>               8            5           0          14    27 frc103   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>               4            0          10          14    28 frc1143  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>               7            0           0           8    15 frc1168  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>               0            5           0           5    10 frc1391  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>               5            0           0          10    15 frc1495  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>               6            5           0          13    24 frc1712  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>               0            0           0           7     7 frc1791  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>              16            5          30          22    73 frc225   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>               0            0           0           9     9 frc2539  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>              16            5          30          20    71 frc2607  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    qual_points elim_points alliance_points award_points total team_keys</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>          22          30              16            5    73 frc225   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>          21          20              15            5    61 frc316   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>          20          30              16            5    71 frc2607  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>          19          10              14            8    51 frc365   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>          18          10              13            5    46 frc87    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>          18          20              15            5    58 frc272   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>          17           0              12           10    39 frc321   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>          17           0              11            0    28 frc3929  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>          16           0              10            8    34 frc5404  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>          16          10              13            0    39 frc3974  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 25 more rows</span></span>
 </code></pre></div>
     </div>

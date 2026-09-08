@@ -30,39 +30,37 @@ Gabriel Krotkov
 
 ``` r
 event("2022txirv")
-#>                              address   city country
-#> event 500 West Las Colinas Boulevard Irving     USA
-#>                                         district division_keys   end_date
-#> event fit, FIRST In Texas, 2022fit, 23, 80, 2022          NULL 2022-03-26
-#>       event_code event_type event_type_string first_event_code first_event_id
-#> event      txirv          1          District            txirv           NULL
-#>       gmaps_place_id gmaps_url       key  lat  lng            location_name
-#> event           NULL      NULL 2022txirv NULL NULL Irving Convention Center
-#>                            name parent_event_key playoff_type
-#> event FIT District Irving Event             NULL            0
-#>       playoff_type_string postal_code remap_teams short_name start_date
-#> event                NULL       75039        NULL     Irving 2022-03-24
-#>       state_prov        timezone                   webcasts
-#> event         TX America/Chicago firstintexasevents, twitch
-#>                         website week year
-#> event https://firstintexas.org/    3 2022
+#>             key                      name short_name event_code event_type
+#> event 2022txirv FIT District Irving Event     Irving      txirv          1
+#>       event_type_string parent_event_key playoff_type playoff_type_string
+#> event          District             NULL            0                NULL
+#>                                         district division_keys first_event_id
+#> event 2022fit, 2022, fit, FIRST In Texas, 80, 23          NULL           NULL
+#>       first_event_code year        timezone week                   website
+#> event            txirv 2022 America/Chicago    3 https://firstintexas.org/
+#>       remap_teams   city state_prov country postal_code  lat  lng
+#> event        NULL Irving         TX     USA       75039 NULL NULL
+#>                  location_name                        address gmaps_place_id
+#> event Irving Convention Center 500 West Las Colinas Boulevard           NULL
+#>       gmaps_url start_date   end_date                   webcasts
+#> event      NULL 2022-03-24 2022-03-26 twitch, firstintexasevents
 event("2016pahat", simple = TRUE)
+#>             key                                 name      short_name event_code
+#> event 2016pahat MAR District - Hatboro-Horsham Event Hatboro-Horsham      pahat
+#>       event_type event_type_string parent_event_key playoff_type
+#> event          1          District             NULL         NULL
+#>       playoff_type_string                                       district
+#> event                NULL 2016mar, 2016, mar, FIRST Mid-Atlantic, 60, 22
+#>       division_keys first_event_id first_event_code year         timezone week
+#> event          NULL          17425            pahat 2016 America/New_York    1
+#>                                   website remap_teams    city state_prov
+#> event http://www.midatlanticrobotics.com/        NULL Horsham         PA
+#>       country postal_code  lat  lng               location_name
+#> event     USA       19044 NULL NULL Hatboro-Horsham High School
 #>                                                                     address
 #> event Hatboro-Horsham High School\n899 Horsham Road\nHorsham, PA 19044\nUSA
-#>          city country                                       district
-#> event Horsham     USA mar, FIRST Mid-Atlantic, 2016mar, 22, 60, 2016
-#>       division_keys   end_date event_code event_type event_type_string
-#> event          NULL 2016-03-06      pahat          1          District
-#>       first_event_code first_event_id gmaps_place_id gmaps_url       key  lat
-#> event            pahat          17425           NULL      NULL 2016pahat NULL
-#>        lng               location_name                                 name
-#> event NULL Hatboro-Horsham High School MAR District - Hatboro-Horsham Event
-#>       parent_event_key playoff_type playoff_type_string postal_code remap_teams
-#> event             NULL         NULL                NULL       19044        NULL
-#>            short_name start_date state_prov         timezone
-#> event Hatboro-Horsham 2016-03-04         PA America/New_York
+#>       gmaps_place_id gmaps_url start_date   end_date
+#> event           NULL      NULL 2016-03-04 2016-03-06
 #>                                         webcasts
-#> event Osoi9RrsFVM, youtube, RFVj5E28Rao, youtube
-#>                                   website week year
-#> event http://www.midatlanticrobotics.com/    1 2016
+#> event youtube, Osoi9RrsFVM, youtube, RFVj5E28Rao
 ```

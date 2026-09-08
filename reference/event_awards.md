@@ -31,26 +31,26 @@ Gabriel Krotkov
 ``` r
 event_awards("2015padre")
 #> # A tibble: 18 × 5
-#>    award_type event_key name                                recipient_list  year
-#>         <int> <chr>     <chr>                               <list>         <int>
-#>  1          0 2015padre District Chairman's Award           <list [1]>      2015
-#>  2          1 2015padre District Event Winner               <list [3]>      2015
-#>  3         10 2015padre Rookie All Star Award               <list [1]>      2015
-#>  4         11 2015padre Gracious Professionalism Award spo… <list [1]>      2015
-#>  5         13 2015padre Judges' Award                       <list [1]>      2015
-#>  6         14 2015padre Highest Rookie Seed                 <list [1]>      2015
-#>  7         15 2015padre Rookie Inspiration Award            <list [1]>      2015
-#>  8         16 2015padre Industrial Design Award sponsored … <list [1]>      2015
-#>  9         17 2015padre Quality Award sponsored by Motorola <list [1]>      2015
-#> 10         18 2015padre Industrial Safety Award sponsored … <list [1]>      2015
-#> 11          2 2015padre District Event Finalist             <list [3]>      2015
-#> 12         20 2015padre Creativity Award sponsored by Xerox <list [1]>      2015
-#> 13         21 2015padre Excellence in Engineering Award sp… <list [1]>      2015
-#> 14         22 2015padre Entrepreneurship Award sponsored b… <list [1]>      2015
-#> 15         27 2015padre Imagery Award in honor of Jack Kam… <list [1]>      2015
-#> 16         29 2015padre Innovation in Control Award sponso… <list [1]>      2015
-#> 17         30 2015padre Team Spirit Award sponsored by Chr… <list [1]>      2015
-#> 18          9 2015padre District Engineering Inspiration A… <list [1]>      2015
+#>    name                                award_type  year event_key recipient_list
+#>    <chr>                                    <int> <int> <chr>     <list>        
+#>  1 District Chairman's Award                    0  2015 2015padre <list [1]>    
+#>  2 District Event Winner                        1  2015 2015padre <list [3]>    
+#>  3 Rookie All Star Award                       10  2015 2015padre <list [1]>    
+#>  4 Gracious Professionalism Award spo…         11  2015 2015padre <list [1]>    
+#>  5 Judges' Award                               13  2015 2015padre <list [1]>    
+#>  6 Highest Rookie Seed                         14  2015 2015padre <list [1]>    
+#>  7 Rookie Inspiration Award                    15  2015 2015padre <list [1]>    
+#>  8 Industrial Design Award sponsored …         16  2015 2015padre <list [1]>    
+#>  9 Quality Award sponsored by Motorola         17  2015 2015padre <list [1]>    
+#> 10 Industrial Safety Award sponsored …         18  2015 2015padre <list [1]>    
+#> 11 District Event Finalist                      2  2015 2015padre <list [3]>    
+#> 12 Creativity Award sponsored by Xerox         20  2015 2015padre <list [1]>    
+#> 13 Excellence in Engineering Award sp…         21  2015 2015padre <list [1]>    
+#> 14 Entrepreneurship Award sponsored b…         22  2015 2015padre <list [1]>    
+#> 15 Imagery Award in honor of Jack Kam…         27  2015 2015padre <list [1]>    
+#> 16 Innovation in Control Award sponso…         29  2015 2015padre <list [1]>    
+#> 17 Team Spirit Award sponsored by Chr…         30  2015 2015padre <list [1]>    
+#> 18 District Engineering Inspiration A…          9  2015 2015padre <list [1]>    
 event_awards("2010ein", recipients = TRUE)
 #> Error in unnest_wider(awards, awards): ℹ In column: `awards`.
 #> ℹ In row: 1.

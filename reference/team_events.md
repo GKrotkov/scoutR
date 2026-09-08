@@ -43,35 +43,35 @@ Gabriel Krotkov
 ``` r
 team_events(1712, year = 2017)
 #> # A tibble: 5 × 31
-#>   address           city  country district     division_keys end_date event_code
-#>   <chr>             <chr> <chr>   <list>       <lgl>         <chr>    <chr>     
-#> 1 "Lehigh Universi… "Bet… USA     <named list> NA            2017-04… mrcmp     
-#> 2 "West Windsor-Pl… " We… USA     <NULL>       NA            2017-06… njmm      
-#> 3 "Seneca High Sch… "Tab… USA     <named list> NA            2017-03… njtab     
-#> 4 "Wissahickon Hig… "Amb… USA     <NULL>       NA            2017-11… parr      
-#> 5 "Westtown School… "Wes… USA     <named list> NA            2017-03… pawch     
-#> # ℹ 24 more variables: event_type <int>, event_type_string <chr>,
-#> #   first_event_code <chr>, first_event_id <chr>, gmaps_place_id <lgl>,
-#> #   gmaps_url <lgl>, key <chr>, lat <lgl>, lng <lgl>, location_name <chr>,
-#> #   name <chr>, parent_event_key <lgl>, playoff_type <lgl>,
-#> #   playoff_type_string <lgl>, postal_code <chr>, remap_teams <lgl>,
-#> #   short_name <chr>, start_date <chr>, state_prov <chr>, timezone <chr>,
-#> #   webcasts <list>, website <chr>, week <int>, year <int>
+#>   key       name              short_name event_code event_type event_type_string
+#>   <chr>     <chr>             <chr>      <chr>           <int> <chr>            
+#> 1 2017mrcmp FIRST Mid-Atlant… Mid-Atlan… mrcmp               2 District Champio…
+#> 2 2017njmm  MidKnight Mayhem… MidKnight… njmm               99 Offseason        
+#> 3 2017njtab MAR District - S… Seneca     njtab               1 District         
+#> 4 2017parr  Ramp Riot         Ramp Riot  parr               99 Offseason        
+#> 5 2017pawch MAR District - W… Westtown   pawch               1 District         
+#> # ℹ 25 more variables: parent_event_key <lgl>, playoff_type <lgl>,
+#> #   playoff_type_string <lgl>, district <list>, division_keys <lgl>,
+#> #   first_event_id <chr>, first_event_code <chr>, year <int>, timezone <chr>,
+#> #   week <int>, website <chr>, remap_teams <lgl>, city <chr>, state_prov <chr>,
+#> #   country <chr>, postal_code <chr>, lat <lgl>, lng <lgl>,
+#> #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>,
+#> #   start_date <chr>, end_date <chr>, webcasts <list>
 team_events("1712", year = 2018, official = TRUE)
 #> # A tibble: 4 × 31
-#>   address           city  country district     division_keys end_date event_code
-#>   <chr>             <chr> <chr>   <list>       <lgl>         <chr>    <chr>     
-#> 1 "Lehigh Universi… Beth… USA     <named list> NA            2018-04… mrcmp     
-#> 2 "Seneca High Sch… Tabe… USA     <named list> NA            2018-03… njtab     
-#> 3 "Westtown School… West… USA     <named list> NA            2018-03… pawch     
-#> 4 "1 Washington Bl… Detr… USA     <NULL>       NA            2018-04… tes       
-#> # ℹ 24 more variables: event_type <int>, event_type_string <chr>,
-#> #   first_event_code <chr>, first_event_id <chr>, gmaps_place_id <lgl>,
-#> #   gmaps_url <lgl>, key <chr>, lat <lgl>, lng <lgl>, location_name <chr>,
-#> #   name <chr>, parent_event_key <chr>, playoff_type <lgl>,
-#> #   playoff_type_string <lgl>, postal_code <chr>, remap_teams <lgl>,
-#> #   short_name <chr>, start_date <chr>, state_prov <chr>, timezone <chr>,
-#> #   webcasts <list>, website <chr>, week <int>, year <int>
+#>   key       name              short_name event_code event_type event_type_string
+#>   <chr>     <chr>             <chr>      <chr>           <int> <chr>            
+#> 1 2018mrcmp FIRST Mid-Atlant… Mid-Atlan… mrcmp               2 District Champio…
+#> 2 2018njtab MAR District Sen… Seneca     njtab               1 District         
+#> 3 2018pawch MAR District Wes… Westtown   pawch               1 District         
+#> 4 2018tes   Tesla Division    Tesla      tes                 3 Championship Div…
+#> # ℹ 25 more variables: parent_event_key <chr>, playoff_type <lgl>,
+#> #   playoff_type_string <lgl>, district <list>, division_keys <lgl>,
+#> #   first_event_id <chr>, first_event_code <chr>, year <int>, timezone <chr>,
+#> #   week <int>, website <chr>, remap_teams <lgl>, city <chr>, state_prov <chr>,
+#> #   country <chr>, postal_code <chr>, lat <lgl>, lng <lgl>,
+#> #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>,
+#> #   start_date <chr>, end_date <chr>, webcasts <list>
 team_events("frc1712", keys = TRUE)
 #>  [1] "2006pa"    "2007gal"   "2007pa"    "2008mm"    "2008pa"    "2009arc"  
 #>  [7] "2009dc"    "2010cmp"   "2010dc"    "2010pa"    "2011pa"    "2012njt"  

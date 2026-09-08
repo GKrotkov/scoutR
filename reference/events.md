@@ -39,62 +39,62 @@ Gabriel Krotkov
 ``` r
 events(2019)
 #> # A tibble: 303 × 31
-#>    address   city  country district division_keys end_date event_code event_type
-#>    <chr>     <chr> <chr>   <list>   <list>        <chr>    <chr>           <int>
-#>  1 "7555 Fa… Calg… Canada  <NULL>   <NULL>        2019-04… abca                0
-#>  2 "Von Bra… Hunt… USA     <NULL>   <NULL>        2019-03… alhu                0
-#>  3 "1 Washi… Detr… USA     <NULL>   <NULL>        2019-04… arc                 3
-#>  4 "Arkansa… Litt… USA     <NULL>   <NULL>        2019-03… arli                0
-#>  5 "Harding… Sear… USA     <NULL>   <NULL>        2019-09… aroz               99
-#>  6 "Macquar… Sydn… Austra… <NULL>   <NULL>        2019-07… audd               99
-#>  7 "Olympic… Sydn… Austra… <NULL>   <NULL>        2019-03… ausc                0
-#>  8 "Olympic… Sydn… Austra… <NULL>   <NULL>        2019-03… ausp                0
-#>  9 "J. Lawr… Flag… USA     <NULL>   <NULL>        2019-03… azfl                0
-#> 10 "Grand C… Phoe… USA     <NULL>   <NULL>        2019-04… azpx                0
+#>    key      name              short_name event_code event_type event_type_string
+#>    <chr>    <chr>             <chr>      <chr>           <int> <chr>            
+#>  1 2019abca Canadian Rockies… Canadian … abca                0 Regional         
+#>  2 2019alhu Rocket City Regi… Rocket Ci… alhu                0 Regional         
+#>  3 2019arc  Archimedes Divis… Archimedes arc                 3 Championship Div…
+#>  4 2019arli Arkansas Rock Ci… Arkansas … arli                0 Regional         
+#>  5 2019aroz Ozark Mountain B… Ozark Mou… aroz               99 Offseason        
+#>  6 2019audd Duel Down Under   Duel Down… audd               99 Offseason        
+#>  7 2019ausc Southern Cross R… Southern … ausc                0 Regional         
+#>  8 2019ausp South Pacific Re… South Pac… ausp                0 Regional         
+#>  9 2019azfl Arizona North Re… Arizona N… azfl                0 Regional         
+#> 10 2019azpx Arizona West Reg… Arizona W… azpx                0 Regional         
 #> # ℹ 293 more rows
-#> # ℹ 23 more variables: event_type_string <chr>, first_event_code <chr>,
-#> #   first_event_id <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>, key <chr>,
-#> #   lat <lgl>, lng <lgl>, location_name <chr>, name <chr>,
-#> #   parent_event_key <chr>, playoff_type <int>, playoff_type_string <chr>,
-#> #   postal_code <chr>, remap_teams <list>, short_name <chr>, start_date <chr>,
-#> #   state_prov <chr>, timezone <chr>, webcasts <list>, website <chr>, …
+#> # ℹ 25 more variables: parent_event_key <chr>, playoff_type <int>,
+#> #   playoff_type_string <chr>, district <list>, division_keys <list>,
+#> #   first_event_id <chr>, first_event_code <chr>, year <int>, timezone <chr>,
+#> #   week <int>, website <chr>, remap_teams <list>, city <chr>,
+#> #   state_prov <chr>, country <chr>, postal_code <chr>, lat <lgl>, lng <lgl>,
+#> #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, …
 events(2010, official = TRUE)
 #> # A tibble: 56 × 31
-#>    address          city  country district     division_keys end_date event_code
-#>    <chr>            <chr> <chr>   <list>       <list>        <chr>    <chr>     
-#>  1 "1 Georgia Dome… Atla… USA     <NULL>       <NULL>        2010-04… arc       
-#>  2 "Arizona Vetera… Phoe… USA     <NULL>       <NULL>        2010-03… az        
-#>  3 "Long Beach Are… Long… USA     <NULL>       <NULL>        2010-03… ca        
-#>  4 "1 Georgia Dome… Atla… USA     <NULL>       <list [4]>    2010-04… cmp       
-#>  5 "Daniel L. Ritc… Denv… USA     <NULL>       <NULL>        2010-03… co        
-#>  6 "Connecticut Co… Hart… USA     <NULL>       <NULL>        2010-04… ct        
-#>  7 "1 Georgia Dome… Atla… USA     <NULL>       <NULL>        2010-04… cur       
-#>  8 "Moody Coliseum… Dall… USA     <NULL>       <NULL>        2010-03… da        
-#>  9 "Walter E. Wash… Wash… USA     <NULL>       <NULL>        2010-03… dc        
-#> 10 "Wayne State Un… Detr… USA     <named list> <NULL>        2010-03… dt        
+#>    key     name               short_name event_code event_type event_type_string
+#>    <chr>   <chr>              <chr>      <chr>           <int> <chr>            
+#>  1 2010arc Archimedes Divisi… Archimedes arc                 3 Championship Div…
+#>  2 2010az  Arizona Regional   Arizona    az                  0 Regional         
+#>  3 2010ca  Los Angeles Regio… Los Angel… ca                  0 Regional         
+#>  4 2010cmp Einstein Field     Einstein   cmp                 4 Championship Fin…
+#>  5 2010co  Colorado Regional  Colorado   co                  0 Regional         
+#>  6 2010ct  Northeast Utiliti… Northeast… ct                  0 Regional         
+#>  7 2010cur Curie Division     Curie      cur                 3 Championship Div…
+#>  8 2010da  Dallas Regional s… Dallas     da                  0 Regional         
+#>  9 2010dc  Washington DC  Re… Washingto… dc                  0 Regional         
+#> 10 2010dt  Detroit FIRST Rob… Detroit    dt                  1 District         
 #> # ℹ 46 more rows
-#> # ℹ 24 more variables: event_type <int>, event_type_string <chr>,
-#> #   first_event_code <chr>, first_event_id <chr>, gmaps_place_id <lgl>,
-#> #   gmaps_url <lgl>, key <chr>, lat <lgl>, lng <lgl>, location_name <chr>,
-#> #   name <chr>, parent_event_key <chr>, playoff_type <int>,
-#> #   playoff_type_string <lgl>, postal_code <chr>, remap_teams <lgl>,
-#> #   short_name <chr>, start_date <chr>, state_prov <chr>, timezone <chr>, …
+#> # ℹ 25 more variables: parent_event_key <chr>, playoff_type <int>,
+#> #   playoff_type_string <lgl>, district <list>, division_keys <list>,
+#> #   first_event_id <chr>, first_event_code <chr>, year <int>, timezone <chr>,
+#> #   week <int>, website <chr>, remap_teams <lgl>, city <chr>, state_prov <chr>,
+#> #   country <chr>, postal_code <chr>, lat <lgl>, lng <lgl>,
+#> #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, …
 events(2012, simple = TRUE)
 #> # A tibble: 82 × 11
-#>    city   country district end_date event_code event_type key   name  start_date
-#>    <chr>  <chr>   <list>   <chr>    <chr>           <int> <chr> <chr> <chr>     
-#>  1 St. L… USA     <NULL>   2012-04… arc                 3 2012… Arch… 2012-04-25
-#>  2 Chand… USA     <NULL>   2012-03… az                  0 2012… Ariz… 2012-03-22
-#>  3 Worce… USA     <NULL>   2012-05… bc                 99 2012… Batt… 2012-05-18
-#>  4 Long … USA     <NULL>   2012-03… ca                  0 2012… Los … 2012-03-15
-#>  5 San D… USA     <NULL>   2012-10… cabb               99 2012… Batt… 2012-10-20
-#>  6 Madera USA     <NULL>   2012-04… caf                 0 2012… Cent… 2012-04-05
-#>  7 Woods… USA     <NULL>   2012-10… cal                99 2012… CalG… 2012-10-12
-#>  8 St. L… USA     <NULL>   2012-04… cmp                 4 2012… Eins… 2012-04-28
-#>  9 Denver USA     <NULL>   2012-03… co                  0 2012… Colo… 2012-03-22
-#> 10 Hartf… USA     <NULL>   2012-03… ct                  0 2012… Nort… 2012-03-29
+#>    key      name   year event_code event_type district start_date end_date city 
+#>    <chr>    <chr> <int> <chr>           <int> <list>   <chr>      <chr>    <chr>
+#>  1 2012arc  Arch…  2012 arc                 3 <NULL>   2012-04-25 2012-04… St. …
+#>  2 2012az   Ariz…  2012 az                  0 <NULL>   2012-03-22 2012-03… Chan…
+#>  3 2012bc   Batt…  2012 bc                 99 <NULL>   2012-05-18 2012-05… Worc…
+#>  4 2012ca   Los …  2012 ca                  0 <NULL>   2012-03-15 2012-03… Long…
+#>  5 2012cabb Batt…  2012 cabb               99 <NULL>   2012-10-20 2012-10… San …
+#>  6 2012caf  Cent…  2012 caf                 0 <NULL>   2012-04-05 2012-04… Made…
+#>  7 2012cal  CalG…  2012 cal                99 <NULL>   2012-10-12 2012-10… Wood…
+#>  8 2012cmp  Eins…  2012 cmp                 4 <NULL>   2012-04-28 2012-04… St. …
+#>  9 2012co   Colo…  2012 co                  0 <NULL>   2012-03-22 2012-03… Denv…
+#> 10 2012ct   Nort…  2012 ct                  0 <NULL>   2012-03-29 2012-03… Hart…
 #> # ℹ 72 more rows
-#> # ℹ 2 more variables: state_prov <chr>, year <int>
+#> # ℹ 2 more variables: state_prov <chr>, country <chr>
 events(2015, keys = TRUE)
 #>   [1] "2015abca"   "2015arc"    "2015arfa"   "2015auddu"  "2015ausy"  
 #>   [6] "2015azch"   "2015azpx"   "2015azsc"   "2015bc"     "2015bt"    

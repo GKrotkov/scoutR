@@ -27,23 +27,23 @@ Gabriel Krotkov
 ``` r
 districts(2012)
 #> # A tibble: 2 × 5
-#>   abbreviation display_name       key     official_advancement_counts  year
-#>   <chr>        <chr>              <chr>   <list>                      <int>
-#> 1 fim          FIRST in Michigan  2012fim <named list [2]>             2012
-#> 2 mar          FIRST Mid-Atlantic 2012mar <named list [2]>             2012
+#>   key      year abbreviation display_name       official_advancement_counts
+#>   <chr>   <int> <chr>        <chr>              <list>                     
+#> 1 2012fim  2012 fim          FIRST in Michigan  <named list [2]>           
+#> 2 2012mar  2012 mar          FIRST Mid-Atlantic <named list [2]>           
 districts(2023)
 #> # A tibble: 11 × 5
-#>    abbreviation display_name           key     official_advancement_counts  year
-#>    <chr>        <chr>                  <chr>   <list>                      <int>
-#>  1 chs          FIRST Chesapeake       2023chs <named list [2]>             2023
-#>  2 fim          FIRST in Michigan      2023fim <named list [2]>             2023
-#>  3 fin          FIRST Indiana Robotics 2023fin <named list [2]>             2023
-#>  4 fit          FIRST In Texas         2023fit <named list [2]>             2023
-#>  5 fma          FIRST Mid-Atlantic     2023fma <named list [2]>             2023
-#>  6 fnc          FIRST North Carolina   2023fnc <named list [2]>             2023
-#>  7 isr          FIRST Israel           2023isr <named list [2]>             2023
-#>  8 ne           New England            2023ne  <named list [2]>             2023
-#>  9 ont          FIRST Canada - Ontario 2023ont <named list [2]>             2023
-#> 10 pch          Peachtree              2023pch <named list [2]>             2023
-#> 11 pnw          Pacific Northwest      2023pnw <named list [2]>             2023
+#>    key      year abbreviation display_name           official_advancement_counts
+#>    <chr>   <int> <chr>        <chr>                  <list>                     
+#>  1 2023chs  2023 chs          FIRST Chesapeake       <named list [2]>           
+#>  2 2023fim  2023 fim          FIRST in Michigan      <named list [2]>           
+#>  3 2023fin  2023 fin          FIRST Indiana Robotics <named list [2]>           
+#>  4 2023fit  2023 fit          FIRST In Texas         <named list [2]>           
+#>  5 2023fma  2023 fma          FIRST Mid-Atlantic     <named list [2]>           
+#>  6 2023fnc  2023 fnc          FIRST North Carolina   <named list [2]>           
+#>  7 2023isr  2023 isr          FIRST Israel           <named list [2]>           
+#>  8 2023ne   2023 ne           New England            <named list [2]>           
+#>  9 2023ont  2023 ont          FIRST Canada - Ontario <named list [2]>           
+#> 10 2023pch  2023 pch          Peachtree              <named list [2]>           
+#> 11 2023pnw  2023 pnw          Pacific Northwest      <named list [2]>           
 ```

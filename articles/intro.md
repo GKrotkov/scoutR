@@ -85,21 +85,21 @@ head(mil23)
 ```
 
     ## # A tibble: 6 × 103
-    ##   actual_time blue_dq_team_keys blue_score blue_surrogate_team_keys blue1  blue2
-    ##         <int> <lgl>                  <int> <list>                   <chr>  <chr>
-    ## 1  1681997904 NA                        90 <NULL>                   frc50… frc5…
-    ## 2  1681998310 NA                       135 <NULL>                   frc41… frc9…
-    ## 3  1681998767 NA                       139 <NULL>                   frc10… frc5…
-    ## 4  1681999168 NA                       122 <NULL>                   frc12… frc9…
-    ## 5  1681999586 NA                       132 <NULL>                   frc26… frc2…
-    ## 6  1681999996 NA                        89 <NULL>                   frc90… frc4…
-    ## # ℹ 97 more variables: blue3 <chr>, red_dq_team_keys <lgl>, red_score <int>,
-    ## #   red_surrogate_team_keys <list>, red1 <chr>, red2 <chr>, red3 <chr>,
-    ## #   comp_level <fct>, event_key <chr>, key <chr>, match_number <int>,
-    ## #   post_result_time <int>, predicted_time <int>,
-    ## #   blue_activationBonusAchieved <lgl>, blue_adjustPoints <int>,
-    ## #   blue_autoBridgeState <chr>, blue_autoChargeStationPoints <int>,
-    ## #   blue_autoChargeStationRobot1 <chr>, blue_autoChargeStationRobot2 <chr>, …
+    ##   key   event_key comp_level set_number match_number red1  red2  red3  red_score
+    ##   <chr> <chr>     <fct>           <int>        <int> <chr> <chr> <chr>     <int>
+    ## 1 2023… 2023mil   qm                  1            1 frc2… frc5… frc1…       145
+    ## 2 2023… 2023mil   qm                  1            2 frc3… frc3… frc5…       159
+    ## 3 2023… 2023mil   qm                  1            3 frc2… frc5… frc5…       170
+    ## 4 2023… 2023mil   qm                  1            4 frc9… frc5… frc25       140
+    ## 5 2023… 2023mil   qm                  1            5 frc3… frc3… frc6…       161
+    ## 6 2023… 2023mil   qm                  1            6 frc1… frc9… frc4…       150
+    ## # ℹ 94 more variables: red_surrogate_team_keys <list>, red_dq_team_keys <lgl>,
+    ## #   blue1 <chr>, blue2 <chr>, blue3 <chr>, blue_score <int>,
+    ## #   blue_surrogate_team_keys <list>, blue_dq_team_keys <lgl>,
+    ## #   winning_alliance <chr>, red_mobilityRobot1 <chr>,
+    ## #   red_autoChargeStationRobot1 <chr>, red_endGameChargeStationRobot1 <chr>,
+    ## #   red_mobilityRobot2 <chr>, red_autoChargeStationRobot2 <chr>,
+    ## #   red_endGameChargeStationRobot2 <chr>, red_mobilityRobot3 <chr>, …
 
 ### event_tangibles()
 
@@ -143,21 +143,21 @@ head(chargedup_events)
 ```
 
     ## # A tibble: 6 × 31
-    ##   address    city  country district division_keys end_date event_code event_type
-    ##   <chr>      <chr> <chr>   <list>   <list>        <chr>    <chr>           <int>
-    ## 1 "700 Monr… "Hun… "USA"   <NULL>   <NULL>        2023-04… alhu                0
-    ## 2 "1001 Ave… "Hou… "USA"   <NULL>   <NULL>        2023-04… arc                 3
-    ## 3 "Burks Dr… "Sea… "USA"   <NULL>   <NULL>        2023-03… arli                0
-    ## 4 "Harding … "Sea… "USA"   <NULL>   <NULL>        2023-09… aroz               99
-    ## 5 "Macquari… "Syd… "Austr… <NULL>   <NULL>        2023-05… audd               99
-    ## 6 "Harbour … "Wol… "Austr… <NULL>   <NULL>        2023-03… ausc                0
-    ## # ℹ 23 more variables: event_type_string <chr>, first_event_code <chr>,
-    ## #   first_event_id <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>, key <chr>,
-    ## #   lat <lgl>, lng <lgl>, location_name <chr>, name <chr>,
-    ## #   parent_event_key <chr>, playoff_type <int>, playoff_type_string <chr>,
-    ## #   postal_code <chr>, remap_teams <list>, short_name <chr>, start_date <chr>,
-    ## #   state_prov <chr>, timezone <chr>, webcasts <list>, website <chr>,
-    ## #   week <int>, year <int>
+    ##   key      name               short_name event_code event_type event_type_string
+    ##   <chr>    <chr>              <chr>      <chr>           <int> <chr>            
+    ## 1 2023alhu Rocket City Regio… "Rocket C… alhu                0 Regional         
+    ## 2 2023arc  Archimedes Divisi… "Archimed… arc                 3 Championship Div…
+    ## 3 2023arli Arkansas Regional  "Arkansas" arli                0 Regional         
+    ## 4 2023aroz Ozark Mountain Br… ""         aroz               99 Offseason        
+    ## 5 2023audd Duel Down Under    ""         audd               99 Offseason        
+    ## 6 2023ausc Southern Cross Re… "Southern… ausc                0 Regional         
+    ## # ℹ 25 more variables: parent_event_key <chr>, playoff_type <int>,
+    ## #   playoff_type_string <chr>, district <list>, division_keys <list>,
+    ## #   first_event_id <chr>, first_event_code <chr>, year <int>, timezone <chr>,
+    ## #   week <int>, website <chr>, remap_teams <list>, city <chr>,
+    ## #   state_prov <chr>, country <chr>, postal_code <chr>, lat <lgl>, lng <lgl>,
+    ## #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>,
+    ## #   start_date <chr>, end_date <chr>, webcasts <list>
 
 ``` r
 
@@ -166,21 +166,21 @@ head(chargedup_official_events)
 ```
 
     ## # A tibble: 6 × 31
-    ##   address    city  country district division_keys end_date event_code event_type
-    ##   <chr>      <chr> <chr>   <list>   <list>        <chr>    <chr>           <int>
-    ## 1 700 Monro… Hunt… USA     <NULL>   <NULL>        2023-04… alhu                0
-    ## 2 1001 Aven… Hous… USA     <NULL>   <NULL>        2023-04… arc                 3
-    ## 3 Burks Dri… Sear… USA     <NULL>   <NULL>        2023-03… arli                0
-    ## 4 Harbour S… Woll… Austra… <NULL>   <NULL>        2023-03… ausc                0
-    ## 5 6330 W Gr… Glen… USA     <NULL>   <NULL>        2023-03… azgl                0
-    ## 6 Chapparal… Scot… USA     <NULL>   <NULL>        2023-03… azva                0
-    ## # ℹ 23 more variables: event_type_string <chr>, first_event_code <chr>,
-    ## #   first_event_id <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>, key <chr>,
-    ## #   lat <lgl>, lng <lgl>, location_name <chr>, name <chr>,
-    ## #   parent_event_key <chr>, playoff_type <int>, playoff_type_string <chr>,
-    ## #   postal_code <chr>, remap_teams <list>, short_name <chr>, start_date <chr>,
-    ## #   state_prov <chr>, timezone <chr>, webcasts <list>, website <chr>,
-    ## #   week <int>, year <int>
+    ##   key      name               short_name event_code event_type event_type_string
+    ##   <chr>    <chr>              <chr>      <chr>           <int> <chr>            
+    ## 1 2023alhu Rocket City Regio… Rocket Ci… alhu                0 Regional         
+    ## 2 2023arc  Archimedes Divisi… Archimedes arc                 3 Championship Div…
+    ## 3 2023arli Arkansas Regional  Arkansas   arli                0 Regional         
+    ## 4 2023ausc Southern Cross Re… Southern … ausc                0 Regional         
+    ## 5 2023azgl Arizona West Regi… Arizona W… azgl                0 Regional         
+    ## 6 2023azva Arizona East Regi… Arizona E… azva                0 Regional         
+    ## # ℹ 25 more variables: parent_event_key <chr>, playoff_type <int>,
+    ## #   playoff_type_string <chr>, district <list>, division_keys <list>,
+    ## #   first_event_id <chr>, first_event_code <chr>, year <int>, timezone <chr>,
+    ## #   week <int>, website <chr>, remap_teams <list>, city <chr>,
+    ## #   state_prov <chr>, country <chr>, postal_code <chr>, lat <lgl>, lng <lgl>,
+    ## #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>,
+    ## #   start_date <chr>, end_date <chr>, webcasts <list>
 
 ``` r
 
@@ -229,14 +229,14 @@ head(gos_awards_history)
 ```
 
     ## # A tibble: 6 × 5
-    ##   award_type event_key name                                 recipient_list  year
-    ##        <int> <chr>     <chr>                                <list>         <int>
-    ## 1         10 2011dc    Rookie All Star Award                <list [1]>      2011
-    ## 2         10 2011pit   Rookie All Star Award                <list [1]>      2011
-    ## 3         29 2012ohc   Innovation in Control Award sponsor… <list [1]>      2012
-    ## 4         31 2012pit   Website Award                        <list [1]>      2012
-    ## 5          4 2012pit   FIRST Dean's List Finalist Award     <list [2]>      2012
-    ## 6          9 2012pit   Engineering Inspiration Award        <list [1]>      2012
+    ##   name                                 award_type  year event_key recipient_list
+    ##   <chr>                                     <int> <int> <chr>     <list>        
+    ## 1 Rookie All Star Award                        10  2011 2011dc    <list [1]>    
+    ## 2 Rookie All Star Award                        10  2011 2011pit   <list [1]>    
+    ## 3 Innovation in Control Award sponsor…         29  2012 2012ohc   <list [1]>    
+    ## 4 Website Award                                31  2012 2012pit   <list [1]>    
+    ## 5 FIRST Dean's List Finalist Award              4  2012 2012pit   <list [2]>    
+    ## 6 Engineering Inspiration Award                 9  2012 2012pit   <list [1]>
 
 ### event_coprs()
 
@@ -249,21 +249,21 @@ head(vagle25_coprs)
 ```
 
     ## # A tibble: 6 × 34
-    ##   team     `L1 Coral Count` `L2 Coral Count` `L3 Coral Count` `L4 Coral Count`
-    ##   <chr>               <dbl>            <dbl>            <dbl>            <dbl>
-    ## 1 frc10224             0.1             -0.13             1.02             2.9 
-    ## 2 frc10257             0.58            -0.58             0.48             0.18
-    ## 3 frc10370             4.01            -0.12            -0.47            -0.08
-    ## 4 frc1086              1.27             1.65             2.1              0.69
-    ## 5 frc1262              0.05             1.42             2.06             0.14
-    ## 6 frc1522             -0.22             0.72             2.17             0.44
-    ## # ℹ 29 more variables: `Total Algae Count` <dbl>, `Total Coral Count` <dbl>,
-    ## #   `Total Coral Points` <dbl>, `Total Game Piece Count` <dbl>,
-    ## #   adjustPoints <dbl>, algaePoints <dbl>, autoBonusAchieved <dbl>,
-    ## #   autoCoralCount <dbl>, autoCoralPoints <dbl>, autoMobilityPoints <dbl>,
-    ## #   autoPoints <dbl>, bargeBonusAchieved <dbl>, coopertitionCriteriaMet <dbl>,
-    ## #   coralBonusAchieved <dbl>, endGameBargePoints <dbl>, foulCount <dbl>,
-    ## #   foulPoints <dbl>, g206Penalty <dbl>, g410Penalty <dbl>, …
+    ##   team    `L1 Coral Count` `L2 Coral Count` `L3 Coral Count` `L4 Coral Count`
+    ##   <chr>              <dbl>            <dbl>            <dbl>            <dbl>
+    ## 1 frc3373            -0.22             0.27             0.35             1.84
+    ## 2 frc6802            -1.76             0.02             0.26             2.37
+    ## 3 frc617             -0.13             0.32             0.23             0.07
+    ## 4 frc5724             0.74             0.07             0.61             0.07
+    ## 5 frc2106             0.57             1.82             2.09             4.44
+    ## 6 frc6326             0.88            -0.21             0.58             0.71
+    ## # ℹ 29 more variables: `Total Coral Count` <dbl>, `Total Coral Points` <dbl>,
+    ## #   `Total Algae Count` <dbl>, `Total Game Piece Count` <dbl>,
+    ## #   autoCoralCount <dbl>, autoMobilityPoints <dbl>, autoPoints <dbl>,
+    ## #   autoCoralPoints <dbl>, teleopCoralCount <dbl>, teleopPoints <dbl>,
+    ## #   teleopCoralPoints <dbl>, algaePoints <dbl>, netAlgaeCount <dbl>,
+    ## #   wallAlgaeCount <dbl>, endGameBargePoints <dbl>, autoBonusAchieved <dbl>,
+    ## #   coralBonusAchieved <dbl>, bargeBonusAchieved <dbl>, …
 
 ### prescout()
 

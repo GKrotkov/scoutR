@@ -31,23 +31,23 @@ tidy tibble of district events, or vector if keys = TRUE
 ``` r
 district_events("2016mar")
 #> # A tibble: 8 × 31
-#>   address           city  country district     division_keys end_date event_code
-#>   <chr>             <chr> <chr>   <list>       <lgl>         <chr>    <chr>     
-#> 1 "Stabler Arena, … Beth… USA     <named list> NA            2016-04… mrcmp     
-#> 2 "Bridgewater-Rar… Brid… USA     <named list> NA            2016-04… njbri     
-#> 3 "Mt. Olive High … Flan… USA     <named list> NA            2016-03… njfla     
-#> 4 "Montgomery Town… Skil… USA     <named list> NA            2016-04… njski     
-#> 5 "Seneca High Sch… Tabe… USA     <named list> NA            2016-03… njtab     
-#> 6 "Hatboro-Horsham… Hors… USA     <named list> NA            2016-03… pahat     
-#> 7 "Springside Ches… Phil… USA     <named list> NA            2016-03… paphi     
-#> 8 "Westtown School… West… USA     <named list> NA            2016-04… pawch     
-#> # ℹ 24 more variables: event_type <int>, event_type_string <chr>,
-#> #   first_event_code <chr>, first_event_id <chr>, gmaps_place_id <lgl>,
-#> #   gmaps_url <lgl>, key <chr>, lat <lgl>, lng <lgl>, location_name <chr>,
-#> #   name <chr>, parent_event_key <lgl>, playoff_type <lgl>,
-#> #   playoff_type_string <lgl>, postal_code <chr>, remap_teams <lgl>,
-#> #   short_name <chr>, start_date <chr>, state_prov <chr>, timezone <chr>,
-#> #   webcasts <list>, website <chr>, week <int>, year <int>
+#>   key       name              short_name event_code event_type event_type_string
+#>   <chr>     <chr>             <chr>      <chr>           <int> <chr>            
+#> 1 2016mrcmp Mid-Atlantic Rob… Mid-Atlan… mrcmp               2 District Champio…
+#> 2 2016njbri MAR District - B… Bridgewat… njbri               1 District         
+#> 3 2016njfla MAR District - M… Mt. Olive  njfla               1 District         
+#> 4 2016njski MAR District - M… Montgomery njski               1 District         
+#> 5 2016njtab MAR District - S… Seneca     njtab               1 District         
+#> 6 2016pahat MAR District - H… Hatboro-H… pahat               1 District         
+#> 7 2016paphi MAR District - S… Springsid… paphi               1 District         
+#> 8 2016pawch MAR District - W… Westtown   pawch               1 District         
+#> # ℹ 25 more variables: parent_event_key <lgl>, playoff_type <lgl>,
+#> #   playoff_type_string <lgl>, district <list>, division_keys <lgl>,
+#> #   first_event_id <chr>, first_event_code <chr>, year <int>, timezone <chr>,
+#> #   week <int>, website <chr>, remap_teams <lgl>, city <chr>, state_prov <chr>,
+#> #   country <chr>, postal_code <chr>, lat <lgl>, lng <lgl>,
+#> #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>,
+#> #   start_date <chr>, end_date <chr>, webcasts <list>
 district_events("2018fma", keys = TRUE)
 #> NULL
 ```
