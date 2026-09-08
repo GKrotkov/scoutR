@@ -1,5 +1,5 @@
 STATBOTICS_BASE <- httr2::request("https://api.statbotics.io/v3")
-ITR_BASE <- httr2::request("https://api-statbotics.iterativerefinement.com/v3/")
+ITR_BASE <- httr2::request("https://api-statbotics.popcornpenguins.com/v3/")
 
 #' Internal: perform a Statbotics request, falling back to ITR_BASE on a 500
 #'
