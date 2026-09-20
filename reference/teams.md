@@ -34,7 +34,7 @@ tidy tibble of teams
 
 ``` r
 teams(0)
-#> # A tibble: 405 × 18
+#> # A tibble: 406 × 18
 #>    key   team_number nickname  name  website rookie_year motto school_name city 
 #>    <chr>       <int> <chr>     <chr> <chr>         <int> <lgl> <chr>       <chr>
 #>  1 frc1            1 The Jugg… FCA … http:/…        1997 NA    Oakland Sc… Pont…
@@ -47,7 +47,7 @@ teams(0)
 #>  8 frc10          10 Red Knig… Beni… NA             1998 NA    NA          St. …
 #>  9 frc11          11 MORT      Nati… http:/…        1997 NA    Mt Olive H… Flan…
 #> 10 frc13          13 Triskade… Team… NA             1996 NA    NA          NA   
-#> # ℹ 395 more rows
+#> # ℹ 396 more rows
 #> # ℹ 9 more variables: state_prov <chr>, country <chr>, postal_code <chr>,
 #> #   lat <lgl>, lng <lgl>, location_name <lgl>, address <lgl>,
 #> #   gmaps_place_id <lgl>, gmaps_url <lgl>
@@ -88,7 +88,7 @@ teams(1, year = 2016)
 #> #   lat <lgl>, lng <lgl>, location_name <lgl>, address <lgl>,
 #> #   gmaps_place_id <lgl>, gmaps_url <lgl>
 teams(0, simple = TRUE)
-#> # A tibble: 405 × 7
+#> # A tibble: 406 × 7
 #>    key   team_number nickname             name          city  state_prov country
 #>    <chr>       <int> <chr>                <chr>         <chr> <chr>      <chr>  
 #>  1 frc1            1 The Juggernauts      FCA Foundati… Pont… Michigan   USA    
@@ -101,7 +101,7 @@ teams(0, simple = TRUE)
 #>  8 frc10          10 Red Knights          Benilde-St. … St. … MN         USA    
 #>  9 frc11          11 MORT                 National Def… Flan… New Jersey USA    
 #> 10 frc13          13 Triskadekamanics     Team 13       NA    NA         NA     
-#> # ℹ 395 more rows
+#> # ℹ 396 more rows
 teams(3, keys = TRUE)
 #>   [1] "frc1500" "frc1501" "frc1502" "frc1503" "frc1504" "frc1505" "frc1506"
 #>   [8] "frc1507" "frc1508" "frc1509" "frc1510" "frc1511" "frc1512" "frc1513"

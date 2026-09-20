@@ -3101,7 +3101,7 @@ team_years_sb(team = 449)
 #> [1] 0.9715
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3722
+#> [1] 3723
 #> 
 #> 
 #> [[23]]$epa$ranks$country

@@ -73,7 +73,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">teams</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 405 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 406 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    key   team_number nickname  name  website rookie_year motto school_name city </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> frc1            1 The Jugg… FCA … http:/…        <span style="text-decoration: underline;">1</span>997 <span style="color: #BB0000;">NA</span>    Oakland Sc… Pont…</span>
@@ -86,7 +86,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> frc10          10 Red Knig… Beni… <span style="color: #BB0000;">NA</span>             <span style="text-decoration: underline;">1</span>998 <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>          St. …</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> frc11          11 MORT      Nati… http:/…        <span style="text-decoration: underline;">1</span>997 <span style="color: #BB0000;">NA</span>    Mt Olive H… Flan…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> frc13          13 Triskade… Team… <span style="color: #BB0000;">NA</span>             <span style="text-decoration: underline;">1</span>996 <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 395 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 396 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: state_prov &lt;chr&gt;, country &lt;chr&gt;, postal_code &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lat &lt;lgl&gt;, lng &lt;lgl&gt;, location_name &lt;lgl&gt;, address &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gmaps_place_id &lt;lgl&gt;, gmaps_url &lt;lgl&gt;</span></span>
@@ -127,7 +127,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   lat &lt;lgl&gt;, lng &lt;lgl&gt;, location_name &lt;lgl&gt;, address &lt;lgl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   gmaps_place_id &lt;lgl&gt;, gmaps_url &lt;lgl&gt;</span></span>
 <span class="r-in"><span><span class="fu">teams</span><span class="op">(</span><span class="fl">0</span>, simple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 405 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 406 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    key   team_number nickname             name          city  state_prov country</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> frc1            1 The Juggernauts      FCA Foundati… Pont… Michigan   USA    </span>
@@ -140,7 +140,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> frc10          10 Red Knights          Benilde-St. … St. … MN         USA    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> frc11          11 MORT                 National Def… Flan… New Jersey USA    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> frc13          13 Triskadekamanics     Team 13       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 395 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 396 more rows</span></span>
 <span class="r-in"><span><span class="fu">teams</span><span class="op">(</span><span class="fl">3</span>, keys <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "frc1500" "frc1501" "frc1502" "frc1503" "frc1504" "frc1505" "frc1506"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [8] "frc1507" "frc1508" "frc1509" "frc1510" "frc1511" "frc1512" "frc1513"</span>
