@@ -2,11 +2,11 @@ flatten_package_for_llm <- function(
         pkg_dir = ".",
         output_file = "package_summary.md"
 ) {
-    
+
     write_header <- function(con, title) {
         writeLines(paste0("\n\n---\n\n# ", title, "\n"), con)
     }
-    
+
     write_file <- function(con, filepath, label = NULL) {
         if (!file.exists(filepath)) return(invisible(NULL))
         label <- if (is.null(label)) basename(filepath) else label
@@ -15,7 +15,7 @@ flatten_package_for_llm <- function(
         fence <- strrep("`", 3)
         writeLines(paste0(fence, "\n", content, "\n", fence, "\n"), con)
     }
-    
+
     write_dir <- function(con, dir_path, extension, header) {
         full_path <- file.path(pkg_dir, dir_path)
         if (!dir.exists(full_path)) {
@@ -32,25 +32,25 @@ flatten_package_for_llm <- function(
         for (f in files) {
             write_file(con, f)
         }
-    }    
+    }
     con <- file(output_file, open = "w")
     on.exit(close(con))
-    
-    writeLines(paste0("# Package Summary for LLM Ingestion\nGenerated: ", 
+
+    writeLines(paste0("# Package Summary for LLM Ingestion\nGenerated: ",
                       Sys.time(), "\n"), con)
-    
+
     write_header(con, "Standard Package Files")
     for (f in c("DESCRIPTION", "NAMESPACE", "README.md")) {
-        
+
         write_file(con, file.path(pkg_dir, f))
     }
-    
+
     write_dir(con, "R", extension = ".r", header = "R Source Files (R/)")
-    
+
     rd_path <- file.path(pkg_dir, "man")
-    
+
     if (dir.exists(rd_path)) {
-        
+
         write_header(con, "Documentation (man/)")
         rd_files <- list.files(rd_path, full.names = TRUE)
         rd_files <- rd_files[endsWith(tolower(rd_files), ".rd")]
@@ -69,21 +69,21 @@ flatten_package_for_llm <- function(
             }
         }
     } else {
-        
+
         message("Directory not found, skipping: ", rd_path)
     }
-    
-    write_dir(con, "vignettes", extension = ".rmd", 
+
+    write_dir(con, "vignettes", extension = ".rmd",
               header = "Vignettes (vignettes/)")
     message("Done! Output written to: ", output_file)
 }
 
 flatten_package_for_llm(
-    pkg_dir = "scoutR",
+    pkg_dir = ".",
     output_file = "scoutR_summary.md"
 )
 
 flatten_package_for_llm(
-    pkg_dir = "pRidge_eval", 
+    pkg_dir = "../pRidge_eval",
     output_file = "pRidge_eval_summary.md"
 )
