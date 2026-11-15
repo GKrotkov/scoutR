@@ -65,7 +65,7 @@ Gabriel Krotkov
 
 ``` r
 event_matches("2015paphi", match_type = "playoff")
-#> # A tibble: 16 × 73
+#> # A tibble: 16 × 72
 #>    key            event_key comp_level set_number match_number red1  red2  red3 
 #>    <chr>          <chr>     <fct>           <int>        <int> <chr> <chr> <chr>
 #>  1 2015paphi_qf1… 2015paphi qf                  1            1 frc4… frc1… frc3…
@@ -84,13 +84,13 @@ event_matches("2015paphi", match_type = "playoff")
 #> 14 2015paphi_sf1… 2015paphi sf                  1            6 frc1… frc2… frc2…
 #> 15 2015paphi_f1m1 2015paphi f                   1            1 frc1… frc2… frc2…
 #> 16 2015paphi_f1m2 2015paphi f                   1            2 frc1… frc2… frc2…
-#> # ℹ 65 more variables: red_score <int>, red_surrogate_team_keys <lgl>,
+#> # ℹ 64 more variables: red_score <int>, red_surrogate_team_keys <lgl>,
 #> #   red_dq_team_keys <lgl>, blue1 <chr>, blue2 <chr>, blue3 <chr>,
 #> #   blue_score <int>, blue_surrogate_team_keys <lgl>, blue_dq_team_keys <lgl>,
-#> #   winning_alliance <chr>, blue_tote_count_far <int>,
-#> #   blue_tote_count_near <int>, blue_container_count_level1 <int>,
-#> #   blue_container_count_level2 <int>, blue_container_count_level3 <int>,
-#> #   blue_container_count_level4 <int>, blue_container_count_level5 <int>, …
+#> #   winning_alliance <chr>, red_robot_set <lgl>, red_container_set <lgl>,
+#> #   red_tote_set <lgl>, red_tote_stack <lgl>, red_tote_count_far <int>,
+#> #   red_tote_count_near <int>, red_container_count_level1 <int>,
+#> #   red_container_count_level2 <int>, red_container_count_level3 <int>, …
 event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
 #>   [1] "2014mrcmp_qm1"   "2014mrcmp_qm10"  "2014mrcmp_qm100" "2014mrcmp_qm101"
 #>   [5] "2014mrcmp_qm102" "2014mrcmp_qm103" "2014mrcmp_qm104" "2014mrcmp_qm105"

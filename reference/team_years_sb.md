@@ -2928,7 +2928,7 @@ team_years_sb(team = 449)
 #> [1] 0.9665
 #> 
 #> [[22]]$epa$ranks$total$team_count
-#> [1] 3706
+#> [1] 3707
 #> 
 #> 
 #> [[22]]$epa$ranks$country
@@ -2939,7 +2939,7 @@ team_years_sb(team = 449)
 #> [1] 0.967
 #> 
 #> [[22]]$epa$ranks$country$team_count
-#> [1] 2937
+#> [1] 2938
 #> 
 #> 
 #> [[22]]$epa$ranks$state
@@ -3101,7 +3101,7 @@ team_years_sb(team = 449)
 #> [1] 0.9715
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3723
+#> [1] 3713
 #> 
 #> 
 #> [[23]]$epa$ranks$country
@@ -3112,7 +3112,7 @@ team_years_sb(team = 449)
 #> [1] 0.9714
 #> 
 #> [[23]]$epa$ranks$country$team_count
-#> [1] 2935
+#> [1] 2940
 #> 
 #> 
 #> [[23]]$epa$ranks$state
@@ -3156,18 +3156,152 @@ team_years_sb(team = 449)
 #> [1] 0.7656
 #> 
 #> 
-#> [[23]]$competing
-#> [[23]]$competing$next_event_key
-#> NULL
 #> 
-#> [[23]]$competing$next_event_name
-#> NULL
+#> [[24]]
+#> [[24]]$team
+#> [1] 449
 #> 
-#> [[23]]$competing$next_event_week
-#> NULL
+#> [[24]]$year
+#> [1] 2027
 #> 
-#> [[23]]$competing$next_event_start_date
-#> NULL
+#> [[24]]$name
+#> [1] "The Blair Robot Project"
+#> 
+#> [[24]]$country
+#> [1] "USA"
+#> 
+#> [[24]]$state
+#> [1] "MD"
+#> 
+#> [[24]]$district
+#> [1] "fch"
+#> 
+#> [[24]]$rookie_year
+#> [1] 2000
+#> 
+#> [[24]]$epa
+#> [[24]]$epa$total_points
+#> [1] 14.68
+#> 
+#> [[24]]$epa$unitless
+#> [1] 1617
+#> 
+#> [[24]]$epa$norm
+#> [1] 1740
+#> 
+#> [[24]]$epa$breakdown
+#> [[24]]$epa$breakdown$total_points
+#> [1] 14.68
+#> 
+#> [[24]]$epa$breakdown$auto_points
+#> [1] 4.89
+#> 
+#> [[24]]$epa$breakdown$teleop_points
+#> [1] 4.89
+#> 
+#> [[24]]$epa$breakdown$endgame_points
+#> [1] 4.89
+#> 
+#> [[24]]$epa$breakdown$rp_1
+#> [1] 0.2447
+#> 
+#> [[24]]$epa$breakdown$rp_2
+#> [1] 0.2447
+#> 
+#> [[24]]$epa$breakdown$rp_3
+#> [1] 0.24465
+#> 
+#> [[24]]$epa$breakdown$tiebreaker_points
+#> [1] 0
+#> 
+#> 
+#> [[24]]$epa$stats
+#> [[24]]$epa$stats$start
+#> [1] 14.68
+#> 
+#> [[24]]$epa$stats$pre_champs
+#> [1] 14.68
+#> 
+#> [[24]]$epa$stats$max
+#> [1] 14.68
+#> 
+#> 
+#> [[24]]$epa$ranks
+#> [[24]]$epa$ranks$total
+#> [[24]]$epa$ranks$total$rank
+#> [1] 92
+#> 
+#> [[24]]$epa$ranks$total$percentile
+#> [1] 0.9754
+#> 
+#> [[24]]$epa$ranks$total$team_count
+#> [1] 3742
+#> 
+#> 
+#> [[24]]$epa$ranks$country
+#> [[24]]$epa$ranks$country$rank
+#> [1] 73
+#> 
+#> [[24]]$epa$ranks$country$percentile
+#> [1] 0.9747
+#> 
+#> [[24]]$epa$ranks$country$team_count
+#> [1] 2890
+#> 
+#> 
+#> [[24]]$epa$ranks$state
+#> [[24]]$epa$ranks$state$rank
+#> [1] 1
+#> 
+#> [[24]]$epa$ranks$state$percentile
+#> [1] 0.973
+#> 
+#> [[24]]$epa$ranks$state$team_count
+#> [1] 37
+#> 
+#> 
+#> [[24]]$epa$ranks$district
+#> [[24]]$epa$ranks$district$rank
+#> [1] 1
+#> 
+#> [[24]]$epa$ranks$district$percentile
+#> [1] 0.9917
+#> 
+#> [[24]]$epa$ranks$district$team_count
+#> [1] 120
+#> 
+#> 
+#> 
+#> 
+#> [[24]]$record
+#> [[24]]$record$wins
+#> [1] 0
+#> 
+#> [[24]]$record$losses
+#> [1] 0
+#> 
+#> [[24]]$record$ties
+#> [1] 0
+#> 
+#> [[24]]$record$count
+#> [1] 0
+#> 
+#> [[24]]$record$winrate
+#> [1] 0
+#> 
+#> 
+#> [[24]]$competing
+#> [[24]]$competing$next_event_key
+#> [1] "2027vaale"
+#> 
+#> [[24]]$competing$next_event_name
+#> [1] "FCH District Alexandria VA Event"
+#> 
+#> [[24]]$competing$next_event_week
+#> [1] 1
+#> 
+#> [[24]]$competing$next_event_start_date
+#> [1] "2027-03-05"
 #> 
 #> 
 #> 

@@ -3604,7 +3604,7 @@ team_events_sb(event = "2025mdsev")
 #> [1] 1558
 #> 
 #> [[15]]$epa$norm
-#> [1] 1542
+#> [1] 1543
 #> 
 #> [[15]]$epa$breakdown
 #> [[15]]$epa$breakdown$total_points
@@ -5026,7 +5026,7 @@ team_events_sb(event = "2025mdsev")
 #> [1] 1741910400
 #> 
 #> [[22]]$team_name
-#> [1] "Oakton Cougar Robotics"
+#> [1] "Oakton Cougar Robotics 623"
 #> 
 #> [[22]]$event_name
 #> [1] "CHS District Severn MD Event presented by Ball Corp"

@@ -34,25 +34,25 @@ tidy tibble of teams
 
 ``` r
 teams(0)
-#> # A tibble: 406 × 18
+#> # A tibble: 413 × 18
 #>    key   team_number nickname  name  website rookie_year motto school_name city 
 #>    <chr>       <int> <chr>     <chr> <chr>         <int> <lgl> <chr>       <chr>
-#>  1 frc1            1 The Jugg… FCA … http:/…        1997 NA    Oakland Sc… Pont…
-#>  2 frc4            4 Team 4 E… Gene… http:/…        1997 NA    High Tech … Van …
-#>  3 frc5            5 Robocards Ford… http:/…        1998 NA    NA          Melv…
-#>  4 frc6            6 The CogS… ATK … http:/…        1994 NA    NA          Plym…
-#>  5 frc7            7 Team007   Lock… http:/…        1997 NA    NA          Balt…
-#>  6 frc8            8 Paly Rob… Appl… http:/…        1996 NA    Palo Alto … Palo…
-#>  7 frc9            9 Roosevel… Roos… http:/…        1998 NA    NA          Chic…
-#>  8 frc10          10 Red Knig… Beni… NA             1998 NA    NA          St. …
-#>  9 frc11          11 MORT      Nati… http:/…        1997 NA    Mt Olive H… Flan…
-#> 10 frc13          13 Triskade… Team… NA             1996 NA    NA          NA   
-#> # ℹ 396 more rows
+#>  1 frc0            0 Team 0    Team… NA               NA NA    NA          NA   
+#>  2 frc1            1 The Jugg… FCA … http:/…        1997 NA    Oakland Sc… Pont…
+#>  3 frc2            2 Team 2    Team… NA               NA NA    NA          NA   
+#>  4 frc3            3 Team 3    Team… NA               NA NA    NA          NA   
+#>  5 frc4            4 Team 4 E… Glen… http:/…        1997 NA    High Tech … Van …
+#>  6 frc5            5 Robocards Ford… http:/…        1998 NA    NA          Melv…
+#>  7 frc6            6 The CogS… ATK … http:/…        1994 NA    NA          Plym…
+#>  8 frc7            7 Team007   Lock… http:/…        1997 NA    NA          Balt…
+#>  9 frc8            8 Paly Rob… Appl… http:/…        1996 NA    Palo Alto … Palo…
+#> 10 frc9            9 Roosevel… Roos… http:/…        1998 NA    NA          Chic…
+#> # ℹ 403 more rows
 #> # ℹ 9 more variables: state_prov <chr>, country <chr>, postal_code <chr>,
 #> #   lat <lgl>, lng <lgl>, location_name <lgl>, address <lgl>,
 #> #   gmaps_place_id <lgl>, gmaps_url <lgl>
 teams(4)
-#> # A tibble: 408 × 18
+#> # A tibble: 409 × 18
 #>    key    team_number nickname name  website rookie_year motto school_name city 
 #>    <chr>        <int> <chr>    <chr> <chr>         <int> <lgl> <chr>       <chr>
 #>  1 frc20…        2000 TEAM RO… Will… http:/…        2007 NA    NA          Dorr 
@@ -65,7 +65,7 @@ teams(4)
 #>  8 frc20…        2009 Robo-Ti… Smit… http:/…        2007 NA    NA          Roxb…
 #>  9 frc20…        2010 The Lig… Apti… http:/…        2007 NA    Champion H… Warr…
 #> 10 frc20…        2011 SMH Rob… Ewin… http:/…        2007 NA    NA          Inde…
-#> # ℹ 398 more rows
+#> # ℹ 399 more rows
 #> # ℹ 9 more variables: state_prov <chr>, country <chr>, postal_code <chr>,
 #> #   lat <lgl>, lng <lgl>, location_name <lgl>, address <lgl>,
 #> #   gmaps_place_id <lgl>, gmaps_url <lgl>
@@ -73,7 +73,7 @@ teams(1, year = 2016)
 #> # A tibble: 148 × 18
 #>    key    team_number nickname name  website rookie_year motto school_name city 
 #>    <chr>        <int> <chr>    <chr> <chr>         <int> <lgl> <chr>       <chr>
-#>  1 frc501         501 The Pow… AC T… http:/…        2001 NA    4-H & Manc… Manc…
+#>  1 frc501         501 The Pow… Nort… http:/…        1992 NA    4-H & Manc… Manc…
 #>  2 frc503         503 Frog Fo… Magn… http:/…        2001 NA    Novi High … Novi 
 #>  3 frc509         509 Red Sto… Bedf… http:/…        2001 NA    Bedford Hi… Bedf…
 #>  4 frc514         514 Entropy  Wend… https:…        2001 NA    Miller Pla… Mill…
@@ -82,26 +82,26 @@ teams(1, year = 2016)
 #>  7 frc533         533 The PSI… Lind… http:/…        2001 NA    Lindenhurs… Lind…
 #>  8 frc537         537 Charger… Wisc… https:…        2001 NA    Hamilton H… Suss…
 #>  9 frc538         538 Renaiss… NASA… http:/…        2001 NA    Athens Ren… Athe…
-#> 10 frc539         539 Titan R… &Tri… http:/…        2001 NA    Trinity Ep… Rich…
+#> 10 frc539         539 Titan R… Trin… http:/…        2001 NA    Trinity Ep… Rich…
 #> # ℹ 138 more rows
 #> # ℹ 9 more variables: state_prov <chr>, country <chr>, postal_code <chr>,
 #> #   lat <lgl>, lng <lgl>, location_name <lgl>, address <lgl>,
 #> #   gmaps_place_id <lgl>, gmaps_url <lgl>
 teams(0, simple = TRUE)
-#> # A tibble: 406 × 7
+#> # A tibble: 413 × 7
 #>    key   team_number nickname             name          city  state_prov country
 #>    <chr>       <int> <chr>                <chr>         <chr> <chr>      <chr>  
-#>  1 frc1            1 The Juggernauts      FCA Foundati… Pont… Michigan   USA    
-#>  2 frc4            4 Team 4 ELEMENT       Gene HAAS Fo… Van … California USA    
-#>  3 frc5            5 Robocards            Ford FIRST R… Melv… MI         USA    
-#>  4 frc6            6 The CogSquad         ATK (Alliant… Plym… MN         USA    
-#>  5 frc7            7 Team007              Lockheed Mar… Balt… MD         USA    
-#>  6 frc8            8 Paly Robotics        Apple/Bayer … Palo… California USA    
-#>  7 frc9            9 Roosevelt RoboRiders Roosevelt Hi… Chic… IL         USA    
-#>  8 frc10          10 Red Knights          Benilde-St. … St. … MN         USA    
-#>  9 frc11          11 MORT                 National Def… Flan… New Jersey USA    
-#> 10 frc13          13 Triskadekamanics     Team 13       NA    NA         NA     
-#> # ℹ 396 more rows
+#>  1 frc0            0 Team 0               Team 0        NA    NA         NA     
+#>  2 frc1            1 The Juggernauts      FCA Foundati… Pont… Michigan   USA    
+#>  3 frc2            2 Team 2               Team 2        NA    NA         NA     
+#>  4 frc3            3 Team 3               Team 3        NA    NA         NA     
+#>  5 frc4            4 Team 4 ELEMENT       Glenn W Bail… Van … California USA    
+#>  6 frc5            5 Robocards            Ford FIRST R… Melv… MI         USA    
+#>  7 frc6            6 The CogSquad         ATK (Alliant… Plym… MN         USA    
+#>  8 frc7            7 Team007              Lockheed Mar… Balt… MD         USA    
+#>  9 frc8            8 Paly Robotics        Apple/Bayer … Palo… California USA    
+#> 10 frc9            9 Roosevelt RoboRiders Roosevelt Hi… Chic… IL         USA    
+#> # ℹ 403 more rows
 teams(3, keys = TRUE)
 #>   [1] "frc1500" "frc1501" "frc1502" "frc1503" "frc1504" "frc1505" "frc1506"
 #>   [8] "frc1507" "frc1508" "frc1509" "frc1510" "frc1511" "frc1512" "frc1513"

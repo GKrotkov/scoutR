@@ -249,14 +249,14 @@ head(vagle25_coprs)
 ```
 
     ## # A tibble: 6 × 34
-    ##   team    `L1 Coral Count` `L2 Coral Count` `L3 Coral Count` `L4 Coral Count`
-    ##   <chr>              <dbl>            <dbl>            <dbl>            <dbl>
-    ## 1 frc3373            -0.22             0.27             0.35             1.84
-    ## 2 frc6802            -1.76             0.02             0.26             2.37
-    ## 3 frc617             -0.13             0.32             0.23             0.07
-    ## 4 frc5724             0.74             0.07             0.61             0.07
-    ## 5 frc2106             0.57             1.82             2.09             4.44
-    ## 6 frc6326             0.88            -0.21             0.58             0.71
+    ##   team     `L1 Coral Count` `L2 Coral Count` `L3 Coral Count` `L4 Coral Count`
+    ##   <chr>               <dbl>            <dbl>            <dbl>            <dbl>
+    ## 1 frc346               0.97             0.36             0.5              2.19
+    ## 2 frc1895              0.23             0.71             0.8              2.81
+    ## 3 frc539               2.65             0.36             0.1              0.1 
+    ## 4 frc10257             0.54            -0.49             0.5              0.26
+    ## 5 frc4505              0.03            -0.31             0.24             1.81
+    ## 6 frc617              -0.07             0.36             0.29             0.15
     ## # ℹ 29 more variables: `Total Coral Count` <dbl>, `Total Coral Points` <dbl>,
     ## #   `Total Algae Count` <dbl>, `Total Game Piece Count` <dbl>,
     ## #   autoCoralCount <dbl>, autoMobilityPoints <dbl>, autoPoints <dbl>,

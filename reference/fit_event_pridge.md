@@ -8,7 +8,7 @@ prior ridge model using pre-event EPA from statbotics as the prior.
 ``` r
 fit_event_pridge(
   event_key,
-  response_name = "score",
+  response_name = "unpenalized",
   grid = exp(seq(log(0.01), log(20), length.out = 100)),
   n_cores = NULL
 )
@@ -22,7 +22,9 @@ fit_event_pridge(
 
 - response_name:
 
-  name of the desired response vector (typically "score")
+  name of the desired response vector. The default, "unpenalized", is
+  the alliance score minus the foul points awarded to it; use "score"
+  for the total score including foul points.
 
 - grid:
 
@@ -44,30 +46,30 @@ Relies on statbotics API to establish priors
 ``` r
 fit_event_pridge("2025mdsev")
 #>   frc339   frc404   frc449   frc623   frc888  frc1111  frc1727  frc1811 
-#>    19.29    39.69    60.89    20.90    44.62    21.73    45.04    25.41 
+#>    18.44    37.49    59.41    22.35    44.43    17.51    45.69    22.80 
 #>  frc1885  frc2106  frc2199  frc2377  frc2421  frc2537  frc3714  frc3748 
-#>    28.72    54.23    39.44    12.07    22.12    19.09    12.30    35.97 
+#>    28.14    52.71    36.13     9.77    21.35    19.05    12.05    34.58 
 #>  frc3793  frc4464  frc4541  frc5587  frc7770  frc7886  frc8622  frc9403 
-#>    20.28     7.22    25.33    14.67    24.88    18.12    13.82    21.08 
+#>    19.21     7.28    24.70    14.99    25.38    17.59    11.69    21.07 
 #>  frc9709 frc10224 frc10449 frc10679 
-#>    14.70    34.00    10.87    21.93 
+#>    14.72    31.14    10.27    21.33 
 fit_event_pridge("2023new", n_cores = 3)
 #>   frc11  frc177  frc179  frc195  frc494  frc503  frc857  frc900  frc955 frc1023 
-#>   52.48   58.75   56.83   64.12   59.66   50.16   53.05   53.29   52.33   53.23 
+#>   53.16   56.04   54.79   63.06   59.36   48.77   50.52   52.36   51.03   50.21 
 #> frc1123 frc1156 frc1466 frc1468 frc1501 frc1538 frc1629 frc1746 frc1757 frc1816 
-#>   52.05   45.27   48.01   51.52   53.95   63.64   50.35   57.08   56.66   43.85 
+#>   50.91   45.53   47.20   50.62   50.64   63.37   49.01   56.50   56.82   43.23 
 #> frc1836 frc2642 frc2960 frc2992 frc3003 frc3039 frc3161 frc3184 frc3218 frc3478 
-#>   36.15   52.73   41.69   55.42   41.34   64.00   45.81   61.08   60.10   53.37 
+#>   35.46   53.33   40.94   54.40   42.68   61.72   45.56   56.53   59.31   50.69 
 #> frc3538 frc3572 frc3767 frc3932 frc3940 frc4069 frc4099 frc4112 frc4143 frc4145 
-#>   72.78   45.51   50.01   43.97   52.28   50.04   48.44   30.45   63.21   49.94 
+#>   69.52   44.46   46.18   43.49   51.56   49.20   46.84   29.86   60.41   49.26 
 #> frc4329 frc4419 frc4522 frc4663 frc4905 frc4909 frc4944 frc5006 frc5135 frc5172 
-#>   51.52   46.99   68.24   42.75   39.65   57.38   45.79   48.54   51.10   35.37 
+#>   49.71   43.59   66.50   41.13   39.14   55.00   46.01   48.14   49.69   33.77 
 #> frc5274 frc5338 frc5553 frc5665 frc5804 frc5990 frc6431 frc6606 frc6657 frc6817 
-#>   38.27   40.46   28.43   39.79   57.20   54.54    7.43   19.86   30.17   18.90 
+#>   37.70   41.00   28.20   39.16   56.53   50.62    6.63   17.81   30.39   17.97 
 #> frc6909 frc7072 frc7285 frc7428 frc7617 frc8015 frc8016 frc8592 frc8717 frc8808 
-#>   17.52   37.43   52.41   27.91   52.78   16.74   29.97   54.86   25.62   35.71 
+#>   17.53   34.96   53.26   26.84   51.58   16.01   30.63   53.82   26.27   33.97 
 #> frc8847 frc9023 frc9030 frc9062 frc9084 frc9126 frc9140 
-#>   38.90   27.02   23.29   20.01   50.76   23.84   46.75 
+#>   38.31   27.03   21.30   19.58   49.88   23.06   45.84 
 fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
 #>   frc339   frc614   frc623   frc686   frc836  frc1111  frc1389  frc1418 
 #>     5.52    22.40    13.77    24.58    24.23     3.43    11.23     2.65 
@@ -79,4 +81,13 @@ fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
 #>     9.25     5.67    23.11     2.68     8.42    12.58     3.31     2.73 
 #> frc11211 frc11318 frc11350 
 #>     5.10    15.05     2.49 
+fit_event_pridge("2025mdsev", response_name = "score")
+#>   frc339   frc404   frc449   frc623   frc888  frc1111  frc1727  frc1811 
+#>    19.29    39.69    60.89    20.90    44.62    21.73    45.04    25.41 
+#>  frc1885  frc2106  frc2199  frc2377  frc2421  frc2537  frc3714  frc3748 
+#>    28.72    54.23    39.44    12.07    22.12    19.09    12.30    35.97 
+#>  frc3793  frc4464  frc4541  frc5587  frc7770  frc7886  frc8622  frc9403 
+#>    20.28     7.22    25.33    14.67    24.88    18.12    13.82    21.08 
+#>  frc9709 frc10224 frc10449 frc10679 
+#>    14.70    34.00    10.87    21.93 
 ```

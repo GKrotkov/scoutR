@@ -49,5 +49,6 @@ district_events("2016mar")
 #> #   location_name <chr>, address <chr>, gmaps_place_id <lgl>, gmaps_url <lgl>,
 #> #   start_date <chr>, end_date <chr>, webcasts <list>
 district_events("2018fma", keys = TRUE)
-#> NULL
+#> [1] "2018mrcmp" "2018njbri" "2018njfla" "2018njski" "2018njtab" "2018pahat"
+#> [7] "2018paphi" "2018pawch"
 ```
