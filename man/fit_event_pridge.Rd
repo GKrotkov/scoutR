@@ -6,7 +6,7 @@
 \usage{
 fit_event_pridge(
   event_key,
-  response_name = "score",
+  response_name = "unpenalized",
   grid = exp(seq(log(0.01), log(20), length.out = 100)),
   n_cores = NULL
 )
@@ -14,7 +14,9 @@ fit_event_pridge(
 \arguments{
 \item{event_key}{(char) TBA-legal event key (ex. "2025mdsev")}
 
-\item{response_name}{name of the desired response vector (typically "score")}
+\item{response_name}{name of the desired response vector. The default,
+"unpenalized", is the alliance score minus the foul points awarded to it;
+use "score" for the total score including foul points.}
 
 \item{grid}{(vector) all possible lambda values to consider. Defaults to
 starting at just above zero to reduce matrix singularity in fits (guarantees
@@ -33,4 +35,5 @@ Relies on statbotics API to establish priors
 fit_event_pridge("2025mdsev")
 fit_event_pridge("2023new", n_cores = 3)
 fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
+fit_event_pridge("2025mdsev", response_name = "score")
 }

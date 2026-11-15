@@ -7,7 +7,7 @@
 fit_pridge(
   matches,
   priors,
-  response_name = "score",
+  response_name = "unpenalized",
   grid = exp(seq(log(0.01), log(20), length.out = 100)),
   n_cores = NULL,
   digits = 2
@@ -22,7 +22,10 @@ the response named "(red/blue)_(responseName)"}
 tba-legal team identifiers (i.e. "frc449")}
 
 \item{response_name}{(character) name of the response vectors as they appear
-in `matches`}
+in `matches`. The default, "unpenalized", is the alliance score minus the
+foul points awarded to it (`score - foulPoints`); if `matches` has no
+`foulPoints` columns it falls back to total score with a warning. Use
+"score" for the total score including foul points.}
 
 \item{grid}{(numeric) Grid of lambda values to consider for regularization}
 
@@ -45,5 +48,6 @@ sb_data <- team_events_sb(event = event_key)
 epas <- sapply(sb_data, function(te){te$epa$stats$start})
 names(epas) <- sapply(sb_data, function(te){te$team})
 mdsev_pridge <- fit_pridge(matches, epas)
+mdsev_pridge_total <- fit_pridge(matches, epas, response_name = "score")
 
 }

@@ -111,6 +111,33 @@ pridge_lambda_cv <- function(
     return(mses)
 }
 
+#' Prior Ridge Response
+#'
+#' Extracts the response vector from a data.frame of matches, ordered blue
+#' then red to match `lineup_design_matrix`.
+#' @param matches (data.frame) dataframe of matches with response columns
+#' named "(red/blue)_(responseName)"
+#' @param response_name (character) name of the response as it appears in
+#' `matches`, or "unpenalized" for score minus foul points.
+#' @details
+#' If "unpenalized" is requested but `matches` has no `foulPoints` columns,
+#' warns and falls back to total score.
+#' @noRd
+pridge_response <- function(matches, response_name){
+    get_col <- function(name){
+        c(unlist(matches[, paste0("blue_", name)]),
+          unlist(matches[, paste0("red_", name)]))
+    }
+    if (response_name != "unpenalized") return(get_col(response_name))
+
+    foul_cols <- paste0(c("blue_", "red_"), "foulPoints")
+    if (!all(foul_cols %in% colnames(matches))){
+        warning("No foulPoints columns in `matches`; using total score")
+        return(get_col("score"))
+    }
+    get_col("score") - get_col("foulPoints")
+}
+
 #' Fit Prior Ridge
 #'
 #' Given a data.frame of matches, fit the pRidge model
@@ -120,7 +147,10 @@ pridge_lambda_cv <- function(
 #' @param priors (numeric) vector of priors to regularize towards, named with
 #' tba-legal team identifiers (i.e. "frc449")
 #' @param response_name (character) name of the response vectors as they appear
-#' in `matches`
+#' in `matches`. The default, "unpenalized", is the alliance score minus the
+#' foul points awarded to it (`score - foulPoints`); if `matches` has no
+#' `foulPoints` columns it falls back to total score with a warning. Use
+#' "score" for the total score including foul points.
 #' @param grid (numeric) Grid of lambda values to consider for regularization
 #' @param n_cores the number of cores on your machine to reserve for
 #' calculation. If NULL, will default to the max - 1.
@@ -136,17 +166,17 @@ pridge_lambda_cv <- function(
 #' epas <- sapply(sb_data, function(te){te$epa$stats$start})
 #' names(epas) <- sapply(sb_data, function(te){te$team})
 #' mdsev_pridge <- fit_pridge(matches, epas)
+#' mdsev_pridge_total <- fit_pridge(matches, epas, response_name = "score")
 #'
 fit_pridge <- function(
-        matches, priors, response_name = "score",
+        matches, priors, response_name = "unpenalized",
         grid = exp(seq(log(0.01), log(20), length.out = 100)),
         n_cores = NULL, digits = 2
 ){
     design <- as.matrix(lineup_design_matrix(matches))
 
     # extract the response vector from matches
-    response <- c(unlist(matches[, paste0("blue_", response_name)]),
-                  unlist(matches[, paste0("red_", response_name)]))
+    response <- pridge_response(matches, response_name)
 
     # match priors order to the design matrix; also implicitly discards
     # teams in `priors` that are not in `design`
@@ -165,7 +195,9 @@ fit_pridge <- function(
 #' Given an event key, selects an optimal lambda using LOOCV and fits the prior
 #' ridge model using pre-event EPA from statbotics as the prior.
 #' @param event_key (char) TBA-legal event key (ex. "2025mdsev")
-#' @param response_name name of the desired response vector (typically "score")
+#' @param response_name name of the desired response vector. The default,
+#' "unpenalized", is the alliance score minus the foul points awarded to it;
+#' use "score" for the total score including foul points.
 #' @param grid (vector) all possible lambda values to consider. Defaults to
 #' starting at just above zero to reduce matrix singularity in fits (guarantees
 #' that X^tX + (lambda)I is positive definite.)
@@ -178,8 +210,9 @@ fit_pridge <- function(
 #' fit_event_pridge("2025mdsev")
 #' fit_event_pridge("2023new", n_cores = 3)
 #' fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
+#' fit_event_pridge("2025mdsev", response_name = "score")
 fit_event_pridge <- function(
-        event_key, response_name = "score",
+        event_key, response_name = "unpenalized",
         grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL
 ){
     matches <- event_matches(event_key, match_type = "qual")
@@ -188,5 +221,6 @@ fit_event_pridge <- function(
     epas <- sapply(sb_data, function(te){te$epa$stats$start})
     names(epas) <- sapply(sb_data, function(te){te$team})
 
-    return(fit_pridge(matches, epas, response_name = response_name))
+    return(fit_pridge(matches, epas, response_name = response_name,
+                      grid = grid, n_cores = n_cores))
 }
