@@ -3187,7 +3187,7 @@ team_years_sb(team = 449)
 #> [1] 1617
 #> 
 #> [[24]]$epa$norm
-#> [1] 1740
+#> [1] 1741
 #> 
 #> [[24]]$epa$breakdown
 #> [[24]]$epa$breakdown$total_points
@@ -3232,10 +3232,10 @@ team_years_sb(team = 449)
 #> [1] 92
 #> 
 #> [[24]]$epa$ranks$total$percentile
-#> [1] 0.9754
+#> [1] 0.9757
 #> 
 #> [[24]]$epa$ranks$total$team_count
-#> [1] 3742
+#> [1] 3781
 #> 
 #> 
 #> [[24]]$epa$ranks$country
@@ -3243,10 +3243,10 @@ team_years_sb(team = 449)
 #> [1] 73
 #> 
 #> [[24]]$epa$ranks$country$percentile
-#> [1] 0.9747
+#> [1] 0.9749
 #> 
 #> [[24]]$epa$ranks$country$team_count
-#> [1] 2890
+#> [1] 2914
 #> 
 #> 
 #> [[24]]$epa$ranks$state
