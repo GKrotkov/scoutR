@@ -44,8 +44,6 @@ additions to scoutR scoped, modular, and testable.
 - “OPR Dropout”; adjustments to the design matrix based on scouted data
   - Dropout: subtract out teams that no-showed the match or played
     exactly 0 offense
-- How many matches are needed to get a good seeding?
-  (<https://www.chiefdelphi.com/t/how-many-matches-are-needed-to-get-good-seeding/462857>)
 - Principled model to predict district points cutoff
 
 # Long term
