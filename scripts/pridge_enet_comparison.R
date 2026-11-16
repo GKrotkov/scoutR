@@ -45,7 +45,7 @@ cli_years <- suppressWarnings(as.integer(commandArgs(trailingOnly = TRUE)))
 YEARS <- if (length(cli_years) > 0 && !anyNA(cli_years)) {
     cli_years
 } else {
-    c(2016:2019, 2022:2025)
+    c(2016:2019, 2022:2026)
 }
 
 OUT_DIR <- Sys.getenv("PRIDGE_ENET_OUT", "data/pridge_vs_enet")
@@ -60,7 +60,10 @@ N_CORES <- env_int(
 N_FETCH_CORES <- min(N_CORES, 4L)
 
 cfg <- list(
-    alphas = c(0, 0.1, 0.25, 0.5, 0.75, 1),
+    # must include 0 (prior ridge), which is the baseline for every comparison.
+    # The full range from ridge (0) to LASSO (1). Rounded so that the values,
+    # and the column names built from them, are exact multiples of 0.05.
+    alphas = round(seq(0, 1, by = 0.05), 2),
     # prior ridge lambdas, on scoutR::prior_ridge's scale. Wider at the top
     # than fit_pridge()'s default grid (which stops at 20) so that ridge can
     # shrink all the way to the prior, as the alpha > 0 paths can.
@@ -356,23 +359,25 @@ message("\n", nrow(done), " events evaluated, ", sum(!is.na(result$error)),
 message("Saved to ", out_file)
 
 if (nrow(done) > 0){
-    mse_cols <- c("mse_prior", paste0("mse_alpha_", cfg$alphas), "mse_tuned")
-    # each event's MSE relative to its own prior ridge MSE (below 1 = better)
-    relative <- done[, mse_cols] / done$mse_alpha_0
-    cat("\nMean across events of MSE / prior ridge MSE:\n")
-    print(round(colMeans(relative), 4))
+    # Paired comparison against prior ridge: each event's percent MSE
+    # improvement over its own alpha = 0 MSE (positive = better than ridge)
+    candidates <- c("mse_prior", paste0("mse_alpha_", setdiff(cfg$alphas, 0)),
+                    "mse_tuned")
+    vs_ridge <- t(vapply(candidates, function(col){
+        pct_imp <- (done$mse_alpha_0 - done[[col]]) / done$mse_alpha_0 * 100
+        ci <- if (nrow(done) > 1) t.test(pct_imp)$conf.int else c(NA, NA)
+        c(mean = mean(pct_imp), ci_lower = ci[1], ci_upper = ci[2],
+          median = median(pct_imp), pct_events_improved = mean(pct_imp > 0) * 100)
+    }, numeric(5)))
+    rownames(vs_ridge) <- sub("^mse_", "", candidates)
+    cat("\nPercent MSE improvement over prior ridge, per event",
+        "(95% CI for the mean):\n")
+    print(round(vs_ridge, 2))
+    cat("Note: picking the best fixed alpha from this table overstates its",
+        "gain;\nconfirm the chosen alpha on events that were not used to",
+        "choose it.\n")
 
-    cat("\nHow often each alpha was selected (all forward-chaining steps):\n")
+    cat("\nHow often each alpha was selected when tuned (all",
+        "forward-chaining steps):\n")
     print(round(prop.table(table(detail$alpha_selected[detail$alliance == "blue"])), 3))
-
-    cat("\nTuned elastic net vs prior ridge, percent MSE improvement per event:\n")
-    cat("  mean ", round(mean(done$pct_imp_tuned), 3),
-        ", median ", round(median(done$pct_imp_tuned), 3),
-        ", events improved ", round(mean(done$pct_imp_tuned > 0) * 100, 1),
-        "%\n", sep = "")
-    if (nrow(done) > 1){
-        ci <- t.test(done$pct_imp_tuned)$conf.int
-        cat("  95% CI for the mean: [", round(ci[1], 3), ", ",
-            round(ci[2], 3), "]\n", sep = "")
-    }
 }
