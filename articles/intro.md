@@ -214,7 +214,7 @@ head(mdpas)
 
 ``` r
 
-# write.csv(mdpas, file = "2025mdpas_schedule.csv")
+# write.csv(mdpas, file = "2025mdpas_schedule.csv") # nolint
 ```
 
 ### team_awards()
