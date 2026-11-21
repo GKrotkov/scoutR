@@ -35,7 +35,7 @@ name_sublist <- function(elem, label = "") {
 }
 
 # adapted from stackOverflow at:
-# https://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na
+# https://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na nolint: line_length_linter.
 drop_na_cols <- function(df) {
     not_na_col <- function(x) !all(is.na(x))
     return(Filter(not_na_col, df))
@@ -153,8 +153,10 @@ unpack_breakdown <- function(matches) {
 #' @param raw list of match objects from TBA API as read by tba_readR
 #' @param alliances (boolean) unpack the alliances?
 #' @param breakdown (boolean) unpack the score breakdown?
-#' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
-#' @param sort (boolean) if TRUE, will sort the output matches by competition level and match number.
+#' @param unplayed (boolean) include matches with scores of -1 (indicating that
+#' the match has not been played?)
+#' @param sort (boolean) if TRUE, will sort the output matches by competition
+#' level and match number.
 #' @author Gabriel Krotkov
 #' @return tidy tibble of matches
 #' @examples
@@ -163,7 +165,7 @@ unpack_breakdown <- function(matches) {
 #'     breakdown = TRUE
 #' )
 tidy_matches <- function(
-  raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
+    raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
 ) {
     event <- tibble(matches = raw)
 
@@ -177,7 +179,7 @@ tidy_matches <- function(
 
     # handling case of call on nulls or when score_breakdown does not exist
     if (breakdown && (!("score_breakdown" %in% colnames(event)) ||
-        all(is.na(event$score_breakdown)))) {
+                      all(is.na(event$score_breakdown)))) {
         warning("tidy_matches called with breakdown = TRUE on null case \n
                 Recalling tidy_matches with breakdown = FALSE")
         return(tidy_matches(raw, alliances = alliances, breakdown = FALSE))
@@ -191,7 +193,7 @@ tidy_matches <- function(
     }
 
     # sort by competition level and match number
-    if (sort & all(c("match_number", "comp_level") %in% colnames(event))) {
+    if (sort && all(c("match_number", "comp_level") %in% colnames(event))) {
         event <- event |>
             mutate(comp_level = factor(comp_level,
                 levels = c("qm", "qf", "sf", "f")
@@ -354,7 +356,7 @@ tidy_coprs <- function(data) {
 tidy_rankings <- function(raw, trim = TRUE) {
     data <- tibble(ranking = raw$rankings)
     data <- unnest_wider(data, ranking)
-    if ("record" %in% colnames(data) & !all(is.na(data$record))) {
+    if ("record" %in% colnames(data) && !all(is.na(data$record))) {
         data <- unnest_wider(data, record)
     }
 
@@ -436,14 +438,17 @@ tidy_districts <- function(raw) {
 # takes a raw district rankings like as output from read_district_rankings
 #' Tidy District Ranking
 #' @param raw JSON list output from tba_readR
-#' @param detail (chr) how much detail do we want to break the results down into?
+#' @param detail (chr) how much detail do we want to break the results down
+#' into?
 #' @details
 #' If "none", will include the event results list in a column in the output
 #' If "separate" will separate the events but not break down the points
 #' If "breakdown" will break down points earning at each event to the most
 #' granular level.
 #'
-tidy_district_rankings <- function(raw, detail = c("none", "separate", "breakdown")) {
+tidy_district_rankings <- function(
+    raw, detail = c("none", "separate", "breakdown")
+) {
     detail <- match.arg(detail)
 
     raw <- tibble::tibble(ranks = raw)

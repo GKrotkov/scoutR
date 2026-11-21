@@ -73,7 +73,9 @@ pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE) {
 #'   the max minus 1.
 #'
 #' @export
-pridge_lambda_cv <- function(design, response, priors, grid, plot_mses = TRUE, n_cores = NULL) {
+pridge_lambda_cv <- function(
+    design, response, priors, grid, plot_mses = TRUE, n_cores = NULL
+) {
     design <- as.matrix(design)
 
     # Leave one core free by default
@@ -217,7 +219,8 @@ fit_pridge <- function(matches, priors, response_name = "unpenalized",
 #' @param grid (vector) all possible lambda values to consider. Defaults to
 #' starting at just above zero to reduce matrix singularity in fits (guarantees
 #' that X^tX + (lambda)I is positive definite.)
-#' @param n_cores (int) number of cores to parallelize over. If NULL, will select (max - 1) cores
+#' @param n_cores (int) number of cores to parallelize over. If NULL, will
+#' select (max - 1) cores
 #' @details
 #' Relies on statbotics API to establish priors
 #'
@@ -227,8 +230,10 @@ fit_pridge <- function(matches, priors, response_name = "unpenalized",
 #' fit_event_pridge("2023new", n_cores = 3)
 #' fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
 #' fit_event_pridge("2025mdsev", response_name = "score")
-fit_event_pridge <- function(event_key, response_name = "unpenalized",
-                             grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL) {
+fit_event_pridge <- function(
+    event_key, response_name = "unpenalized",
+    grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL
+) {
     matches <- event_matches(event_key, match_type = "qual")
 
     sb_data <- team_events_sb(event = event_key)

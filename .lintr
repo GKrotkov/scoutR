@@ -2,6 +2,7 @@ linters: linters_with_defaults(
     indentation_linter(indent = 4L),
     return_linter(return_style = "explicit"),
     pipe_consistency_linter(pipe = "|>"),
-    object_usage_linter = NULL
+    object_usage_linter = NULL,
+    object_name_linter = NULL
   )
 encoding: "UTF-8"

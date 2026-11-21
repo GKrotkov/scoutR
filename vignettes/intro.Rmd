@@ -102,7 +102,7 @@ Retrieve the posted qual schedule. Usually, you'll want to direct this to a CSV 
 ```{r}
 mdpas <- qual_schedule("2025mdpas")
 head(mdpas)
-# write.csv(mdpas, file = "2025mdpas_schedule.csv")
+# write.csv(mdpas, file = "2025mdpas_schedule.csv") # nolint
 ```
 
 ## team_awards()

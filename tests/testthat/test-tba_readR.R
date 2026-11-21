@@ -6,8 +6,8 @@ test_that("Testing numbers_only()", {
 })
 
 test_that("Testing auth()", {
-    expect_equal(auth(""), "?X-TBA-Auth-Key=m8eOXxp89B9pTqVXHAvR1HFA83eQz8ybZVEJdxCyB6T331LPIIv1ze1dUNjSF9rE")
-    expect_equal(auth("test"), "test?X-TBA-Auth-Key=m8eOXxp89B9pTqVXHAvR1HFA83eQz8ybZVEJdxCyB6T331LPIIv1ze1dUNjSF9rE")
+    expect_equal(auth(""), "?X-TBA-Auth-Key=m8eOXxp89B9pTqVXHAvR1HFA83eQz8ybZVEJdxCyB6T331LPIIv1ze1dUNjSF9rE") # nolint: line_length_linter.
+    expect_equal(auth("test"), "test?X-TBA-Auth-Key=m8eOXxp89B9pTqVXHAvR1HFA83eQz8ybZVEJdxCyB6T331LPIIv1ze1dUNjSF9rE") # nolint: line_length_linter.
 })
 
 test_that("Testing tf()", {

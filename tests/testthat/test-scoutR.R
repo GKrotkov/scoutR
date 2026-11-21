@@ -27,7 +27,9 @@ test_that("event_tangibles", {
     expect_equal(event_tangibles("2025vagle"), test1)
     expect_equal(event_tangibles("2025tnkn"), test2)
     expect_equal(event_tangibles("2018pawch"), test3)
-    expect_equal(event_tangibles("2025new", qual_only = F, pct = F), test4)
+    expect_equal(
+        event_tangibles("2025new", qual_only = FALSE, pct = FALSE), test4
+    )
 })
 
 test_that("event_opr_progression", {

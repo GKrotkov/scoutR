@@ -59,7 +59,7 @@ team <- function(key, simple = FALSE) {
 #' teams(0, simple = TRUE)
 #' teams(3, keys = TRUE)
 teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE) {
-    if (simple & keys) warning(warns()$simkey)
+    if (simple && keys) warning(warns()$simkey)
 
     data <- read_teams(page_num, year, simple, keys)
     if (keys) {
@@ -78,7 +78,8 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE) {
 #' @param keys (bool) get only keys?
 #' @param alliances (bool) break out alliance column in match objects?
 #' @param breakdown (bool) break out score breakdown column?
-#' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
+#' @param unplayed (boolean) include matches with scores of -1 (indicating
+#' that the match has not been played?)
 #' @return tidy tibble of team matches, or vector if keys = TRUE
 #' @author Gabriel Krotkov
 #' @export
@@ -91,8 +92,8 @@ team_matches <- function(
   key, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE,
   alliances = TRUE, breakdown = TRUE, unplayed = FALSE
 ) {
-    if (simple & keys) warning(warns()$simkey)
-    if (!is.na(year) & !is.na(event)) warning(warns()$year_event)
+    if (simple && keys) warning(warns()$simkey)
+    if (!is.na(year) && !is.na(event)) warning(warns()$year_event)
 
     data <- read_team_matches(key, year, event, official, simple, keys)
 
@@ -126,7 +127,7 @@ team_matches <- function(
 team_events <- function(
   key, year = NA, official = FALSE, simple = FALSE, keys = FALSE
 ) {
-    if (simple & keys) warning(warns()$simkey)
+    if (simple && keys) warning(warns()$simkey)
 
     data <- read_team_events(key, year, official, simple, keys)
 
@@ -157,7 +158,7 @@ team_events <- function(
 #' team_awards("frc1712", year = 2010, recipients = TRUE)
 #' team_awards(1712, event = "2017pawch")
 team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE) {
-    if (!is.null(year) & !is.null(event)) warning(warns()$year_event)
+    if (!is.null(year) && !is.null(event)) warning(warns()$year_event)
 
     data <- read_team_awards(key, year, event)
 
@@ -218,10 +219,10 @@ event <- function(key, simple = FALSE) {
 #' events(2012, simple = TRUE)
 #' events(2015, keys = TRUE)
 events <- function(year, official = FALSE, simple = FALSE, keys = FALSE) {
-    if (simple & keys) warning(warns()$simkeys)
+    if (simple && keys) warning(warns()$simkeys)
     # keys needs to short-circuit official because the official check requires
     # information from the whole events object
-    if (keys & official) {
+    if (keys && official) {
         df <- events(year, official = TRUE, simple = simple, keys = FALSE)
         return(df$key)
     }
@@ -262,7 +263,7 @@ event_matches <- function(
   unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
 ) {
     match_type <- match.arg(match_type)
-    if (simple & keys) warning(warns()$simkeys)
+    if (simple && keys) warning(warns()$simkeys)
 
     if (match_type == "quals") {
         data <- read_event_qual_matches(event_key, simple, keys)
@@ -276,7 +277,7 @@ event_matches <- function(
         return(unlist(data))
     }
 
-    if (is.null(data) | length(data) == 0) { # case where no matches are posted
+    if (is.null(data) || length(data) == 0) { # case where no matches are posted
         warning("event_matches() call with no posted schedule; returning NULL")
         return(NULL)
     }
@@ -483,7 +484,7 @@ districts <- function(year = YEAR) {
 #' district_events("2016mar")
 #' district_events("2018fma", keys = TRUE)
 district_events <- function(district_key, simple = FALSE, keys = FALSE) {
-    if (simple & keys) warning(warns()$simkey)
+    if (simple && keys) warning(warns()$simkey)
 
     data <- read_district_events(district_key, simple, keys)
 
@@ -510,7 +511,7 @@ district_events <- function(district_key, simple = FALSE, keys = FALSE) {
 #' district_teams("2014mar", simple = TRUE)
 #' district_teams("2016mar")
 district_teams <- function(district_key, simple = FALSE, keys = FALSE) {
-    if (simple & keys) warning(warns()$simkey)
+    if (simple && keys) warning(warns()$simkey)
 
     data <- read_district_teams(district_key, simple, keys)
 
@@ -542,7 +543,7 @@ district_teams <- function(district_key, simple = FALSE, keys = FALSE) {
 #' district_rankings("2016mar", detail = "breakdown")
 #' district_rankings("2022fit")
 district_rankings <- function(
-  district_key, detail = c("none", "separate", "breakdown")
+    district_key, detail = c("none", "separate", "breakdown")
 ) {
     detail <- match.arg(detail)
     data <- read_district_rankings(district_key)

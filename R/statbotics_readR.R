@@ -129,7 +129,7 @@ teams_sb <- function(..., yr = NULL, event = NULL, match = NULL) {
 
 #' Years (Statbotics)
 #'
-#' Returns a batch of statbotics event objects conforming to the given parameters
+#' Returns a batch of statbotics event objects conforming to given parameters
 #' @param ... Parameters to be passed to the statbotics /v3/{years}/ endpoint
 #' @export
 years_sb <- function(...) {
@@ -138,7 +138,7 @@ years_sb <- function(...) {
 
 #' Events (Statbotics)
 #'
-#' Returns a batch of statbotics event objects conforming to the given parameters
+#' Returns a batch of statbotics event objects conforming to given parameters
 #' @param ... Parameters passed to the statbotics /v3/{events} endpoint
 #' @export
 events_sb <- function(...) {
@@ -147,7 +147,7 @@ events_sb <- function(...) {
 
 #' Matches (Statbotics)
 #'
-#' Returns a batch of statbotics match objects conforming to the given parameters
+#' Returns a batch of statbotics match objects conforming to given parameters
 #' @param ... Parameters passed to the statbotics /v3/{matches} endpoint
 #' @export
 matches_sb <- function(...) {
@@ -156,7 +156,7 @@ matches_sb <- function(...) {
 
 #' Team-Years (Statbotics)
 #'
-#' Returns a batch of statbotics team-year objects based on the given parameters.
+#' Returns a batch of statbotics team-year objects based on given parameters.
 #' @param ... Parameters passed to the statbotics /v3/team_years endpoint
 #' @examples
 #' team_years_sb(year = 2025, district = "chs")
@@ -168,7 +168,7 @@ team_years_sb <- function(...) {
 
 #' Team-Events (Statbotics)
 #'
-#' Returns a batch of statbotics team-event objects based on the given parameters.
+#' Returns a batch of statbotics team-event objects based on given parameters.
 #' @param ... Parameters passed to the statbotics /v3/team_events endpoint
 #' @examples
 #' team_events_sb(team = 4821, year = 2025)
@@ -180,7 +180,7 @@ team_events_sb <- function(...) {
 
 #' Team-Matches (Statbotics)
 #'
-#' Returns a batch of statbotics team-match objects based on the given parameters.
+#' Returns a batch of statbotics team-match objects based on given parameters.
 #' @param ... Parameters passed to the statbotics /v3/team_matches endpoint
 #' @examples
 #' team_matches_sb(team = 449, year = 2025)

@@ -46,7 +46,7 @@ event_matchups <- function(event_code, team_id) {
     schedule <- qual_schedule(event_code, int_output = TRUE)
     filtered <- schedule |>
         filter(team_id == red1 | team_id == red2 | team_id == red3 |
-            team_id == blue1 | team_id == blue2 | team_id == blue3)
+                   team_id == blue1 | team_id == blue2 | team_id == blue3)
     # logical vector: is the team of interest on the blue alliance?
     on_blue <- team_id == filtered$blue1 |
         team_id == filtered$blue2 |
@@ -122,7 +122,7 @@ prescout <- function(event_code, breakdown = TRUE, manual_teams = NULL) {
 #' event_tangibles("2017mrcmp", schema = schema_csf)
 #' @export
 event_tangibles <- function(
-  event_key, schema = schema_cfs, qual_only = T, pct = T, digits = 2
+    event_key, schema = schema_cfs, qual_only = TRUE, pct = TRUE, digits = 2
 ) {
     type <- ifelse(qual_only, "qual", "all")
     matches_df <- event_matches(event_key, match_type = type)
@@ -197,9 +197,10 @@ week_seed_finish_table <- function(wk, year = YEAR,
         dplyr::filter(week == wk) |>
         dplyr::select(key)
     keys <- unlist(keys)
-    return(table(sapply(keys, event_finish_seed,
-        finish = finish, size = size
-    )))
+    result <- table(
+        sapply(keys, event_finish_seed, finish = finish, size = size)
+    )
+    return(result)
 }
 
 #######################################################
@@ -321,8 +322,8 @@ fit_lineup_lm <- function(lineups, responses, w = NULL) {
 #' fit_event_lr("2024new", match_type = "all")
 #' fit_event_lr("2024paca", response = "foulPoints", flip_response_alliance = T)
 fit_event_lr <- function(
-  event_code, match_type = "qual", response = "score", w = NULL,
-  flip_response_alliance = FALSE
+    event_code, match_type = "qual", response = "score", w = NULL,
+    flip_response_alliance = FALSE
 ) {
     matches <- event_matches(event_code, match_type = match_type)
     matches <- matches[order(matches$match_number), ]
@@ -361,7 +362,7 @@ fit_event_lr <- function(
 #' result <- event_opr_progression("2024paca")
 #' result <- event_opr_progression("2024paca", response = "autoTotalNotePoints")
 event_opr_progression <- function(
-  event_code, response_name = "score", standardize = FALSE, w = NULL
+    event_code, response_name = "score", standardize = FALSE, w = NULL
 ) {
     red_resp <- paste0("red_", response_name) # red response
     blue_resp <- paste0("blue_", response_name) # blue response
@@ -371,8 +372,10 @@ event_opr_progression <- function(
     } # handle null case
     if (standardize) { # handle response standardization
         scores <- c(matches[[red_resp]], matches[[blue_resp]])
-        matches[[red_resp]] <- (matches[[red_resp]] - mean(scores)) / sd(scores)
-        matches[[blue_resp]] <- (matches[[blue_resp]] - mean(scores)) / sd(scores)
+        matches[[red_resp]] <- (matches[[red_resp]] - mean(scores)) /
+            sd(scores)
+        matches[[blue_resp]] <- (matches[[blue_resp]] - mean(scores)) /
+            sd(scores)
     }
     n_teams <- length(unique(c(
         matches$red1, matches$red2, matches$red3,
@@ -433,7 +436,7 @@ year_opr_swings <- function(year) {
     for (i in seq_along(event_keys)) {
         progression <- event_opr_progression(event_keys[i], standardize = TRUE)
         if (is.null(progression)) next()
-        if (nrow(progression) < 3) next() # exclude extreme low-qual (ex. 2010is)
+        if (nrow(progression) < 3) next() # exclude extreme low-qual (ex 2010is)
         mean_diff <- progression |>
             dplyr::select(-c(match_num, ppt)) |>
             sapply(diff) |>

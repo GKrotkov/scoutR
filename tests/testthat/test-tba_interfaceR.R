@@ -14,7 +14,7 @@ test_that("event_insights works", {
     expect_null(event_insights("2012la"))
     expect_equal(event_insights("2024new"), test_2024new)
     expect_equal(event_insights("2023mil"), test_2023mil)
-    expect_equal(event_insights("2023mil", T), test_2023mil_transpose)
+    expect_equal(event_insights("2023mil", TRUE), test_2023mil_transpose)
 })
 
 test_that("team_matches", {

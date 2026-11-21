@@ -248,7 +248,7 @@ schema_csf <- function(color, station_num, field) {
 #' mar16 <- event_matches("2016mrcmp")
 #' get_robot_field(mar16, "auto", 1712, schema = schema_csf)
 get_robot_field <- function(
-  matches, field, team_id, schema = schema_cfs, unlist = T
+    matches, field, team_id, schema = schema_cfs, unlist = TRUE
 ) {
     stations <- get_team_stations(matches, team_id)
     # assumption: station number is the last character of the string
@@ -276,7 +276,7 @@ get_robot_field <- function(
 #' mar17 <- event_matches("2017mrcmp")
 #' get_robot_field_df(mar17, "auto", schema = schema_csf)
 get_robot_field_df <- function(
-  matches, field, schema = schema_cfs, unlist = T
+    matches, field, schema = schema_cfs, unlist = TRUE
 ) {
     ids <- unique(c(
         matches$blue1, matches$blue2, matches$blue3,
@@ -332,7 +332,7 @@ count_team_matches <- function(matches) {
 #' fields <- c("auto")
 #' get_multifield_df(fma17, fields, schema = schema_csf)
 get_multifield_df <- function(
-  matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
+    matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
 ) {
     if (is.null(fields)) {
         fields <- id_robot_fields(matches)
@@ -495,10 +495,12 @@ prescout_sb <- function(tms, yr, breakdown = FALSE) {
 
 #' Team-Event OPRs
 #'
-#' Retrieve linear regression coefficients of interest (OPRs) for a particular team in a particular event
+#' Retrieve linear regression coefficients of interest (OPRs) for a particular
+#' team in a particular event
 #' @param event_id event key (i.e. "2022txirv")
 #' @param team_id team key (i.e. "frc1712")
-#' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
+#' @param breakdown (bool) Get all LR coefficients for all response variables?
+#' If FALSE, only returns overall OPR.
 #' @noRd
 team_event_oprs <- function(event_id, team_id, breakdown = TRUE) {
     team_id <- tf(team_id)
@@ -524,7 +526,8 @@ team_event_oprs <- function(event_id, team_id, breakdown = TRUE) {
 #'
 #' @param team_id team number
 #' @param yr year
-#' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
+#' @param breakdown (bool) Get all LR coefficients for all response variables?
+#' If FALSE, only returns overall OPR.
 #' @noRd
 team_max_oprs <- function(team_id, yr, breakdown = TRUE) {
     # get only official events to cut down on malformed inputs (i.e. offseasons)
