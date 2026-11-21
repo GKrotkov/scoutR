@@ -21,11 +21,11 @@ qual_schedule <- function(event_code, int_output = TRUE) {
         return(NULL)
     }
 
-    matches <- matches %>%
+    matches <- matches |>
         dplyr::select(match_number, red1, red2, red3, blue1, blue2, blue3)
 
     if (int_output) {
-        matches <- matches %>%
+        matches <- matches |>
             dplyr::mutate(dplyr::across(
                 c(red1, red2, red3, blue1, blue2, blue3), id2int
             ))
@@ -44,7 +44,7 @@ qual_schedule <- function(event_code, int_output = TRUE) {
 event_matchups <- function(event_code, team_id) {
     if (is.character(team_id)) team_id <- id2int(team_id)
     schedule <- qual_schedule(event_code, int_output = TRUE)
-    filtered <- schedule %>%
+    filtered <- schedule |>
         filter(team_id == red1 | team_id == red2 | team_id == red3 |
             team_id == blue1 | team_id == blue2 | team_id == blue3)
     # logical vector: is the team of interest on the blue alliance?
@@ -193,8 +193,8 @@ week_seed_finish_table <- function(wk, year = YEAR,
         length(wk) == 1 && 0 < wk && wk <= 6
     })
     wk <- wk - 1 # TBA uses 0-indexing for week numbering
-    keys <- events(year) %>%
-        dplyr::filter(week == wk) %>%
+    keys <- events(year) |>
+        dplyr::filter(week == wk) |>
         dplyr::select(key)
     keys <- unlist(keys)
     return(table(sapply(keys, event_finish_seed,

@@ -31,9 +31,9 @@
 # load("apollo.rda") # loads tba_data object
 # kraken_data <- read.csv("krakendata/kraken_apollo.csv")
 #
-# kraken_data <- kraken_data %>%
+# kraken_data <- kraken_data |>
 #     select(all_of(kraken_cols))
-# tba_data <- tba_data %>%
+# tba_data <- tba_data |>
 #     select(all_of(tba_cols))
 #
 # rm(tba_cols, kraken_cols)

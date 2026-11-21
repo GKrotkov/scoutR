@@ -337,12 +337,12 @@ event_insights <- function(key, insight_as_col = FALSE) {
     data <- tidy_insights(response, insight_as_col)
     if (insight_as_col) {
         data$event <- key
-        data <- data %>%
+        data <- data |>
             select(event, everything())
     } else {
         data$id <- paste(key, data$phase, sep = "_")
         data$key <- key
-        data <- data %>%
+        data <- data |>
             select(id, key, phase, everything())
     }
     return(data)

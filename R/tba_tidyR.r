@@ -62,7 +62,7 @@ unnest_alliances <- function(matches) {
     # remember the number of columns and the column we're unpacking
     ncol0 <- ncol(matches)
     cid <- which(colnames(matches) == "blue")
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider(blue)
     # rename using our remembered indices
     idx <- cid:(cid + ncol(matches) - ncol0)
@@ -72,13 +72,13 @@ unnest_alliances <- function(matches) {
         matches$blue_team_keys,
         name_teams_list, "blue"
     )
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider(blue_team_keys)
 
     # remember the number of columns and the column we're unpacking
     ncol0 <- ncol(matches)
     cid <- which(colnames(matches) == "red")
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider(red)
     # rename using our remembered indices
     idx <- cid:(cid + ncol(matches) - ncol0)
@@ -87,7 +87,7 @@ unnest_alliances <- function(matches) {
         matches$red_team_keys,
         name_teams_list, "red"
     )
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider(red_team_keys)
 
     return(matches)
@@ -105,7 +105,7 @@ unpack_alliances <- function(matches) {
         warning("unpack_alliances() called with no `alliance` column")
         return(matches)
     }
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider(alliances)
 
     matches <- unnest_alliances(matches)
@@ -124,13 +124,13 @@ unpack_breakdown <- function(matches) {
         return(matches)
     }
     # unpack score_breakdown into red and blue
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider("score_breakdown")
 
     # unpack the top level of "blue"
     ncol0 <- ncol(matches)
     cid <- which(colnames(matches) == "blue")
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider("blue")
     idx <- cid:(cid + ncol(matches) - ncol0)
     colnames(matches)[idx] <- paste("blue", colnames(matches)[idx], sep = "_")
@@ -138,7 +138,7 @@ unpack_breakdown <- function(matches) {
     # reset variables and repeat the process for red
     ncol0 <- ncol(matches)
     cid <- which(colnames(matches) == "red")
-    matches <- matches %>%
+    matches <- matches |>
         unnest_wider("red")
     idx <- cid:(cid + ncol(matches) - ncol0)
     colnames(matches)[idx] <- paste("red", colnames(matches)[idx], sep = "_")
@@ -172,7 +172,7 @@ tidy_matches <- function(
         return(event)
     }
 
-    event <- event %>%
+    event <- event |>
         unnest_wider(matches)
 
     # handling case of call on nulls or when score_breakdown does not exist
@@ -192,10 +192,10 @@ tidy_matches <- function(
 
     # sort by competition level and match number
     if (sort & all(c("match_number", "comp_level") %in% colnames(event))) {
-        event <- event %>%
+        event <- event |>
             mutate(comp_level = factor(comp_level,
                 levels = c("qm", "qf", "sf", "f")
-            )) %>%
+            )) |>
             arrange(comp_level, match_number)
     }
     return(event)
@@ -280,7 +280,7 @@ transpose_insights <- function(data) {
     })
     data <- bind_rows(data)
     data$phase <- unique(phase)
-    data <- data %>%
+    data <- data |>
         select(phase, everything())
     return(data)
 }

@@ -303,7 +303,7 @@ get_robot_field_df <- function(
 #' @return dataframe with team ids and the count of matches appeared in
 count_team_matches <- function(matches) {
     result <- data.frame(table(unlist(c(
-        matches %>%
+        matches |>
             dplyr::select(blue1, blue2, blue3, red1, red2, red3)
     ))))
     colnames(result) <- c("id", "count")
@@ -444,7 +444,7 @@ season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL) {
     # filter out teams with no matches played:
     matches <- matches[sapply(matches, nrow) > 0]
     # join by every column, because we don't want duplicated vars in the output
-    matches <- matches %>%
+    matches <- matches |>
         purrr::reduce(full_join, by = colnames(matches[[1]]))
     # check for duplicated matches
     stopifnot(!any(duplicated(matches)))
