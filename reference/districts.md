@@ -38,7 +38,7 @@ districts(2023)
 #>  1 2023chs  2023 chs          FIRST Chesapeake       <named list [2]>           
 #>  2 2023fim  2023 fim          FIRST in Michigan      <named list [2]>           
 #>  3 2023fin  2023 fin          FIRST Indiana Robotics <named list [2]>           
-#>  4 2023fit  2023 fit          FIRST In Texas         <named list [2]>           
+#>  4 2023fit  2023 fit          Texas - FIRST Texas    <named list [2]>           
 #>  5 2023fma  2023 fma          FIRST Mid-Atlantic     <named list [2]>           
 #>  6 2023fnc  2023 fnc          FIRST North Carolina   <named list [2]>           
 #>  7 2023isr  2023 isr          FIRST Israel           <named list [2]>           
