@@ -10,13 +10,12 @@
 #'
 #' Function to store the auth key for scoutR in the user's HOME directory
 #' @export
-initialize_scoutR <- function(auth_key){
+initialize_scoutR <- function(auth_key) {
     home <- Sys.getenv("HOME")
-    if (is.null(auth_key)){
+    if (is.null(auth_key)) {
         warning("No auth key supplied. We assume ~/.scoutR_auth.txt exists.")
-    }
-    else{
-        with_dir(home,{
+    } else {
+        with_dir(home, {
             # write the auth key text file
             write_file(auth_key, file = ".scoutR_auth.txt")
         })
@@ -43,9 +42,13 @@ normalize_weights <- function(w, len_out = NA) {
     # round the digits to 4 places to avoid number representation problems
     # (when the fractionalized numbers get too large, we hit 2's complement)
     w <- round(w, digits = 4)
-    stopifnot("weights must be nonnegative" = {all(w >= 0)})
+    stopifnot("weights must be nonnegative" = {
+        all(w >= 0)
+    })
     # apply MASS fractional approximation
-    fractions <- sapply(w, function(x) {as.character(MASS::fractions(x))})
+    fractions <- sapply(w, function(x) {
+        as.character(MASS::fractions(x))
+    })
 
     fractional <- matrix(sapply(fractions, function(f) {
         parts <- unlist(strsplit(f, "/"))
@@ -68,7 +71,7 @@ normalize_weights <- function(w, len_out = NA) {
     # use round to guarantee integer results
     result <- round(w * lcm_den)
 
-    if (!is.na(len_out)){
+    if (!is.na(len_out)) {
         result <- rep_each_len(result, len_out)
     }
 
@@ -85,14 +88,16 @@ normalize_weights <- function(w, len_out = NA) {
 #' length-2, there will be two bins with 50% of the data each, and if weights
 #' is length-5, there will be five bins with 20% of the data each). The
 #' weighting respects order.
-weight_rows <- function(df, w){
+weight_rows <- function(df, w) {
     w <- normalize_weights(w)
-    stopifnot("weights must all be integers after normalization" =
-                  all(w == floor(w)))
+    stopifnot(
+        "weights must all be integers after normalization" =
+            all(w == floor(w))
+    )
     # apply weighting by multiply-sampling the weighted rows
     cuts <- cut(1:nrow(df), length(w))
     result <- data.frame()
-    for (i in seq_along(w)){
+    for (i in seq_along(w)) {
         bin <- df[cuts == levels(cuts)[i], ]
         result <- rbind(result, bin[rep(seq_len(nrow(bin)), w[i]), ])
     }
@@ -106,8 +111,8 @@ weight_rows <- function(df, w){
 #' @return numeric estimate of leave-one-out CV risk
 #' @details Uses a "shortcut" formula for LOOCV. For details, see formula 5.2
 #' in ISLR by James, Witten, Hastie, and Tibshirani (v2), pg 202
-LOOCV <- function(fit){
-    mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
+LOOCV <- function(fit) {
+    mean(((fit$model$response - predict(fit)) / (1 - boot::glm.diag(fit)$h))^2)
 }
 
 
@@ -120,9 +125,11 @@ LOOCV <- function(fit){
 #' Coerce a string in team formatting to an int
 #' @param id TBA-legal team formatted string (i.e. "frc3504")
 #' @param prefix string prefix for id (in overwhelming majority of cases "frc")
-id2int <- function(id, prefix = "frc"){
+id2int <- function(id, prefix = "frc") {
     # if the user accidentally input a numeric, just return it
-    if (is.numeric(id)) return(id)
+    if (is.numeric(id)) {
+        return(id)
+    }
     return(as.numeric(substr(id, nchar(prefix) + 1, nchar(id))))
 }
 
@@ -135,10 +142,10 @@ id2int <- function(id, prefix = "frc"){
 #' @param simplify (bool) if TRUE, we will make some assumptions about the
 #' naming schema to cut away alliance color and the robot number so that we can
 #' make the output a little less ugly.
-id_robot_fields <- function(matches, simplify = TRUE){
+id_robot_fields <- function(matches, simplify = TRUE) {
     idx <- grep("robot[1-3]", colnames(matches), ignore.case = TRUE)
     result <- colnames(matches)[idx]
-    if (simplify){
+    if (simplify) {
         result <- gsub("red|blue", "", result, ignore.case = TRUE)
         result <- gsub("_", "", result)
         result <- gsub("robot", "", result, ignore.case = TRUE)
@@ -155,7 +162,7 @@ id_robot_fields <- function(matches, simplify = TRUE){
 #' @param matches dataframe of matches with alliances broken out
 #' @param key team key
 #' @return data frame with match indices and alliance station
-get_team_stations <- function(matches, key){
+get_team_stations <- function(matches, key) {
     key <- tf(key)
     stations <- matches[, c(paste0("blue", 1:3), paste0("red", 1:3))]
     idx <- which(stations == key, arr.ind = TRUE)
@@ -181,7 +188,7 @@ get_team_stations <- function(matches, key){
 #' @details We identify a match as unplayed if both red and blue alliances have
 #' a score of -1.
 #' @param matches a dataframe of TBA match objects
-id_unplayed <- function(matches){
+id_unplayed <- function(matches) {
     return((matches$red_score == -1) & (matches$blue_score == -1))
 }
 
@@ -192,7 +199,7 @@ id_unplayed <- function(matches){
 #' @details We identify a match as unplayed if both the red and blue alliance
 #' score is -1.
 #' @param matches dataframe of match objects
-trim_unplayed <- function(matches){
+trim_unplayed <- function(matches) {
     return(matches[!id_unplayed(matches), ])
 }
 
@@ -203,7 +210,7 @@ trim_unplayed <- function(matches){
 #' @param color alliance color, either "red" or "blue"
 #' @param station_num number of the driver station
 #' @param field name of the relevant field
-schema_cfs <- function(color, station_num, field){
+schema_cfs <- function(color, station_num, field) {
     return(paste0(color, "_", field, "Robot", station_num))
 }
 
@@ -214,7 +221,7 @@ schema_cfs <- function(color, station_num, field){
 #' @param color alliance color, either "red" or "blue"
 #' @param station_num number of the driver station
 #' @param field name of the relevant field
-schema_csf <- function(color, station_num, field){
+schema_csf <- function(color, station_num, field) {
     # for correct camelCase, field must have a capital first letter
     return(paste0(color, "_", "robot", station_num, cap_first(field)))
 }
@@ -241,8 +248,8 @@ schema_csf <- function(color, station_num, field){
 #' mar16 <- event_matches("2016mrcmp")
 #' get_robot_field(mar16, "auto", 1712, schema = schema_csf)
 get_robot_field <- function(
-    matches, field, team_id, schema = schema_cfs, unlist = T
-){
+  matches, field, team_id, schema = schema_cfs, unlist = T
+) {
     stations <- get_team_stations(matches, team_id)
     # assumption: station number is the last character of the string
     station_num <- substr_right(stations$station, 1)
@@ -269,14 +276,17 @@ get_robot_field <- function(
 #' mar17 <- event_matches("2017mrcmp")
 #' get_robot_field_df(mar17, "auto", schema = schema_csf)
 get_robot_field_df <- function(
-    matches, field, schema = schema_cfs, unlist = T
-){
-    ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
-                    matches$red1, matches$red2, matches$red3))
+  matches, field, schema = schema_cfs, unlist = T
+) {
+    ids <- unique(c(
+        matches$blue1, matches$blue2, matches$blue3,
+        matches$red1, matches$red2, matches$red3
+    ))
     df <- data.frame(id = ids)
-    for (i in 1:length(ids)){
+    for (i in 1:length(ids)) {
         result <- get_robot_field(matches, field, ids[i],
-                                  schema = schema, unlist = unlist)
+            schema = schema, unlist = unlist
+        )
         tbl <- table(result)
         df[df$id == ids[i], names(tbl)] <- tbl
     }
@@ -291,7 +301,7 @@ get_robot_field_df <- function(
 #' @param matches dataframe assumed to have "blue1", "blue2", "blue3", "red1",
 #' "red2", and "red3" columns.
 #' @return dataframe with team ids and the count of matches appeared in
-count_team_matches <- function(matches){
+count_team_matches <- function(matches) {
     result <- data.frame(table(unlist(c(
         matches %>%
             dplyr::select(blue1, blue2, blue3, red1, red2, red3)
@@ -322,16 +332,18 @@ count_team_matches <- function(matches){
 #' fields <- c("auto")
 #' get_multifield_df(fma17, fields, schema = schema_csf)
 get_multifield_df <- function(
-    matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
-){
-    if (is.null(fields)){
+  matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
+) {
+    if (is.null(fields)) {
         fields <- id_robot_fields(matches)
     }
     statics <- list(matches = matches, schema = schema, unlist = unlist)
-    result <- mapply(get_robot_field_df, field = fields,
-                     MoreArgs = statics, SIMPLIFY = FALSE)
+    result <- mapply(get_robot_field_df,
+        field = fields,
+        MoreArgs = statics, SIMPLIFY = FALSE
+    )
     result$n_matches <- count_team_matches(matches)
-    if (merge){
+    if (merge) {
         # note down the titles and the dataframes they come from
         titles <- lapply(lapply(result, colnames), function(v) v[-1])
         sources <- sapply(titles, length)
@@ -354,18 +366,18 @@ get_multifield_df <- function(
 #' @details
 #' case_when uses a "step-down" resolution; so we rely on the first condition
 #' being false to make later conditions correctly specified.
-de_alliance_finish <- function(status){
+de_alliance_finish <- function(status) {
     finish <- dplyr::case_when(
         status$status == "won" ~ "Winner",
         status$double_elim_round == "Finals" &
             status$status == "eliminated" ~ "Finalist",
-        status$double_elim_round == "Round 5"&
+        status$double_elim_round == "Round 5" &
             status$status == "eliminated" ~ "3rd",
-        status$double_elim_round == "Round 4"&
+        status$double_elim_round == "Round 4" &
             status$status == "eliminated" ~ "4th",
-        status$double_elim_round == "Round 3"&
+        status$double_elim_round == "Round 3" &
             status$status == "eliminated" ~ "5th/6th",
-        status$double_elim_round == "Round 2"&
+        status$double_elim_round == "Round 2" &
             status$status == "eliminated" ~ "7th/8th",
         .default = "Still Competing"
     )
@@ -381,7 +393,7 @@ de_alliance_finish <- function(status){
 #' @details
 #' case_when uses a "step-down" resolution; so we rely on the first condition
 #' being false to make later conditions correctly specified.
-bo3_alliance_finish <- function(status){
+bo3_alliance_finish <- function(status) {
     finish <- dplyr::case_when(
         status$status == "won" ~ "Winner",
         status$level == "f" &
@@ -400,8 +412,8 @@ bo3_alliance_finish <- function(status){
 #' Switching fxn to use appropriate "alliance_finish" status (double elim or
 #' bo3) based on the internal structure of the input status object
 #' @param status status object as output in a column of event_alliances()
-alliance_finish <- function(status){
-    if ("double_elim_round" %in% names(status)){
+alliance_finish <- function(status) {
+    if ("double_elim_round" %in% names(status)) {
         return(de_alliance_finish(status))
     }
     return(bo3_alliance_finish(status))
@@ -423,8 +435,10 @@ alliance_finish <- function(status){
 #' tms <- event_teams("2024paca", keys = TRUE)
 #' tms <- id2int(tms)
 #' tangibles <- season_tangibles(tms)
-season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL){
-    stopifnot("yr should be length 1" = {length(yr) == 1})
+season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL) {
+    stopifnot("yr should be length 1" = {
+        length(yr) == 1
+    })
     # only consider official matches to avoid data irregularities
     matches <- lapply(tms, team_matches, year = yr, official = TRUE)
     # filter out teams with no matches played:
@@ -435,7 +449,7 @@ season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL){
     # check for duplicated matches
     stopifnot(!any(duplicated(matches)))
 
-    if (is.null(fields)){
+    if (is.null(fields)) {
         fields <- id_robot_fields(matches)
     }
 
@@ -457,13 +471,13 @@ season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL){
 #' @param breakdown (bool) If FALSE, result includes only the overall EPA value.
 #' If TRUE, the result includes all component EPA values.
 #' @noRd
-prescout_sb <- function(tms, yr, breakdown = FALSE){
-    get_data <- function(tm, yr = NULL, breakdown = FALSE){
+prescout_sb <- function(tms, yr, breakdown = FALSE) {
+    get_data <- function(tm, yr = NULL, breakdown = FALSE) {
         sb_data <- team_sb(tm, yr = yr)
         record <- data.frame(sb_data$record)
         record$count <- NULL
 
-        if (breakdown){
+        if (breakdown) {
             epas <- data.frame(sb_data$epa$breakdown)
             colnames(epas) <- paste0(colnames(epas), "_epa")
             record <- dplyr::bind_cols(record, epas)
@@ -486,15 +500,15 @@ prescout_sb <- function(tms, yr, breakdown = FALSE){
 #' @param team_id team key (i.e. "frc1712")
 #' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
 #' @noRd
-team_event_oprs <- function(event_id, team_id, breakdown = TRUE){
+team_event_oprs <- function(event_id, team_id, breakdown = TRUE) {
     team_id <- tf(team_id)
-    if (!breakdown){
+    if (!breakdown) {
         result <- event_oprs(event_id)[, c("team", "opr")] |>
             dplyr::rename(score = opr)
     } else {
         result <- tryCatch(
             event_coprs(event_id),
-            error = function(e){
+            error = function(e) {
                 warning("event_coprs() fails for this event")
                 return(data.frame())
             }
@@ -512,7 +526,7 @@ team_event_oprs <- function(event_id, team_id, breakdown = TRUE){
 #' @param yr year
 #' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
 #' @noRd
-team_max_oprs <- function(team_id, yr, breakdown = TRUE){
+team_max_oprs <- function(team_id, yr, breakdown = TRUE) {
     # get only official events to cut down on malformed inputs (i.e. offseasons)
     event_history <- team_events(team_id, year = yr, official = TRUE)
 
@@ -527,8 +541,10 @@ team_max_oprs <- function(team_id, yr, breakdown = TRUE){
     oprs <- lapply(event_keys, team_event_oprs, team_id, breakdown)
     oprs <- dplyr::bind_rows(oprs)
     if (ncol(oprs) > 0) colnames(oprs) <- paste0(colnames(oprs), "_opr_max")
-    result <- matrix(c(apply(oprs, 2, max, na.rm = TRUE),
-                       last_week, id2int(team_id)), nrow = 1)
+    result <- matrix(c(
+        apply(oprs, 2, max, na.rm = TRUE),
+        last_week, id2int(team_id)
+    ), nrow = 1)
     colnames(result) <- c(colnames(oprs), "last week seen", "id")
     return(as.data.frame(result))
 }
@@ -538,7 +554,7 @@ team_max_oprs <- function(team_id, yr, breakdown = TRUE){
 #' @param tms (numeric) vector of team ids
 #' @param yr (numeric) year
 #' @param ... additional arguments passed to team_max_oprs()
-max_oprs <- function(tms, yr, ...){
+max_oprs <- function(tms, yr, ...) {
     result <- lapply(tms, team_max_oprs, yr = yr, ...)
     result <- bind_rows(result)
     return(result)

@@ -15,8 +15,8 @@
 #### Helpers ####
 #################
 
-name_teams_list <- function(team_list, color){
-    if (!(color %in% c("blue", "red"))){
+name_teams_list <- function(team_list, color) {
+    if (!(color %in% c("blue", "red"))) {
         return(as.character(1:length(team_list)))
     }
     names(team_list) <- paste(color, 1:length(team_list), sep = "")
@@ -24,9 +24,11 @@ name_teams_list <- function(team_list, color){
 }
 
 # helper for adding name attributes to a list so unnest_wider can be used
-name_sublist <- function(elem, label = ""){
+name_sublist <- function(elem, label = "") {
     # return empty list to speed up future unnest calls that need names
-    if(is.null(elem)) return(list())
+    if (is.null(elem)) {
+        return(list())
+    }
     N <- length(elem)
     names(elem) <- paste(label, 1:N, sep = "")
     return(elem)
@@ -34,13 +36,13 @@ name_sublist <- function(elem, label = ""){
 
 # adapted from stackOverflow at:
 # https://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na
-drop_na_cols <- function(df){
+drop_na_cols <- function(df) {
     not_na_col <- function(x) !all(is.na(x))
     return(Filter(not_na_col, df))
 }
 
 # adapted from stackOverflow as above
-drop_zero_cols <- function(df){
+drop_zero_cols <- function(df) {
     not_zero_col <- function(x) !all(x == 0)
     return(Filter(not_zero_col, df))
 }
@@ -56,7 +58,7 @@ drop_zero_cols <- function(df){
 #' @param matches list of match objects
 #' @author Gabriel Krotkov
 #' @return match objects with the alliance field broken up into alliance members
-unnest_alliances <- function(matches){
+unnest_alliances <- function(matches) {
     # remember the number of columns and the column we're unpacking
     ncol0 <- ncol(matches)
     cid <- which(colnames(matches) == "blue")
@@ -66,8 +68,10 @@ unnest_alliances <- function(matches){
     idx <- cid:(cid + ncol(matches) - ncol0)
     colnames(matches)[idx] <- paste("blue", colnames(matches)[idx], sep = "_")
     # unpack team keys
-    matches$blue_team_keys <- lapply(matches$blue_team_keys,
-                                     name_teams_list, "blue")
+    matches$blue_team_keys <- lapply(
+        matches$blue_team_keys,
+        name_teams_list, "blue"
+    )
     matches <- matches %>%
         unnest_wider(blue_team_keys)
 
@@ -79,8 +83,10 @@ unnest_alliances <- function(matches){
     # rename using our remembered indices
     idx <- cid:(cid + ncol(matches) - ncol0)
     colnames(matches)[idx] <- paste("red", colnames(matches)[idx], sep = "_")
-    matches$red_team_keys <- lapply(matches$red_team_keys,
-                                    name_teams_list, "red")
+    matches$red_team_keys <- lapply(
+        matches$red_team_keys,
+        name_teams_list, "red"
+    )
     matches <- matches %>%
         unnest_wider(red_team_keys)
 
@@ -94,8 +100,8 @@ unnest_alliances <- function(matches){
 #' @author Gabriel Krotkov
 #' @param matches tibble of matches
 #' @return tibble of matches with alliance compositions broken down
-unpack_alliances <- function(matches){
-    if (!("alliances" %in% colnames(matches))){
+unpack_alliances <- function(matches) {
+    if (!("alliances" %in% colnames(matches))) {
         warning("unpack_alliances() called with no `alliance` column")
         return(matches)
     }
@@ -112,8 +118,8 @@ unpack_alliances <- function(matches){
 #' @author Gabriel Krotkov
 #' @param matches Tibble of TBA match objects (unnested)
 #' @return Tibble of matches with additional columns for the score breakdown.
-unpack_breakdown <- function(matches){
-    if (!("score_breakdown" %in% colnames(matches))){
+unpack_breakdown <- function(matches) {
+    if (!("score_breakdown" %in% colnames(matches))) {
         warning("unpack_breakdown() called with no `score_breakdown` column")
         return(matches)
     }
@@ -152,22 +158,26 @@ unpack_breakdown <- function(matches){
 #' @author Gabriel Krotkov
 #' @return tidy tibble of matches
 #' @examples
-#' tidy_matches(read_event_matches("2016mrcmp"), alliances = TRUE,
-#'     breakdown = TRUE)
+#' tidy_matches(read_event_matches("2016mrcmp"),
+#'     alliances = TRUE,
+#'     breakdown = TRUE
+#' )
 tidy_matches <- function(
-    raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
-){
+  raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
+) {
     event <- tibble(matches = raw)
 
     # if there are no matches, we can return the empty tibble
-    if (nrow(event) == 0) return(event)
+    if (nrow(event) == 0) {
+        return(event)
+    }
 
     event <- event %>%
         unnest_wider(matches)
 
     # handling case of call on nulls or when score_breakdown does not exist
     if (breakdown && (!("score_breakdown" %in% colnames(event)) ||
-                     all(is.na(event$score_breakdown)))){
+        all(is.na(event$score_breakdown)))) {
         warning("tidy_matches called with breakdown = TRUE on null case \n
                 Recalling tidy_matches with breakdown = FALSE")
         return(tidy_matches(raw, alliances = alliances, breakdown = FALSE))
@@ -176,15 +186,16 @@ tidy_matches <- function(
     if (alliances) event <- unpack_alliances(event)
     if (breakdown) event <- unpack_breakdown(event)
 
-    if(!unplayed){
+    if (!unplayed) {
         event <- trim_unplayed(event)
     }
 
     # sort by competition level and match number
-    if(sort & all(c("match_number", "comp_level") %in% colnames(event))){
+    if (sort & all(c("match_number", "comp_level") %in% colnames(event))) {
         event <- event %>%
             mutate(comp_level = factor(comp_level,
-                                       levels = c("qm", "qf", "sf", "f"))) %>%
+                levels = c("qm", "qf", "sf", "f")
+            )) %>%
             arrange(comp_level, match_number)
     }
     return(event)
@@ -204,7 +215,7 @@ tidy_matches <- function(
 #' @return tidy tibble row of an event object
 #' @examples
 #' tidy_event(read_event("2017pawch"))
-tidy_event <- function(raw){
+tidy_event <- function(raw) {
     data <- tibble(event = raw)
     data <- as.data.frame(t(data))
     colnames(data) <- names(raw)
@@ -220,11 +231,11 @@ tidy_event <- function(raw){
 #' @return Tidy tibble of events
 #' @examples
 #' tidy_events(read_district_events("2016mar"))
-tidy_events <- function(raw, official = FALSE){
+tidy_events <- function(raw, official = FALSE) {
     data <- tibble(event = raw)
     data <- unnest_wider(data, event)
     # 99 and 100 are offseason and preseason events, respectively
-    if (official){
+    if (official) {
         data <- data[!(data$event_type %in% c(99, 100)), ]
     }
     return(data)
@@ -239,7 +250,7 @@ tidy_events <- function(raw, official = FALSE){
 #' @return tidy tibble of alliances
 #' @examples
 #' tidy_alliances(read_event_alliances("2019mrcmp"), unpack_picks = TRUE)
-tidy_alliances <- function(raw, unpack_picks = FALSE){
+tidy_alliances <- function(raw, unpack_picks = FALSE) {
     data <- tibble(alliance = raw)
     alliances <- unnest_wider(data, alliance)
     alliances$picks <- lapply(alliances$picks, name_sublist, label = "robot")
@@ -258,12 +269,12 @@ tidy_alliances <- function(raw, unpack_picks = FALSE){
 #' Helper function for tidy_insights, handles the transpose case.
 #' @param data long dataframe of insights
 #' @importFrom data.table transpose
-transpose_insights <- function(data){
+transpose_insights <- function(data) {
     phase <- data$phase
     data$phase <- NULL
     data <- split(data, phase)
     data <- lapply(data, data.table::transpose)
-    data <- lapply(data, function(subl){
+    data <- lapply(data, function(subl) {
         colnames(subl) <- subl[1, ]
         subl <- subl[-1, ]
     })
@@ -279,7 +290,7 @@ transpose_insights <- function(data){
 #' Function to handle JSON input of insight data, returning a tidy dataframe.
 #' @param raw Sublist of insight data, usually either quals or playoffs
 #' @param insight_as_col (bool) Do we want to transpose the data? If TRUE,
-tidy_insights <- function(raw, insight_as_col = FALSE){
+tidy_insights <- function(raw, insight_as_col = FALSE) {
     lists <- unlist(raw[sapply(raw, is.list)])
     data <- tibble(field = names(lists), value = lists)
     # extend nonlist values to the dataframe
@@ -290,7 +301,7 @@ tidy_insights <- function(raw, insight_as_col = FALSE){
     data$phase <- tmp[seq(1, nrow(data) * 2, 2)]
     data$field <- tmp[seq(2, nrow(data) * 2, 2)]
     # transpose the dataframe and fix the naming if required
-    if (insight_as_col){
+    if (insight_as_col) {
         data <- transpose_insights(data)
     }
     return(data)
@@ -304,10 +315,12 @@ tidy_insights <- function(raw, insight_as_col = FALSE){
 #' @return tidy tibble of event OPRs
 #' @examples
 #' tidy_oprs(read_event_oprs("2018mrcmp"))
-tidy_oprs <- function(raw){
+tidy_oprs <- function(raw) {
     team_names <- names(raw$oprs)
-    data <- tibble(opr = as.numeric(raw$oprs), dpr = as.numeric(raw$dprs),
-                   ccwm = as.numeric(raw$ccwms))
+    data <- tibble(
+        opr = as.numeric(raw$oprs), dpr = as.numeric(raw$dprs),
+        ccwm = as.numeric(raw$ccwms)
+    )
     data$team <- team_names
     data$team <- as.numeric(substr(data$team, 4, nchar(data$team)))
     return(data)
@@ -317,7 +330,7 @@ tidy_oprs <- function(raw){
 #'
 #' Turns list of event cOPRs (from read_event_coprs) to a tidy dataframe
 #' @param data list of cOPR data
-tidy_coprs <- function(data){
+tidy_coprs <- function(data) {
     # strategy: unlist() all the elements of data, and then cbind them
     result <- lapply(data, unlist)
     result <- do.call(cbind, result)
@@ -338,16 +351,16 @@ tidy_coprs <- function(data){
 #' @return Tidy tibble of event rankings
 #' @examples
 #' tidy_rankings(read_event_rankings("2016hop"))
-tidy_rankings <- function(raw, trim = TRUE){
+tidy_rankings <- function(raw, trim = TRUE) {
     data <- tibble(ranking = raw$rankings)
     data <- unnest_wider(data, ranking)
-    if ("record" %in% colnames(data) & !all(is.na(data$record))){
+    if ("record" %in% colnames(data) & !all(is.na(data$record))) {
         data <- unnest_wider(data, record)
     }
 
     # unpack sort order names
     sort_order <- tibble(rank = raw$sort_order_info)
-    if (is.null(raw$sort_order_info)){
+    if (is.null(raw$sort_order_info)) {
         labels <- seq(1, length(unlist(data$sort_orders[1])))
         tiebreaker_names <- paste("sort", labels)
     } else {
@@ -362,7 +375,7 @@ tidy_rankings <- function(raw, trim = TRUE){
     idx <- idx:(idx + length(tiebreaker_names) - 1)
     colnames(data)[idx] <- tiebreaker_names
 
-    if(trim){
+    if (trim) {
         # remove columns with all 0s or all NAs
         data <- drop_na_cols(data)
         data <- drop_zero_cols(data)
@@ -383,7 +396,7 @@ tidy_rankings <- function(raw, trim = TRUE){
 #' @return tidy tibble of teams
 #' @examples
 #' tidy_teams(read_event_teams("2022txirv"))
-tidy_teams <- function(raw){
+tidy_teams <- function(raw) {
     raw <- tibble(team = raw)
     result <- unnest_wider(raw, team)
     return(result)
@@ -396,12 +409,14 @@ tidy_teams <- function(raw){
 # take nested list with team awards and unnest
 # team - (list) nested list with awards information from TBA awards call
 # recipients - (boolean) unpack award recipients?
-tidy_awards <- function(raw, recipients = FALSE){
+tidy_awards <- function(raw, recipients = FALSE) {
     awards <- tibble(awards = raw)
     awards <- unnest_wider(awards, awards)
-    if (recipients){
+    if (recipients) {
         awards$recipient_list <- lapply(awards$recipient_list,
-                                           name_sublist, label = "recipients")
+            name_sublist,
+            label = "recipients"
+        )
         awards <- unnest_wider(awards, recipient_list)
     }
     return(awards)
@@ -412,7 +427,7 @@ tidy_awards <- function(raw, recipients = FALSE){
 #######################
 
 # takes a raw districts list as output from read_districts
-tidy_districts <- function(raw){
+tidy_districts <- function(raw) {
     districts <- tibble(districts = raw)
     districts <- unnest_wider(districts, districts)
     return(districts)
@@ -428,9 +443,7 @@ tidy_districts <- function(raw){
 #' If "breakdown" will break down points earning at each event to the most
 #' granular level.
 #'
-tidy_district_rankings <- function(
-        raw, detail = c("none", "separate", "breakdown")
-) {
+tidy_district_rankings <- function(raw, detail = c("none", "separate", "breakdown")) {
     detail <- match.arg(detail)
 
     raw <- tibble::tibble(ranks = raw)
@@ -438,33 +451,38 @@ tidy_district_rankings <- function(
         # rename to make var names simpler later on
         rename(event = event_points)
 
-    if (detail == "none") return(rankings)
+    if (detail == "none") {
+        return(rankings)
+    }
 
     # how many columns did the df used to have?
     mark <- ncol(rankings)
     rankings <- tidyr::unnest_wider(rankings, event, names_sep = "_")
 
-    if (detail == "separate") return(rankings)
+    if (detail == "separate") {
+        return(rankings)
+    }
 
     n_events <- ncol(rankings) - mark + 1
 
     rankings <- rankings |>
         unnest_wider(paste("event", seq_len(n_events), sep = "_"),
-                     names_sep = "_")
+            names_sep = "_"
+        )
 
     return(rankings)
 }
 
 
-tidy_district_points <- function(raw, tiebreakers = FALSE){
+tidy_district_points <- function(raw, tiebreakers = FALSE) {
     data <- tibble(dp = raw$points)
     data <- unnest_wider(data, dp)
     data$team_keys <- names(raw$points)
 
     # ASSUMPTION: raw$points and raw$tiebreakers have the same team order
-    if (tiebreakers){
+    if (tiebreakers) {
         # If we can't find tiebreakers, warn user and return data.
-        if (! ("tiebreakers" %in% names(raw))){
+        if (!("tiebreakers" %in% names(raw))) {
             warning("cannot find 'tiebreakers' in raw input list (tba_tidyR)")
             return(data)
         }

@@ -16,10 +16,12 @@
 #### Constants ####
 ###################
 
-warns <- function(){
-    list(simkey = "both simple and keys are TRUE",
-         year_event = "both year and event supplied, defaulting to year",
-         mtype = "match_type not a valid entry type, defaulting to 'all'")
+warns <- function() {
+    list(
+        simkey = "both simple and keys are TRUE",
+        year_event = "both year and event supplied, defaulting to year",
+        mtype = "match_type not a valid entry type, defaulting to 'all'"
+    )
 }
 
 ##############
@@ -34,7 +36,7 @@ warns <- function(){
 #' @author Gabriel Krotkov
 #' @return Team object in list format
 #' @export
-team <- function(key, simple = FALSE){
+team <- function(key, simple = FALSE) {
     return(read_team(key, simple))
 }
 
@@ -56,11 +58,13 @@ team <- function(key, simple = FALSE){
 #' teams(1, year = 2016)
 #' teams(0, simple = TRUE)
 #' teams(3, keys = TRUE)
-teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
+teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE) {
     if (simple & keys) warning(warns()$simkey)
 
     data <- read_teams(page_num, year, simple, keys)
-    if (keys) return(unlist(data))
+    if (keys) {
+        return(unlist(data))
+    }
     return(tidy_teams(data))
 }
 
@@ -84,18 +88,21 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' team_matches(1712, event = "2015paphi")
 #' team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
 team_matches <- function(
-    key, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE,
-    alliances = TRUE, breakdown = TRUE, unplayed = FALSE
-){
+  key, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE,
+  alliances = TRUE, breakdown = TRUE, unplayed = FALSE
+) {
     if (simple & keys) warning(warns()$simkey)
     if (!is.na(year) & !is.na(event)) warning(warns()$year_event)
 
     data <- read_team_matches(key, year, event, official, simple, keys)
 
-    if (keys) return(unlist(data)) # if user expects keys, list is unnecessary
+    if (keys) {
+        return(unlist(data))
+    } # if user expects keys, list is unnecessary
 
     data <- tidy_matches(
-        data, alliances = alliances, breakdown = breakdown, unplayed = unplayed
+        data,
+        alliances = alliances, breakdown = breakdown, unplayed = unplayed
     )
 
     return(data)
@@ -117,13 +124,15 @@ team_matches <- function(
 #' team_events("1712", year = 2018, official = TRUE)
 #' team_events("frc1712", keys = TRUE)
 team_events <- function(
-    key, year = NA, official = FALSE, simple = FALSE, keys = FALSE
-){
+  key, year = NA, official = FALSE, simple = FALSE, keys = FALSE
+) {
     if (simple & keys) warning(warns()$simkey)
 
     data <- read_team_events(key, year, official, simple, keys)
 
-    if (keys) return(unlist(data))
+    if (keys) {
+        return(unlist(data))
+    }
 
     data <- tidy_events(data)
 
@@ -147,7 +156,7 @@ team_events <- function(
 #' team_awards("1712", year = 2016)
 #' team_awards("frc1712", year = 2010, recipients = TRUE)
 #' team_awards(1712, event = "2017pawch")
-team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE){
+team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE) {
     if (!is.null(year) & !is.null(event)) warning(warns()$year_event)
 
     data <- read_team_awards(key, year, event)
@@ -169,7 +178,7 @@ team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE){
 #' team_participation_years(1712)
 #' team_participation_years("3504")
 #'
-team_participation_years <- function(n){
+team_participation_years <- function(n) {
     request <- paste("team", tf(n), "years_participated", sep = "/")
     return(unlist(get_content(request, base = TBA_BASE)))
 }
@@ -189,7 +198,7 @@ team_participation_years <- function(n){
 #' @examples
 #' event("2022txirv")
 #' event("2016pahat", simple = TRUE)
-event <- function(key, simple = FALSE){
+event <- function(key, simple = FALSE) {
     return(tidy_event(read_event(key, simple = FALSE)))
 }
 
@@ -208,17 +217,19 @@ event <- function(key, simple = FALSE){
 #' events(2010, official = TRUE)
 #' events(2012, simple = TRUE)
 #' events(2015, keys = TRUE)
-events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
+events <- function(year, official = FALSE, simple = FALSE, keys = FALSE) {
     if (simple & keys) warning(warns()$simkeys)
     # keys needs to short-circuit official because the official check requires
     # information from the whole events object
-    if (keys & official){
+    if (keys & official) {
         df <- events(year, official = TRUE, simple = simple, keys = FALSE)
         return(df$key)
     }
     data <- read_year_events(year, simple, keys)
 
-    if (keys) return(data)
+    if (keys) {
+        return(data)
+    }
 
     data <- tidy_events(data, official = official)
     return(data)
@@ -246,30 +257,33 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
 #' event_matches("2015paphi", match_type = "playoff")
 #' event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
 event_matches <- function(
-    event_key, alliances = TRUE, breakdown = TRUE,
-    match_type = c("all", "quals", "playoff"),
-    unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
-){
-    match_type = match.arg(match_type)
+  event_key, alliances = TRUE, breakdown = TRUE,
+  match_type = c("all", "quals", "playoff"),
+  unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
+) {
+    match_type <- match.arg(match_type)
     if (simple & keys) warning(warns()$simkeys)
 
-    if(match_type == "quals"){
+    if (match_type == "quals") {
         data <- read_event_qual_matches(event_key, simple, keys)
-    } else if (match_type == "playoff"){
+    } else if (match_type == "playoff") {
         data <- read_event_playoff_matches(event_key, simple, keys)
-    } else{
+    } else {
         data <- read_event_matches(event_key, simple, keys)
     }
 
-    if (keys) return(unlist(data))
+    if (keys) {
+        return(unlist(data))
+    }
 
-    if (is.null(data) | length(data) == 0){ # case where no matches are posted
+    if (is.null(data) | length(data) == 0) { # case where no matches are posted
         warning("event_matches() call with no posted schedule; returning NULL")
         return(NULL)
     }
 
     data <- tidy_matches(
-        data, alliances = alliances, breakdown = breakdown, unplayed = unplayed,
+        data,
+        alliances = alliances, breakdown = breakdown, unplayed = unplayed,
         sort = sort
     )
 
@@ -289,13 +303,15 @@ event_matches <- function(
 #' event_alliances("2016hop", unpack_picks = TRUE)
 #' event_alliances("2015paphi")
 #' event_alliances("2014mrcmp", unpack_picks = FALSE)
-event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE){
+event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE) {
     data <- read_event_alliances(key)
     # short-circuit eval to safely check null case
-    if (is.null(data) || length(data) == 0) return(NULL)
+    if (is.null(data) || length(data) == 0) {
+        return(NULL)
+    }
     data <- tidy_alliances(data, unpack_picks)
     # check for null status, otherwise we'll crash when attempting to access it
-    if (attach_finish && !is.null(data$status)){
+    if (attach_finish && !is.null(data$status)) {
         data$finish <- sapply(data$status, alliance_finish)
     }
     return(data)
@@ -313,15 +329,17 @@ event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE){
 #' That is, quals and playoffs will have the same length of list, and have
 #' the same fields filled out in both lists, in the same order.
 #' @export
-event_insights <- function(key, insight_as_col = FALSE){
+event_insights <- function(key, insight_as_col = FALSE) {
     response <- read_event_insights(key)
-    if (is.null(response)) return(NULL)
+    if (is.null(response)) {
+        return(NULL)
+    }
     data <- tidy_insights(response, insight_as_col)
-    if(insight_as_col){
+    if (insight_as_col) {
         data$event <- key
         data <- data %>%
             select(event, everything())
-    } else{
+    } else {
         data$id <- paste(key, data$phase, sep = "_")
         data$key <- key
         data <- data %>%
@@ -339,7 +357,7 @@ event_insights <- function(key, insight_as_col = FALSE){
 #' @export
 #' @examples
 #' event_oprs("2015paphi")
-event_oprs <- function(key){
+event_oprs <- function(key) {
     data <- read_event_oprs(key)
     data <- tidy_oprs(data)
     return(data)
@@ -355,7 +373,7 @@ event_oprs <- function(key){
 #' events, you can compute them with `fit_event_lr` and a wise response choice
 #'
 #' @export
-event_coprs <- function(key, digits = 2){
+event_coprs <- function(key, digits = 2) {
     raw <- read_event_coprs(key)
     result <- tidy_coprs(raw)
     result <- round_numerics(result, digits = digits)
@@ -372,7 +390,7 @@ event_coprs <- function(key, digits = 2){
 #' @export
 #' @examples
 #' event_rankings("2016hop")
-event_rankings <- function(key, trim = TRUE){
+event_rankings <- function(key, trim = TRUE) {
     data <- read_event_rankings(key)
     data <- tidy_rankings(data, trim)
     return(data)
@@ -389,7 +407,7 @@ event_rankings <- function(key, trim = TRUE){
 #' @examples
 #' event_district_points("2016mrcmp", tiebreakers = TRUE)
 #' event_district_points("2015padre")
-event_district_points <- function(key, tiebreakers = FALSE){
+event_district_points <- function(key, tiebreakers = FALSE) {
     data <- read_event_district_points(key)
     data <- tidy_district_points(data, tiebreakers)
     return(data)
@@ -406,9 +424,11 @@ event_district_points <- function(key, tiebreakers = FALSE){
 #' @export
 #' @examples
 #' event_teams("2015padre", keys = TRUE)
-event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
+event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE) {
     data <- read_event_teams(key, statuses, simple, keys)
-    if (keys) return(data)
+    if (keys) {
+        return(data)
+    }
     data <- tidy_teams(data)
     return(data)
 }
@@ -424,7 +444,7 @@ event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
 #' @examples
 #' event_awards("2015padre")
 #' event_awards("2010ein", recipients = TRUE)
-event_awards <- function(key, recipients = FALSE){
+event_awards <- function(key, recipients = FALSE) {
     data <- read_event_awards(key)
 
     data <- tidy_awards(data, recipients)
@@ -446,7 +466,7 @@ event_awards <- function(key, recipients = FALSE){
 #' @examples
 #' districts(2012)
 #' districts(2023)
-districts <- function(year = YEAR){
+districts <- function(year = YEAR) {
     data <- read_districts(year)
     return(tidy_districts(data))
 }
@@ -462,12 +482,14 @@ districts <- function(year = YEAR){
 #' @examples
 #' district_events("2016mar")
 #' district_events("2018fma", keys = TRUE)
-district_events <- function(district_key, simple = FALSE, keys = FALSE){
+district_events <- function(district_key, simple = FALSE, keys = FALSE) {
     if (simple & keys) warning(warns()$simkey)
 
     data <- read_district_events(district_key, simple, keys)
 
-    if (keys) return(unlist(data))
+    if (keys) {
+        return(unlist(data))
+    }
 
     data <- tidy_events(data)
 
@@ -487,17 +509,18 @@ district_events <- function(district_key, simple = FALSE, keys = FALSE){
 #' district_teams("2022fit", keys = TRUE)
 #' district_teams("2014mar", simple = TRUE)
 #' district_teams("2016mar")
-district_teams <- function(district_key, simple = FALSE, keys = FALSE){
+district_teams <- function(district_key, simple = FALSE, keys = FALSE) {
     if (simple & keys) warning(warns()$simkey)
 
     data <- read_district_teams(district_key, simple, keys)
 
-    if (keys) return(unlist(data))
+    if (keys) {
+        return(unlist(data))
+    }
 
     data <- tidy_teams(data)
 
     return(data)
-
 }
 
 #' District Rankings
@@ -519,8 +542,8 @@ district_teams <- function(district_key, simple = FALSE, keys = FALSE){
 #' district_rankings("2016mar", detail = "breakdown")
 #' district_rankings("2022fit")
 district_rankings <- function(
-    district_key, detail = c("none", "separate", "breakdown")
-){
+  district_key, detail = c("none", "separate", "breakdown")
+) {
     detail <- match.arg(detail)
     data <- read_district_rankings(district_key)
     return(tidy_district_rankings(data, detail = detail))

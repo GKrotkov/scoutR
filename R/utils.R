@@ -8,7 +8,7 @@
 #' Returns the n rightmost characters in s.
 #' @param s input string
 #' @param n number of characters from the right to include (1 indexed)
-substr_right <- function(s, n){
+substr_right <- function(s, n) {
     return(substr(s, nchar(s) - n + 1, nchar(s)))
 }
 
@@ -17,7 +17,7 @@ substr_right <- function(s, n){
 #' Returns string s without the n rightmost characters
 #' @param s input string
 #' @param n number of characters (1 indexed) to chop off the right.
-substr_right_inv <- function(s, n){
+substr_right_inv <- function(s, n) {
     return(substr(s, 1, nchar(s) - 1))
 }
 
@@ -25,9 +25,11 @@ substr_right_inv <- function(s, n){
 #'
 #' Capitalizes the first character of each of the elements of the input vector
 #' @param s input character vector
-cap_first <- function(s){
+cap_first <- function(s) {
     return(paste(toupper(substr(s, 1, 1)),
-                 substr(s, 2, nchar(s)), sep=""))
+        substr(s, 2, nchar(s)),
+        sep = ""
+    ))
 }
 
 #' Indexer
@@ -46,7 +48,7 @@ indexer <- function(row, col) {
 #' @details Assumes that the 'df' parameter is coercable to a matrix. Also
 #' assumes that idx is a dataframe with columns "ridx" and "cidx" (standing for
 #' row index and col index) that index into df.
-apply_indexer <- function(df, idx){
+apply_indexer <- function(df, idx) {
     indexed <- apply(as.matrix(df[idx$ridx, ]), 1, indexer, idx$cidx)
     if (is.list(indexed)) indexed <- do.call("cbind", indexed)
     return(diag(indexed))
@@ -58,12 +60,14 @@ apply_indexer <- function(df, idx){
 #' using the `each` functionality of `rep()`
 #' @param v input vector to extend
 #' @param len_out the desired final length of the vector
-rep_each_len <- function(v, len_out){
+rep_each_len <- function(v, len_out) {
     # all elements are multiplied an additional baseline number of times
     baseline <- floor(len_out / length(v))
     # only the first (len_out mod len(v)) elements get an additional 1
-    adj <- c(rep(1, len_out %% length(v)),
-             rep(0, length(v) - (len_out %% length(v))))
+    adj <- c(
+        rep(1, len_out %% length(v)),
+        rep(0, length(v) - (len_out %% length(v)))
+    )
     return(rep(v, times = baseline + adj))
 }
 
@@ -74,7 +78,7 @@ rep_each_len <- function(v, len_out){
 #' @param tbl1 First table to be combined
 #' @param tbl2 Second table to be combined
 #' @export
-combine_tbls <- function(tbl1, tbl2){
+combine_tbls <- function(tbl1, tbl2) {
     unq <- unique(c(names(tbl1), names(tbl2)))
     # using 0 bc we will combine with addition
     pads <- rep(0, length(unq) - length(tbl1))
@@ -95,9 +99,8 @@ combine_tbls <- function(tbl1, tbl2){
 #' @param df input data.frame
 #' @param digits precision to round to
 #' @noRd
-round_numerics <- function(df, digits = 2){
+round_numerics <- function(df, digits = 2) {
     numeric_cidx <- which(unlist(lapply(df, is.numeric)))
     df[numeric_cidx] <- lapply(df[numeric_cidx], round, digits = digits)
     return(df)
 }
-

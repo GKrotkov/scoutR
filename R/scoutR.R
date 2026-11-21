@@ -12,16 +12,19 @@
 #' @param event_code TBA-legal event key
 #' @param int_output convert TBA keys (e.g. "frc1712") to int ("1712")?
 #' @export
-qual_schedule <- function(event_code, int_output = TRUE){
+qual_schedule <- function(event_code, int_output = TRUE) {
     matches <- event_matches(
-        event_code, match_type = "qual", breakdown = FALSE, unplayed = TRUE
+        event_code,
+        match_type = "qual", breakdown = FALSE, unplayed = TRUE
     )
-    if (is.null(matches)) return(NULL)
+    if (is.null(matches)) {
+        return(NULL)
+    }
 
     matches <- matches %>%
         dplyr::select(match_number, red1, red2, red3, blue1, blue2, blue3)
 
-    if (int_output){
+    if (int_output) {
         matches <- matches %>%
             dplyr::mutate(dplyr::across(
                 c(red1, red2, red3, blue1, blue2, blue3), id2int
@@ -38,12 +41,12 @@ qual_schedule <- function(event_code, int_output = TRUE){
 #' @param event_code TBA-legal event code (ex. "2025chcmp")
 #' @param team_id team of interest as int or TBA id (ex. "frc449", 449)
 #' @export
-event_matchups <- function(event_code, team_id){
+event_matchups <- function(event_code, team_id) {
     if (is.character(team_id)) team_id <- id2int(team_id)
     schedule <- qual_schedule(event_code, int_output = TRUE)
     filtered <- schedule %>%
         filter(team_id == red1 | team_id == red2 | team_id == red3 |
-                   team_id == blue1 | team_id == blue2 | team_id == blue3)
+            team_id == blue1 | team_id == blue2 | team_id == blue3)
     # logical vector: is the team of interest on the blue alliance?
     on_blue <- team_id == filtered$blue1 |
         team_id == filtered$blue2 |
@@ -72,18 +75,20 @@ event_matchups <- function(event_code, team_id){
 #' @examples
 #' gpr24 <- prescout("2024paca")
 #' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672, 3504))
-prescout <- function(event_code, breakdown = TRUE, manual_teams = NULL){
+prescout <- function(event_code, breakdown = TRUE, manual_teams = NULL) {
     team_data <- event_teams(event_code)
     # add manual teams - suppressing warnings for the 0x0 tibble case
     tms <- union(suppressWarnings(team_data$team_number), manual_teams)
     # for manual additions, add to team_data
-    for (i in seq_along(manual_teams)){
+    for (i in seq_along(manual_teams)) {
         no_nulls <- Filter(Negate(is.null), team(manual_teams[i]))
         team_data <- team_data |>
             # bind_rows fills missing columns with NA
             dplyr::bind_rows(as.data.frame(no_nulls))
     }
-    stopifnot("At least one team needed to prescout()" = {nrow(team_data) > 0})
+    stopifnot("At least one team needed to prescout()" = {
+        nrow(team_data) > 0
+    })
     team_data <- team_data |>
         dplyr::select(team_number, nickname, city, state_prov, country) |>
         dplyr::rename(id = team_number, name = nickname)
@@ -92,7 +97,9 @@ prescout <- function(event_code, breakdown = TRUE, manual_teams = NULL){
     sb <- prescout_sb(tms, yr, breakdown = breakdown)
     oprs <- max_oprs(tms, yr, breakdown = breakdown)
     result <- purrr::reduce(list(team_data, tangibles, sb, oprs),
-                            merge, by = "id", all = TRUE)
+        merge,
+        by = "id", all = TRUE
+    )
     return(result)
 }
 
@@ -115,12 +122,12 @@ prescout <- function(event_code, breakdown = TRUE, manual_teams = NULL){
 #' event_tangibles("2017mrcmp", schema = schema_csf)
 #' @export
 event_tangibles <- function(
-    event_key, schema = schema_cfs, qual_only = T, pct = T, digits = 2
-){
+  event_key, schema = schema_cfs, qual_only = T, pct = T, digits = 2
+) {
     type <- ifelse(qual_only, "qual", "all")
     matches_df <- event_matches(event_key, match_type = type)
     result <- get_multifield_df(matches_df, schema = schema)
-    if (pct){
+    if (pct) {
         # start at 2 to exclude ids, end before last col to exclude match count
         tangible_cidx <- 2:(ncol(result) - 1)
         tangibles <- result[, tangible_cidx]
@@ -131,7 +138,7 @@ event_tangibles <- function(
             paste(colnames(result)[tangible_cidx], "pct", sep = "_")
         colnames(result) <- tolower(colnames(result))
     }
-    if (!is.null(digits)){
+    if (!is.null(digits)) {
         result <- round_numerics(result, digits = digits)
     }
     return(result)
@@ -151,14 +158,20 @@ event_tangibles <- function(
 #' @examples
 #' event_finish_seed("2025vagle")
 #'
-event_finish_seed <- function(key, finish = "Winner", size = NULL){
+event_finish_seed <- function(key, finish = "Winner", size = NULL) {
     alliances <- event_alliances(key)
     # special case for null results (ex. 2023tuis3)
-    if (is.null(alliances) || nrow(alliances) == 0) return(NA)
-    if (!is.null(size) && nrow(alliances) != size) return(NA)
+    if (is.null(alliances) || nrow(alliances) == 0) {
+        return(NA)
+    }
+    if (!is.null(size) && nrow(alliances) != size) {
+        return(NA)
+    }
     result <- which(alliances$finish == finish)
     # special case for failed unpacking (ex. 2025ausc)
-    if (length(result) == 0) return(NA)
+    if (length(result) == 0) {
+        return(NA)
+    }
     return(result)
 }
 
@@ -175,7 +188,7 @@ event_finish_seed <- function(key, finish = "Winner", size = NULL){
 #' week_seed_finish_table(1)
 #' week_seed_finish_table(4, 2023)
 week_seed_finish_table <- function(wk, year = YEAR,
-                                   finish = "Winner", size = NULL){
+                                   finish = "Winner", size = NULL) {
     stopifnot("Week should be a single integer between 1 and 6" = {
         length(wk) == 1 && 0 < wk && wk <= 6
     })
@@ -185,7 +198,8 @@ week_seed_finish_table <- function(wk, year = YEAR,
         dplyr::select(key)
     keys <- unlist(keys)
     return(table(sapply(keys, event_finish_seed,
-                        finish = finish, size = size)))
+        finish = finish, size = size
+    )))
 }
 
 #######################################################
@@ -213,7 +227,7 @@ week_seed_finish_table <- function(wk, year = YEAR,
 #' design$score <- c(matches$blue_score, matches$red_score)
 #' fit <- lm(score ~ 0 + ., data = design)
 #' summary(fit) # retrieves OPRs
-lineup_design_matrix <- function(matches){
+lineup_design_matrix <- function(matches) {
     lineups <- data.frame(
         robot1 = c(matches$blue1, matches$red1),
         robot2 = c(matches$blue2, matches$red2),
@@ -250,15 +264,24 @@ lineup_design_matrix <- function(matches){
 #' @examples
 #' gpr <- event_matches("2024paca", match_type = "qual")
 #' opr <- fit_lineup_lm(gpr, list(red = gpr$red_score, blue = gpr$blue_score))
-fit_lineup_lm <- function(lineups, responses, w = NULL){
-    stopifnot("`responses` must be of length 2" = {length(responses) == 2})
-    stopifnot("`responses` must have `red` and `blue` vectors" =
-                  "red" %in% names(responses) & "blue" %in% names(responses))
-    stopifnot("`responses` vectors must be of the same length as `lineups`" =
-                  all(sapply(responses, length) == nrow(lineups)))
-    stopifnot("Lineups dataframe input cannot have a column named `response`"
-              = {!("response" %in% colnames(lineups))})
-    if (is.null(w)){
+fit_lineup_lm <- function(lineups, responses, w = NULL) {
+    stopifnot("`responses` must be of length 2" = {
+        length(responses) == 2
+    })
+    stopifnot(
+        "`responses` must have `red` and `blue` vectors" =
+            "red" %in% names(responses) & "blue" %in% names(responses)
+    )
+    stopifnot(
+        "`responses` vectors must be of the same length as `lineups`" =
+            all(sapply(responses, length) == nrow(lineups))
+    )
+    stopifnot(
+        "Lineups dataframe input cannot have a column named `response`" = {
+            !("response" %in% colnames(lineups))
+        }
+    )
+    if (is.null(w)) {
         w <- rep(1, nrow(lineups))
     }
     # lm() weights parameter doesn't need integer weights so we can use
@@ -298,9 +321,9 @@ fit_lineup_lm <- function(lineups, responses, w = NULL){
 #' fit_event_lr("2024new", match_type = "all")
 #' fit_event_lr("2024paca", response = "foulPoints", flip_response_alliance = T)
 fit_event_lr <- function(
-    event_code, match_type = "qual", response = "score", w = NULL,
-    flip_response_alliance = FALSE
-){
+  event_code, match_type = "qual", response = "score", w = NULL,
+  flip_response_alliance = FALSE
+) {
     matches <- event_matches(event_code, match_type = match_type)
     matches <- matches[order(matches$match_number), ]
 
@@ -309,7 +332,7 @@ fit_event_lr <- function(
         blue = matches[, paste0("blue_", response)][[1]]
     )
 
-    if (flip_response_alliance){
+    if (flip_response_alliance) {
         tmp <- responses
         responses$red <- tmp$blue
         responses$blue <- tmp$red
@@ -338,19 +361,23 @@ fit_event_lr <- function(
 #' result <- event_opr_progression("2024paca")
 #' result <- event_opr_progression("2024paca", response = "autoTotalNotePoints")
 event_opr_progression <- function(
-    event_code, response_name = "score", standardize = FALSE, w = NULL
-){
+  event_code, response_name = "score", standardize = FALSE, w = NULL
+) {
     red_resp <- paste0("red_", response_name) # red response
     blue_resp <- paste0("blue_", response_name) # blue response
     matches <- event_matches(event_code, match_type = "qual")
-    if (is.null(matches)) return(NULL) # handle null case
-    if (standardize){ # handle response standardization
+    if (is.null(matches)) {
+        return(NULL)
+    } # handle null case
+    if (standardize) { # handle response standardization
         scores <- c(matches[[red_resp]], matches[[blue_resp]])
         matches[[red_resp]] <- (matches[[red_resp]] - mean(scores)) / sd(scores)
         matches[[blue_resp]] <- (matches[[blue_resp]] - mean(scores)) / sd(scores)
     }
-    n_teams <- length(unique(c(matches$red1, matches$red2, matches$red3,
-                               matches$blue1, matches$blue2, matches$blue3)))
+    n_teams <- length(unique(c(
+        matches$red1, matches$red2, matches$red3,
+        matches$blue1, matches$blue2, matches$blue3
+    )))
     # the lowest number of matches for a valid fit is half the number of teams,
     # because there are two alliances in each match.
     lo <- (floor(n_teams / 2) + 1)
@@ -360,16 +387,20 @@ event_opr_progression <- function(
     result <- matrix(NA, nrow = length(lo:hi), ncol = n_teams)
 
     # handle high # of teams, low # of matches cases, ex. 2007ga
-    if (hi <= lo) return(NULL)
+    if (hi <= lo) {
+        return(NULL)
+    }
 
     # loop through valid subsets, fit a linear regression, and store coeffs
-    for (i in lo:hi){
+    for (i in lo:hi) {
         matches_subset <- matches[1:i, ]
         # double bracket syntax allows dynamic construction of column names
         fit <- fit_lineup_lm(
             matches_subset,
-            list(red = matches_subset[[red_resp]],
-                 blue = matches_subset[[blue_resp]]),
+            list(
+                red = matches_subset[[red_resp]],
+                blue = matches_subset[[blue_resp]]
+            ),
             w = w
         )
         result[i - lo + 1, ] <- coefficients(fit)
@@ -393,16 +424,16 @@ event_opr_progression <- function(
 #' standardized OPR coefficients (mean across all competing teams) after the
 #' corresponding match.
 #' @export
-year_opr_swings <- function(year){
+year_opr_swings <- function(year) {
     event_keys <- events(year, official = TRUE) |>
         dplyr::filter(event_type %in% c(0, 1)) |>
         dplyr::pull(key)
 
     result <- data.frame()
-    for (i in seq_along(event_keys)){
+    for (i in seq_along(event_keys)) {
         progression <- event_opr_progression(event_keys[i], standardize = TRUE)
-        if(is.null(progression)) next()
-        if(nrow(progression) < 3) next() # exclude extreme low-qual (ex. 2010is)
+        if (is.null(progression)) next()
+        if (nrow(progression) < 3) next() # exclude extreme low-qual (ex. 2010is)
         mean_diff <- progression |>
             dplyr::select(-c(match_num, ppt)) |>
             sapply(diff) |>
@@ -432,20 +463,23 @@ year_opr_swings <- function(year){
 #' weighting by two lines.
 #' @param bin_vars A vector of the variance in each bin
 #' @return vector of weights
-dual_line_weight_approximation <- function(bin_vars){
+dual_line_weight_approximation <- function(bin_vars) {
     idx <- 1:(floor(length(bin_vars) / 2))
     first_half_fit <- lm(bin_vars[idx] ~ idx)
     idx <- (ceiling(length(bin_vars) / 2)):length(bin_vars)
     second_half_fit <- lm(bin_vars[idx] ~ idx)
-    first_half <- rep(coefficients(first_half_fit)[1],
-                      floor(length(bin_vars) / 2))
+    first_half <- rep(
+        coefficients(first_half_fit)[1],
+        floor(length(bin_vars) / 2)
+    )
     first_half <- first_half +
         (coefficients(first_half_fit)[2] * (1:length(first_half) - 1))
     second_half <- rep(
         coefficients(second_half_fit)[1] +
             (coefficients(second_half_fit)[2] *
-                 ((floor(length(bin_vars) / 2) + 1))),
-        ceiling(length(bin_vars) / 2))
+                ((floor(length(bin_vars) / 2) + 1))),
+        ceiling(length(bin_vars) / 2)
+    )
     second_half <- second_half +
         (coefficients(second_half_fit)[2] * (1:length(second_half) - 1))
     result <- 1 / c(first_half, second_half)

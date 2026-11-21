@@ -10,8 +10,8 @@ ITR_BASE <- httr2::request("https://api-statbotics.popcornpenguins.com/v3/")
 #' @param path (chr) vector of path segments to append, in order
 #' @param query (list) optional named list of query parameters
 #' @noRd
-sb_perform <- function(path, query = NULL){
-    build <- function(base){
+sb_perform <- function(path, query = NULL) {
+    build <- function(base) {
         req <- do.call(httr2::req_url_path_append, c(list(base), as.list(path)))
         if (!is.null(query) && length(query) > 0) {
             req <- do.call(httr2::req_url_query, c(list(req), query))
@@ -40,16 +40,22 @@ sb_perform <- function(path, query = NULL){
 #' dawgma <- team_sb(1712)
 #' blair_at_severn <- team_sb(449, event = "2025mdsev")
 #' @export
-team_sb <- function(tm, yr = NULL, event = NULL, match = NULL){
-    stopifnot("tm should be of length 1" = {length(tm) == 1})
+team_sb <- function(tm, yr = NULL, event = NULL, match = NULL) {
+    stopifnot("tm should be of length 1" = {
+        length(tm) == 1
+    })
     # putting "event" first gives it preference, if multiple optionals are given
     if (!is.null(event)) {
         path <- c("team_event", tm, event)
     } else if (!is.null(yr)) {
-        stopifnot("yr should be of length 1" = {length(yr) == 1})
+        stopifnot("yr should be of length 1" = {
+            length(yr) == 1
+        })
         path <- c("team_year", tm, yr)
-    } else if (!is.null(match)){
-        stopifnot("match should be of length 1" = {length(match) == 1})
+    } else if (!is.null(match)) {
+        stopifnot("match should be of length 1" = {
+            length(match) == 1
+        })
         path <- c("team_match", tm, match)
     } else {
         path <- c("team", tm)
@@ -64,8 +70,10 @@ team_sb <- function(tm, yr = NULL, event = NULL, match = NULL){
 #' @examples
 #' pasadena <- event_sb("2025mdpas")
 #' @export
-event_sb <- function(key){
-    stopifnot("key should have length 1" = {length(key) == 1})
+event_sb <- function(key) {
+    stopifnot("key should have length 1" = {
+        length(key) == 1
+    })
     sb_perform(c("event", key))
 }
 
@@ -74,8 +82,10 @@ event_sb <- function(key){
 #' Returns a list representing statbotics info for a particular match
 #' @param key match key (e.g. "2023milf1m3")
 #' @export
-match_sb <- function(key){
-    stopifnot("key should have length 1" = {length(key) == 1})
+match_sb <- function(key) {
+    stopifnot("key should have length 1" = {
+        length(key) == 1
+    })
     sb_perform(c("match", key))
 }
 
@@ -84,8 +94,10 @@ match_sb <- function(key){
 #' Returns a list representing statbotics info for a given year
 #' @param yr year of interest, as a single-length int
 #' @export
-year_sb <- function(yr){
-    stopifnot("yr should have length 1" = {length(yr) == 1})
+year_sb <- function(yr) {
+    stopifnot("yr should have length 1" = {
+        length(yr) == 1
+    })
     sb_perform(c("year", yr))
 }
 
@@ -98,20 +110,17 @@ year_sb <- function(yr){
 #' @param event (optional) event of interest
 #' @param match (optional) match of interest
 #' @export
-teams_sb <- function (..., yr = NULL, event = NULL, match = NULL) {
+teams_sb <- function(..., yr = NULL, event = NULL, match = NULL) {
     if (!is.null(yr)) {
         path <- "team_years"
         query <- c(list(year = yr), list(...))
-    }
-    else if (!is.null(event)) {
+    } else if (!is.null(event)) {
         path <- "team_events"
         query <- c(list(event = event), list(...))
-    }
-    else if (!is.null(match)) {
+    } else if (!is.null(match)) {
         path <- "team_matches"
         query <- c(list(match = match), list(...))
-    }
-    else {
+    } else {
         path <- "teams"
         query <- list(...)
     }
@@ -123,7 +132,7 @@ teams_sb <- function (..., yr = NULL, event = NULL, match = NULL) {
 #' Returns a batch of statbotics event objects conforming to the given parameters
 #' @param ... Parameters to be passed to the statbotics /v3/{years}/ endpoint
 #' @export
-years_sb <- function(...){
+years_sb <- function(...) {
     sb_perform("years", query = list(...))
 }
 
@@ -132,7 +141,7 @@ years_sb <- function(...){
 #' Returns a batch of statbotics event objects conforming to the given parameters
 #' @param ... Parameters passed to the statbotics /v3/{events} endpoint
 #' @export
-events_sb <- function(...){
+events_sb <- function(...) {
     sb_perform("events", query = list(...))
 }
 
@@ -141,7 +150,7 @@ events_sb <- function(...){
 #' Returns a batch of statbotics match objects conforming to the given parameters
 #' @param ... Parameters passed to the statbotics /v3/{matches} endpoint
 #' @export
-matches_sb <- function(...){
+matches_sb <- function(...) {
     sb_perform("matches", query = list(...))
 }
 
@@ -153,7 +162,7 @@ matches_sb <- function(...){
 #' team_years_sb(year = 2025, district = "chs")
 #' team_years_sb(team = 449)
 #' @export
-team_years_sb <- function(...){
+team_years_sb <- function(...) {
     sb_perform("team_years", query = list(...))
 }
 
@@ -165,7 +174,7 @@ team_years_sb <- function(...){
 #' team_events_sb(team = 4821, year = 2025)
 #' team_events_sb(event = "2025mdsev")
 #' @export
-team_events_sb <- function(...){
+team_events_sb <- function(...) {
     sb_perform("team_events", query = list(...))
 }
 
@@ -176,6 +185,6 @@ team_events_sb <- function(...){
 #' @examples
 #' team_matches_sb(team = 449, year = 2025)
 #' @export
-team_matches_sb <- function(...){
+team_matches_sb <- function(...) {
     sb_perform("team_matches", query = list(...))
 }

@@ -11,11 +11,15 @@
 #' @param beta_0 vector of priors to regularize towards
 #' @export
 prior_ridge <- function(X, y, lambda, beta_0) {
-    stopifnot("prior_ridge design matrix must be a matrix" = {is.matrix(X)})
-    stopifnot("lambda must be a single value, or equal to ncol(X)" =
-                  {length(lambda) %in% c(1, ncol(X))})
-    stopifnot("coefficients in beta_0 must match ncol(X)" =
-                  {length(beta_0) == ncol(X)})
+    stopifnot("prior_ridge design matrix must be a matrix" = {
+        is.matrix(X)
+    })
+    stopifnot("lambda must be a single value, or equal to ncol(X)" = {
+        length(lambda) %in% c(1, ncol(X))
+    })
+    stopifnot("coefficients in beta_0 must match ncol(X)" = {
+        length(beta_0) == ncol(X)
+    })
     p <- ncol(X)
     lambda <- diag(lambda, p)
     solve(crossprod(X) + lambda, crossprod(X, y) + lambda %*% beta_0)[, 1]
@@ -29,9 +33,9 @@ prior_ridge <- function(X, y, lambda, beta_0) {
 #' @param y (vector) response - typically alliance scores
 #' @param lambda regularization parameter
 #' @param beta_0 vector of priors to regularize towards
-pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE){
+pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE) {
     errors <- rep(NA, length(y))
-    for (i in seq_along(y)){
+    for (i in seq_along(y)) {
         X_train <- X[-i, ]
         y_train <- y[-i]
         X_test <- X[i, ]
@@ -43,7 +47,9 @@ pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE){
         # use drop() to ensure the error is a vector, not a matrix
         errors[i] <- drop(pred - y_test)
     }
-    if(mse) return(mean(errors ^ 2))
+    if (mse) {
+        return(mean(errors^2))
+    }
     return(errors)
 }
 
@@ -67,30 +73,31 @@ pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE){
 #'   the max minus 1.
 #'
 #' @export
-pridge_lambda_cv <- function(
-        design, response, priors, grid, plot_mses = TRUE, n_cores = NULL
-){
+pridge_lambda_cv <- function(design, response, priors, grid, plot_mses = TRUE, n_cores = NULL) {
     design <- as.matrix(design)
 
     # Leave one core free by default
     if (is.null(n_cores)) n_cores <- max(1, parallel::detectCores() - 1)
 
     if (n_cores == 1) { # if n_cores is 1, nonparallel execution avoids overhead
-        mses <- sapply(grid, function(lambda){
-            pridge_loocv(X = design, y = response,
-                         lambda = lambda, beta_0 = priors)
+        mses <- sapply(grid, function(lambda) {
+            pridge_loocv(
+                X = design, y = response,
+                lambda = lambda, beta_0 = priors
+            )
         })
-    }
-    else { # parallelized path
+    } else { # parallelized path
         cl <- parallel::makeCluster(n_cores)
         doParallel::registerDoParallel(cl)
 
         mses <- tryCatch({
             foreach::foreach(
-                lambda = grid, .combine = 'c', .packages = 'scoutR'
+                lambda = grid, .combine = "c", .packages = "scoutR"
             ) %dopar% {
-                pridge_loocv(X = design, y = response,
-                             lambda = lambda, beta_0 = priors)
+                pridge_loocv(
+                    X = design, y = response,
+                    lambda = lambda, beta_0 = priors
+                )
             }
         }, finally = {
             # Always stop the cluster to free up resources
@@ -100,11 +107,13 @@ pridge_lambda_cv <- function(
 
     names(mses) <- grid
 
-    if (plot_mses){
+    if (plot_mses) {
         min_ind <- which.min(mses)
-        plot(x = grid, y = mses, xlab = "Lambda", ylab = "LOOCV MSE",
-             main = "Prior Ridge Lambda Cross Validation",
-             sub = paste("LOOCV MSE-min lambda:", round(grid[min_ind], 3)))
+        plot(
+            x = grid, y = mses, xlab = "Lambda", ylab = "LOOCV MSE",
+            main = "Prior Ridge Lambda Cross Validation",
+            sub = paste("LOOCV MSE-min lambda:", round(grid[min_ind], 3))
+        )
         abline(v = grid[min_ind], col = "red", lty = 2)
     }
 
@@ -123,15 +132,19 @@ pridge_lambda_cv <- function(
 #' If "unpenalized" is requested but `matches` has no `foulPoints` columns,
 #' warns and falls back to total score.
 #' @noRd
-pridge_response <- function(matches, response_name){
-    get_col <- function(name){
-        c(unlist(matches[, paste0("blue_", name)]),
-          unlist(matches[, paste0("red_", name)]))
+pridge_response <- function(matches, response_name) {
+    get_col <- function(name) {
+        c(
+            unlist(matches[, paste0("blue_", name)]),
+            unlist(matches[, paste0("red_", name)])
+        )
     }
-    if (response_name != "unpenalized") return(get_col(response_name))
+    if (response_name != "unpenalized") {
+        return(get_col(response_name))
+    }
 
     foul_cols <- paste0(c("blue_", "red_"), "foulPoints")
-    if (!all(foul_cols %in% colnames(matches))){
+    if (!all(foul_cols %in% colnames(matches))) {
         warning("No foulPoints columns in `matches`; using total score")
         return(get_col("score"))
     }
@@ -163,16 +176,18 @@ pridge_response <- function(matches, response_name){
 #' event_key <- "2026mdsev"
 #' matches <- event_matches(event_key, match_type = "qual")
 #' sb_data <- team_events_sb(event = event_key)
-#' epas <- sapply(sb_data, function(te){te$epa$stats$start})
-#' names(epas) <- sapply(sb_data, function(te){te$team})
+#' epas <- sapply(sb_data, function(te) {
+#'     te$epa$stats$start
+#' })
+#' names(epas) <- sapply(sb_data, function(te) {
+#'     te$team
+#' })
 #' mdsev_pridge <- fit_pridge(matches, epas)
 #' mdsev_pridge_total <- fit_pridge(matches, epas, response_name = "score")
 #'
-fit_pridge <- function(
-        matches, priors, response_name = "unpenalized",
-        grid = exp(seq(log(0.01), log(20), length.out = 100)),
-        n_cores = NULL, digits = 2
-){
+fit_pridge <- function(matches, priors, response_name = "unpenalized",
+                       grid = exp(seq(log(0.01), log(20), length.out = 100)),
+                       n_cores = NULL, digits = 2) {
     design <- as.matrix(lineup_design_matrix(matches))
 
     # extract the response vector from matches
@@ -184,7 +199,8 @@ fit_pridge <- function(
     priors <- priors[match(colnames(design), names(priors))]
 
     mses <- pridge_lambda_cv(design, response, priors, grid,
-                             plot_mses = FALSE, n_cores = n_cores)
+        plot_mses = FALSE, n_cores = n_cores
+    )
     lambda_opt <- grid[which.min(mses)]
     result <- prior_ridge(design, response, lambda_opt, priors)
     return(round(result, digits = digits))
@@ -211,16 +227,20 @@ fit_pridge <- function(
 #' fit_event_pridge("2023new", n_cores = 3)
 #' fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
 #' fit_event_pridge("2025mdsev", response_name = "score")
-fit_event_pridge <- function(
-        event_key, response_name = "unpenalized",
-        grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL
-){
+fit_event_pridge <- function(event_key, response_name = "unpenalized",
+                             grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL) {
     matches <- event_matches(event_key, match_type = "qual")
 
     sb_data <- team_events_sb(event = event_key)
-    epas <- sapply(sb_data, function(te){te$epa$stats$start})
-    names(epas) <- sapply(sb_data, function(te){te$team})
+    epas <- sapply(sb_data, function(te) {
+        te$epa$stats$start
+    })
+    names(epas) <- sapply(sb_data, function(te) {
+        te$team
+    })
 
-    return(fit_pridge(matches, epas, response_name = response_name,
-                      grid = grid, n_cores = n_cores))
+    return(fit_pridge(matches, epas,
+        response_name = response_name,
+        grid = grid, n_cores = n_cores
+    ))
 }

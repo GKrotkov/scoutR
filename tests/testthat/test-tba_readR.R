@@ -14,14 +14,18 @@ test_that("Testing tf()", {
     expect_equal(tf(1712), "frc1712")
     expect_equal(tf(708), "frc708")
     expect_equal(tf("frc1712"), "frc1712")
-    expect_equal(tf(c(449, 614, "1712", "frc4821")),
-                 c("frc449", "frc614", "frc1712", "frc4821"))
+    expect_equal(
+        tf(c(449, 614, "1712", "frc4821")),
+        c("frc449", "frc614", "frc1712", "frc4821")
+    )
 })
 
 test_that("Testing simkeys()", {
     expect_equal(simkeys("", simple = TRUE, keys = FALSE), "/simple")
     expect_equal(simkeys("req", simple = FALSE, keys = TRUE), "req/keys")
     expect_equal(simkeys("req", simple = FALSE, keys = FALSE), "req")
-    expect_warning(simkeys("req", simple = TRUE, keys = TRUE),
-                   "both simple and keys = TRUE")
+    expect_warning(
+        simkeys("req", simple = TRUE, keys = TRUE),
+        "both simple and keys = TRUE"
+    )
 })

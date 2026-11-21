@@ -38,15 +38,17 @@ YEAR <- format(Sys.time(), "%Y")
 #' access the file system in a constrained environment (like GitHub Actions)
 #' and crash.
 #' @noRd
-tba_key <- function(){
+tba_key <- function() {
     # covers the Github Actions environment case, where we can't access HOME
-    if (!Sys.getenv("TBA_AUTH") %in% c("", "NA")) return(Sys.getenv("TBA_AUTH"))
+    if (!Sys.getenv("TBA_AUTH") %in% c("", "NA")) {
+        return(Sys.getenv("TBA_AUTH"))
+    }
 
     # for human users, look for the auth key in ~/.scoutR_auth.txt
     path <- file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")
-    if(file.exists(path)){
+    if (file.exists(path)) {
         return(readr::read_file(path))
-    } else{
+    } else {
         stop("tba_key not in either environment vars or ~/.scoutR_auth.txt")
     }
 }
@@ -85,10 +87,12 @@ tf <- function(n) {
 #' @examples
 #' get_content("team/frc1712/awards")
 #' get_content("team/3504", base = STATBOTICS_BASE)
-get_content <- function(req, params = list(), base = TBA_BASE){
-    stopifnot("Authentication key uninitialized.
+get_content <- function(req, params = list(), base = TBA_BASE) {
+    stopifnot(
+        "Authentication key uninitialized.
               To resolve, run: initialize_scoutR('your_tba_auth_key')." =
-                  !is.na(tba_key()))
+            !is.na(tba_key())
+    )
 
     params <- append(params, list(`X-TBA-Auth-Key` = tba_key()))
 
@@ -100,7 +104,7 @@ get_content <- function(req, params = list(), base = TBA_BASE){
             req_error(is_error = \(resp) FALSE) |>
             req_perform() |>
             resp_body_json(),
-        error = function(e) NULL  # network-level failures return NULL
+        error = function(e) NULL # network-level failures return NULL
     )
 
     return(result)
@@ -119,13 +123,13 @@ get_content <- function(req, params = list(), base = TBA_BASE){
 #' simkeys("", TRUE, FALSE)
 #' simkeys("", FALSE, TRUE)
 #' simkeys("", TRUE, TRUE)
-simkeys <- function(req, simple = FALSE, keys = FALSE){
-    if (simple && keys){
+simkeys <- function(req, simple = FALSE, keys = FALSE) {
+    if (simple && keys) {
         warning("both simple and keys = TRUE")
     }
-    if (keys){
+    if (keys) {
         req <- paste(req, "keys", sep = "/")
-    } else if (simple){
+    } else if (simple) {
         req <- paste(req, "simple", sep = "/")
     }
     return(req)
@@ -147,8 +151,8 @@ simkeys <- function(req, simple = FALSE, keys = FALSE){
 #' paphi <- read_event_matches("2016paphi")
 #' is_qual_match(paphi[[1]])
 #' is_qual_match(paphi[[56]])
-is_qual_match <- function(match){
-    return (str_detect(match$key, "_qm"))
+is_qual_match <- function(match) {
+    return(str_detect(match$key, "_qm"))
 }
 
 #' Retrieve score breakdown object
@@ -160,7 +164,7 @@ is_qual_match <- function(match){
 #' @examples
 #' paphi <- read_event_matches("2016paphi")
 #' breakdown(paphi[[1]])
-breakdown <- function(match){
+breakdown <- function(match) {
     return(match$score_breakdown)
 }
 
@@ -174,7 +178,7 @@ breakdown <- function(match){
 #' @examples
 #' match <- read_event_matches("2016paphi")[[1]]
 #' is_score_posted(match)
-is_score_posted <- function(match){
+is_score_posted <- function(match) {
     return(!is.null(match$score_breakdown))
 }
 
@@ -189,7 +193,7 @@ is_score_posted <- function(match){
 #' @examples
 #' matches <- read_event_matches("2022azfl")
 #' remove_unscored_matches(matches)
-remove_unscored_matches <- function(matches){
+remove_unscored_matches <- function(matches) {
     return(matches[unlist(lapply(matches, is_score_posted))])
 }
 
@@ -203,8 +207,10 @@ remove_unscored_matches <- function(matches){
 #' @examples
 #' event_key <- "2016paphi"
 #' match_keys(read_event_matches(event_key))
-match_keys <- function(matches){
-    getter <- function(match){return(match$key)}
+match_keys <- function(matches) {
+    getter <- function(match) {
+        return(match$key)
+    }
     return(sapply(matches, getter))
 }
 
@@ -217,13 +223,15 @@ match_keys <- function(matches){
 #' @return List of all official match keys, or NULL
 #' @examples
 #' read_official_match_keys(year = 2022)
-read_official_match_keys <- function(year = YEAR, trim_parents = TRUE){
-    event_keys <- read_official_events(year = year, trim_parents = trim_parents,
-                                       keys = TRUE)
+read_official_match_keys <- function(year = YEAR, trim_parents = TRUE) {
+    event_keys <- read_official_events(
+        year = year, trim_parents = trim_parents,
+        keys = TRUE
+    )
 
     # loop through and append matches from each event
     matches <- list()
-    for (i in 1:length(event_keys)){
+    for (i in 1:length(event_keys)) {
         matches <- c(matches, read_event_matches(event_keys[i], keys = TRUE))
     }
     return(unlist(matches))
@@ -243,7 +251,7 @@ read_official_match_keys <- function(year = YEAR, trim_parents = TRUE){
 #' @examples
 #' is_event_official(read_event("2016parr"))
 #' is_event_official(read_event("2016pahat"))
-is_event_official <- function(event){
+is_event_official <- function(event) {
     # code 99 is offseason, code 100 is preseason (week0)
     return(!event$event_type %in% c(99, 100))
 }
@@ -257,7 +265,7 @@ is_event_official <- function(event){
 #' @examples
 #' is_event_key_official(read_event("2016parr"))
 #' is_event_key_official(read_event("2016paphi"))
-is_event_key_official <- function(key){
+is_event_key_official <- function(key) {
     evnt <- read_event(key, simple = TRUE)
     return(!evnt$event_type %in% c(99, 100))
 }
@@ -272,7 +280,7 @@ is_event_key_official <- function(key){
 #' @examples
 #' read_event("2016paphi")
 #' read_event("2016mrcmp", simple = TRUE)
-read_event <- function(key, simple = FALSE){
+read_event <- function(key, simple = FALSE) {
     request <- paste("event", key, sep = "/")
     request <- simkeys(request, simple = simple, keys = FALSE)
     return(get_content(request))
@@ -286,7 +294,7 @@ read_event <- function(key, simple = FALSE){
 #' @return TBA Alliances object
 #' @examples
 #' read_event_alliances("2015paphi")
-read_event_alliances <- function(key){
+read_event_alliances <- function(key) {
     request <- paste("event", key, "alliances", sep = "/")
     return(get_content(request))
 }
@@ -299,7 +307,7 @@ read_event_alliances <- function(key){
 #' @return TBA Insights object
 #' @examples
 #' read_event_insights("2018pawch")
-read_event_insights <- function(key){
+read_event_insights <- function(key) {
     request <- paste("event", key, "insights", sep = "/")
     return(get_content(request))
 }
@@ -313,14 +321,14 @@ read_event_insights <- function(key){
 #' @return TBA OPRs object
 #' @examples
 #' read_event_oprs("2018mrcmp")
-read_event_oprs <- function(key){
+read_event_oprs <- function(key) {
     request <- paste("event", key, "oprs", sep = "/")
     return(get_content(request))
 }
 
 #' Read Event cOPRs
 #' @param key (chr) event key (e.g. "2025vagle")
-read_event_coprs <- function(key){
+read_event_coprs <- function(key) {
     request <- paste("event", key, "coprs", sep = "/")
     return(get_content(request))
 }
@@ -333,7 +341,7 @@ read_event_coprs <- function(key){
 #' @return TBA Predictions object
 #' @examples
 #' read_event_predictions("2018mrcmp")
-read_event_predictions <- function(key){
+read_event_predictions <- function(key) {
     request <- paste("event", key, "predictions", sep = "/")
     return(get_content(request))
 }
@@ -346,7 +354,7 @@ read_event_predictions <- function(key){
 #' @return TBA rankings object
 #' @examples
 #' read_event_rankings("2015paphi")
-read_event_rankings <- function(key){
+read_event_rankings <- function(key) {
     request <- paste("event", key, "rankings", sep = "/")
     return(get_content(request))
 }
@@ -359,7 +367,7 @@ read_event_rankings <- function(key){
 #' @return TBA district points event object
 #' @examples
 #' read_event_district_points("2016mrcmp")
-read_event_district_points <- function(key){
+read_event_district_points <- function(key) {
     request <- paste("event", key, "district_points", sep = "/")
     return(get_content(request))
 }
@@ -372,7 +380,7 @@ read_event_district_points <- function(key){
 #' @return TBA Awards object
 #' @examples
 #' read_event_awards("2017pawch")
-read_event_awards <- function(key){
+read_event_awards <- function(key) {
     request <- paste("event", key, "awards", sep = "/")
     return(get_content(request))
 }
@@ -392,11 +400,11 @@ read_event_awards <- function(key){
 #' read_event_teams("2016hop", simple = TRUE)
 #' read_event_teams("2016hop", keys = TRUE)
 read_event_teams <- function(
-    event_key, statuses = FALSE, simple = FALSE, keys = FALSE
-){
+  event_key, statuses = FALSE, simple = FALSE, keys = FALSE
+) {
     request <- paste("event", event_key, "teams", sep = "/")
     request <- simkeys(request, simple = simple, keys = keys)
-    if (!simple & !keys & statuses){
+    if (!simple & !keys & statuses) {
         request <- paste(request, "statuses", sep = "/")
     }
     result <- get_content(request)
@@ -417,7 +425,7 @@ read_event_teams <- function(
 #' read_year_events(year = 2015, simple = TRUE)
 #' read_year_events(year = 2016, keys = TRUE)
 #' read_year_events(year = 2017, simple = TRUE, keys = TRUE)
-read_year_events <- function(year = YEAR, simple = FALSE, keys = FALSE){
+read_year_events <- function(year = YEAR, simple = FALSE, keys = FALSE) {
     request <- paste("events", year, sep = "/")
     request <- simkeys(request, simple = simple, keys = keys)
     result <- get_content(request)
@@ -438,18 +446,20 @@ read_year_events <- function(year = YEAR, simple = FALSE, keys = FALSE){
 #' @examples
 #' read_events(year = 2016, official = TRUE, trim_parents = TRUE)
 read_events <- function(
-    year = NA, official = FALSE, trim_parents = FALSE, simple = FALSE,
-    keys = FALSE
-){
-    if (is.na(year)){ # year = NA implies we want all events
+  year = NA, official = FALSE, trim_parents = FALSE, simple = FALSE,
+  keys = FALSE
+) {
+    if (is.na(year)) { # year = NA implies we want all events
         result <- list()
         earliest <- 1992
-        for (i in earliest:YEAR){
+        for (i in earliest:YEAR) {
             yr_events <- read_year_events(i, simple, keys)
-            if (official){
+            if (official) {
                 # filter out unofficial events
-                yr_events <- yr_events[unlist(lapply(yr_events,
-                                                     is_event_official))]
+                yr_events <- yr_events[unlist(lapply(
+                    yr_events,
+                    is_event_official
+                ))]
             }
             result <- append(result, yr_events)
         }
@@ -457,7 +467,9 @@ read_events <- function(
     }
 
     # if official is false, we can simply return
-    if (!official) return(read_year_events(year, simple, keys))
+    if (!official) {
+        return(read_year_events(year, simple, keys))
+    }
 
     # if official is true, we use read_official_events
     return(read_official_events(year, trim_parents, simple, keys))
@@ -474,9 +486,10 @@ read_events <- function(
 #' @examples
 #' read_event_matches("2016mrcmp")
 #' read_event_matches("2014mrcmp", keys = TRUE)
-read_event_matches <- function(event_key, simple = FALSE, keys = FALSE){
+read_event_matches <- function(event_key, simple = FALSE, keys = FALSE) {
     request <- simkeys(paste("event", event_key, "matches", sep = "/"),
-                       simple = simple, keys = keys)
+        simple = simple, keys = keys
+    )
     result <- get_content(request)
     if (keys) result <- unlist(result)
     return(result)
@@ -493,9 +506,9 @@ read_event_matches <- function(event_key, simple = FALSE, keys = FALSE){
 #' @return List of qualification matches
 #' @examples
 #' read_event_qual_matches("2016hop", simple = TRUE)
-read_event_qual_matches <- function(event_key, simple = FALSE, keys = FALSE){
+read_event_qual_matches <- function(event_key, simple = FALSE, keys = FALSE) {
     # if the user asked only for keys, this is all we need
-    if (keys){
+    if (keys) {
         keys <- unlist(event_matches(event_key, keys = TRUE))
         qual_keys <- keys[grep("_qm", keys)]
         return(qual_keys)
@@ -504,7 +517,7 @@ read_event_qual_matches <- function(event_key, simple = FALSE, keys = FALSE){
     matches <- read_event_matches(event_key, simple = simple, keys = keys)
 
     # handling the null case
-    if (is_empty(matches)){
+    if (is_empty(matches)) {
         return(list())
     }
 
@@ -523,10 +536,10 @@ read_event_qual_matches <- function(event_key, simple = FALSE, keys = FALSE){
 #' @examples
 #' read_event_playoff_matches("2018pawch")
 read_event_playoff_matches <- function(
-    event_key, simple = FALSE, keys = FALSE
-){
+  event_key, simple = FALSE, keys = FALSE
+) {
     # if the user asked only for keys, this is all we need
-    if (keys){
+    if (keys) {
         keys <- unlist(read_event_matches(event_key, keys = TRUE))
         playoff_keys <- keys[grep("_qm", keys, invert = TRUE)]
         return(playoff_keys)
@@ -535,7 +548,7 @@ read_event_playoff_matches <- function(
     matches <- read_event_matches(event_key, simple = simple, keys = keys)
 
     # handling the null case
-    if (is_empty(matches)){
+    if (is_empty(matches)) {
         return(list())
     }
 
@@ -555,8 +568,8 @@ read_event_playoff_matches <- function(
 #' @examples
 #' read_official_events(year = 2016, trim_parents = TRUE, keys = TRUE)
 read_official_events <- function(
-    year = YEAR, trim_parents = TRUE, simple = FALSE, keys = FALSE
-){
+  year = YEAR, trim_parents = TRUE, simple = FALSE, keys = FALSE
+) {
     # we need to start with the full event objects to filter for official events
     events <- read_year_events(year = year)
 
@@ -565,7 +578,7 @@ read_official_events <- function(
     events <- events[events$event_type_string != "Offseason", ]
     events <- events[events$event_type_string != "Preseason", ]
 
-    if(trim_parents){
+    if (trim_parents) {
         # remove events with divisions below them (we keep the divisions themselves)
         events <- events[events$division_keys == "list()", ]
     }
@@ -573,11 +586,14 @@ read_official_events <- function(
     event_keys <- unlist(events$event_code)
     event_keys <- paste(year, event_keys, sep = "")
 
-    if (keys) return(event_keys)
-    else if (simple){
-        simple_event_factors <- c("city", "country", "district", "end_date",
-                                  "event_code", "event_type", "key", "name",
-                                  "start_date", "state_prov", "year")
+    if (keys) {
+        return(event_keys)
+    } else if (simple) {
+        simple_event_factors <- c(
+            "city", "country", "district", "end_date",
+            "event_code", "event_type", "key", "name",
+            "start_date", "state_prov", "year"
+        )
 
         return(events[, simple_event_factors])
     }
@@ -600,7 +616,7 @@ read_official_events <- function(
 #' read_team(1712)
 #' read_team(708)
 #' read_team(6672)
-read_team <- function(n, simple = FALSE){
+read_team <- function(n, simple = FALSE) {
     request <- paste("team", tf(n), sep = "/")
 
     request <- simkeys(request, simple = simple, keys = FALSE)
@@ -620,7 +636,7 @@ read_team <- function(n, simple = FALSE){
 #' @examples
 #' read_teams(1)
 #' read_teams(3, keys = TRUE)
-read_teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
+read_teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE) {
     request <- paste("teams", page_num, sep = "/")
     if (year) request <- paste("teams", year, page_num, sep = "/")
 
@@ -642,11 +658,11 @@ read_teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
 #' read_team_events(1712, year = 2018, simple = TRUE)
 #' read_team_events(1712, keys = TRUE)
 read_team_events <- function(
-    n, year = NA, official = FALSE, simple = FALSE, keys = FALSE
-){
+  n, year = NA, official = FALSE, simple = FALSE, keys = FALSE
+) {
     request <- paste("team", tf(n), "events", sep = "/")
 
-    if (!is.na(year)){
+    if (!is.na(year)) {
         request <- paste(request, as.character(year), sep = "/")
     }
 
@@ -654,11 +670,13 @@ read_team_events <- function(
     # this saves many API calls when keys = TRUE
     request <- simkeys(request, simple, keys = FALSE)
     result <- get_content(request)
-    if (official){
+    if (official) {
         result <- result[unlist(lapply(result, is_event_official))]
     }
-    if (keys){
-        result <- sapply(result, function(elem){return(elem$key)})
+    if (keys) {
+        result <- sapply(result, function(elem) {
+            return(elem$key)
+        })
     }
 
     return(result)
@@ -676,17 +694,17 @@ read_team_events <- function(
 #' @return List of official matches by the team of interest
 #' @examples
 #' read_team_official_matches(1712, 2015, NA, TRUE, TRUE)
-read_team_official_matches <- function(team, year, event, simple, keys){
-    if (!is.na(event)){
+read_team_official_matches <- function(team, year, event, simple, keys) {
+    if (!is.na(event)) {
         warning("both event and official supplied TRUE, prioritizing event")
         return(read_team_matches(team, year, event, FALSE, simple, keys))
-    } else if (!is.na(year)){
+    } else if (!is.na(year)) {
         event_keys <- unlist(read_team_events(team, year = year, keys = TRUE))
     } else { # event and year are both NA
         event_keys <- unlist(read_team_events(team, keys = TRUE))
     }
     matches <- list()
-    for (i in 1:length(event_keys)){
+    for (i in 1:length(event_keys)) {
         if (!is_event_key_official(event_keys[i])) next()
         tmp <- read_team_matches(team, event = event_keys[i], keys = keys)
         matches <- c(matches, tmp)
@@ -711,21 +729,28 @@ read_team_official_matches <- function(team, year, event, simple, keys){
 #' @examples
 #' read_team_matches(1712, year = 2016, keys = TRUE)
 read_team_matches <- function(
-    team, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE
-){
-    if (official) return(read_team_official_matches(team, year, event,
-                                                    simple, keys))
-    if (!is.na(year)){
+  team, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE
+) {
+    if (official) {
+        return(read_team_official_matches(
+            team, year, event,
+            simple, keys
+        ))
+    }
+    if (!is.na(year)) {
         request <- paste("team", tf(team), "matches", as.character(year),
-                         sep = "/")
-    } else if (!is.na(event)){
+            sep = "/"
+        )
+    } else if (!is.na(event)) {
         request <- paste("team", tf(team), "event", as.character(event),
-                         "matches", sep = "/")
+            "matches",
+            sep = "/"
+        )
     } else { # implies (is.na(year) && is.na(event))
         event_keys <- unlist(read_team_events(team, keys = TRUE))
         # we can recurse since we now have event keys
         matches <- list()
-        for (i in 1:length(event_keys)){
+        for (i in 1:length(event_keys)) {
             tmp <- read_team_matches(team, event = event_keys[i], keys = keys)
             matches <- c(matches, tmp)
         }
@@ -751,11 +776,11 @@ read_team_matches <- function(
 #' @return List of award objects
 #' @examples
 #' read_team_awards(1712, year = 2018)
-read_team_awards <- function(team, year = NULL, event = NULL){
+read_team_awards <- function(team, year = NULL, event = NULL) {
     request <- paste("team", tf(team), "awards", sep = "/")
-    if (!is.null(year)){
+    if (!is.null(year)) {
         request <- paste(request, as.character(year), sep = "/")
-    } else if (!is.null(event)){
+    } else if (!is.null(event)) {
         request <- paste("team", tf(team), "event", event, "awards", sep = "/")
     }
     return(get_content(request))
@@ -773,7 +798,7 @@ read_team_awards <- function(team, year = NULL, event = NULL){
 #' @return List of district objects
 #' @examples
 #' read_districts(2022)
-read_districts <- function(year = YEAR){
+read_districts <- function(year = YEAR) {
     request <- paste("districts", as.character(year), sep = "/")
     return(get_content(request))
 }
@@ -787,7 +812,7 @@ read_districts <- function(year = YEAR){
 #' @author Gabriel Krotkov
 #' @examples
 #' read_district_events("2022fit")
-read_district_events <- function(district_key, simple = FALSE, keys = FALSE){
+read_district_events <- function(district_key, simple = FALSE, keys = FALSE) {
     request <- paste("district", district_key, "events", sep = "/")
     request <- simkeys(request, simple = simple, keys = keys)
     return(get_content(request))
@@ -803,7 +828,7 @@ read_district_events <- function(district_key, simple = FALSE, keys = FALSE){
 #' @examples
 #' read_district_teams("2022fit")
 #' read_district_teams("2016mar")
-read_district_teams <- function(district_key, simple = FALSE, keys = FALSE){
+read_district_teams <- function(district_key, simple = FALSE, keys = FALSE) {
     request <- paste("district", district_key, "teams", sep = "/")
     request <- simkeys(request, simple = simple, keys = keys)
     result <- get_content(request)
@@ -819,7 +844,7 @@ read_district_teams <- function(district_key, simple = FALSE, keys = FALSE){
 #' @return list of district rankings objects
 #' @examples
 #' read_district_rankings("2016mar")
-read_district_rankings <- function(district_key){
+read_district_rankings <- function(district_key) {
     request <- paste("district", district_key, "rankings", sep = "/")
     return(get_content(request))
 }
@@ -836,8 +861,7 @@ read_district_rankings <- function(district_key){
 #' @return Zebra match for the input match key, or NULL
 #' @examples
 #' read_match_zebra("2022txcmp2_qf4m3")
-read_match_zebra <- function(match_key){
+read_match_zebra <- function(match_key) {
     request <- paste("match", match_key, "zebra_motionworks", sep = "/")
     return(get_content(request))
 }
-

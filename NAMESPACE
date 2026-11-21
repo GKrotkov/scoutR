@@ -57,24 +57,27 @@ import(tibble)
 import(tidyr)
 importFrom(data.table,transpose)
 importFrom(doParallel,registerDoParallel)
-importFrom(foreach,"%dopar%")
-importFrom(foreach,foreach)
-importFrom(httr2,req_perform)
-importFrom(httr2,req_url_path_append)
-importFrom(httr2,req_url_query)
-importFrom(httr2,request)
-importFrom(httr2,resp_body_json)
+importFrom(foreach,
+  "%dopar%",
+  foreach
+)
 importFrom(jsonlite,fromJSON)
-importFrom(parallel,detectCores)
-importFrom(parallel,makeCluster)
-importFrom(parallel,stopCluster)
+importFrom(parallel,
+  detectCores,
+  makeCluster,
+  stopCluster
+)
 importFrom(pracma,Lcm)
-importFrom(purrr,flatten_chr)
-importFrom(purrr,is_empty)
-importFrom(purrr,reduce)
+importFrom(purrr,
+  flatten_chr,
+  is_empty,
+  reduce
+)
 importFrom(rvest,html_text)
-importFrom(stringr,str_detect)
-importFrom(stringr,str_extract)
-importFrom(stringr,str_length)
-importFrom(stringr,str_sub)
+importFrom(stringr,
+  str_detect,
+  str_extract,
+  str_length,
+  str_sub
+)
 importFrom(withr,with_dir)
