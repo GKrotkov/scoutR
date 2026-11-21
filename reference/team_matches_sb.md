@@ -19,5 +19,5 @@ team_matches_sb(...)
 
 ``` r
 team_matches_sb(team = 449, year = 2025)
-#> Error in value[[3L]](cond): HTTR error not 500 or higher
+#> Error in httr2::req_perform(build(ITR_BASE)): HTTP 404 Not Found.
 ```
