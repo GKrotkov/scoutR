@@ -476,7 +476,7 @@ dual_line_weight_approximation <- function(bin_vars) {
         floor(length(bin_vars) / 2)
     )
     first_half <- first_half +
-        (coefficients(first_half_fit)[2] * (1:length(first_half) - 1))
+        (coefficients(first_half_fit)[2] * (seq_along(first_half) - 1))
     second_half <- rep(
         coefficients(second_half_fit)[1] +
             (coefficients(second_half_fit)[2] *
@@ -484,7 +484,7 @@ dual_line_weight_approximation <- function(bin_vars) {
         ceiling(length(bin_vars) / 2)
     )
     second_half <- second_half +
-        (coefficients(second_half_fit)[2] * (1:length(second_half) - 1))
+        (coefficients(second_half_fit)[2] * (seq_along(second_half) - 1))
     result <- 1 / c(first_half, second_half)
     names(result) <- NULL
     return(result)

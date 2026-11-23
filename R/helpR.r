@@ -95,7 +95,7 @@ weight_rows <- function(df, w) {
             all(w == floor(w))
     )
     # apply weighting by multiply-sampling the weighted rows
-    cuts <- cut(1:nrow(df), length(w))
+    cuts <- cut(seq_len(nrow(df)), length(w))
     result <- data.frame()
     for (i in seq_along(w)) {
         bin <- df[cuts == levels(cuts)[i], ]
@@ -283,7 +283,7 @@ get_robot_field_df <- function(
         matches$red1, matches$red2, matches$red3
     ))
     df <- data.frame(id = ids)
-    for (i in 1:length(ids)) {
+    for (i in seq_along(ids)) {
         result <- get_robot_field(matches, field, ids[i],
             schema = schema, unlist = unlist
         )

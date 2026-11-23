@@ -231,7 +231,7 @@ read_official_match_keys <- function(year = YEAR, trim_parents = TRUE) {
 
     # loop through and append matches from each event
     matches <- list()
-    for (i in 1:length(event_keys)) {
+    for (i in seq_along(event_keys)) {
         matches <- c(matches, read_event_matches(event_keys[i], keys = TRUE))
     }
     return(unlist(matches))
@@ -704,7 +704,7 @@ read_team_official_matches <- function(team, year, event, simple, keys) {
         event_keys <- unlist(read_team_events(team, keys = TRUE))
     }
     matches <- list()
-    for (i in 1:length(event_keys)) {
+    for (i in seq_along(event_keys)) {
         if (!is_event_key_official(event_keys[i])) next()
         tmp <- read_team_matches(team, event = event_keys[i], keys = keys)
         matches <- c(matches, tmp)
@@ -750,7 +750,7 @@ read_team_matches <- function(
         event_keys <- unlist(read_team_events(team, keys = TRUE))
         # we can recurse since we now have event keys
         matches <- list()
-        for (i in 1:length(event_keys)) {
+        for (i in seq_along(event_keys)) {
             tmp <- read_team_matches(team, event = event_keys[i], keys = keys)
             matches <- c(matches, tmp)
         }

@@ -17,9 +17,9 @@
 
 name_teams_list <- function(team_list, color) {
     if (!(color %in% c("blue", "red"))) {
-        return(as.character(1:length(team_list)))
+        return(as.character(seq_along(team_list)))
     }
-    names(team_list) <- paste(color, 1:length(team_list), sep = "")
+    names(team_list) <- paste(color, seq_along(team_list), sep = "")
     return(team_list)
 }
 
@@ -261,7 +261,7 @@ tidy_alliances <- function(raw, unpack_picks = FALSE) {
     idx <- grep("robot", colnames(alliances))
     colnames(alliances)[idx[1]] <- "captain"
     idx <- idx[-1]
-    pick_names <- paste("pick", 1:length(idx), sep = " ")
+    pick_names <- paste("pick", seq_along(idx), sep = " ")
     colnames(alliances)[idx] <- pick_names
     return(alliances)
 }
