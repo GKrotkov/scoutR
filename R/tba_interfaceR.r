@@ -89,8 +89,8 @@ teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE) {
 #' team_matches(1712, event = "2015paphi")
 #' team_matches(1712, official = TRUE, alliances = FALSE, breakdown = FALSE)
 team_matches <- function(
-  key, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE,
-  alliances = TRUE, breakdown = TRUE, unplayed = FALSE
+    key, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE,
+    alliances = TRUE, breakdown = TRUE, unplayed = FALSE
 ) {
     if (simple && keys) warning(warns()$simkey)
     if (!is.na(year) && !is.na(event)) warning(warns()$year_event)
@@ -125,7 +125,7 @@ team_matches <- function(
 #' team_events("1712", year = 2018, official = TRUE)
 #' team_events("frc1712", keys = TRUE)
 team_events <- function(
-  key, year = NA, official = FALSE, simple = FALSE, keys = FALSE
+    key, year = NA, official = FALSE, simple = FALSE, keys = FALSE
 ) {
     if (simple && keys) warning(warns()$simkey)
 
@@ -258,9 +258,9 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE) {
 #' event_matches("2015paphi", match_type = "playoff")
 #' event_matches("2014mrcmp", match_type = "qual", keys = TRUE)
 event_matches <- function(
-  event_key, alliances = TRUE, breakdown = TRUE,
-  match_type = c("all", "quals", "playoff"),
-  unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
+    event_key, alliances = TRUE, breakdown = TRUE,
+    match_type = c("all", "quals", "playoff"),
+    unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
 ) {
     match_type <- match.arg(match_type)
     if (simple && keys) warning(warns()$simkeys)
