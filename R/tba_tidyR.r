@@ -35,7 +35,7 @@ name_sublist <- function(elem, label = "") {
 }
 
 # adapted from stackOverflow at:
-# https://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na nolint: line_length_linter.
+# https://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na # nolint: line_length_linter.
 drop_na_cols <- function(df) {
     not_na_col <- function(x) !all(is.na(x))
     return(Filter(not_na_col, df))
@@ -178,8 +178,9 @@ tidy_matches <- function(
         unnest_wider(matches)
 
     # handling case of call on nulls or when score_breakdown does not exist
-    if (breakdown && (!("score_breakdown" %in% colnames(event)) ||
-                      all(is.na(event$score_breakdown)))) {
+    # this will matter for events before 2015
+    # "[[" returns NULL if a column doesn't exist
+    if (breakdown && all(is.na(event[["score_breakdown"]]))){
         warning("tidy_matches called with breakdown = TRUE on null case \n
                 Recalling tidy_matches with breakdown = FALSE")
         return(tidy_matches(raw, alliances = alliances, breakdown = FALSE))

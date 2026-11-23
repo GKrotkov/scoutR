@@ -248,8 +248,10 @@ events <- function(year, official = FALSE, simple = FALSE, keys = FALSE) {
 #' @param alliances (bool) break down alliances column?
 #' @param breakdown (bool) break down score_breakdown column?
 #' @param match_type one of "all", "qual", or "playoff"
-#' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
-#' @param sort (boolean) if TRUE, will sort the resulting match object by match number.
+#' @param unplayed (boolean) include matches with scores of -1 (indicating
+#' that the match has not been played?)
+#' @param sort (boolean) if TRUE, will sort the resulting match object by
+#' match number.
 #' @param simple (bool) simplify match object?
 #' @param keys (bool) get keys only?
 #' @return Tibble of matches from the given event.
