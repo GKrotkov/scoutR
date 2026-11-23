@@ -180,7 +180,7 @@ tidy_matches <- function(
     # handling case of call on nulls or when score_breakdown does not exist
     # this will matter for events before 2015
     # "[[" returns NULL if a column doesn't exist
-    if (breakdown && all(is.na(event[["score_breakdown"]]))){
+    if (breakdown && all(is.na(event[["score_breakdown"]]))) {
         warning("tidy_matches called with breakdown = TRUE on null case \n
                 Recalling tidy_matches with breakdown = FALSE")
         return(tidy_matches(raw, alliances = alliances, breakdown = FALSE))
