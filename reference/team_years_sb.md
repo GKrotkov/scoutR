@@ -3098,10 +3098,10 @@ team_years_sb(team = 449)
 #> [1] 106
 #> 
 #> [[23]]$epa$ranks$total$percentile
-#> [1] 0.9715
+#> [1] 0.9716
 #> 
 #> [[23]]$epa$ranks$total$team_count
-#> [1] 3713
+#> [1] 3729
 #> 
 #> 
 #> [[23]]$epa$ranks$country
@@ -3232,10 +3232,10 @@ team_years_sb(team = 449)
 #> [1] 92
 #> 
 #> [[24]]$epa$ranks$total$percentile
-#> [1] 0.9758
+#> [1] 0.976
 #> 
 #> [[24]]$epa$ranks$total$team_count
-#> [1] 3795
+#> [1] 3827
 #> 
 #> 
 #> [[24]]$epa$ranks$country
@@ -3243,10 +3243,10 @@ team_years_sb(team = 449)
 #> [1] 73
 #> 
 #> [[24]]$epa$ranks$country$percentile
-#> [1] 0.9751
+#> [1] 0.9753
 #> 
 #> [[24]]$epa$ranks$country$team_count
-#> [1] 2928
+#> [1] 2955
 #> 
 #> 
 #> [[24]]$epa$ranks$state
@@ -3268,7 +3268,7 @@ team_years_sb(team = 449)
 #> [1] 0.9917
 #> 
 #> [[24]]$epa$ranks$district$team_count
-#> [1] 120
+#> [1] 121
 #> 
 #> 
 #> 

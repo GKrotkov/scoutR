@@ -1,6 +1,6 @@
 # Package Summary for LLM Ingestion
 
-Generated: 2026-09-20 13:09:28.427891
+Generated: 2026-11-28 12:10:00.109265
 
 ------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ Generated: 2026-09-20 13:09:28.427891
     Config/testthat/edition: 3
     Encoding: UTF-8
     LazyData: true
-    Config/roxygen2/version: 8.0.0
+    Config/roxygen2/version: 8.1.0
 
 ## NAMESPACE
 
@@ -108,26 +108,29 @@ Generated: 2026-09-20 13:09:28.427891
     import(tidyr)
     importFrom(data.table,transpose)
     importFrom(doParallel,registerDoParallel)
-    importFrom(foreach,"%dopar%")
-    importFrom(foreach,foreach)
-    importFrom(httr2,req_perform)
-    importFrom(httr2,req_url_path_append)
-    importFrom(httr2,req_url_query)
-    importFrom(httr2,request)
-    importFrom(httr2,resp_body_json)
+    importFrom(foreach,
+      "%dopar%",
+      foreach
+    )
     importFrom(jsonlite,fromJSON)
-    importFrom(parallel,detectCores)
-    importFrom(parallel,makeCluster)
-    importFrom(parallel,stopCluster)
+    importFrom(parallel,
+      detectCores,
+      makeCluster,
+      stopCluster
+    )
     importFrom(pracma,Lcm)
-    importFrom(purrr,flatten_chr)
-    importFrom(purrr,is_empty)
-    importFrom(purrr,reduce)
+    importFrom(purrr,
+      flatten_chr,
+      is_empty,
+      reduce
+    )
     importFrom(rvest,html_text)
-    importFrom(stringr,str_detect)
-    importFrom(stringr,str_extract)
-    importFrom(stringr,str_length)
-    importFrom(stringr,str_sub)
+    importFrom(stringr,
+      str_detect,
+      str_extract,
+      str_length,
+      str_sub
+    )
     importFrom(withr,with_dir)
 
 ## README.md
@@ -253,7 +256,6 @@ Generated: 2026-09-20 13:09:28.427891
 
     # Selective function
     #' @importFrom pracma Lcm
-    #' @importFrom httr2 request req_url_path_append req_url_query req_perform resp_body_json
     #' @importFrom withr with_dir
     #' @importFrom rvest html_text
     #' @importFrom stringr str_detect str_sub str_extract str_length
@@ -282,13 +284,12 @@ Generated: 2026-09-20 13:09:28.427891
     #'
     #' Function to store the auth key for scoutR in the user's HOME directory
     #' @export
-    initialize_scoutR <- function(auth_key){
+    initialize_scoutR <- function(auth_key) {
         home <- Sys.getenv("HOME")
-        if (is.null(auth_key)){
+        if (is.null(auth_key)) {
             warning("No auth key supplied. We assume ~/.scoutR_auth.txt exists.")
-        }
-        else{
-            with_dir(home,{
+        } else {
+            with_dir(home, {
                 # write the auth key text file
                 write_file(auth_key, file = ".scoutR_auth.txt")
             })
@@ -315,9 +316,13 @@ Generated: 2026-09-20 13:09:28.427891
         # round the digits to 4 places to avoid number representation problems
         # (when the fractionalized numbers get too large, we hit 2's complement)
         w <- round(w, digits = 4)
-        stopifnot("weights must be nonnegative" = {all(w >= 0)})
+        stopifnot("weights must be nonnegative" = {
+            all(w >= 0)
+        })
         # apply MASS fractional approximation
-        fractions <- sapply(w, function(x) {as.character(MASS::fractions(x))})
+        fractions <- sapply(w, function(x) {
+            as.character(MASS::fractions(x))
+        })
 
         fractional <- matrix(sapply(fractions, function(f) {
             parts <- unlist(strsplit(f, "/"))
@@ -340,7 +345,7 @@ Generated: 2026-09-20 13:09:28.427891
         # use round to guarantee integer results
         result <- round(w * lcm_den)
 
-        if (!is.na(len_out)){
+        if (!is.na(len_out)) {
             result <- rep_each_len(result, len_out)
         }
 
@@ -357,14 +362,16 @@ Generated: 2026-09-20 13:09:28.427891
     #' length-2, there will be two bins with 50% of the data each, and if weights
     #' is length-5, there will be five bins with 20% of the data each). The
     #' weighting respects order.
-    weight_rows <- function(df, w){
+    weight_rows <- function(df, w) {
         w <- normalize_weights(w)
-        stopifnot("weights must all be integers after normalization" =
-                      all(w == floor(w)))
+        stopifnot(
+            "weights must all be integers after normalization" =
+                all(w == floor(w))
+        )
         # apply weighting by multiply-sampling the weighted rows
-        cuts <- cut(1:nrow(df), length(w))
+        cuts <- cut(seq_len(nrow(df)), length(w))
         result <- data.frame()
-        for (i in seq_along(w)){
+        for (i in seq_along(w)) {
             bin <- df[cuts == levels(cuts)[i], ]
             result <- rbind(result, bin[rep(seq_len(nrow(bin)), w[i]), ])
         }
@@ -378,8 +385,8 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return numeric estimate of leave-one-out CV risk
     #' @details Uses a "shortcut" formula for LOOCV. For details, see formula 5.2
     #' in ISLR by James, Witten, Hastie, and Tibshirani (v2), pg 202
-    LOOCV <- function(fit){
-        mean(((fit$model$response - predict(fit))/(1 - boot::glm.diag(fit)$h))^2)
+    LOOCV <- function(fit) {
+        mean(((fit$model$response - predict(fit)) / (1 - boot::glm.diag(fit)$h))^2)
     }
 
 
@@ -392,9 +399,11 @@ Generated: 2026-09-20 13:09:28.427891
     #' Coerce a string in team formatting to an int
     #' @param id TBA-legal team formatted string (i.e. "frc3504")
     #' @param prefix string prefix for id (in overwhelming majority of cases "frc")
-    id2int <- function(id, prefix = "frc"){
+    id2int <- function(id, prefix = "frc") {
         # if the user accidentally input a numeric, just return it
-        if (is.numeric(id)) return(id)
+        if (is.numeric(id)) {
+            return(id)
+        }
         return(as.numeric(substr(id, nchar(prefix) + 1, nchar(id))))
     }
 
@@ -407,10 +416,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param simplify (bool) if TRUE, we will make some assumptions about the
     #' naming schema to cut away alliance color and the robot number so that we can
     #' make the output a little less ugly.
-    id_robot_fields <- function(matches, simplify = TRUE){
+    id_robot_fields <- function(matches, simplify = TRUE) {
         idx <- grep("robot[1-3]", colnames(matches), ignore.case = TRUE)
         result <- colnames(matches)[idx]
-        if (simplify){
+        if (simplify) {
             result <- gsub("red|blue", "", result, ignore.case = TRUE)
             result <- gsub("_", "", result)
             result <- gsub("robot", "", result, ignore.case = TRUE)
@@ -427,7 +436,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param matches dataframe of matches with alliances broken out
     #' @param key team key
     #' @return data frame with match indices and alliance station
-    get_team_stations <- function(matches, key){
+    get_team_stations <- function(matches, key) {
         key <- tf(key)
         stations <- matches[, c(paste0("blue", 1:3), paste0("red", 1:3))]
         idx <- which(stations == key, arr.ind = TRUE)
@@ -453,7 +462,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @details We identify a match as unplayed if both red and blue alliances have
     #' a score of -1.
     #' @param matches a dataframe of TBA match objects
-    id_unplayed <- function(matches){
+    id_unplayed <- function(matches) {
         return((matches$red_score == -1) & (matches$blue_score == -1))
     }
 
@@ -464,7 +473,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @details We identify a match as unplayed if both the red and blue alliance
     #' score is -1.
     #' @param matches dataframe of match objects
-    trim_unplayed <- function(matches){
+    trim_unplayed <- function(matches) {
         return(matches[!id_unplayed(matches), ])
     }
 
@@ -475,7 +484,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param color alliance color, either "red" or "blue"
     #' @param station_num number of the driver station
     #' @param field name of the relevant field
-    schema_cfs <- function(color, station_num, field){
+    schema_cfs <- function(color, station_num, field) {
         return(paste0(color, "_", field, "Robot", station_num))
     }
 
@@ -486,7 +495,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param color alliance color, either "red" or "blue"
     #' @param station_num number of the driver station
     #' @param field name of the relevant field
-    schema_csf <- function(color, station_num, field){
+    schema_csf <- function(color, station_num, field) {
         # for correct camelCase, field must have a capital first letter
         return(paste0(color, "_", "robot", station_num, cap_first(field)))
     }
@@ -513,8 +522,8 @@ Generated: 2026-09-20 13:09:28.427891
     #' mar16 <- event_matches("2016mrcmp")
     #' get_robot_field(mar16, "auto", 1712, schema = schema_csf)
     get_robot_field <- function(
-        matches, field, team_id, schema = schema_cfs, unlist = T
-    ){
+        matches, field, team_id, schema = schema_cfs, unlist = TRUE
+    ) {
         stations <- get_team_stations(matches, team_id)
         # assumption: station number is the last character of the string
         station_num <- substr_right(stations$station, 1)
@@ -541,14 +550,17 @@ Generated: 2026-09-20 13:09:28.427891
     #' mar17 <- event_matches("2017mrcmp")
     #' get_robot_field_df(mar17, "auto", schema = schema_csf)
     get_robot_field_df <- function(
-        matches, field, schema = schema_cfs, unlist = T
-    ){
-        ids <- unique(c(matches$blue1, matches$blue2, matches$blue3,
-                        matches$red1, matches$red2, matches$red3))
+        matches, field, schema = schema_cfs, unlist = TRUE
+    ) {
+        ids <- unique(c(
+            matches$blue1, matches$blue2, matches$blue3,
+            matches$red1, matches$red2, matches$red3
+        ))
         df <- data.frame(id = ids)
-        for (i in 1:length(ids)){
+        for (i in seq_along(ids)) {
             result <- get_robot_field(matches, field, ids[i],
-                                      schema = schema, unlist = unlist)
+                schema = schema, unlist = unlist
+            )
             tbl <- table(result)
             df[df$id == ids[i], names(tbl)] <- tbl
         }
@@ -563,9 +575,9 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param matches dataframe assumed to have "blue1", "blue2", "blue3", "red1",
     #' "red2", and "red3" columns.
     #' @return dataframe with team ids and the count of matches appeared in
-    count_team_matches <- function(matches){
+    count_team_matches <- function(matches) {
         result <- data.frame(table(unlist(c(
-            matches %>%
+            matches |>
                 dplyr::select(blue1, blue2, blue3, red1, red2, red3)
         ))))
         colnames(result) <- c("id", "count")
@@ -595,15 +607,17 @@ Generated: 2026-09-20 13:09:28.427891
     #' get_multifield_df(fma17, fields, schema = schema_csf)
     get_multifield_df <- function(
         matches, fields = NULL, schema = schema_cfs, unlist = TRUE, merge = TRUE
-    ){
-        if (is.null(fields)){
+    ) {
+        if (is.null(fields)) {
             fields <- id_robot_fields(matches)
         }
         statics <- list(matches = matches, schema = schema, unlist = unlist)
-        result <- mapply(get_robot_field_df, field = fields,
-                         MoreArgs = statics, SIMPLIFY = FALSE)
+        result <- mapply(get_robot_field_df,
+            field = fields,
+            MoreArgs = statics, SIMPLIFY = FALSE
+        )
         result$n_matches <- count_team_matches(matches)
-        if (merge){
+        if (merge) {
             # note down the titles and the dataframes they come from
             titles <- lapply(lapply(result, colnames), function(v) v[-1])
             sources <- sapply(titles, length)
@@ -626,18 +640,18 @@ Generated: 2026-09-20 13:09:28.427891
     #' @details
     #' case_when uses a "step-down" resolution; so we rely on the first condition
     #' being false to make later conditions correctly specified.
-    de_alliance_finish <- function(status){
+    de_alliance_finish <- function(status) {
         finish <- dplyr::case_when(
             status$status == "won" ~ "Winner",
             status$double_elim_round == "Finals" &
                 status$status == "eliminated" ~ "Finalist",
-            status$double_elim_round == "Round 5"&
+            status$double_elim_round == "Round 5" &
                 status$status == "eliminated" ~ "3rd",
-            status$double_elim_round == "Round 4"&
+            status$double_elim_round == "Round 4" &
                 status$status == "eliminated" ~ "4th",
-            status$double_elim_round == "Round 3"&
+            status$double_elim_round == "Round 3" &
                 status$status == "eliminated" ~ "5th/6th",
-            status$double_elim_round == "Round 2"&
+            status$double_elim_round == "Round 2" &
                 status$status == "eliminated" ~ "7th/8th",
             .default = "Still Competing"
         )
@@ -653,7 +667,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @details
     #' case_when uses a "step-down" resolution; so we rely on the first condition
     #' being false to make later conditions correctly specified.
-    bo3_alliance_finish <- function(status){
+    bo3_alliance_finish <- function(status) {
         finish <- dplyr::case_when(
             status$status == "won" ~ "Winner",
             status$level == "f" &
@@ -672,8 +686,8 @@ Generated: 2026-09-20 13:09:28.427891
     #' Switching fxn to use appropriate "alliance_finish" status (double elim or
     #' bo3) based on the internal structure of the input status object
     #' @param status status object as output in a column of event_alliances()
-    alliance_finish <- function(status){
-        if ("double_elim_round" %in% names(status)){
+    alliance_finish <- function(status) {
+        if ("double_elim_round" %in% names(status)) {
             return(de_alliance_finish(status))
         }
         return(bo3_alliance_finish(status))
@@ -695,19 +709,21 @@ Generated: 2026-09-20 13:09:28.427891
     #' tms <- event_teams("2024paca", keys = TRUE)
     #' tms <- id2int(tms)
     #' tangibles <- season_tangibles(tms)
-    season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL){
-        stopifnot("yr should be length 1" = {length(yr) == 1})
+    season_tangibles <- function(tms, yr, fields = NULL, manual_teams = NULL) {
+        stopifnot("yr should be length 1" = {
+            length(yr) == 1
+        })
         # only consider official matches to avoid data irregularities
         matches <- lapply(tms, team_matches, year = yr, official = TRUE)
         # filter out teams with no matches played:
         matches <- matches[sapply(matches, nrow) > 0]
         # join by every column, because we don't want duplicated vars in the output
-        matches <- matches %>%
+        matches <- matches |>
             purrr::reduce(full_join, by = colnames(matches[[1]]))
         # check for duplicated matches
         stopifnot(!any(duplicated(matches)))
 
-        if (is.null(fields)){
+        if (is.null(fields)) {
             fields <- id_robot_fields(matches)
         }
 
@@ -729,13 +745,13 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param breakdown (bool) If FALSE, result includes only the overall EPA value.
     #' If TRUE, the result includes all component EPA values.
     #' @noRd
-    prescout_sb <- function(tms, yr, breakdown = FALSE){
-        get_data <- function(tm, yr = NULL, breakdown = FALSE){
+    prescout_sb <- function(tms, yr, breakdown = FALSE) {
+        get_data <- function(tm, yr = NULL, breakdown = FALSE) {
             sb_data <- team_sb(tm, yr = yr)
             record <- data.frame(sb_data$record)
             record$count <- NULL
 
-            if (breakdown){
+            if (breakdown) {
                 epas <- data.frame(sb_data$epa$breakdown)
                 colnames(epas) <- paste0(colnames(epas), "_epa")
                 record <- dplyr::bind_cols(record, epas)
@@ -753,20 +769,22 @@ Generated: 2026-09-20 13:09:28.427891
 
     #' Team-Event OPRs
     #'
-    #' Retrieve linear regression coefficients of interest (OPRs) for a particular team in a particular event
+    #' Retrieve linear regression coefficients of interest (OPRs) for a particular
+    #' team in a particular event
     #' @param event_id event key (i.e. "2022txirv")
     #' @param team_id team key (i.e. "frc1712")
-    #' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
+    #' @param breakdown (bool) Get all LR coefficients for all response variables?
+    #' If FALSE, only returns overall OPR.
     #' @noRd
-    team_event_oprs <- function(event_id, team_id, breakdown = TRUE){
+    team_event_oprs <- function(event_id, team_id, breakdown = TRUE) {
         team_id <- tf(team_id)
-        if (!breakdown){
+        if (!breakdown) {
             result <- event_oprs(event_id)[, c("team", "opr")] |>
                 dplyr::rename(score = opr)
         } else {
             result <- tryCatch(
                 event_coprs(event_id),
-                error = function(e){
+                error = function(e) {
                     warning("event_coprs() fails for this event")
                     return(data.frame())
                 }
@@ -782,9 +800,10 @@ Generated: 2026-09-20 13:09:28.427891
     #'
     #' @param team_id team number
     #' @param yr year
-    #' @param breakdown (bool) Get all LR coefficients for all response variables? If FALSE, only returns overall OPR.
+    #' @param breakdown (bool) Get all LR coefficients for all response variables?
+    #' If FALSE, only returns overall OPR.
     #' @noRd
-    team_max_oprs <- function(team_id, yr, breakdown = TRUE){
+    team_max_oprs <- function(team_id, yr, breakdown = TRUE) {
         # get only official events to cut down on malformed inputs (i.e. offseasons)
         event_history <- team_events(team_id, year = yr, official = TRUE)
 
@@ -799,8 +818,10 @@ Generated: 2026-09-20 13:09:28.427891
         oprs <- lapply(event_keys, team_event_oprs, team_id, breakdown)
         oprs <- dplyr::bind_rows(oprs)
         if (ncol(oprs) > 0) colnames(oprs) <- paste0(colnames(oprs), "_opr_max")
-        result <- matrix(c(apply(oprs, 2, max, na.rm = TRUE),
-                           last_week, id2int(team_id)), nrow = 1)
+        result <- matrix(c(
+            apply(oprs, 2, max, na.rm = TRUE),
+            last_week, id2int(team_id)
+        ), nrow = 1)
         colnames(result) <- c(colnames(oprs), "last week seen", "id")
         return(as.data.frame(result))
     }
@@ -810,7 +831,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param tms (numeric) vector of team ids
     #' @param yr (numeric) year
     #' @param ... additional arguments passed to team_max_oprs()
-    max_oprs <- function(tms, yr, ...){
+    max_oprs <- function(tms, yr, ...) {
         result <- lapply(tms, team_max_oprs, yr = yr, ...)
         result <- bind_rows(result)
         return(result)
@@ -831,11 +852,15 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param beta_0 vector of priors to regularize towards
     #' @export
     prior_ridge <- function(X, y, lambda, beta_0) {
-        stopifnot("prior_ridge design matrix must be a matrix" = {is.matrix(X)})
-        stopifnot("lambda must be a single value, or equal to ncol(X)" =
-                      {length(lambda) %in% c(1, ncol(X))})
-        stopifnot("coefficients in beta_0 must match ncol(X)" =
-                      {length(beta_0) == ncol(X)})
+        stopifnot("prior_ridge design matrix must be a matrix" = {
+            is.matrix(X)
+        })
+        stopifnot("lambda must be a single value, or equal to ncol(X)" = {
+            length(lambda) %in% c(1, ncol(X))
+        })
+        stopifnot("coefficients in beta_0 must match ncol(X)" = {
+            length(beta_0) == ncol(X)
+        })
         p <- ncol(X)
         lambda <- diag(lambda, p)
         solve(crossprod(X) + lambda, crossprod(X, y) + lambda %*% beta_0)[, 1]
@@ -849,9 +874,9 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param y (vector) response - typically alliance scores
     #' @param lambda regularization parameter
     #' @param beta_0 vector of priors to regularize towards
-    pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE){
+    pridge_loocv <- function(X, y, lambda, beta_0, mse = TRUE) {
         errors <- rep(NA, length(y))
-        for (i in seq_along(y)){
+        for (i in seq_along(y)) {
             X_train <- X[-i, ]
             y_train <- y[-i]
             X_test <- X[i, ]
@@ -863,7 +888,9 @@ Generated: 2026-09-20 13:09:28.427891
             # use drop() to ensure the error is a vector, not a matrix
             errors[i] <- drop(pred - y_test)
         }
-        if(mse) return(mean(errors ^ 2))
+        if (mse) {
+            return(mean(errors^2))
+        }
         return(errors)
     }
 
@@ -888,29 +915,32 @@ Generated: 2026-09-20 13:09:28.427891
     #'
     #' @export
     pridge_lambda_cv <- function(
-            design, response, priors, grid, plot_mses = TRUE, n_cores = NULL
-    ){
+        design, response, priors, grid, plot_mses = TRUE, n_cores = NULL
+    ) {
         design <- as.matrix(design)
 
         # Leave one core free by default
         if (is.null(n_cores)) n_cores <- max(1, parallel::detectCores() - 1)
 
         if (n_cores == 1) { # if n_cores is 1, nonparallel execution avoids overhead
-            mses <- sapply(grid, function(lambda){
-                pridge_loocv(X = design, y = response,
-                             lambda = lambda, beta_0 = priors)
+            mses <- sapply(grid, function(lambda) {
+                pridge_loocv(
+                    X = design, y = response,
+                    lambda = lambda, beta_0 = priors
+                )
             })
-        }
-        else { # parallelized path
+        } else { # parallelized path
             cl <- parallel::makeCluster(n_cores)
             doParallel::registerDoParallel(cl)
 
             mses <- tryCatch({
                 foreach::foreach(
-                    lambda = grid, .combine = 'c', .packages = 'scoutR'
+                    lambda = grid, .combine = "c", .packages = "scoutR"
                 ) %dopar% {
-                    pridge_loocv(X = design, y = response,
-                                 lambda = lambda, beta_0 = priors)
+                    pridge_loocv(
+                        X = design, y = response,
+                        lambda = lambda, beta_0 = priors
+                    )
                 }
             }, finally = {
                 # Always stop the cluster to free up resources
@@ -920,15 +950,48 @@ Generated: 2026-09-20 13:09:28.427891
 
         names(mses) <- grid
 
-        if (plot_mses){
+        if (plot_mses) {
             min_ind <- which.min(mses)
-            plot(x = grid, y = mses, xlab = "Lambda", ylab = "LOOCV MSE",
-                 main = "Prior Ridge Lambda Cross Validation",
-                 sub = paste("LOOCV MSE-min lambda:", round(grid[min_ind], 3)))
+            plot(
+                x = grid, y = mses, xlab = "Lambda", ylab = "LOOCV MSE",
+                main = "Prior Ridge Lambda Cross Validation",
+                sub = paste("LOOCV MSE-min lambda:", round(grid[min_ind], 3))
+            )
             abline(v = grid[min_ind], col = "red", lty = 2)
         }
 
         return(mses)
+    }
+
+    #' Prior Ridge Response
+    #'
+    #' Extracts the response vector from a data.frame of matches, ordered blue
+    #' then red to match `lineup_design_matrix`.
+    #' @param matches (data.frame) dataframe of matches with response columns
+    #' named "(red/blue)_(responseName)"
+    #' @param response_name (character) name of the response as it appears in
+    #' `matches`, or "unpenalized" for score minus foul points.
+    #' @details
+    #' If "unpenalized" is requested but `matches` has no `foulPoints` columns,
+    #' warns and falls back to total score.
+    #' @noRd
+    pridge_response <- function(matches, response_name) {
+        get_col <- function(name) {
+            c(
+                unlist(matches[, paste0("blue_", name)]),
+                unlist(matches[, paste0("red_", name)])
+            )
+        }
+        if (response_name != "unpenalized") {
+            return(get_col(response_name))
+        }
+
+        foul_cols <- paste0(c("blue_", "red_"), "foulPoints")
+        if (!all(foul_cols %in% colnames(matches))) {
+            warning("No foulPoints columns in `matches`; using total score")
+            return(get_col("score"))
+        }
+        get_col("score") - get_col("foulPoints")
     }
 
     #' Fit Prior Ridge
@@ -940,7 +1003,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param priors (numeric) vector of priors to regularize towards, named with
     #' tba-legal team identifiers (i.e. "frc449")
     #' @param response_name (character) name of the response vectors as they appear
-    #' in `matches`
+    #' in `matches`. The default, "unpenalized", is the alliance score minus the
+    #' foul points awarded to it (`score - foulPoints`); if `matches` has no
+    #' `foulPoints` columns it falls back to total score with a warning. Use
+    #' "score" for the total score including foul points.
     #' @param grid (numeric) Grid of lambda values to consider for regularization
     #' @param n_cores the number of cores on your machine to reserve for
     #' calculation. If NULL, will default to the max - 1.
@@ -953,20 +1019,22 @@ Generated: 2026-09-20 13:09:28.427891
     #' event_key <- "2026mdsev"
     #' matches <- event_matches(event_key, match_type = "qual")
     #' sb_data <- team_events_sb(event = event_key)
-    #' epas <- sapply(sb_data, function(te){te$epa$stats$start})
-    #' names(epas) <- sapply(sb_data, function(te){te$team})
+    #' epas <- sapply(sb_data, function(te) {
+    #'     te$epa$stats$start
+    #' })
+    #' names(epas) <- sapply(sb_data, function(te) {
+    #'     te$team
+    #' })
     #' mdsev_pridge <- fit_pridge(matches, epas)
+    #' mdsev_pridge_total <- fit_pridge(matches, epas, response_name = "score")
     #'
-    fit_pridge <- function(
-            matches, priors, response_name = "score",
-            grid = exp(seq(log(0.01), log(20), length.out = 100)),
-            n_cores = NULL, digits = 2
-    ){
+    fit_pridge <- function(matches, priors, response_name = "unpenalized",
+                           grid = exp(seq(log(0.01), log(20), length.out = 100)),
+                           n_cores = NULL, digits = 2) {
         design <- as.matrix(lineup_design_matrix(matches))
 
         # extract the response vector from matches
-        response <- c(unlist(matches[, paste0("blue_", response_name)]),
-                      unlist(matches[, paste0("red_", response_name)]))
+        response <- pridge_response(matches, response_name)
 
         # match priors order to the design matrix; also implicitly discards
         # teams in `priors` that are not in `design`
@@ -974,7 +1042,8 @@ Generated: 2026-09-20 13:09:28.427891
         priors <- priors[match(colnames(design), names(priors))]
 
         mses <- pridge_lambda_cv(design, response, priors, grid,
-                                 plot_mses = FALSE, n_cores = n_cores)
+            plot_mses = FALSE, n_cores = n_cores
+        )
         lambda_opt <- grid[which.min(mses)]
         result <- prior_ridge(design, response, lambda_opt, priors)
         return(round(result, digits = digits))
@@ -985,11 +1054,14 @@ Generated: 2026-09-20 13:09:28.427891
     #' Given an event key, selects an optimal lambda using LOOCV and fits the prior
     #' ridge model using pre-event EPA from statbotics as the prior.
     #' @param event_key (char) TBA-legal event key (ex. "2025mdsev")
-    #' @param response_name name of the desired response vector (typically "score")
+    #' @param response_name name of the desired response vector. The default,
+    #' "unpenalized", is the alliance score minus the foul points awarded to it;
+    #' use "score" for the total score including foul points.
     #' @param grid (vector) all possible lambda values to consider. Defaults to
     #' starting at just above zero to reduce matrix singularity in fits (guarantees
     #' that X^tX + (lambda)I is positive definite.)
-    #' @param n_cores (int) number of cores to parallelize over. If NULL, will select (max - 1) cores
+    #' @param n_cores (int) number of cores to parallelize over. If NULL, will
+    #' select (max - 1) cores
     #' @details
     #' Relies on statbotics API to establish priors
     #'
@@ -998,17 +1070,25 @@ Generated: 2026-09-20 13:09:28.427891
     #' fit_event_pridge("2025mdsev")
     #' fit_event_pridge("2023new", n_cores = 3)
     #' fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
+    #' fit_event_pridge("2025mdsev", response_name = "score")
     fit_event_pridge <- function(
-            event_key, response_name = "score",
-            grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL
-    ){
+        event_key, response_name = "unpenalized",
+        grid = exp(seq(log(0.01), log(20), length.out = 100)), n_cores = NULL
+    ) {
         matches <- event_matches(event_key, match_type = "qual")
 
         sb_data <- team_events_sb(event = event_key)
-        epas <- sapply(sb_data, function(te){te$epa$stats$start})
-        names(epas) <- sapply(sb_data, function(te){te$team})
+        epas <- sapply(sb_data, function(te) {
+            te$epa$stats$start
+        })
+        names(epas) <- sapply(sb_data, function(te) {
+            te$team
+        })
 
-        return(fit_pridge(matches, epas, response_name = response_name))
+        return(fit_pridge(matches, epas,
+            response_name = response_name,
+            grid = grid, n_cores = n_cores
+        ))
     }
 
 ## scoutR.R
@@ -1027,17 +1107,20 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param event_code TBA-legal event key
     #' @param int_output convert TBA keys (e.g. "frc1712") to int ("1712")?
     #' @export
-    qual_schedule <- function(event_code, int_output = TRUE){
+    qual_schedule <- function(event_code, int_output = TRUE) {
         matches <- event_matches(
-            event_code, match_type = "qual", breakdown = FALSE, unplayed = TRUE
+            event_code,
+            match_type = "qual", breakdown = FALSE, unplayed = TRUE
         )
-        if (is.null(matches)) return(NULL)
+        if (is.null(matches)) {
+            return(NULL)
+        }
 
-        matches <- matches %>%
+        matches <- matches |>
             dplyr::select(match_number, red1, red2, red3, blue1, blue2, blue3)
 
-        if (int_output){
-            matches <- matches %>%
+        if (int_output) {
+            matches <- matches |>
                 dplyr::mutate(dplyr::across(
                     c(red1, red2, red3, blue1, blue2, blue3), id2int
                 ))
@@ -1053,10 +1136,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param event_code TBA-legal event code (ex. "2025chcmp")
     #' @param team_id team of interest as int or TBA id (ex. "frc449", 449)
     #' @export
-    event_matchups <- function(event_code, team_id){
+    event_matchups <- function(event_code, team_id) {
         if (is.character(team_id)) team_id <- id2int(team_id)
         schedule <- qual_schedule(event_code, int_output = TRUE)
-        filtered <- schedule %>%
+        filtered <- schedule |>
             filter(team_id == red1 | team_id == red2 | team_id == red3 |
                        team_id == blue1 | team_id == blue2 | team_id == blue3)
         # logical vector: is the team of interest on the blue alliance?
@@ -1087,18 +1170,20 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' gpr24 <- prescout("2024paca")
     #' newton25 <- prescout("2025newton", manual_teams = c(1712, 6672, 3504))
-    prescout <- function(event_code, breakdown = TRUE, manual_teams = NULL){
+    prescout <- function(event_code, breakdown = TRUE, manual_teams = NULL) {
         team_data <- event_teams(event_code)
         # add manual teams - suppressing warnings for the 0x0 tibble case
         tms <- union(suppressWarnings(team_data$team_number), manual_teams)
         # for manual additions, add to team_data
-        for (i in seq_along(manual_teams)){
+        for (i in seq_along(manual_teams)) {
             no_nulls <- Filter(Negate(is.null), team(manual_teams[i]))
             team_data <- team_data |>
                 # bind_rows fills missing columns with NA
                 dplyr::bind_rows(as.data.frame(no_nulls))
         }
-        stopifnot("At least one team needed to prescout()" = {nrow(team_data) > 0})
+        stopifnot("At least one team needed to prescout()" = {
+            nrow(team_data) > 0
+        })
         team_data <- team_data |>
             dplyr::select(team_number, nickname, city, state_prov, country) |>
             dplyr::rename(id = team_number, name = nickname)
@@ -1107,7 +1192,9 @@ Generated: 2026-09-20 13:09:28.427891
         sb <- prescout_sb(tms, yr, breakdown = breakdown)
         oprs <- max_oprs(tms, yr, breakdown = breakdown)
         result <- purrr::reduce(list(team_data, tangibles, sb, oprs),
-                                merge, by = "id", all = TRUE)
+            merge,
+            by = "id", all = TRUE
+        )
         return(result)
     }
 
@@ -1130,12 +1217,12 @@ Generated: 2026-09-20 13:09:28.427891
     #' event_tangibles("2017mrcmp", schema = schema_csf)
     #' @export
     event_tangibles <- function(
-        event_key, schema = schema_cfs, qual_only = T, pct = T, digits = 2
-    ){
+        event_key, schema = schema_cfs, qual_only = TRUE, pct = TRUE, digits = 2
+    ) {
         type <- ifelse(qual_only, "qual", "all")
         matches_df <- event_matches(event_key, match_type = type)
         result <- get_multifield_df(matches_df, schema = schema)
-        if (pct){
+        if (pct) {
             # start at 2 to exclude ids, end before last col to exclude match count
             tangible_cidx <- 2:(ncol(result) - 1)
             tangibles <- result[, tangible_cidx]
@@ -1146,7 +1233,7 @@ Generated: 2026-09-20 13:09:28.427891
                 paste(colnames(result)[tangible_cidx], "pct", sep = "_")
             colnames(result) <- tolower(colnames(result))
         }
-        if (!is.null(digits)){
+        if (!is.null(digits)) {
             result <- round_numerics(result, digits = digits)
         }
         return(result)
@@ -1166,14 +1253,20 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' event_finish_seed("2025vagle")
     #'
-    event_finish_seed <- function(key, finish = "Winner", size = NULL){
+    event_finish_seed <- function(key, finish = "Winner", size = NULL) {
         alliances <- event_alliances(key)
         # special case for null results (ex. 2023tuis3)
-        if (is.null(alliances) || nrow(alliances) == 0) return(NA)
-        if (!is.null(size) && nrow(alliances) != size) return(NA)
+        if (is.null(alliances) || nrow(alliances) == 0) {
+            return(NA)
+        }
+        if (!is.null(size) && nrow(alliances) != size) {
+            return(NA)
+        }
         result <- which(alliances$finish == finish)
         # special case for failed unpacking (ex. 2025ausc)
-        if (length(result) == 0) return(NA)
+        if (length(result) == 0) {
+            return(NA)
+        }
         return(result)
     }
 
@@ -1190,17 +1283,19 @@ Generated: 2026-09-20 13:09:28.427891
     #' week_seed_finish_table(1)
     #' week_seed_finish_table(4, 2023)
     week_seed_finish_table <- function(wk, year = YEAR,
-                                       finish = "Winner", size = NULL){
+                                       finish = "Winner", size = NULL) {
         stopifnot("Week should be a single integer between 1 and 6" = {
             length(wk) == 1 && 0 < wk && wk <= 6
         })
         wk <- wk - 1 # TBA uses 0-indexing for week numbering
-        keys <- events(year) %>%
-            dplyr::filter(week == wk) %>%
+        keys <- events(year) |>
+            dplyr::filter(week == wk) |>
             dplyr::select(key)
         keys <- unlist(keys)
-        return(table(sapply(keys, event_finish_seed,
-                            finish = finish, size = size)))
+        result <- table(
+            sapply(keys, event_finish_seed, finish = finish, size = size)
+        )
+        return(result)
     }
 
     #######################################################
@@ -1228,7 +1323,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' design$score <- c(matches$blue_score, matches$red_score)
     #' fit <- lm(score ~ 0 + ., data = design)
     #' summary(fit) # retrieves OPRs
-    lineup_design_matrix <- function(matches){
+    lineup_design_matrix <- function(matches) {
         lineups <- data.frame(
             robot1 = c(matches$blue1, matches$red1),
             robot2 = c(matches$blue2, matches$red2),
@@ -1265,15 +1360,24 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' gpr <- event_matches("2024paca", match_type = "qual")
     #' opr <- fit_lineup_lm(gpr, list(red = gpr$red_score, blue = gpr$blue_score))
-    fit_lineup_lm <- function(lineups, responses, w = NULL){
-        stopifnot("`responses` must be of length 2" = {length(responses) == 2})
-        stopifnot("`responses` must have `red` and `blue` vectors" =
-                      "red" %in% names(responses) & "blue" %in% names(responses))
-        stopifnot("`responses` vectors must be of the same length as `lineups`" =
-                      all(sapply(responses, length) == nrow(lineups)))
-        stopifnot("Lineups dataframe input cannot have a column named `response`"
-                  = {!("response" %in% colnames(lineups))})
-        if (is.null(w)){
+    fit_lineup_lm <- function(lineups, responses, w = NULL) {
+        stopifnot("`responses` must be of length 2" = {
+            length(responses) == 2
+        })
+        stopifnot(
+            "`responses` must have `red` and `blue` vectors" =
+                "red" %in% names(responses) & "blue" %in% names(responses)
+        )
+        stopifnot(
+            "`responses` vectors must be of the same length as `lineups`" =
+                all(sapply(responses, length) == nrow(lineups))
+        )
+        stopifnot(
+            "Lineups dataframe input cannot have a column named `response`" = {
+                !("response" %in% colnames(lineups))
+            }
+        )
+        if (is.null(w)) {
             w <- rep(1, nrow(lineups))
         }
         # lm() weights parameter doesn't need integer weights so we can use
@@ -1315,7 +1419,7 @@ Generated: 2026-09-20 13:09:28.427891
     fit_event_lr <- function(
         event_code, match_type = "qual", response = "score", w = NULL,
         flip_response_alliance = FALSE
-    ){
+    ) {
         matches <- event_matches(event_code, match_type = match_type)
         matches <- matches[order(matches$match_number), ]
 
@@ -1324,7 +1428,7 @@ Generated: 2026-09-20 13:09:28.427891
             blue = matches[, paste0("blue_", response)][[1]]
         )
 
-        if (flip_response_alliance){
+        if (flip_response_alliance) {
             tmp <- responses
             responses$red <- tmp$blue
             responses$blue <- tmp$red
@@ -1354,18 +1458,24 @@ Generated: 2026-09-20 13:09:28.427891
     #' result <- event_opr_progression("2024paca", response = "autoTotalNotePoints")
     event_opr_progression <- function(
         event_code, response_name = "score", standardize = FALSE, w = NULL
-    ){
+    ) {
         red_resp <- paste0("red_", response_name) # red response
         blue_resp <- paste0("blue_", response_name) # blue response
         matches <- event_matches(event_code, match_type = "qual")
-        if (is.null(matches)) return(NULL) # handle null case
-        if (standardize){ # handle response standardization
+        if (is.null(matches)) {
+            return(NULL)
+        } # handle null case
+        if (standardize) { # handle response standardization
             scores <- c(matches[[red_resp]], matches[[blue_resp]])
-            matches[[red_resp]] <- (matches[[red_resp]] - mean(scores)) / sd(scores)
-            matches[[blue_resp]] <- (matches[[blue_resp]] - mean(scores)) / sd(scores)
+            matches[[red_resp]] <- (matches[[red_resp]] - mean(scores)) /
+                sd(scores)
+            matches[[blue_resp]] <- (matches[[blue_resp]] - mean(scores)) /
+                sd(scores)
         }
-        n_teams <- length(unique(c(matches$red1, matches$red2, matches$red3,
-                                   matches$blue1, matches$blue2, matches$blue3)))
+        n_teams <- length(unique(c(
+            matches$red1, matches$red2, matches$red3,
+            matches$blue1, matches$blue2, matches$blue3
+        )))
         # the lowest number of matches for a valid fit is half the number of teams,
         # because there are two alliances in each match.
         lo <- (floor(n_teams / 2) + 1)
@@ -1375,16 +1485,20 @@ Generated: 2026-09-20 13:09:28.427891
         result <- matrix(NA, nrow = length(lo:hi), ncol = n_teams)
 
         # handle high # of teams, low # of matches cases, ex. 2007ga
-        if (hi <= lo) return(NULL)
+        if (hi <= lo) {
+            return(NULL)
+        }
 
         # loop through valid subsets, fit a linear regression, and store coeffs
-        for (i in lo:hi){
+        for (i in lo:hi) {
             matches_subset <- matches[1:i, ]
             # double bracket syntax allows dynamic construction of column names
             fit <- fit_lineup_lm(
                 matches_subset,
-                list(red = matches_subset[[red_resp]],
-                     blue = matches_subset[[blue_resp]]),
+                list(
+                    red = matches_subset[[red_resp]],
+                    blue = matches_subset[[blue_resp]]
+                ),
                 w = w
             )
             result[i - lo + 1, ] <- coefficients(fit)
@@ -1408,16 +1522,16 @@ Generated: 2026-09-20 13:09:28.427891
     #' standardized OPR coefficients (mean across all competing teams) after the
     #' corresponding match.
     #' @export
-    year_opr_swings <- function(year){
+    year_opr_swings <- function(year) {
         event_keys <- events(year, official = TRUE) |>
             dplyr::filter(event_type %in% c(0, 1)) |>
             dplyr::pull(key)
 
         result <- data.frame()
-        for (i in seq_along(event_keys)){
+        for (i in seq_along(event_keys)) {
             progression <- event_opr_progression(event_keys[i], standardize = TRUE)
-            if(is.null(progression)) next()
-            if(nrow(progression) < 3) next() # exclude extreme low-qual (ex. 2010is)
+            if (is.null(progression)) next()
+            if (nrow(progression) < 3) next() # exclude extreme low-qual (ex 2010is)
             mean_diff <- progression |>
                 dplyr::select(-c(match_num, ppt)) |>
                 sapply(diff) |>
@@ -1447,22 +1561,25 @@ Generated: 2026-09-20 13:09:28.427891
     #' weighting by two lines.
     #' @param bin_vars A vector of the variance in each bin
     #' @return vector of weights
-    dual_line_weight_approximation <- function(bin_vars){
+    dual_line_weight_approximation <- function(bin_vars) {
         idx <- 1:(floor(length(bin_vars) / 2))
         first_half_fit <- lm(bin_vars[idx] ~ idx)
         idx <- (ceiling(length(bin_vars) / 2)):length(bin_vars)
         second_half_fit <- lm(bin_vars[idx] ~ idx)
-        first_half <- rep(coefficients(first_half_fit)[1],
-                          floor(length(bin_vars) / 2))
+        first_half <- rep(
+            coefficients(first_half_fit)[1],
+            floor(length(bin_vars) / 2)
+        )
         first_half <- first_half +
-            (coefficients(first_half_fit)[2] * (1:length(first_half) - 1))
+            (coefficients(first_half_fit)[2] * (seq_along(first_half) - 1))
         second_half <- rep(
             coefficients(second_half_fit)[1] +
-                (coefficients(second_half_fit)[2] *
-                     ((floor(length(bin_vars) / 2) + 1))),
-            ceiling(length(bin_vars) / 2))
+                coefficients(second_half_fit)[2] *
+                    (floor(length(bin_vars) / 2) + 1),
+            ceiling(length(bin_vars) / 2)
+        )
         second_half <- second_half +
-            (coefficients(second_half_fit)[2] * (1:length(second_half) - 1))
+            (coefficients(second_half_fit)[2] * (seq_along(second_half) - 1))
         result <- 1 / c(first_half, second_half)
         names(result) <- NULL
         return(result)
@@ -1482,8 +1599,8 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param path (chr) vector of path segments to append, in order
     #' @param query (list) optional named list of query parameters
     #' @noRd
-    sb_perform <- function(path, query = NULL){
-        build <- function(base){
+    sb_perform <- function(path, query = NULL) {
+        build <- function(base) {
             req <- do.call(httr2::req_url_path_append, c(list(base), as.list(path)))
             if (!is.null(query) && length(query) > 0) {
                 req <- do.call(httr2::req_url_query, c(list(req), query))
@@ -1512,16 +1629,22 @@ Generated: 2026-09-20 13:09:28.427891
     #' dawgma <- team_sb(1712)
     #' blair_at_severn <- team_sb(449, event = "2025mdsev")
     #' @export
-    team_sb <- function(tm, yr = NULL, event = NULL, match = NULL){
-        stopifnot("tm should be of length 1" = {length(tm) == 1})
+    team_sb <- function(tm, yr = NULL, event = NULL, match = NULL) {
+        stopifnot("tm should be of length 1" = {
+            length(tm) == 1
+        })
         # putting "event" first gives it preference, if multiple optionals are given
         if (!is.null(event)) {
             path <- c("team_event", tm, event)
         } else if (!is.null(yr)) {
-            stopifnot("yr should be of length 1" = {length(yr) == 1})
+            stopifnot("yr should be of length 1" = {
+                length(yr) == 1
+            })
             path <- c("team_year", tm, yr)
-        } else if (!is.null(match)){
-            stopifnot("match should be of length 1" = {length(match) == 1})
+        } else if (!is.null(match)) {
+            stopifnot("match should be of length 1" = {
+                length(match) == 1
+            })
             path <- c("team_match", tm, match)
         } else {
             path <- c("team", tm)
@@ -1536,8 +1659,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' pasadena <- event_sb("2025mdpas")
     #' @export
-    event_sb <- function(key){
-        stopifnot("key should have length 1" = {length(key) == 1})
+    event_sb <- function(key) {
+        stopifnot("key should have length 1" = {
+            length(key) == 1
+        })
         sb_perform(c("event", key))
     }
 
@@ -1546,8 +1671,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' Returns a list representing statbotics info for a particular match
     #' @param key match key (e.g. "2023milf1m3")
     #' @export
-    match_sb <- function(key){
-        stopifnot("key should have length 1" = {length(key) == 1})
+    match_sb <- function(key) {
+        stopifnot("key should have length 1" = {
+            length(key) == 1
+        })
         sb_perform(c("match", key))
     }
 
@@ -1556,8 +1683,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' Returns a list representing statbotics info for a given year
     #' @param yr year of interest, as a single-length int
     #' @export
-    year_sb <- function(yr){
-        stopifnot("yr should have length 1" = {length(yr) == 1})
+    year_sb <- function(yr) {
+        stopifnot("yr should have length 1" = {
+            length(yr) == 1
+        })
         sb_perform(c("year", yr))
     }
 
@@ -1570,20 +1699,17 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param event (optional) event of interest
     #' @param match (optional) match of interest
     #' @export
-    teams_sb <- function (..., yr = NULL, event = NULL, match = NULL) {
+    teams_sb <- function(..., yr = NULL, event = NULL, match = NULL) {
         if (!is.null(yr)) {
             path <- "team_years"
             query <- c(list(year = yr), list(...))
-        }
-        else if (!is.null(event)) {
+        } else if (!is.null(event)) {
             path <- "team_events"
             query <- c(list(event = event), list(...))
-        }
-        else if (!is.null(match)) {
+        } else if (!is.null(match)) {
             path <- "team_matches"
             query <- c(list(match = match), list(...))
-        }
-        else {
+        } else {
             path <- "teams"
             query <- list(...)
         }
@@ -1592,63 +1718,63 @@ Generated: 2026-09-20 13:09:28.427891
 
     #' Years (Statbotics)
     #'
-    #' Returns a batch of statbotics event objects conforming to the given parameters
+    #' Returns a batch of statbotics event objects conforming to given parameters
     #' @param ... Parameters to be passed to the statbotics /v3/{years}/ endpoint
     #' @export
-    years_sb <- function(...){
+    years_sb <- function(...) {
         sb_perform("years", query = list(...))
     }
 
     #' Events (Statbotics)
     #'
-    #' Returns a batch of statbotics event objects conforming to the given parameters
+    #' Returns a batch of statbotics event objects conforming to given parameters
     #' @param ... Parameters passed to the statbotics /v3/{events} endpoint
     #' @export
-    events_sb <- function(...){
+    events_sb <- function(...) {
         sb_perform("events", query = list(...))
     }
 
     #' Matches (Statbotics)
     #'
-    #' Returns a batch of statbotics match objects conforming to the given parameters
+    #' Returns a batch of statbotics match objects conforming to given parameters
     #' @param ... Parameters passed to the statbotics /v3/{matches} endpoint
     #' @export
-    matches_sb <- function(...){
+    matches_sb <- function(...) {
         sb_perform("matches", query = list(...))
     }
 
     #' Team-Years (Statbotics)
     #'
-    #' Returns a batch of statbotics team-year objects based on the given parameters.
+    #' Returns a batch of statbotics team-year objects based on given parameters.
     #' @param ... Parameters passed to the statbotics /v3/team_years endpoint
     #' @examples
     #' team_years_sb(year = 2025, district = "chs")
     #' team_years_sb(team = 449)
     #' @export
-    team_years_sb <- function(...){
+    team_years_sb <- function(...) {
         sb_perform("team_years", query = list(...))
     }
 
     #' Team-Events (Statbotics)
     #'
-    #' Returns a batch of statbotics team-event objects based on the given parameters.
+    #' Returns a batch of statbotics team-event objects based on given parameters.
     #' @param ... Parameters passed to the statbotics /v3/team_events endpoint
     #' @examples
     #' team_events_sb(team = 4821, year = 2025)
     #' team_events_sb(event = "2025mdsev")
     #' @export
-    team_events_sb <- function(...){
+    team_events_sb <- function(...) {
         sb_perform("team_events", query = list(...))
     }
 
     #' Team-Matches (Statbotics)
     #'
-    #' Returns a batch of statbotics team-match objects based on the given parameters.
+    #' Returns a batch of statbotics team-match objects based on given parameters.
     #' @param ... Parameters passed to the statbotics /v3/team_matches endpoint
     #' @examples
     #' team_matches_sb(team = 449, year = 2025)
     #' @export
-    team_matches_sb <- function(...){
+    team_matches_sb <- function(...) {
         sb_perform("team_matches", query = list(...))
     }
 
@@ -1672,10 +1798,12 @@ Generated: 2026-09-20 13:09:28.427891
     #### Constants ####
     ###################
 
-    warns <- function(){
-        list(simkey = "both simple and keys are TRUE",
-             year_event = "both year and event supplied, defaulting to year",
-             mtype = "match_type not a valid entry type, defaulting to 'all'")
+    warns <- function() {
+        list(
+            simkey = "both simple and keys are TRUE",
+            year_event = "both year and event supplied, defaulting to year",
+            mtype = "match_type not a valid entry type, defaulting to 'all'"
+        )
     }
 
     ##############
@@ -1690,7 +1818,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @author Gabriel Krotkov
     #' @return Team object in list format
     #' @export
-    team <- function(key, simple = FALSE){
+    team <- function(key, simple = FALSE) {
         return(read_team(key, simple))
     }
 
@@ -1712,11 +1840,13 @@ Generated: 2026-09-20 13:09:28.427891
     #' teams(1, year = 2016)
     #' teams(0, simple = TRUE)
     #' teams(3, keys = TRUE)
-    teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
-        if (simple & keys) warning(warns()$simkey)
+    teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE) {
+        if (simple && keys) warning(warns()$simkey)
 
         data <- read_teams(page_num, year, simple, keys)
-        if (keys) return(unlist(data))
+        if (keys) {
+            return(unlist(data))
+        }
         return(tidy_teams(data))
     }
 
@@ -1730,7 +1860,8 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param keys (bool) get only keys?
     #' @param alliances (bool) break out alliance column in match objects?
     #' @param breakdown (bool) break out score breakdown column?
-    #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
+    #' @param unplayed (boolean) include matches with scores of -1 (indicating
+    #' that the match has not been played?)
     #' @return tidy tibble of team matches, or vector if keys = TRUE
     #' @author Gabriel Krotkov
     #' @export
@@ -1742,16 +1873,19 @@ Generated: 2026-09-20 13:09:28.427891
     team_matches <- function(
         key, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE,
         alliances = TRUE, breakdown = TRUE, unplayed = FALSE
-    ){
-        if (simple & keys) warning(warns()$simkey)
-        if (!is.na(year) & !is.na(event)) warning(warns()$year_event)
+    ) {
+        if (simple && keys) warning(warns()$simkey)
+        if (!is.na(year) && !is.na(event)) warning(warns()$year_event)
 
         data <- read_team_matches(key, year, event, official, simple, keys)
 
-        if (keys) return(unlist(data)) # if user expects keys, list is unnecessary
+        if (keys) {
+            return(unlist(data))
+        } # if user expects keys, list is unnecessary
 
         data <- tidy_matches(
-            data, alliances = alliances, breakdown = breakdown, unplayed = unplayed
+            data,
+            alliances = alliances, breakdown = breakdown, unplayed = unplayed
         )
 
         return(data)
@@ -1774,12 +1908,14 @@ Generated: 2026-09-20 13:09:28.427891
     #' team_events("frc1712", keys = TRUE)
     team_events <- function(
         key, year = NA, official = FALSE, simple = FALSE, keys = FALSE
-    ){
-        if (simple & keys) warning(warns()$simkey)
+    ) {
+        if (simple && keys) warning(warns()$simkey)
 
         data <- read_team_events(key, year, official, simple, keys)
 
-        if (keys) return(unlist(data))
+        if (keys) {
+            return(unlist(data))
+        }
 
         data <- tidy_events(data)
 
@@ -1803,8 +1939,8 @@ Generated: 2026-09-20 13:09:28.427891
     #' team_awards("1712", year = 2016)
     #' team_awards("frc1712", year = 2010, recipients = TRUE)
     #' team_awards(1712, event = "2017pawch")
-    team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE){
-        if (!is.null(year) & !is.null(event)) warning(warns()$year_event)
+    team_awards <- function(key, year = NULL, event = NULL, recipients = FALSE) {
+        if (!is.null(year) && !is.null(event)) warning(warns()$year_event)
 
         data <- read_team_awards(key, year, event)
 
@@ -1825,7 +1961,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' team_participation_years(1712)
     #' team_participation_years("3504")
     #'
-    team_participation_years <- function(n){
+    team_participation_years <- function(n) {
         request <- paste("team", tf(n), "years_participated", sep = "/")
         return(unlist(get_content(request, base = TBA_BASE)))
     }
@@ -1845,7 +1981,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' event("2022txirv")
     #' event("2016pahat", simple = TRUE)
-    event <- function(key, simple = FALSE){
+    event <- function(key, simple = FALSE) {
         return(tidy_event(read_event(key, simple = FALSE)))
     }
 
@@ -1864,17 +2000,19 @@ Generated: 2026-09-20 13:09:28.427891
     #' events(2010, official = TRUE)
     #' events(2012, simple = TRUE)
     #' events(2015, keys = TRUE)
-    events <- function(year, official = FALSE, simple = FALSE, keys = FALSE){
-        if (simple & keys) warning(warns()$simkeys)
+    events <- function(year, official = FALSE, simple = FALSE, keys = FALSE) {
+        if (simple && keys) warning(warns()$simkeys)
         # keys needs to short-circuit official because the official check requires
         # information from the whole events object
-        if (keys & official){
+        if (keys && official) {
             df <- events(year, official = TRUE, simple = simple, keys = FALSE)
             return(df$key)
         }
         data <- read_year_events(year, simple, keys)
 
-        if (keys) return(data)
+        if (keys) {
+            return(data)
+        }
 
         data <- tidy_events(data, official = official)
         return(data)
@@ -1892,8 +2030,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param alliances (bool) break down alliances column?
     #' @param breakdown (bool) break down score_breakdown column?
     #' @param match_type one of "all", "qual", or "playoff"
-    #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
-    #' @param sort (boolean) if TRUE, will sort the resulting match object by match number.
+    #' @param unplayed (boolean) include matches with scores of -1 (indicating
+    #' that the match has not been played?)
+    #' @param sort (boolean) if TRUE, will sort the resulting match object by
+    #' match number.
     #' @param simple (bool) simplify match object?
     #' @param keys (bool) get keys only?
     #' @return Tibble of matches from the given event.
@@ -1905,27 +2045,30 @@ Generated: 2026-09-20 13:09:28.427891
         event_key, alliances = TRUE, breakdown = TRUE,
         match_type = c("all", "quals", "playoff"),
         unplayed = FALSE, sort = TRUE, simple = FALSE, keys = FALSE
-    ){
-        match_type = match.arg(match_type)
-        if (simple & keys) warning(warns()$simkeys)
+    ) {
+        match_type <- match.arg(match_type)
+        if (simple && keys) warning(warns()$simkeys)
 
-        if(match_type == "quals"){
+        if (match_type == "quals") {
             data <- read_event_qual_matches(event_key, simple, keys)
-        } else if (match_type == "playoff"){
+        } else if (match_type == "playoff") {
             data <- read_event_playoff_matches(event_key, simple, keys)
-        } else{
+        } else {
             data <- read_event_matches(event_key, simple, keys)
         }
 
-        if (keys) return(unlist(data))
+        if (keys) {
+            return(unlist(data))
+        }
 
-        if (is.null(data) | length(data) == 0){ # case where no matches are posted
+        if (is.null(data) || length(data) == 0) { # case where no matches are posted
             warning("event_matches() call with no posted schedule; returning NULL")
             return(NULL)
         }
 
         data <- tidy_matches(
-            data, alliances = alliances, breakdown = breakdown, unplayed = unplayed,
+            data,
+            alliances = alliances, breakdown = breakdown, unplayed = unplayed,
             sort = sort
         )
 
@@ -1945,13 +2088,15 @@ Generated: 2026-09-20 13:09:28.427891
     #' event_alliances("2016hop", unpack_picks = TRUE)
     #' event_alliances("2015paphi")
     #' event_alliances("2014mrcmp", unpack_picks = FALSE)
-    event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE){
+    event_alliances <- function(key, unpack_picks = TRUE, attach_finish = TRUE) {
         data <- read_event_alliances(key)
         # short-circuit eval to safely check null case
-        if (is.null(data) || length(data) == 0) return(NULL)
+        if (is.null(data) || length(data) == 0) {
+            return(NULL)
+        }
         data <- tidy_alliances(data, unpack_picks)
         # check for null status, otherwise we'll crash when attempting to access it
-        if (attach_finish && !is.null(data$status)){
+        if (attach_finish && !is.null(data$status)) {
             data$finish <- sapply(data$status, alliance_finish)
         }
         return(data)
@@ -1969,18 +2114,20 @@ Generated: 2026-09-20 13:09:28.427891
     #' That is, quals and playoffs will have the same length of list, and have
     #' the same fields filled out in both lists, in the same order.
     #' @export
-    event_insights <- function(key, insight_as_col = FALSE){
+    event_insights <- function(key, insight_as_col = FALSE) {
         response <- read_event_insights(key)
-        if (is.null(response)) return(NULL)
+        if (is.null(response)) {
+            return(NULL)
+        }
         data <- tidy_insights(response, insight_as_col)
-        if(insight_as_col){
+        if (insight_as_col) {
             data$event <- key
-            data <- data %>%
+            data <- data |>
                 select(event, everything())
-        } else{
+        } else {
             data$id <- paste(key, data$phase, sep = "_")
             data$key <- key
-            data <- data %>%
+            data <- data |>
                 select(id, key, phase, everything())
         }
         return(data)
@@ -1995,7 +2142,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @export
     #' @examples
     #' event_oprs("2015paphi")
-    event_oprs <- function(key){
+    event_oprs <- function(key) {
         data <- read_event_oprs(key)
         data <- tidy_oprs(data)
         return(data)
@@ -2011,7 +2158,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' events, you can compute them with `fit_event_lr` and a wise response choice
     #'
     #' @export
-    event_coprs <- function(key, digits = 2){
+    event_coprs <- function(key, digits = 2) {
         raw <- read_event_coprs(key)
         result <- tidy_coprs(raw)
         result <- round_numerics(result, digits = digits)
@@ -2028,7 +2175,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @export
     #' @examples
     #' event_rankings("2016hop")
-    event_rankings <- function(key, trim = TRUE){
+    event_rankings <- function(key, trim = TRUE) {
         data <- read_event_rankings(key)
         data <- tidy_rankings(data, trim)
         return(data)
@@ -2045,7 +2192,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' event_district_points("2016mrcmp", tiebreakers = TRUE)
     #' event_district_points("2015padre")
-    event_district_points <- function(key, tiebreakers = FALSE){
+    event_district_points <- function(key, tiebreakers = FALSE) {
         data <- read_event_district_points(key)
         data <- tidy_district_points(data, tiebreakers)
         return(data)
@@ -2062,9 +2209,11 @@ Generated: 2026-09-20 13:09:28.427891
     #' @export
     #' @examples
     #' event_teams("2015padre", keys = TRUE)
-    event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE){
+    event_teams <- function(key, statuses = FALSE, simple = FALSE, keys = FALSE) {
         data <- read_event_teams(key, statuses, simple, keys)
-        if (keys) return(data)
+        if (keys) {
+            return(data)
+        }
         data <- tidy_teams(data)
         return(data)
     }
@@ -2080,7 +2229,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' event_awards("2015padre")
     #' event_awards("2010ein", recipients = TRUE)
-    event_awards <- function(key, recipients = FALSE){
+    event_awards <- function(key, recipients = FALSE) {
         data <- read_event_awards(key)
 
         data <- tidy_awards(data, recipients)
@@ -2102,7 +2251,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' districts(2012)
     #' districts(2023)
-    districts <- function(year = YEAR){
+    districts <- function(year = YEAR) {
         data <- read_districts(year)
         return(tidy_districts(data))
     }
@@ -2118,12 +2267,14 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' district_events("2016mar")
     #' district_events("2018fma", keys = TRUE)
-    district_events <- function(district_key, simple = FALSE, keys = FALSE){
-        if (simple & keys) warning(warns()$simkey)
+    district_events <- function(district_key, simple = FALSE, keys = FALSE) {
+        if (simple && keys) warning(warns()$simkey)
 
         data <- read_district_events(district_key, simple, keys)
 
-        if (keys) return(unlist(data))
+        if (keys) {
+            return(unlist(data))
+        }
 
         data <- tidy_events(data)
 
@@ -2143,17 +2294,18 @@ Generated: 2026-09-20 13:09:28.427891
     #' district_teams("2022fit", keys = TRUE)
     #' district_teams("2014mar", simple = TRUE)
     #' district_teams("2016mar")
-    district_teams <- function(district_key, simple = FALSE, keys = FALSE){
-        if (simple & keys) warning(warns()$simkey)
+    district_teams <- function(district_key, simple = FALSE, keys = FALSE) {
+        if (simple && keys) warning(warns()$simkey)
 
         data <- read_district_teams(district_key, simple, keys)
 
-        if (keys) return(unlist(data))
+        if (keys) {
+            return(unlist(data))
+        }
 
         data <- tidy_teams(data)
 
         return(data)
-
     }
 
     #' District Rankings
@@ -2176,7 +2328,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' district_rankings("2022fit")
     district_rankings <- function(
         district_key, detail = c("none", "separate", "breakdown")
-    ){
+    ) {
         detail <- match.arg(detail)
         data <- read_district_rankings(district_key)
         return(tidy_district_rankings(data, detail = detail))
@@ -2224,15 +2376,17 @@ Generated: 2026-09-20 13:09:28.427891
     #' access the file system in a constrained environment (like GitHub Actions)
     #' and crash.
     #' @noRd
-    tba_key <- function(){
+    tba_key <- function() {
         # covers the Github Actions environment case, where we can't access HOME
-        if (!Sys.getenv("TBA_AUTH") %in% c("", "NA")) return(Sys.getenv("TBA_AUTH"))
+        if (!Sys.getenv("TBA_AUTH") %in% c("", "NA")) {
+            return(Sys.getenv("TBA_AUTH"))
+        }
 
         # for human users, look for the auth key in ~/.scoutR_auth.txt
         path <- file.path(Sys.getenv("HOME"), ".scoutR_auth.txt")
-        if(file.exists(path)){
+        if (file.exists(path)) {
             return(readr::read_file(path))
-        } else{
+        } else {
             stop("tba_key not in either environment vars or ~/.scoutR_auth.txt")
         }
     }
@@ -2271,10 +2425,12 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' get_content("team/frc1712/awards")
     #' get_content("team/3504", base = STATBOTICS_BASE)
-    get_content <- function(req, params = list(), base = TBA_BASE){
-        stopifnot("Authentication key uninitialized.
+    get_content <- function(req, params = list(), base = TBA_BASE) {
+        stopifnot(
+            "Authentication key uninitialized.
                   To resolve, run: initialize_scoutR('your_tba_auth_key')." =
-                      !is.na(tba_key()))
+                !is.na(tba_key())
+        )
 
         params <- append(params, list(`X-TBA-Auth-Key` = tba_key()))
 
@@ -2286,7 +2442,7 @@ Generated: 2026-09-20 13:09:28.427891
                 req_error(is_error = \(resp) FALSE) |>
                 req_perform() |>
                 resp_body_json(),
-            error = function(e) NULL  # network-level failures return NULL
+            error = function(e) NULL # network-level failures return NULL
         )
 
         return(result)
@@ -2305,13 +2461,13 @@ Generated: 2026-09-20 13:09:28.427891
     #' simkeys("", TRUE, FALSE)
     #' simkeys("", FALSE, TRUE)
     #' simkeys("", TRUE, TRUE)
-    simkeys <- function(req, simple = FALSE, keys = FALSE){
-        if (simple && keys){
+    simkeys <- function(req, simple = FALSE, keys = FALSE) {
+        if (simple && keys) {
             warning("both simple and keys = TRUE")
         }
-        if (keys){
+        if (keys) {
             req <- paste(req, "keys", sep = "/")
-        } else if (simple){
+        } else if (simple) {
             req <- paste(req, "simple", sep = "/")
         }
         return(req)
@@ -2333,8 +2489,8 @@ Generated: 2026-09-20 13:09:28.427891
     #' paphi <- read_event_matches("2016paphi")
     #' is_qual_match(paphi[[1]])
     #' is_qual_match(paphi[[56]])
-    is_qual_match <- function(match){
-        return (str_detect(match$key, "_qm"))
+    is_qual_match <- function(match) {
+        return(str_detect(match$key, "_qm"))
     }
 
     #' Retrieve score breakdown object
@@ -2346,7 +2502,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' paphi <- read_event_matches("2016paphi")
     #' breakdown(paphi[[1]])
-    breakdown <- function(match){
+    breakdown <- function(match) {
         return(match$score_breakdown)
     }
 
@@ -2360,7 +2516,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' match <- read_event_matches("2016paphi")[[1]]
     #' is_score_posted(match)
-    is_score_posted <- function(match){
+    is_score_posted <- function(match) {
         return(!is.null(match$score_breakdown))
     }
 
@@ -2375,7 +2531,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' matches <- read_event_matches("2022azfl")
     #' remove_unscored_matches(matches)
-    remove_unscored_matches <- function(matches){
+    remove_unscored_matches <- function(matches) {
         return(matches[unlist(lapply(matches, is_score_posted))])
     }
 
@@ -2389,8 +2545,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' event_key <- "2016paphi"
     #' match_keys(read_event_matches(event_key))
-    match_keys <- function(matches){
-        getter <- function(match){return(match$key)}
+    match_keys <- function(matches) {
+        getter <- function(match) {
+            return(match$key)
+        }
         return(sapply(matches, getter))
     }
 
@@ -2403,13 +2561,15 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return List of all official match keys, or NULL
     #' @examples
     #' read_official_match_keys(year = 2022)
-    read_official_match_keys <- function(year = YEAR, trim_parents = TRUE){
-        event_keys <- read_official_events(year = year, trim_parents = trim_parents,
-                                           keys = TRUE)
+    read_official_match_keys <- function(year = YEAR, trim_parents = TRUE) {
+        event_keys <- read_official_events(
+            year = year, trim_parents = trim_parents,
+            keys = TRUE
+        )
 
         # loop through and append matches from each event
         matches <- list()
-        for (i in 1:length(event_keys)){
+        for (i in seq_along(event_keys)) {
             matches <- c(matches, read_event_matches(event_keys[i], keys = TRUE))
         }
         return(unlist(matches))
@@ -2429,7 +2589,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' is_event_official(read_event("2016parr"))
     #' is_event_official(read_event("2016pahat"))
-    is_event_official <- function(event){
+    is_event_official <- function(event) {
         # code 99 is offseason, code 100 is preseason (week0)
         return(!event$event_type %in% c(99, 100))
     }
@@ -2443,7 +2603,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' is_event_key_official(read_event("2016parr"))
     #' is_event_key_official(read_event("2016paphi"))
-    is_event_key_official <- function(key){
+    is_event_key_official <- function(key) {
         evnt <- read_event(key, simple = TRUE)
         return(!evnt$event_type %in% c(99, 100))
     }
@@ -2458,7 +2618,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' read_event("2016paphi")
     #' read_event("2016mrcmp", simple = TRUE)
-    read_event <- function(key, simple = FALSE){
+    read_event <- function(key, simple = FALSE) {
         request <- paste("event", key, sep = "/")
         request <- simkeys(request, simple = simple, keys = FALSE)
         return(get_content(request))
@@ -2472,7 +2632,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return TBA Alliances object
     #' @examples
     #' read_event_alliances("2015paphi")
-    read_event_alliances <- function(key){
+    read_event_alliances <- function(key) {
         request <- paste("event", key, "alliances", sep = "/")
         return(get_content(request))
     }
@@ -2485,7 +2645,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return TBA Insights object
     #' @examples
     #' read_event_insights("2018pawch")
-    read_event_insights <- function(key){
+    read_event_insights <- function(key) {
         request <- paste("event", key, "insights", sep = "/")
         return(get_content(request))
     }
@@ -2499,14 +2659,14 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return TBA OPRs object
     #' @examples
     #' read_event_oprs("2018mrcmp")
-    read_event_oprs <- function(key){
+    read_event_oprs <- function(key) {
         request <- paste("event", key, "oprs", sep = "/")
         return(get_content(request))
     }
 
     #' Read Event cOPRs
     #' @param key (chr) event key (e.g. "2025vagle")
-    read_event_coprs <- function(key){
+    read_event_coprs <- function(key) {
         request <- paste("event", key, "coprs", sep = "/")
         return(get_content(request))
     }
@@ -2519,7 +2679,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return TBA Predictions object
     #' @examples
     #' read_event_predictions("2018mrcmp")
-    read_event_predictions <- function(key){
+    read_event_predictions <- function(key) {
         request <- paste("event", key, "predictions", sep = "/")
         return(get_content(request))
     }
@@ -2532,7 +2692,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return TBA rankings object
     #' @examples
     #' read_event_rankings("2015paphi")
-    read_event_rankings <- function(key){
+    read_event_rankings <- function(key) {
         request <- paste("event", key, "rankings", sep = "/")
         return(get_content(request))
     }
@@ -2545,7 +2705,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return TBA district points event object
     #' @examples
     #' read_event_district_points("2016mrcmp")
-    read_event_district_points <- function(key){
+    read_event_district_points <- function(key) {
         request <- paste("event", key, "district_points", sep = "/")
         return(get_content(request))
     }
@@ -2558,7 +2718,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return TBA Awards object
     #' @examples
     #' read_event_awards("2017pawch")
-    read_event_awards <- function(key){
+    read_event_awards <- function(key) {
         request <- paste("event", key, "awards", sep = "/")
         return(get_content(request))
     }
@@ -2579,10 +2739,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' read_event_teams("2016hop", keys = TRUE)
     read_event_teams <- function(
         event_key, statuses = FALSE, simple = FALSE, keys = FALSE
-    ){
+    ) {
         request <- paste("event", event_key, "teams", sep = "/")
         request <- simkeys(request, simple = simple, keys = keys)
-        if (!simple & !keys & statuses){
+        if (!simple && !keys && statuses) {
             request <- paste(request, "statuses", sep = "/")
         }
         result <- get_content(request)
@@ -2603,7 +2763,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' read_year_events(year = 2015, simple = TRUE)
     #' read_year_events(year = 2016, keys = TRUE)
     #' read_year_events(year = 2017, simple = TRUE, keys = TRUE)
-    read_year_events <- function(year = YEAR, simple = FALSE, keys = FALSE){
+    read_year_events <- function(year = YEAR, simple = FALSE, keys = FALSE) {
         request <- paste("events", year, sep = "/")
         request <- simkeys(request, simple = simple, keys = keys)
         result <- get_content(request)
@@ -2626,16 +2786,18 @@ Generated: 2026-09-20 13:09:28.427891
     read_events <- function(
         year = NA, official = FALSE, trim_parents = FALSE, simple = FALSE,
         keys = FALSE
-    ){
-        if (is.na(year)){ # year = NA implies we want all events
+    ) {
+        if (is.na(year)) { # year = NA implies we want all events
             result <- list()
             earliest <- 1992
-            for (i in earliest:YEAR){
+            for (i in earliest:YEAR) {
                 yr_events <- read_year_events(i, simple, keys)
-                if (official){
+                if (official) {
                     # filter out unofficial events
-                    yr_events <- yr_events[unlist(lapply(yr_events,
-                                                         is_event_official))]
+                    yr_events <- yr_events[unlist(lapply(
+                        yr_events,
+                        is_event_official
+                    ))]
                 }
                 result <- append(result, yr_events)
             }
@@ -2643,7 +2805,9 @@ Generated: 2026-09-20 13:09:28.427891
         }
 
         # if official is false, we can simply return
-        if (!official) return(read_year_events(year, simple, keys))
+        if (!official) {
+            return(read_year_events(year, simple, keys))
+        }
 
         # if official is true, we use read_official_events
         return(read_official_events(year, trim_parents, simple, keys))
@@ -2660,9 +2824,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' read_event_matches("2016mrcmp")
     #' read_event_matches("2014mrcmp", keys = TRUE)
-    read_event_matches <- function(event_key, simple = FALSE, keys = FALSE){
+    read_event_matches <- function(event_key, simple = FALSE, keys = FALSE) {
         request <- simkeys(paste("event", event_key, "matches", sep = "/"),
-                           simple = simple, keys = keys)
+            simple = simple, keys = keys
+        )
         result <- get_content(request)
         if (keys) result <- unlist(result)
         return(result)
@@ -2679,9 +2844,9 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return List of qualification matches
     #' @examples
     #' read_event_qual_matches("2016hop", simple = TRUE)
-    read_event_qual_matches <- function(event_key, simple = FALSE, keys = FALSE){
+    read_event_qual_matches <- function(event_key, simple = FALSE, keys = FALSE) {
         # if the user asked only for keys, this is all we need
-        if (keys){
+        if (keys) {
             keys <- unlist(event_matches(event_key, keys = TRUE))
             qual_keys <- keys[grep("_qm", keys)]
             return(qual_keys)
@@ -2690,7 +2855,7 @@ Generated: 2026-09-20 13:09:28.427891
         matches <- read_event_matches(event_key, simple = simple, keys = keys)
 
         # handling the null case
-        if (is_empty(matches)){
+        if (is_empty(matches)) {
             return(list())
         }
 
@@ -2710,9 +2875,9 @@ Generated: 2026-09-20 13:09:28.427891
     #' read_event_playoff_matches("2018pawch")
     read_event_playoff_matches <- function(
         event_key, simple = FALSE, keys = FALSE
-    ){
+    ) {
         # if the user asked only for keys, this is all we need
-        if (keys){
+        if (keys) {
             keys <- unlist(read_event_matches(event_key, keys = TRUE))
             playoff_keys <- keys[grep("_qm", keys, invert = TRUE)]
             return(playoff_keys)
@@ -2721,7 +2886,7 @@ Generated: 2026-09-20 13:09:28.427891
         matches <- read_event_matches(event_key, simple = simple, keys = keys)
 
         # handling the null case
-        if (is_empty(matches)){
+        if (is_empty(matches)) {
             return(list())
         }
 
@@ -2742,7 +2907,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' read_official_events(year = 2016, trim_parents = TRUE, keys = TRUE)
     read_official_events <- function(
         year = YEAR, trim_parents = TRUE, simple = FALSE, keys = FALSE
-    ){
+    ) {
         # we need to start with the full event objects to filter for official events
         events <- read_year_events(year = year)
 
@@ -2751,19 +2916,22 @@ Generated: 2026-09-20 13:09:28.427891
         events <- events[events$event_type_string != "Offseason", ]
         events <- events[events$event_type_string != "Preseason", ]
 
-        if(trim_parents){
-            # remove events with divisions below them (we keep the divisions themselves)
+        if (trim_parents) {
+            # remove events with divisions (keep the divisions themselves)
             events <- events[events$division_keys == "list()", ]
         }
 
         event_keys <- unlist(events$event_code)
         event_keys <- paste(year, event_keys, sep = "")
 
-        if (keys) return(event_keys)
-        else if (simple){
-            simple_event_factors <- c("city", "country", "district", "end_date",
-                                      "event_code", "event_type", "key", "name",
-                                      "start_date", "state_prov", "year")
+        if (keys) {
+            return(event_keys)
+        } else if (simple) {
+            simple_event_factors <- c(
+                "city", "country", "district", "end_date",
+                "event_code", "event_type", "key", "name",
+                "start_date", "state_prov", "year"
+            )
 
             return(events[, simple_event_factors])
         }
@@ -2786,7 +2954,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' read_team(1712)
     #' read_team(708)
     #' read_team(6672)
-    read_team <- function(n, simple = FALSE){
+    read_team <- function(n, simple = FALSE) {
         request <- paste("team", tf(n), sep = "/")
 
         request <- simkeys(request, simple = simple, keys = FALSE)
@@ -2806,7 +2974,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' read_teams(1)
     #' read_teams(3, keys = TRUE)
-    read_teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE){
+    read_teams <- function(page_num, year = FALSE, simple = FALSE, keys = FALSE) {
         request <- paste("teams", page_num, sep = "/")
         if (year) request <- paste("teams", year, page_num, sep = "/")
 
@@ -2829,10 +2997,10 @@ Generated: 2026-09-20 13:09:28.427891
     #' read_team_events(1712, keys = TRUE)
     read_team_events <- function(
         n, year = NA, official = FALSE, simple = FALSE, keys = FALSE
-    ){
+    ) {
         request <- paste("team", tf(n), "events", sep = "/")
 
-        if (!is.na(year)){
+        if (!is.na(year)) {
             request <- paste(request, as.character(year), sep = "/")
         }
 
@@ -2840,11 +3008,13 @@ Generated: 2026-09-20 13:09:28.427891
         # this saves many API calls when keys = TRUE
         request <- simkeys(request, simple, keys = FALSE)
         result <- get_content(request)
-        if (official){
+        if (official) {
             result <- result[unlist(lapply(result, is_event_official))]
         }
-        if (keys){
-            result <- sapply(result, function(elem){return(elem$key)})
+        if (keys) {
+            result <- sapply(result, function(elem) {
+                return(elem$key)
+            })
         }
 
         return(result)
@@ -2862,17 +3032,17 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return List of official matches by the team of interest
     #' @examples
     #' read_team_official_matches(1712, 2015, NA, TRUE, TRUE)
-    read_team_official_matches <- function(team, year, event, simple, keys){
-        if (!is.na(event)){
+    read_team_official_matches <- function(team, year, event, simple, keys) {
+        if (!is.na(event)) {
             warning("both event and official supplied TRUE, prioritizing event")
             return(read_team_matches(team, year, event, FALSE, simple, keys))
-        } else if (!is.na(year)){
+        } else if (!is.na(year)) {
             event_keys <- unlist(read_team_events(team, year = year, keys = TRUE))
         } else { # event and year are both NA
             event_keys <- unlist(read_team_events(team, keys = TRUE))
         }
         matches <- list()
-        for (i in 1:length(event_keys)){
+        for (i in seq_along(event_keys)) {
             if (!is_event_key_official(event_keys[i])) next()
             tmp <- read_team_matches(team, event = event_keys[i], keys = keys)
             matches <- c(matches, tmp)
@@ -2898,20 +3068,27 @@ Generated: 2026-09-20 13:09:28.427891
     #' read_team_matches(1712, year = 2016, keys = TRUE)
     read_team_matches <- function(
         team, year = NA, event = NA, official = FALSE, simple = FALSE, keys = FALSE
-    ){
-        if (official) return(read_team_official_matches(team, year, event,
-                                                        simple, keys))
-        if (!is.na(year)){
+    ) {
+        if (official) {
+            return(read_team_official_matches(
+                team, year, event,
+                simple, keys
+            ))
+        }
+        if (!is.na(year)) {
             request <- paste("team", tf(team), "matches", as.character(year),
-                             sep = "/")
-        } else if (!is.na(event)){
+                sep = "/"
+            )
+        } else if (!is.na(event)) {
             request <- paste("team", tf(team), "event", as.character(event),
-                             "matches", sep = "/")
-        } else { # implies (is.na(year) && is.na(event))
+                "matches",
+                sep = "/"
+            )
+        } else { # implies year is NA and event is NA
             event_keys <- unlist(read_team_events(team, keys = TRUE))
             # we can recurse since we now have event keys
             matches <- list()
-            for (i in 1:length(event_keys)){
+            for (i in seq_along(event_keys)) {
                 tmp <- read_team_matches(team, event = event_keys[i], keys = keys)
                 matches <- c(matches, tmp)
             }
@@ -2937,11 +3114,11 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return List of award objects
     #' @examples
     #' read_team_awards(1712, year = 2018)
-    read_team_awards <- function(team, year = NULL, event = NULL){
+    read_team_awards <- function(team, year = NULL, event = NULL) {
         request <- paste("team", tf(team), "awards", sep = "/")
-        if (!is.null(year)){
+        if (!is.null(year)) {
             request <- paste(request, as.character(year), sep = "/")
-        } else if (!is.null(event)){
+        } else if (!is.null(event)) {
             request <- paste("team", tf(team), "event", event, "awards", sep = "/")
         }
         return(get_content(request))
@@ -2959,7 +3136,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return List of district objects
     #' @examples
     #' read_districts(2022)
-    read_districts <- function(year = YEAR){
+    read_districts <- function(year = YEAR) {
         request <- paste("districts", as.character(year), sep = "/")
         return(get_content(request))
     }
@@ -2973,7 +3150,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @author Gabriel Krotkov
     #' @examples
     #' read_district_events("2022fit")
-    read_district_events <- function(district_key, simple = FALSE, keys = FALSE){
+    read_district_events <- function(district_key, simple = FALSE, keys = FALSE) {
         request <- paste("district", district_key, "events", sep = "/")
         request <- simkeys(request, simple = simple, keys = keys)
         return(get_content(request))
@@ -2989,7 +3166,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @examples
     #' read_district_teams("2022fit")
     #' read_district_teams("2016mar")
-    read_district_teams <- function(district_key, simple = FALSE, keys = FALSE){
+    read_district_teams <- function(district_key, simple = FALSE, keys = FALSE) {
         request <- paste("district", district_key, "teams", sep = "/")
         request <- simkeys(request, simple = simple, keys = keys)
         result <- get_content(request)
@@ -3005,7 +3182,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return list of district rankings objects
     #' @examples
     #' read_district_rankings("2016mar")
-    read_district_rankings <- function(district_key){
+    read_district_rankings <- function(district_key) {
         request <- paste("district", district_key, "rankings", sep = "/")
         return(get_content(request))
     }
@@ -3022,7 +3199,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return Zebra match for the input match key, or NULL
     #' @examples
     #' read_match_zebra("2022txcmp2_qf4m3")
-    read_match_zebra <- function(match_key){
+    read_match_zebra <- function(match_key) {
         request <- paste("match", match_key, "zebra_motionworks", sep = "/")
         return(get_content(request))
     }
@@ -3046,32 +3223,34 @@ Generated: 2026-09-20 13:09:28.427891
     #### Helpers ####
     #################
 
-    name_teams_list <- function(team_list, color){
-        if (!(color %in% c("blue", "red"))){
-            return(as.character(1:length(team_list)))
+    name_teams_list <- function(team_list, color) {
+        if (!(color %in% c("blue", "red"))) {
+            return(as.character(seq_along(team_list)))
         }
-        names(team_list) <- paste(color, 1:length(team_list), sep = "")
+        names(team_list) <- paste(color, seq_along(team_list), sep = "")
         return(team_list)
     }
 
     # helper for adding name attributes to a list so unnest_wider can be used
-    name_sublist <- function(elem, label = ""){
+    name_sublist <- function(elem, label = "") {
         # return empty list to speed up future unnest calls that need names
-        if(is.null(elem)) return(list())
+        if (is.null(elem)) {
+            return(list())
+        }
         N <- length(elem)
         names(elem) <- paste(label, 1:N, sep = "")
         return(elem)
     }
 
     # adapted from stackOverflow at:
-    # https://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na
-    drop_na_cols <- function(df){
+    # https://stackoverflow.com/questions/2643939/remove-columns-from-dataframe-where-all-values-are-na # nolint: line_length_linter.
+    drop_na_cols <- function(df) {
         not_na_col <- function(x) !all(is.na(x))
         return(Filter(not_na_col, df))
     }
 
     # adapted from stackOverflow as above
-    drop_zero_cols <- function(df){
+    drop_zero_cols <- function(df) {
         not_zero_col <- function(x) !all(x == 0)
         return(Filter(not_zero_col, df))
     }
@@ -3087,32 +3266,36 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param matches list of match objects
     #' @author Gabriel Krotkov
     #' @return match objects with the alliance field broken up into alliance members
-    unnest_alliances <- function(matches){
+    unnest_alliances <- function(matches) {
         # remember the number of columns and the column we're unpacking
         ncol0 <- ncol(matches)
         cid <- which(colnames(matches) == "blue")
-        matches <- matches %>%
+        matches <- matches |>
             unnest_wider(blue)
         # rename using our remembered indices
         idx <- cid:(cid + ncol(matches) - ncol0)
         colnames(matches)[idx] <- paste("blue", colnames(matches)[idx], sep = "_")
         # unpack team keys
-        matches$blue_team_keys <- lapply(matches$blue_team_keys,
-                                         name_teams_list, "blue")
-        matches <- matches %>%
+        matches$blue_team_keys <- lapply(
+            matches$blue_team_keys,
+            name_teams_list, "blue"
+        )
+        matches <- matches |>
             unnest_wider(blue_team_keys)
 
         # remember the number of columns and the column we're unpacking
         ncol0 <- ncol(matches)
         cid <- which(colnames(matches) == "red")
-        matches <- matches %>%
+        matches <- matches |>
             unnest_wider(red)
         # rename using our remembered indices
         idx <- cid:(cid + ncol(matches) - ncol0)
         colnames(matches)[idx] <- paste("red", colnames(matches)[idx], sep = "_")
-        matches$red_team_keys <- lapply(matches$red_team_keys,
-                                        name_teams_list, "red")
-        matches <- matches %>%
+        matches$red_team_keys <- lapply(
+            matches$red_team_keys,
+            name_teams_list, "red"
+        )
+        matches <- matches |>
             unnest_wider(red_team_keys)
 
         return(matches)
@@ -3125,12 +3308,12 @@ Generated: 2026-09-20 13:09:28.427891
     #' @author Gabriel Krotkov
     #' @param matches tibble of matches
     #' @return tibble of matches with alliance compositions broken down
-    unpack_alliances <- function(matches){
-        if (!("alliances" %in% colnames(matches))){
+    unpack_alliances <- function(matches) {
+        if (!("alliances" %in% colnames(matches))) {
             warning("unpack_alliances() called with no `alliance` column")
             return(matches)
         }
-        matches <- matches %>%
+        matches <- matches |>
             unnest_wider(alliances)
 
         matches <- unnest_alliances(matches)
@@ -3143,19 +3326,19 @@ Generated: 2026-09-20 13:09:28.427891
     #' @author Gabriel Krotkov
     #' @param matches Tibble of TBA match objects (unnested)
     #' @return Tibble of matches with additional columns for the score breakdown.
-    unpack_breakdown <- function(matches){
-        if (!("score_breakdown" %in% colnames(matches))){
+    unpack_breakdown <- function(matches) {
+        if (!("score_breakdown" %in% colnames(matches))) {
             warning("unpack_breakdown() called with no `score_breakdown` column")
             return(matches)
         }
         # unpack score_breakdown into red and blue
-        matches <- matches %>%
+        matches <- matches |>
             unnest_wider("score_breakdown")
 
         # unpack the top level of "blue"
         ncol0 <- ncol(matches)
         cid <- which(colnames(matches) == "blue")
-        matches <- matches %>%
+        matches <- matches |>
             unnest_wider("blue")
         idx <- cid:(cid + ncol(matches) - ncol0)
         colnames(matches)[idx] <- paste("blue", colnames(matches)[idx], sep = "_")
@@ -3163,7 +3346,7 @@ Generated: 2026-09-20 13:09:28.427891
         # reset variables and repeat the process for red
         ncol0 <- ncol(matches)
         cid <- which(colnames(matches) == "red")
-        matches <- matches %>%
+        matches <- matches |>
             unnest_wider("red")
         idx <- cid:(cid + ncol(matches) - ncol0)
         colnames(matches)[idx] <- paste("red", colnames(matches)[idx], sep = "_")
@@ -3178,27 +3361,34 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param raw list of match objects from TBA API as read by tba_readR
     #' @param alliances (boolean) unpack the alliances?
     #' @param breakdown (boolean) unpack the score breakdown?
-    #' @param unplayed (boolean) include matches with scores of -1 (indicating that the match has not been played?)
-    #' @param sort (boolean) if TRUE, will sort the output matches by competition level and match number.
+    #' @param unplayed (boolean) include matches with scores of -1 (indicating that
+    #' the match has not been played?)
+    #' @param sort (boolean) if TRUE, will sort the output matches by competition
+    #' level and match number.
     #' @author Gabriel Krotkov
     #' @return tidy tibble of matches
     #' @examples
-    #' tidy_matches(read_event_matches("2016mrcmp"), alliances = TRUE,
-    #'     breakdown = TRUE)
+    #' tidy_matches(read_event_matches("2016mrcmp"),
+    #'     alliances = TRUE,
+    #'     breakdown = TRUE
+    #' )
     tidy_matches <- function(
         raw, alliances = FALSE, breakdown = FALSE, unplayed = FALSE, sort = TRUE
-    ){
+    ) {
         event <- tibble(matches = raw)
 
         # if there are no matches, we can return the empty tibble
-        if (nrow(event) == 0) return(event)
+        if (nrow(event) == 0) {
+            return(event)
+        }
 
-        event <- event %>%
+        event <- event |>
             unnest_wider(matches)
 
         # handling case of call on nulls or when score_breakdown does not exist
-        if (breakdown && (!("score_breakdown" %in% colnames(event)) ||
-                         all(is.na(event$score_breakdown)))){
+        # this will matter for events before 2015
+        # "[[" returns NULL if a column doesn't exist
+        if (breakdown && all(is.na(event[["score_breakdown"]]))) {
             warning("tidy_matches called with breakdown = TRUE on null case \n
                     Recalling tidy_matches with breakdown = FALSE")
             return(tidy_matches(raw, alliances = alliances, breakdown = FALSE))
@@ -3207,15 +3397,16 @@ Generated: 2026-09-20 13:09:28.427891
         if (alliances) event <- unpack_alliances(event)
         if (breakdown) event <- unpack_breakdown(event)
 
-        if(!unplayed){
+        if (!unplayed) {
             event <- trim_unplayed(event)
         }
 
         # sort by competition level and match number
-        if(sort & all(c("match_number", "comp_level") %in% colnames(event))){
-            event <- event %>%
+        if (sort && all(c("match_number", "comp_level") %in% colnames(event))) {
+            event <- event |>
                 mutate(comp_level = factor(comp_level,
-                                           levels = c("qm", "qf", "sf", "f"))) %>%
+                    levels = c("qm", "qf", "sf", "f")
+                )) |>
                 arrange(comp_level, match_number)
         }
         return(event)
@@ -3235,7 +3426,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return tidy tibble row of an event object
     #' @examples
     #' tidy_event(read_event("2017pawch"))
-    tidy_event <- function(raw){
+    tidy_event <- function(raw) {
         data <- tibble(event = raw)
         data <- as.data.frame(t(data))
         colnames(data) <- names(raw)
@@ -3251,11 +3442,11 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return Tidy tibble of events
     #' @examples
     #' tidy_events(read_district_events("2016mar"))
-    tidy_events <- function(raw, official = FALSE){
+    tidy_events <- function(raw, official = FALSE) {
         data <- tibble(event = raw)
         data <- unnest_wider(data, event)
         # 99 and 100 are offseason and preseason events, respectively
-        if (official){
+        if (official) {
             data <- data[!(data$event_type %in% c(99, 100)), ]
         }
         return(data)
@@ -3270,7 +3461,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return tidy tibble of alliances
     #' @examples
     #' tidy_alliances(read_event_alliances("2019mrcmp"), unpack_picks = TRUE)
-    tidy_alliances <- function(raw, unpack_picks = FALSE){
+    tidy_alliances <- function(raw, unpack_picks = FALSE) {
         data <- tibble(alliance = raw)
         alliances <- unnest_wider(data, alliance)
         alliances$picks <- lapply(alliances$picks, name_sublist, label = "robot")
@@ -3279,7 +3470,7 @@ Generated: 2026-09-20 13:09:28.427891
         idx <- grep("robot", colnames(alliances))
         colnames(alliances)[idx[1]] <- "captain"
         idx <- idx[-1]
-        pick_names <- paste("pick", 1:length(idx), sep = " ")
+        pick_names <- paste("pick", seq_along(idx), sep = " ")
         colnames(alliances)[idx] <- pick_names
         return(alliances)
     }
@@ -3289,18 +3480,18 @@ Generated: 2026-09-20 13:09:28.427891
     #' Helper function for tidy_insights, handles the transpose case.
     #' @param data long dataframe of insights
     #' @importFrom data.table transpose
-    transpose_insights <- function(data){
+    transpose_insights <- function(data) {
         phase <- data$phase
         data$phase <- NULL
         data <- split(data, phase)
         data <- lapply(data, data.table::transpose)
-        data <- lapply(data, function(subl){
+        data <- lapply(data, function(subl) {
             colnames(subl) <- subl[1, ]
             subl <- subl[-1, ]
         })
         data <- bind_rows(data)
         data$phase <- unique(phase)
-        data <- data %>%
+        data <- data |>
             select(phase, everything())
         return(data)
     }
@@ -3310,7 +3501,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' Function to handle JSON input of insight data, returning a tidy dataframe.
     #' @param raw Sublist of insight data, usually either quals or playoffs
     #' @param insight_as_col (bool) Do we want to transpose the data? If TRUE,
-    tidy_insights <- function(raw, insight_as_col = FALSE){
+    tidy_insights <- function(raw, insight_as_col = FALSE) {
         lists <- unlist(raw[sapply(raw, is.list)])
         data <- tibble(field = names(lists), value = lists)
         # extend nonlist values to the dataframe
@@ -3321,7 +3512,7 @@ Generated: 2026-09-20 13:09:28.427891
         data$phase <- tmp[seq(1, nrow(data) * 2, 2)]
         data$field <- tmp[seq(2, nrow(data) * 2, 2)]
         # transpose the dataframe and fix the naming if required
-        if (insight_as_col){
+        if (insight_as_col) {
             data <- transpose_insights(data)
         }
         return(data)
@@ -3335,10 +3526,12 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return tidy tibble of event OPRs
     #' @examples
     #' tidy_oprs(read_event_oprs("2018mrcmp"))
-    tidy_oprs <- function(raw){
+    tidy_oprs <- function(raw) {
         team_names <- names(raw$oprs)
-        data <- tibble(opr = as.numeric(raw$oprs), dpr = as.numeric(raw$dprs),
-                       ccwm = as.numeric(raw$ccwms))
+        data <- tibble(
+            opr = as.numeric(raw$oprs), dpr = as.numeric(raw$dprs),
+            ccwm = as.numeric(raw$ccwms)
+        )
         data$team <- team_names
         data$team <- as.numeric(substr(data$team, 4, nchar(data$team)))
         return(data)
@@ -3348,7 +3541,7 @@ Generated: 2026-09-20 13:09:28.427891
     #'
     #' Turns list of event cOPRs (from read_event_coprs) to a tidy dataframe
     #' @param data list of cOPR data
-    tidy_coprs <- function(data){
+    tidy_coprs <- function(data) {
         # strategy: unlist() all the elements of data, and then cbind them
         result <- lapply(data, unlist)
         result <- do.call(cbind, result)
@@ -3369,16 +3562,16 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return Tidy tibble of event rankings
     #' @examples
     #' tidy_rankings(read_event_rankings("2016hop"))
-    tidy_rankings <- function(raw, trim = TRUE){
+    tidy_rankings <- function(raw, trim = TRUE) {
         data <- tibble(ranking = raw$rankings)
         data <- unnest_wider(data, ranking)
-        if ("record" %in% colnames(data) & !all(is.na(data$record))){
+        if ("record" %in% colnames(data) && !all(is.na(data$record))) {
             data <- unnest_wider(data, record)
         }
 
         # unpack sort order names
         sort_order <- tibble(rank = raw$sort_order_info)
-        if (is.null(raw$sort_order_info)){
+        if (is.null(raw$sort_order_info)) {
             labels <- seq(1, length(unlist(data$sort_orders[1])))
             tiebreaker_names <- paste("sort", labels)
         } else {
@@ -3393,7 +3586,7 @@ Generated: 2026-09-20 13:09:28.427891
         idx <- idx:(idx + length(tiebreaker_names) - 1)
         colnames(data)[idx] <- tiebreaker_names
 
-        if(trim){
+        if (trim) {
             # remove columns with all 0s or all NAs
             data <- drop_na_cols(data)
             data <- drop_zero_cols(data)
@@ -3414,7 +3607,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @return tidy tibble of teams
     #' @examples
     #' tidy_teams(read_event_teams("2022txirv"))
-    tidy_teams <- function(raw){
+    tidy_teams <- function(raw) {
         raw <- tibble(team = raw)
         result <- unnest_wider(raw, team)
         return(result)
@@ -3427,12 +3620,14 @@ Generated: 2026-09-20 13:09:28.427891
     # take nested list with team awards and unnest
     # team - (list) nested list with awards information from TBA awards call
     # recipients - (boolean) unpack award recipients?
-    tidy_awards <- function(raw, recipients = FALSE){
+    tidy_awards <- function(raw, recipients = FALSE) {
         awards <- tibble(awards = raw)
         awards <- unnest_wider(awards, awards)
-        if (recipients){
+        if (recipients) {
             awards$recipient_list <- lapply(awards$recipient_list,
-                                               name_sublist, label = "recipients")
+                name_sublist,
+                label = "recipients"
+            )
             awards <- unnest_wider(awards, recipient_list)
         }
         return(awards)
@@ -3443,7 +3638,7 @@ Generated: 2026-09-20 13:09:28.427891
     #######################
 
     # takes a raw districts list as output from read_districts
-    tidy_districts <- function(raw){
+    tidy_districts <- function(raw) {
         districts <- tibble(districts = raw)
         districts <- unnest_wider(districts, districts)
         return(districts)
@@ -3452,7 +3647,8 @@ Generated: 2026-09-20 13:09:28.427891
     # takes a raw district rankings like as output from read_district_rankings
     #' Tidy District Ranking
     #' @param raw JSON list output from tba_readR
-    #' @param detail (chr) how much detail do we want to break the results down into?
+    #' @param detail (chr) how much detail do we want to break the results down
+    #' into?
     #' @details
     #' If "none", will include the event results list in a column in the output
     #' If "separate" will separate the events but not break down the points
@@ -3460,7 +3656,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' granular level.
     #'
     tidy_district_rankings <- function(
-            raw, detail = c("none", "separate", "breakdown")
+        raw, detail = c("none", "separate", "breakdown")
     ) {
         detail <- match.arg(detail)
 
@@ -3469,33 +3665,38 @@ Generated: 2026-09-20 13:09:28.427891
             # rename to make var names simpler later on
             rename(event = event_points)
 
-        if (detail == "none") return(rankings)
+        if (detail == "none") {
+            return(rankings)
+        }
 
         # how many columns did the df used to have?
         mark <- ncol(rankings)
         rankings <- tidyr::unnest_wider(rankings, event, names_sep = "_")
 
-        if (detail == "separate") return(rankings)
+        if (detail == "separate") {
+            return(rankings)
+        }
 
         n_events <- ncol(rankings) - mark + 1
 
         rankings <- rankings |>
             unnest_wider(paste("event", seq_len(n_events), sep = "_"),
-                         names_sep = "_")
+                names_sep = "_"
+            )
 
         return(rankings)
     }
 
 
-    tidy_district_points <- function(raw, tiebreakers = FALSE){
+    tidy_district_points <- function(raw, tiebreakers = FALSE) {
         data <- tibble(dp = raw$points)
         data <- unnest_wider(data, dp)
         data$team_keys <- names(raw$points)
 
         # ASSUMPTION: raw$points and raw$tiebreakers have the same team order
-        if (tiebreakers){
+        if (tiebreakers) {
             # If we can't find tiebreakers, warn user and return data.
-            if (! ("tiebreakers" %in% names(raw))){
+            if (!("tiebreakers" %in% names(raw))) {
                 warning("cannot find 'tiebreakers' in raw input list (tba_tidyR)")
                 return(data)
             }
@@ -3507,116 +3708,6 @@ Generated: 2026-09-20 13:09:28.427891
 
         return(data)
     }
-
-## tba_validatoR.R
-
-    ###################
-    #### validatoR ####
-    ###################
-
-    # tba_validatoR provides functions to compare your scouted data to
-    # TheBlueAlliance data.
-
-    # tba_cols <- c("blue1", "blue2", "blue3", "red1", "red2", "red3", "match_number",
-    #               "blue_autoChargeStationRobot1",
-    #               "blue_autoChargeStationRobot2",
-    #               "blue_autoChargeStationRobot3",
-    #               "blue_endGameChargeStationRobot1",
-    #               "blue_endGameChargeStationRobot2",
-    #               "blue_endGameChargeStationRobot3",
-    #               "blue_mobilityRobot1", "blue_mobilityRobot2",
-    #               "blue_mobilityRobot3", "red_autoChargeStationRobot1",
-    #               "red_autoChargeStationRobot2",
-    #               "red_autoChargeStationRobot3",
-    #               "red_endGameChargeStationRobot1",
-    #               "red_endGameChargeStationRobot2",
-    #               "red_endGameChargeStationRobot3",
-    #               "red_mobilityRobot1", "red_mobilityRobot2",
-    #               "red_mobilityRobot3", "blue_autoBridgeState",
-    #               "blue_endGameBridgeState", "red_autoBridgeState",
-    #               "red_endGameBridgeState")
-    #
-    # kraken_cols <- c("matchNum", "teamNum", "mobility",
-    #                  "autoBalance", "teleopBalance", "scoutName")
-    # # load and reformat data so the TBA data is kraken-compatible
-    # load("col_defs.rda")
-    # load("apollo.rda") # loads tba_data object
-    # kraken_data <- read.csv("krakendata/kraken_apollo.csv")
-    #
-    # kraken_data <- kraken_data %>%
-    #     select(all_of(kraken_cols))
-    # tba_data <- tba_data %>%
-    #     select(all_of(tba_cols))
-    #
-    # rm(tba_cols, kraken_cols)
-    #
-    # col_stems <- c("", "_mobilityRobot", "_autoChargeStationRobot",
-    #                "_endGameChargeStationRobot")
-    # col_names_template <- c("matchNum", "teamNum",
-    #                         "mobility", "autoBalance", "teleopBalance",
-    #                         "autoBridgeState", "endgameBridgeState")
-    #
-    # # pull out correct columns and rename columns
-    # tba_blue1 <- tba_data[, c("match_number", paste0("blue", col_stems, "1"),
-    #                           "blue_autoBridgeState", "blue_endGameBridgeState")]
-    # colnames(tba_blue1) <- col_names_template
-    # tba_blue2 <- tba_data[, c("match_number", paste0("blue", col_stems, "2"),
-    #                           "blue_autoBridgeState", "blue_endGameBridgeState")]
-    # colnames(tba_blue2) <- col_names_template
-    # tba_blue3 <- tba_data[, c("match_number", paste0("blue", col_stems, "3"),
-    #                           "blue_autoBridgeState", "blue_endGameBridgeState")]
-    # colnames(tba_blue3) <- col_names_template
-    # tba_red1 <- tba_data[, c("match_number", paste0("red", col_stems, "1"),
-    #                          "red_autoBridgeState", "red_endGameBridgeState")]
-    # colnames(tba_red1) <- col_names_template
-    # tba_red2 <- tba_data[, c("match_number", paste0("red", col_stems, "2"),
-    #                          "red_autoBridgeState", "red_endGameBridgeState")]
-    # colnames(tba_red2) <- col_names_template
-    # tba_red3 <- tba_data[, c("match_number", paste0("red", col_stems, "3"),
-    #                          "red_autoBridgeState", "red_endGameBridgeState")]
-    # colnames(tba_red3) <- col_names_template
-    #
-    # tba_data <- rbind(tba_blue1, tba_blue2, tba_blue3, tba_red1, tba_red2, tba_red3)
-    # rm(tba_red1, tba_red2, tba_red3, tba_blue1, tba_blue2, tba_blue3)
-    # tba_data$teamNum <- as.integer(substr(tba_data$teamNum,
-    #                                       4, nchar(tba_data$teamNum)))
-    # tba_data$mobility <- ifelse(tba_data$mobility == "Yes", TRUE, FALSE)
-    #
-    # # conform balance data
-    # tba_data$autoBalance <- ifelse(tba_data$autoBalance == "Docked",
-    #                                ifelse(tba_data$autoBridgeState == "Level",
-    #                                       "engage", "dock"), "na")
-    # tba_data$teleopBalance <- ifelse(tba_data$teleopBalance == "Docked",
-    #                                  ifelse(tba_data$endgameBridgeState == "Level",
-    #                                         "engage", "dock"),
-    #                                  ifelse(tba_data$teleopBalance == "Park",
-    #                                         "park", "na"))
-    # tba_data$autoBridgeState <- NULL; tba_data$endgameBridgeState <- NULL
-    # kraken_data$teleopBalance <- ifelse(kraken_data$teleopBalance == "fail",
-    #                                     "na", kraken_data$teleopBalance)
-    #
-    # # trim TBA data to remove matches beyond what we've scouted
-    # match_limit <- max(kraken_data$matchNum)
-    # tba_data <- tba_data[which(tba_data$matchNum <= match_limit), ]
-    #
-    # # sort both dataframes
-    # tba_data <- tba_data[order(tba_data$matchNum, tba_data$teamNum), ]
-    # kraken_data <- kraken_data[order(kraken_data$matchNum, kraken_data$teamNum), ]
-    # tba_data$id <- paste(tba_data$matchNum, tba_data$teamNum, sep = "-")
-    # kraken_data$id <- paste(kraken_data$matchNum, kraken_data$teamNum, sep = "-")
-    #
-    # # @TODO update this function to be more generic, check it actually works as-is
-    # agreement_generic <- function(scouted, validation, scout_name, col_name){
-    #     scout_df <- scouted[scouted$scoutName == scout_name, ]
-    #     scout_validation <- validation[which(validation$id %in% scout_df$id), ]
-    #     scout_df <- validation[which(scout_df$id %in% scout_validation$id), ]
-    #     colnames(scout_validation) <- paste0(colnames(scout_validation),
-    #                                          "_validation")
-    #     scout_combined <- cbind(scout_df, scout_validation)
-    #     scout_combined$agree <- scout_combined[, col_name] ==
-    #         scout_combined[, paste(col_name, "validation", sep = "_")]
-    #     return(sum(scout_combined$agree) / nrow(scout_combined))
-    # }
 
 ## utils.R
 
@@ -3630,7 +3721,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' Returns the n rightmost characters in s.
     #' @param s input string
     #' @param n number of characters from the right to include (1 indexed)
-    substr_right <- function(s, n){
+    substr_right <- function(s, n) {
         return(substr(s, nchar(s) - n + 1, nchar(s)))
     }
 
@@ -3639,7 +3730,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' Returns string s without the n rightmost characters
     #' @param s input string
     #' @param n number of characters (1 indexed) to chop off the right.
-    substr_right_inv <- function(s, n){
+    substr_right_inv <- function(s, n) {
         return(substr(s, 1, nchar(s) - 1))
     }
 
@@ -3647,9 +3738,11 @@ Generated: 2026-09-20 13:09:28.427891
     #'
     #' Capitalizes the first character of each of the elements of the input vector
     #' @param s input character vector
-    cap_first <- function(s){
+    cap_first <- function(s) {
         return(paste(toupper(substr(s, 1, 1)),
-                     substr(s, 2, nchar(s)), sep=""))
+            substr(s, 2, nchar(s)),
+            sep = ""
+        ))
     }
 
     #' Indexer
@@ -3668,7 +3761,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @details Assumes that the 'df' parameter is coercable to a matrix. Also
     #' assumes that idx is a dataframe with columns "ridx" and "cidx" (standing for
     #' row index and col index) that index into df.
-    apply_indexer <- function(df, idx){
+    apply_indexer <- function(df, idx) {
         indexed <- apply(as.matrix(df[idx$ridx, ]), 1, indexer, idx$cidx)
         if (is.list(indexed)) indexed <- do.call("cbind", indexed)
         return(diag(indexed))
@@ -3680,12 +3773,14 @@ Generated: 2026-09-20 13:09:28.427891
     #' using the `each` functionality of `rep()`
     #' @param v input vector to extend
     #' @param len_out the desired final length of the vector
-    rep_each_len <- function(v, len_out){
+    rep_each_len <- function(v, len_out) {
         # all elements are multiplied an additional baseline number of times
         baseline <- floor(len_out / length(v))
         # only the first (len_out mod len(v)) elements get an additional 1
-        adj <- c(rep(1, len_out %% length(v)),
-                 rep(0, length(v) - (len_out %% length(v))))
+        adj <- c(
+            rep(1, len_out %% length(v)),
+            rep(0, length(v) - (len_out %% length(v)))
+        )
         return(rep(v, times = baseline + adj))
     }
 
@@ -3696,7 +3791,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param tbl1 First table to be combined
     #' @param tbl2 Second table to be combined
     #' @export
-    combine_tbls <- function(tbl1, tbl2){
+    combine_tbls <- function(tbl1, tbl2) {
         unq <- unique(c(names(tbl1), names(tbl2)))
         # using 0 bc we will combine with addition
         pads <- rep(0, length(unq) - length(tbl1))
@@ -3717,7 +3812,7 @@ Generated: 2026-09-20 13:09:28.427891
     #' @param df input data.frame
     #' @param digits precision to round to
     #' @noRd
-    round_numerics <- function(df, digits = 2){
+    round_numerics <- function(df, digits = 2) {
         numeric_cidx <- which(unlist(lapply(df, is.numeric)))
         df[numeric_cidx] <- lapply(df[numeric_cidx], round, digits = digits)
         return(df)
@@ -4710,7 +4805,7 @@ Generated: 2026-09-20 13:09:28.427891
 
          fit_event_pridge(
            event_key,
-           response_name = "score",
+           response_name = "unpenalized",
            grid = exp(seq(log(0.01), log(20), length.out = 100)),
            n_cores = NULL
          )
@@ -4719,7 +4814,10 @@ Generated: 2026-09-20 13:09:28.427891
 
     event_key: (char) TBA-legal event key (ex. "2025mdsev")
 
-    response_name: name of the desired response vector (typically "score")
+    response_name: name of the desired response vector. The default,
+              "unpenalized", is the alliance score minus the foul points
+              awarded to it; use "score" for the total score including foul
+              points.
 
         grid: (vector) all possible lambda values to consider. Defaults to
               starting at just above zero to reduce matrix singularity in
@@ -4737,6 +4835,7 @@ Generated: 2026-09-20 13:09:28.427891
          fit_event_pridge("2025mdsev")
          fit_event_pridge("2023new", n_cores = 3)
          fit_event_pridge("2026mdsev", response_name = "totalAutoPoints")
+         fit_event_pridge("2025mdsev", response_name = "score")
          
 
 ## fit_lineup_lm.Rd
@@ -4794,7 +4893,7 @@ Generated: 2026-09-20 13:09:28.427891
          fit_pridge(
            matches,
            priors,
-           response_name = "score",
+           response_name = "unpenalized",
            grid = exp(seq(log(0.01), log(20), length.out = 100)),
            n_cores = NULL,
            digits = 2
@@ -4810,7 +4909,11 @@ Generated: 2026-09-20 13:09:28.427891
               tba-legal team identifiers (i.e. "frc449")
 
     response_name: (character) name of the response vectors as they appear
-              in `matches`
+              in `matches`. The default, "unpenalized", is the alliance
+              score minus the foul points awarded to it (`score -
+              foulPoints`); if `matches` has no `foulPoints` columns it
+              falls back to total score with a warning. Use "score" for the
+              total score including foul points.
 
         grid: (numeric) Grid of lambda values to consider for
               regularization
@@ -4833,6 +4936,7 @@ Generated: 2026-09-20 13:09:28.427891
          epas <- sapply(sb_data, function(te){te$epa$stats$start})
          names(epas) <- sapply(sb_data, function(te){te$team})
          mdsev_pridge <- fit_pridge(matches, epas)
+         mdsev_pridge_total <- fit_pridge(matches, epas, response_name = "score")
          
 
 ## get_content.Rd
@@ -7724,7 +7828,7 @@ Retrieve the posted qual schedule. Usually, you’ll want to direct this
 to a CSV for use in whatever scouting application you’re using that
 depends on the schedule.
 
-`{r} mdpas <- qual_schedule("2025mdpas") head(mdpas) # write.csv(mdpas, file = "2025mdpas_schedule.csv")`
+`{r} mdpas <- qual_schedule("2025mdpas") head(mdpas) # write.csv(mdpas, file = "2025mdpas_schedule.csv") # nolint`
 
 ## team_awards()
 
